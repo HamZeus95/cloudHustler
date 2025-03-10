@@ -5,7 +5,6 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -27,7 +26,7 @@ public class ServiceRequests {
 
 
     @ManyToOne
-    Service service;
+    Servicee servicee;
 
     @ManyToMany(mappedBy = "serviceRequests")
     Set<User> users_applying= new HashSet<>();

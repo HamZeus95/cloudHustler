@@ -6,7 +6,6 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,7 +22,7 @@ public class Farmer extends User {
 
 
     @OneToMany(mappedBy = "farmer")
-    Set<Service> services= new HashSet<>();
+    Set<Servicee> servicees = new HashSet<>();
 
     @OneToMany(mappedBy = "farmer")
     Set<Farm> lands= new HashSet<>();
