@@ -1,8 +1,12 @@
 package cloud.hustler.pidevbackend.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -11,5 +15,9 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
 public class Consumer extends User {
+
+    @OneToMany(mappedBy = "consumer")
+    Set<Order> orders= new HashSet<>();
+
 
 }

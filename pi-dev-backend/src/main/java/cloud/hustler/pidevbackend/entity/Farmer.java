@@ -5,7 +5,9 @@ import jakarta.persistence.OneToMany;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -19,17 +21,15 @@ public class Farmer extends User {
 
     int experience;
 
-    @OneToMany(mappedBy = "farmer")
-    List<Post> posts;
 
     @OneToMany(mappedBy = "farmer")
-    List<Service> services;
+    Set<Service> services= new HashSet<>();
 
     @OneToMany(mappedBy = "farmer")
-    List<Land> lands;
+    Set<Land> lands= new HashSet<>();
 
-    @OneToMany
-    List<Product> products;
+    @OneToMany(mappedBy = "farmer")
+    Set<Product> products= new HashSet<>();
 
 
 }

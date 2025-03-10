@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -17,7 +19,8 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ServiceRequests {
     @Id
-    UUID uuid;
+    @GeneratedValue(strategy= GenerationType.UUID)
+    UUID uuid_serviceRequest;
 
     @Enumerated(EnumType.STRING)
     TypeStatus status;
@@ -26,8 +29,8 @@ public class ServiceRequests {
     @ManyToOne
     Service service;
 
-    @ManyToMany
-    List<User> users_applying;
+    @ManyToMany(mappedBy = "serviceRequests")
+    Set<User> users_applying= new HashSet<>();
 
 
 

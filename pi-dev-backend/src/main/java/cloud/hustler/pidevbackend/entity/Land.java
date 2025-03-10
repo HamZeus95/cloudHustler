@@ -1,11 +1,11 @@
 package cloud.hustler.pidevbackend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -18,7 +18,8 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Land {
     @Id
-    UUID uuid;
+    @GeneratedValue(strategy= GenerationType.UUID)
+    UUID uuid_land;
     String name;
     Double size;
     Double latitude;
@@ -27,6 +28,9 @@ public class Land {
 
     @ManyToOne
     Farmer farmer;
+
+    @OneToMany(mappedBy = "land")
+    Set<Ressource> ressources = new HashSet<>();
 
 
 }

@@ -10,7 +10,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
 public class DeliveryDriver extends User {

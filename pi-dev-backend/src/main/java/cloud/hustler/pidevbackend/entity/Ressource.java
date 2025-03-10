@@ -1,8 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -18,7 +16,8 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Ressource {
     @Id
-    UUID uuid;
+    @GeneratedValue(strategy= GenerationType.UUID)
+    UUID uuid_ressource;
     String name;
     int Quantity;
 
@@ -26,6 +25,8 @@ public class Ressource {
     @ManyToOne
     ResourceCat resourceCat;
 
+    @ManyToOne
+    Land land;
 
 
 
