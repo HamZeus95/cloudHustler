@@ -26,7 +26,7 @@ public class Ressource {
     ResourceCat resourceCat;
 
     @ManyToOne
-    Land land;
+    Farm farm;
 
 
 

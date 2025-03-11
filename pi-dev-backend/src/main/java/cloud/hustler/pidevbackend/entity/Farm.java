@@ -1,8 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -18,11 +16,13 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Farm {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     UUID uuid;
     String name;
     Double size;
     Double latitude;
     Double longitude;
+
 
 
     @ManyToOne
