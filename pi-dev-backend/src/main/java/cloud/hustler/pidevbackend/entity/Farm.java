@@ -1,7 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
@@ -19,7 +18,6 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Farm {
     @Id
-
     UUID uuid;
     String name;
     Double size;
@@ -27,7 +25,6 @@ public class Farm {
     Double longitude;
 
 
-    //farmer
     @ManyToOne
     Farmer farmer;
 

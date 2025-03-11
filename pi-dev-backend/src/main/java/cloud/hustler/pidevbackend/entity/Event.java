@@ -1,9 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -20,7 +17,8 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Event {
     @Id
-    UUID uuid;
+    @GeneratedValue(strategy= GenerationType.UUID)
+    UUID uuid_event;
     String name;
     String description;
     String location;

@@ -6,9 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Getter
@@ -25,7 +23,8 @@ import java.util.UUID;
 
 public abstract class User {
     @Id
-    UUID uuid;
+    @GeneratedValue(strategy= GenerationType.UUID)
+    UUID uuid_user;
     String firstName;
     String lastName;
     Date birthDate;
@@ -39,7 +38,10 @@ public abstract class User {
 
 
     @ManyToMany
-    List<ServiceRequests> serviceRequests;
+    Set<ServiceRequests> serviceRequests= new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    Set<Post> posts = new HashSet<>();
 
 
 

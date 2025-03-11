@@ -1,13 +1,12 @@
 package cloud.hustler.pidevbackend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -21,7 +20,8 @@ import java.util.UUID;
 
 public class Service {
     @Id
-    UUID uuid;
+    @GeneratedValue(strategy= GenerationType.UUID)
+    UUID uuid_service;
     String title;
     String description;
     boolean isHiring;
@@ -35,8 +35,8 @@ public class Service {
     @ManyToOne
     Farmer farmer;
 
-    @OneToMany
-    List<ServiceRequests> serviceRequests;
+    @OneToMany(mappedBy = "service")
+    Set<ServiceRequests> serviceRequests= new HashSet<>();
 
 
 

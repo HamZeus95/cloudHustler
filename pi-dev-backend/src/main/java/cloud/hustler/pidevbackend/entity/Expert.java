@@ -7,7 +7,9 @@ import jakarta.persistence.OneToMany;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -27,10 +29,10 @@ public class Expert extends User {
 
 
     @OneToMany(mappedBy = "expert")
-    List<Event> events;
+    Set<Event> events = new HashSet<>();
 
     @OneToMany(mappedBy = "expert")
-    List<Certification> certifications;
+    Set<Certification> certifications = new HashSet<>();
 
 
 
