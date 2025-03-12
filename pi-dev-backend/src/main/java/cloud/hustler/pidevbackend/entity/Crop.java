@@ -2,10 +2,9 @@ package cloud.hustler.pidevbackend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
-
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
+
 
 @Entity
 @Getter
@@ -14,24 +13,21 @@ import java.util.UUID;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class Ressource {
+
+public class Crop {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
-    private UUID uuid_ressource;
+    private UUID uuid_crop;
     private String name;
-    private double quantity;
-    private String unit;
-    private double cost;
+    private LocalDate plantingDate;
+    private LocalDate harvestDate;
+    private double expectedYield;
 
-
-
-    //@ManyToOne
-    //ResourceCat resourceCat;
-
+    //les relations
     @ManyToOne
     @JoinColumn(name = "farm_id")
     private Farm farm;
+
 
 
 

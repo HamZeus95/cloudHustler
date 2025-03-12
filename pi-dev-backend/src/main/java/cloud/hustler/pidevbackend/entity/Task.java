@@ -2,9 +2,8 @@ package cloud.hustler.pidevbackend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -14,24 +13,25 @@ import java.util.UUID;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class Ressource {
+
+public class Task {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
-    private UUID uuid_ressource;
-    private String name;
-    private double quantity;
-    private String unit;
-    private double cost;
+    private UUID uuid_task;
+    private String title;
+    private String description;
+    @Enumerated(EnumType.STRING)
+    private taskStatus status;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-
-
-    //@ManyToOne
-    //ResourceCat resourceCat;
+    //les relations
 
     @ManyToOne
     @JoinColumn(name = "farm_id")
     private Farm farm;
+
+
 
 
 
