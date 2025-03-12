@@ -27,7 +27,7 @@ public class Reaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    UUID uuid_Reaction;
+    UUID uuid_reaction;
     @Enumerated(EnumType.STRING)
     TypeReaction typeReaction;
 }
