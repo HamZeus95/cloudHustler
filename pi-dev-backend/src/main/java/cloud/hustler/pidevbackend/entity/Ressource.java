@@ -22,11 +22,6 @@ public class Ressource {
     int Quantity;
 
 
-    @ManyToOne
-    ResourceCat resourceCat;
-
-    @ManyToOne
-    Farm farm;
 
 
 

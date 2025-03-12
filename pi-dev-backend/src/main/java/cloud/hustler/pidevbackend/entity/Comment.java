@@ -23,8 +23,8 @@ import java.util.UUID;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.UUID)
-    UUID uuid_comment;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    long uuid_comment;
     String content;
 
     @CreationTimestamp
@@ -37,10 +37,10 @@ public class Comment {
 
 
     @ManyToOne
+    @JoinColumn(name = "post_uuid", nullable = false)
     Post post;
 
-    @ManyToOne
-    User user;
+
 
 
 

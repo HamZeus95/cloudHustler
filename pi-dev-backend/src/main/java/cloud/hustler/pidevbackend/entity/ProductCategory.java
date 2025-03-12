@@ -26,8 +26,6 @@ public class ProductCategory {
     String description;
 
 
-    @OneToMany(mappedBy = "productCategory")
-    Set<Product> products = new HashSet<>();
 
 
 }

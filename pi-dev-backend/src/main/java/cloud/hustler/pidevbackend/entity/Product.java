@@ -26,15 +26,5 @@ public class Product {
     String imageUrl;
 
 
-    @ManyToOne
-    Order order;
-
-    @ManyToOne
-    Farmer farmer;
-
-    @ManyToOne
-    ProductCategory productCategory;
-
-
 
 }

@@ -29,8 +29,7 @@ public class Event {
     List<String> imgsUrls;
 
 
-    @ManyToOne
-    Expert expert;
+
 
 
 

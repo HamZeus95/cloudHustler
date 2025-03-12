@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
+@Table(name = "orders")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,18 +20,14 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Order {
     @Id
-    @GeneratedValue(strategy= GenerationType.UUID)
-    UUID uuid_order;
-    double TotalPrice;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    long id_order;
+    double totalPrice;
     String status;
     String paymentMethod;
 
 
-    @OneToMany(mappedBy = "order")
-    Set<Product> products= new HashSet<>();
 
-    @ManyToOne
-    Consumer consumer;
 
 
 

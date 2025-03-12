@@ -23,8 +23,8 @@ import java.util.*;
 
 public abstract class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.UUID)
-    UUID uuid_user;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+        long uuid_user;
     String firstName;
     String lastName;
     Date birthDate;
@@ -37,11 +37,9 @@ public abstract class User {
     boolean isActif;
 
 
-    @ManyToMany
-    Set<ServiceRequests> serviceRequests= new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
-    Set<Post> posts = new HashSet<>();
+
+
 
 
 

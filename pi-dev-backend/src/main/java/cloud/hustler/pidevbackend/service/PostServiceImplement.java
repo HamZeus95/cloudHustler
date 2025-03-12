@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
+
 @Service
 
 public class PostServiceImplement implements IPostService {
@@ -26,6 +28,8 @@ public class PostServiceImplement implements IPostService {
     @Override
     public void deletePost(long uuid_post) {
         postRepository.deleteById(uuid_post);
+
+
 
     }
 

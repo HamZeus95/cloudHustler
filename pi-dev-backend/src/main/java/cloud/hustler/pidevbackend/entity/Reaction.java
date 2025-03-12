@@ -4,10 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
 
 @Entity
@@ -21,13 +17,13 @@ import java.util.UUID;
 public class Reaction {
 
     @ManyToOne
+    @JoinColumn(name = "post_uuid", nullable = false)
     Post post;
-    @ManyToOne
-    User user;
+
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    UUID uuid_reaction;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    long uuid_reaction;
     @Enumerated(EnumType.STRING)
     TypeReaction typeReaction;
 }

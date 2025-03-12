@@ -25,8 +25,6 @@ public class Certification {
     Date startDate;
     Date endDate;
 
-    @ManyToOne
-    Expert expert;
 
 
 

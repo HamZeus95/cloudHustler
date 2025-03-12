@@ -28,11 +28,7 @@ public class Expert extends User {
 
 
 
-    @OneToMany(mappedBy = "expert")
-    Set<Event> events = new HashSet<>();
 
-    @OneToMany(mappedBy = "expert")
-    Set<Certification> certifications = new HashSet<>();
 
 
 

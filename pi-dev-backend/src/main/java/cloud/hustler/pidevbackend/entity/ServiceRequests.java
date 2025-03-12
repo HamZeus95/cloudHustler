@@ -26,11 +26,7 @@ public class ServiceRequests {
     TypeStatus status;
 
 
-    @ManyToOne
-    Service service;
 
-    @ManyToMany(mappedBy = "serviceRequests")
-    Set<User> users_applying= new HashSet<>();
 
 
 

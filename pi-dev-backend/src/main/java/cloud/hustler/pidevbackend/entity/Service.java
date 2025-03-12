@@ -32,11 +32,7 @@ public class Service {
 
 
 
-    @ManyToOne
-    Farmer farmer;
 
-    @OneToMany(mappedBy = "service")
-    Set<ServiceRequests> serviceRequests= new HashSet<>();
 
 
 

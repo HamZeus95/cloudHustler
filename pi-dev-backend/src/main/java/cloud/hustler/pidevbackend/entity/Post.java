@@ -18,28 +18,25 @@ import java.util.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Post {
     @Id
-    @GeneratedValue(strategy= GenerationType.UUID)
-    UUID uuid_post;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    long uuid_post;
     String title;
     String content;
     String mediaUrl;
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
+
     Date createdAt;
-    @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
+
     Date updatedAt;
 
 
 
 
-    @ManyToOne
-    User user;
 
-    @OneToMany(mappedBy = "post")
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     Set<Comment> comments= new HashSet<>();
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     Set<Reaction> reactions= new HashSet<>();
 
 

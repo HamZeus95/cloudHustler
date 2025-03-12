@@ -1,7 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,19 +16,16 @@ import java.util.Set;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
-public class Farmer extends User {
+public class Farmer{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    long id_farmer;
 
-    int experience;
 
 
-    @OneToMany(mappedBy = "farmer")
-    Set<Service> services= new HashSet<>();
 
-    @OneToMany(mappedBy = "farmer")
-    Set<Farm> lands= new HashSet<>();
 
-    @OneToMany(mappedBy = "farmer")
-    Set<Product> products= new HashSet<>();
+
 
 
 }
