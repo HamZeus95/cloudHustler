@@ -1,6 +1,7 @@
 package cloud.hustler.pidevbackend.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -16,7 +17,8 @@ import java.util.*;
 @ToString
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "role")
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "email")  // 👈 Ensures unique email at DB level
 })
@@ -34,6 +36,8 @@ public abstract class User {
     String image;
     String phone;
     String address;
+    // default value is true in database
+    @Column(columnDefinition = "boolean default true")
     boolean isActif;
 
 
@@ -43,6 +47,9 @@ public abstract class User {
     @OneToMany(mappedBy = "user")
     Set<Post> posts = new HashSet<>();
 
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    Set<Token> tokens = new HashSet<>();
 
 
 }
