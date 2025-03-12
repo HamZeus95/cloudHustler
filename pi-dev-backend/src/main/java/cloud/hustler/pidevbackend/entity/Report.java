@@ -10,8 +10,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString

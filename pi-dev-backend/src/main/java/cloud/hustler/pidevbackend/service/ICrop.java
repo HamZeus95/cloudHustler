@@ -4,11 +4,12 @@ package cloud.hustler.pidevbackend.service;
 import cloud.hustler.pidevbackend.entity.Crop;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ICrop {
     Crop addCrop(Crop crop);
     Crop updateCrop(Crop crop);
-    void deleteCrop(long idCrop);
+    void deleteCrop(UUID idCrop);
     List<Crop> getAll();
-    Crop getCrop(long idCrop);
+    Crop getCrop(UUID idCrop);
 }

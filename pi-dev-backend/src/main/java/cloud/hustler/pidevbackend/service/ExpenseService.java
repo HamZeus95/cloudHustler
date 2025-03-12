@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -27,7 +28,7 @@ public class ExpenseService implements IExpense{
     }
 
     @Override
-    public void deleteExpense(long idExpense) {
+    public void deleteExpense(UUID idExpense) {
         expenseRepository.deleteById(idExpense);
 
     }
@@ -38,7 +39,7 @@ public class ExpenseService implements IExpense{
     }
 
     @Override
-    public Expense getExpense(long idExpense) {
+    public Expense getExpense(UUID idExpense) {
         return expenseRepository.findById(idExpense).get();
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -26,7 +27,7 @@ public class CropService implements ICrop{
     }
 
     @Override
-    public void deleteCrop(long idCrop) {
+    public void deleteCrop(UUID idCrop) {
         cropRepository.deleteById(idCrop);
 
     }
@@ -37,7 +38,7 @@ public class CropService implements ICrop{
     }
 
     @Override
-    public Crop getCrop(long idCrop) {
+    public Crop getCrop(UUID idCrop) {
         return cropRepository.findById(idCrop).get();
     }
 }

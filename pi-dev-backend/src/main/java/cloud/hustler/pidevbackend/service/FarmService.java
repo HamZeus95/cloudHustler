@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -25,7 +27,7 @@ public class FarmService implements IFarm{
     }
 
     @Override
-    public void deleteFarm(long idFarm) {
+    public void deleteFarm(UUID idFarm) {
         farmRepository.deleteById(idFarm);
 
     }
@@ -36,7 +38,9 @@ public class FarmService implements IFarm{
     }
 
     @Override
-    public Farm getFarm(long idFarm) {
+    public Farm getFarm(UUID idFarm) {
         return farmRepository.findById(idFarm).get();
     }
+
+
 }

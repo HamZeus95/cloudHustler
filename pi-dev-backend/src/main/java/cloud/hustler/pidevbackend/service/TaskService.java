@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -25,7 +26,7 @@ public class TaskService implements ITask{
     }
 
     @Override
-    public void deleteTask(long idTask) {
+    public void deleteTask(UUID idTask) {
         taskRepository.deleteById(idTask);
 
     }
@@ -36,7 +37,7 @@ public class TaskService implements ITask{
     }
 
     @Override
-    public Task getTask(long idTask) {
+    public Task getTask(UUID idTask) {
         return taskRepository.findById(idTask).get();
     }
 }

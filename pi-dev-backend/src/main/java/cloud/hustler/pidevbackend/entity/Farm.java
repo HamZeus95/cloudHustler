@@ -9,8 +9,7 @@ import java.util.UUID;
 
 
 @Entity
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -33,6 +32,7 @@ public class Farm {
 
     @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL)
     private Set<Ressource> resources=new HashSet<>();
+
 
     @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL)
     private Set<Crop> crops=new HashSet<>();
