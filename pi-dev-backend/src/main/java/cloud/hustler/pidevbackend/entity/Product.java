@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -27,14 +28,95 @@ public class Product {
 
 
     @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "`order_uuid_order`")
     Order order;
 
     @ManyToOne
+    @JsonIgnore
     Farmer farmer;
 
     @ManyToOne
     ProductCategory productCategory;
 
 
+    public UUID getUuid_product() {
+        return uuid_product;
+    }
 
+    public void setUuid_product(UUID uuid_product) {
+        this.uuid_product = uuid_product;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Farmer getFarmer() {
+        return farmer;
+    }
+
+    public void setFarmer(Farmer farmer) {
+        this.farmer = farmer;
+    }
+
+    public ProductCategory getProductCategory() {
+        return productCategory;
+    }
+
+    public void setProductCategory(ProductCategory productCategory) {
+        this.productCategory = productCategory;
+    }
 }

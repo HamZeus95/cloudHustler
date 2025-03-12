@@ -17,6 +17,7 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "`order`")
 public class Order {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)

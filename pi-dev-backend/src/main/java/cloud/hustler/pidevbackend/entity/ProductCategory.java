@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -27,7 +28,40 @@ public class ProductCategory {
 
 
     @OneToMany(mappedBy = "productCategory")
+    @ToString.Exclude
+    @JsonIgnore
     Set<Product> products = new HashSet<>();
 
 
+    public UUID getUuid_category() {
+        return uuid_category;
+    }
+
+    public void setUuid_category(UUID uuid_category) {
+        this.uuid_category = uuid_category;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
 }
