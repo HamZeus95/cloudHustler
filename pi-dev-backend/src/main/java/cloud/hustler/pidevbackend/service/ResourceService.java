@@ -16,26 +16,27 @@ public class ResourceService implements IResource{
 
     @Override
     public Ressource addRessource(Ressource ressource) {
-        return null;
+        return resourceRepository.save(ressource);
     }
 
     @Override
     public Ressource updateRessource(Ressource ressource) {
-        return null;
+        return resourceRepository.save(ressource);
     }
 
     @Override
     public void deleteRessource(long idRessource) {
+        resourceRepository.deleteById(idRessource);
 
     }
 
     @Override
     public List<Ressource> getAll() {
-        return List.of();
+        return resourceRepository.findAll();
     }
 
     @Override
     public Ressource getRessource(long idRessource) {
-        return null;
+        return resourceRepository.findById(idRessource).get();
     }
 }

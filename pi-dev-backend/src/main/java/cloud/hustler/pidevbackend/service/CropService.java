@@ -17,26 +17,27 @@ public class CropService implements ICrop{
 
     @Override
     public Crop addCrop(Crop crop) {
-        return null;
+        return cropRepository.save(crop);
     }
 
     @Override
     public Crop updateCrop(Crop crop) {
-        return null;
+        return cropRepository.save(crop);
     }
 
     @Override
     public void deleteCrop(long idCrop) {
+        cropRepository.deleteById(idCrop);
 
     }
 
     @Override
     public List<Crop> getAll() {
-        return List.of();
+        return cropRepository.findAll();
     }
 
     @Override
     public Crop getCrop(long idCrop) {
-        return null;
+        return cropRepository.findById(idCrop).get();
     }
 }

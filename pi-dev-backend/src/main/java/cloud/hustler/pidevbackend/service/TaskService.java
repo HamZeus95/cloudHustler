@@ -16,26 +16,27 @@ public class TaskService implements ITask{
 
     @Override
     public Task addTask(Task task) {
-        return null;
+        return taskRepository.save(task);
     }
 
     @Override
     public Task updateTask(Task task) {
-        return null;
+        return taskRepository.save(task);
     }
 
     @Override
     public void deleteTask(long idTask) {
+        taskRepository.deleteById(idTask);
 
     }
 
     @Override
     public List<Task> getAll() {
-        return List.of();
+        return taskRepository.findAll();
     }
 
     @Override
     public Task getTask(long idTask) {
-        return null;
+        return taskRepository.findById(idTask).get();
     }
 }

@@ -16,26 +16,27 @@ public class FarmService implements IFarm{
 
     @Override
     public Farm addFarm(Farm farm) {
-        return null;
+        return farmRepository.save(farm);
     }
 
     @Override
     public Farm updateFarm(Farm farm) {
-        return null;
+        return farmRepository.save(farm);
     }
 
     @Override
     public void deleteFarm(long idFarm) {
+        farmRepository.deleteById(idFarm);
 
     }
 
     @Override
     public List<Farm> getAll() {
-        return List.of();
+        return farmRepository.findAll();
     }
 
     @Override
     public Farm getFarm(long idFarm) {
-        return null;
+        return farmRepository.findById(idFarm).get();
     }
 }

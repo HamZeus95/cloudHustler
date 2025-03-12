@@ -18,26 +18,27 @@ public class ExpenseService implements IExpense{
 
     @Override
     public Expense addExpense(Expense expense) {
-        return null;
+        return expenseRepository.save(expense);
     }
 
     @Override
     public Expense updateExpense(Expense expense) {
-        return null;
+        return expenseRepository.save(expense);
     }
 
     @Override
     public void deleteExpense(long idExpense) {
+        expenseRepository.deleteById(idExpense);
 
     }
 
     @Override
     public List<Expense> getAll() {
-        return List.of();
+        return expenseRepository.findAll();
     }
 
     @Override
     public Expense getExpense(long idExpense) {
-        return null;
+        return expenseRepository.findById(idExpense).get();
     }
 }
