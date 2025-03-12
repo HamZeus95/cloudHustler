@@ -1,4 +1,4 @@
-package cloud.hustler.pidevbackend.service;
+package cloud.hustler.pidevbackend.service.auth;
 
 import cloud.hustler.pidevbackend.dto.AuthenticationResponse;
 import cloud.hustler.pidevbackend.dto.RegisterRequest;
