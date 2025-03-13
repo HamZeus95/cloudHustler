@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
@@ -22,8 +24,8 @@ import java.util.*;
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "email")  // 👈 Ensures unique email at DB level
 })
-
-public abstract class User {
+@SuperBuilder
+public abstract class User implements UserDetails {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
     UUID uuid_user;
@@ -46,10 +48,10 @@ public abstract class User {
 
     @OneToMany(mappedBy = "user")
     Set<Post> posts = new HashSet<>();
-
+  /*
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     Set<Token> tokens = new HashSet<>();
-
+*/
 
 }

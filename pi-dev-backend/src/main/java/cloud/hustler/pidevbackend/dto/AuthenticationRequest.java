@@ -9,9 +9,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthenticationResponse {
-    @JsonProperty("access_token")
-    String accessToken;
-    @JsonProperty("refresh_token")
-    String refreshToken;
+public class AuthenticationRequest {
+    String email;
+    String password;
+
 }

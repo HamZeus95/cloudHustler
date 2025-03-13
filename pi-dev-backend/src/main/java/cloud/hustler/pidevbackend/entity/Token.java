@@ -9,14 +9,14 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.UUID;
 
-@Entity
+/*@Entity
 @Getter
 @Setter
 @ToString
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)*/
 
 public class Token {
-    @Id
+  /*  @Id
     @GeneratedValue(strategy= GenerationType.UUID)
     UUID uuid_tokrn;
 
@@ -32,4 +32,6 @@ public class Token {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_uuid")
     User user;
+
+ */
 }
