@@ -1,0 +1,8 @@
+<h2>Farms</h2>
+<div *ngFor="let farm of farms" class="farm-card">
+  <h3>{{ farm.name }}</h3>
+  <p><strong>Size:</strong> {{ farm.size }} hectares</p>
+  <p><strong>Location:</strong> Lat {{ farm.latitude }}, Long {{ farm.longitude }}</p>
+  <p><strong>Irrigation:</strong> {{ farm.irrigation_type }}</p>
+  <hr />
+</div>
