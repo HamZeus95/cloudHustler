@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/farm")
 public class FarmController {
@@ -19,6 +19,11 @@ public class FarmController {
     @GetMapping("/farms")
     public List<Farm> farms(){
         return farmService.getAll();
+    }
+    @GetMapping("/name")
+    public String name(){
+        String name="med dhia alaya";
+        return name;
     }
     @GetMapping("/farm/{id}")
     public Farm farm(@PathVariable UUID id){

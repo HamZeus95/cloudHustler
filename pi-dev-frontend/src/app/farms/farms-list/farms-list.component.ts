@@ -17,5 +17,16 @@ export class FarmsListComponent implements OnInit {
     this.farmService.getFarms().subscribe(farms => {
       this.farms = farms;
     });
+   
+  }
+  deleteFarm(id: string): void {
+    this.farmService.deleteFarm(id).subscribe(() => {
+      this.farms = this.farms.filter(farm => farm.uuid_farm !== id);
+    });
+  }
+  addFarm(farm: Farm): void {
+    this.farmService.addFarm(farm).subscribe(newFarm => {
+      this.farms.push(newFarm);
+    });
   }
 }
