@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.*;
@@ -19,7 +20,7 @@ import java.util.Set;
 @ToString
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
+@DiscriminatorValue("Farmer")
 public class Farmer extends User {
 
     int experience;

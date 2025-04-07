@@ -39,7 +39,7 @@ public abstract class User implements UserDetails {
     String phone;
     String address;
     // default value is true in database
-    @Column(columnDefinition = "boolean default true")
+    @Column(columnDefinition = "boolean default False")
     boolean isActif;
 
 
@@ -53,5 +53,10 @@ public abstract class User implements UserDetails {
     @JsonIgnore
     Set<Token> tokens = new HashSet<>();
 */
+    @Transient
+    public String getRole(){
+        DiscriminatorValue discriminator = this.getClass().getAnnotation(DiscriminatorValue.class);
+        return (discriminator != null) ? discriminator.value() : "USER";
+    }
 
 }

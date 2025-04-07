@@ -1,9 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,7 +18,7 @@ import java.util.Set;
 @ToString
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
+@DiscriminatorValue("Expert")
 public class Expert extends User {
 
     @Enumerated(EnumType.STRING)

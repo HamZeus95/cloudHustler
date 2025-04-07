@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.*;
@@ -20,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
+@DiscriminatorValue("Consumer")
 public class Consumer extends User {
 
     @OneToMany(mappedBy = "consumer")

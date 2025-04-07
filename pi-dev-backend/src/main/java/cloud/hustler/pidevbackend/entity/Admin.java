@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
 import lombok.*;
@@ -15,7 +16,8 @@ import java.util.List;
 @ToString
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
+@NoArgsConstructor
+@DiscriminatorValue("ADMIN")
 public class Admin extends User {
 
     @Override
