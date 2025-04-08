@@ -1,6 +1,5 @@
 package cloud.hustler.pidevbackend.service;
 
-
 import cloud.hustler.pidevbackend.entity.Crop;
 import cloud.hustler.pidevbackend.repository.CropRepository;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,7 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class CropService implements ICrop{
+public class CropService implements ICrop {
     @Autowired
     private CropRepository cropRepository;
 
@@ -29,7 +28,6 @@ public class CropService implements ICrop{
     @Override
     public void deleteCrop(UUID idCrop) {
         cropRepository.deleteById(idCrop);
-
     }
 
     @Override
@@ -39,6 +37,11 @@ public class CropService implements ICrop{
 
     @Override
     public Crop getCrop(UUID idCrop) {
-        return cropRepository.findById(idCrop).get();
+        return cropRepository.findById(idCrop).orElse(null);
+    }
+
+    // New method to get crops by farm
+    public List<Crop> getCropsByFarm(UUID farmId) {
+        return cropRepository.findByFarmUuid(farmId);
     }
 }

@@ -20,11 +20,7 @@ public class FarmController {
     public List<Farm> farms(){
         return farmService.getAll();
     }
-    @GetMapping("/name")
-    public String name(){
-        String name="med dhia alaya";
-        return name;
-    }
+
     @GetMapping("/farm/{id}")
     public Farm farm(@PathVariable UUID id){
         return farmService.getFarm(id);

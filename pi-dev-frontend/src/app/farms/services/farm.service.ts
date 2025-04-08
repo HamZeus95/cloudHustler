@@ -13,7 +13,6 @@ export class FarmService {
   getFarms(): Observable<Farm[]> {
     return this.http.get<Farm[]>(`${this.apiUrl}/farms`);
   }
-    
 
   getFarmById(id: string): Observable<Farm> {
     return this.http.get<Farm>(`${this.apiUrl}/farm/${id}`);

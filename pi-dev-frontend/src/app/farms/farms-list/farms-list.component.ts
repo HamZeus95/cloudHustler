@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FarmService } from '../services/farm.service';
 import { Farm } from 'src/app/core/modules/farm';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-farms-list',
@@ -8,25 +9,40 @@ import { Farm } from 'src/app/core/modules/farm';
   styleUrls: ['./farms-list.component.css']
 })
 export class FarmsListComponent implements OnInit {
+  farms: Farm[] = [];
 
-  farms: Farm[] = []; 
-
-  constructor(private farmService: FarmService) {}
+  constructor(
+    private farmService: FarmService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.farmService.getFarms().subscribe(farms => {
-      this.farms = farms;
-    });
-   
+    this.loadFarms();
   }
-  deleteFarm(id: string): void {
-    this.farmService.deleteFarm(id).subscribe(() => {
-      this.farms = this.farms.filter(farm => farm.uuid_farm !== id);
-    });
-  }
-  addFarm(farm: Farm): void {
-    this.farmService.addFarm(farm).subscribe(newFarm => {
-      this.farms.push(newFarm);
+
+  loadFarms(): void {
+    this.farmService.getFarms().subscribe({
+      next: (farms) => {
+        this.farms = farms;
+      },
+      error: (err) => {
+        console.error('Error loading farms:', err);
+      }
     });
   }
+
+  onDelete(farmId: string): void {
+    if (confirm('Are you sure you want to delete this farm?')) {
+      this.farmService.deleteFarm(farmId).subscribe({
+        next: () => {
+          this.farms = this.farms.filter(farm => farm.uuid_farm !== farmId);
+        },
+        error: (err) => {
+          console.error('Error deleting farm:', err);
+        }
+      });
+    }
+  }
+
+
 }
