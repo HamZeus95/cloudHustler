@@ -1,12 +1,12 @@
 package cloud.hustler.pidevbackend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -20,13 +20,14 @@ import java.util.UUID;
 public class ProductCategory {
 
     @Id
-    UUID uuid;
+    @GeneratedValue(strategy= GenerationType.UUID)
+    UUID uuid_category;
     String name;
     String description;
 
 
-    @OneToMany
-    List<Product> products;
+    @OneToMany(mappedBy = "productCategory")
+    Set<Product> products = new HashSet<>();
 
 
 }

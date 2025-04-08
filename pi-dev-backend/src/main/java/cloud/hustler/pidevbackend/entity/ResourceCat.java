@@ -1,12 +1,12 @@
 package cloud.hustler.pidevbackend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -20,12 +20,13 @@ import java.util.UUID;
 
 public class ResourceCat {
     @Id
-    UUID uuid;
+    @GeneratedValue(strategy= GenerationType.UUID)
+    UUID uuid_categoryCat;
     String name;
     String description;
 
-    @OneToMany
-    List<Ressource> resources;
+    @OneToMany(mappedBy = "resourceCat")
+    Set<Ressource> resources= new HashSet<>();
 
 
 

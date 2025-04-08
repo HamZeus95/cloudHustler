@@ -4,9 +4,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -19,8 +22,9 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Farm {
     @Id
+    @GeneratedValue(strategy= GenerationType.UUID)
+    UUID uuid_land;
 
-    UUID uuid;
     String name;
     Double size;
     Double latitude;
@@ -30,6 +34,8 @@ public class Farm {
     //farmer
     @ManyToOne
     Farmer farmer;
+
+
 
 
 }
