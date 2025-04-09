@@ -1,6 +1,8 @@
 package cloud.hustler.pidevbackend.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -16,16 +18,15 @@ import java.util.Set;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
-public class Farmer{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id_farmer;
+public class Farmer extends User {
+
+    int experience;
 
 
 
 
-
-
+    @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true)
+    Set<Post> posts = new HashSet<>(); // Relation avec les posts du fermier
 
 
 }

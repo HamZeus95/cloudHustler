@@ -23,8 +23,8 @@ import java.util.UUID;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    long uuid_comment;
+    @GeneratedValue(strategy= GenerationType.UUID)
+    UUID uuid_comment;
     String content;
 
     @CreationTimestamp

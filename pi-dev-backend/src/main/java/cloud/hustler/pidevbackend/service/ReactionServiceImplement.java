@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 
@@ -24,13 +25,13 @@ public class ReactionServiceImplement implements IReactionService {
     }
 
     @Override
-    public void deleteReaction(long uuid_reaction) {
+    public void deleteReaction(UUID uuid_reaction) {
         reactionRepository.deleteById(uuid_reaction);
 
     }
 
     @Override
-    public Reaction getReactionById(long uuid_reaction) {
+    public Reaction getReactionById(UUID uuid_reaction) {
         return reactionRepository.findById(uuid_reaction).get();
     }
 

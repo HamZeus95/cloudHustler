@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.UUID;
 
 
 @Entity
@@ -22,8 +23,8 @@ public class Reaction {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long uuid_reaction;
+    @GeneratedValue(strategy= GenerationType.UUID)
+    UUID uuid_reaction;
     @Enumerated(EnumType.STRING)
     TypeReaction typeReaction;
 }

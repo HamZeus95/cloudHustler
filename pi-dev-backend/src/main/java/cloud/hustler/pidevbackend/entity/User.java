@@ -23,8 +23,8 @@ import java.util.*;
 
 public abstract class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-        long uuid_user;
+    @GeneratedValue(strategy= GenerationType.UUID)
+    UUID uuid_user;
     String firstName;
     String lastName;
     Date birthDate;

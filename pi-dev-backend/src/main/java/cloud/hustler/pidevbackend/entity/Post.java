@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,8 +19,8 @@ import java.util.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Post {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    long uuid_post;
+    @GeneratedValue(strategy= GenerationType.UUID)
+    UUID uuid_post;
     String title;
     String content;
     String mediaUrl;
@@ -34,12 +35,16 @@ public class Post {
 
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+            @JsonIgnore
     Set<Comment> comments= new HashSet<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     Set<Reaction> reactions= new HashSet<>();
 
-
+    @ManyToOne
+    @JoinColumn(name = "farmer_id")
+    private Farmer farmer;  // Relation avec le Farmer qui a écrit ce post
 
 
 }

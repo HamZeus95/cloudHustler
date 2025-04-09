@@ -1,0 +1,12 @@
+<h1>Liste des Posts</h1>
+
+<p *ngIf="posts.length === 0">Aucun post à afficher.</p>
+
+<div class="card-container" *ngIf="posts.length > 0">
+  <div class="post-card" *ngFor="let post of posts" (click)="viewPost(post.uuid_post!)">
+    <img *ngIf="post.mediaUrl" [src]="post.mediaUrl" alt="Image du post" />
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content | slice:0:100 }}...</p>
+    <small>{{ post.createdAt | date:'short' }}</small>
+  </div>
+</div>

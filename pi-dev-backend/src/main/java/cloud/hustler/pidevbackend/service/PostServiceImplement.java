@@ -26,7 +26,7 @@ public class PostServiceImplement implements IPostService {
     }
 
     @Override
-    public void deletePost(long uuid_post) {
+    public void deletePost(UUID uuid_post) {
         postRepository.deleteById(uuid_post);
 
 
@@ -39,7 +39,7 @@ public class PostServiceImplement implements IPostService {
     }
 
     @Override
-    public Post getPostById(long uuid_post) {
+    public Post getPostById(UUID uuid_post) {
         return postRepository.findById(uuid_post).get();
     }
 }

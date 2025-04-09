@@ -3,14 +3,24 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { PostComponent } from './posts/post-list/post.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AddPostComponent } from './posts/add-post/add-post.component';
+import { FormsModule } from '@angular/forms';
+import { PostDetailsComponent } from './posts/post-details/post-details.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PostComponent,
+    AddPostComponent,
+    PostDetailsComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
