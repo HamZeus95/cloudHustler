@@ -1,4 +1,5 @@
 package cloud.hustler.pidevbackend.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -26,8 +27,9 @@ public class Livraison {
     @NotNull(message = "La date de creation ne peut pas être nulle.")
     private LocalDateTime dateCreation;
 
-    @OneToOne(mappedBy = "livraison", cascade = CascadeType.ALL)
-    private Facture facture;
+    /*@OneToOne(mappedBy = "livraison", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private Facture facture;*/
 
     public Livraison() {
         this.dateCreation = LocalDateTime.now();
@@ -64,14 +66,14 @@ public class Livraison {
     }
 
     // Getter pour facture
-    public Facture getFacture() {
+   /* public Facture getFacture() {
         return facture;
     }
 
     // Setter pour facture
     public void setFacture(Facture facture) {
         this.facture = facture;
-    }
+    }*/
 
 
 }

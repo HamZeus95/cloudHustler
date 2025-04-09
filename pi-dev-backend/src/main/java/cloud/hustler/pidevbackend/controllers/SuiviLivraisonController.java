@@ -1,8 +1,6 @@
 package cloud.hustler.pidevbackend.controllers;
 
-import cloud.hustler.pidevbackend.entity.Livraison;
 import cloud.hustler.pidevbackend.entity.SuiviLivraison;
-import cloud.hustler.pidevbackend.service.LivraisonService;
 import cloud.hustler.pidevbackend.service.SuiviLivraisonService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

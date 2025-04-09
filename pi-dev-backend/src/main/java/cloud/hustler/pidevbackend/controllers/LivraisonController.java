@@ -1,6 +1,7 @@
 package cloud.hustler.pidevbackend.controllers;
 
 import cloud.hustler.pidevbackend.entity.Livraison;
+import cloud.hustler.pidevbackend.entity.SuiviLivraison;
 import cloud.hustler.pidevbackend.service.LivraisonService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/livraisons")
@@ -36,4 +38,11 @@ public class LivraisonController {
         livraisonService.deleteLivraison(id);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Livraison> getLivraisonById(@PathVariable Long id) {
+        Optional<Livraison> livraison = livraisonService.getLivraisonById(id);
+        return livraison.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 }

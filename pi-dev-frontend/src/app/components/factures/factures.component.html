@@ -1,0 +1,36 @@
+<h2>Liste des Factures</h2>
+
+<ul *ngIf="factures && factures.length > 0; else aucuneFacture">
+  <li *ngFor="let f of factures">
+    <strong>ID :</strong> {{ f.id }} |
+    <strong>Date :</strong> {{ f.dateEmission }} |
+    <strong>Montant :</strong> {{ f.montantTotal }}€ |
+    <strong>Statut :</strong> {{ f.statut }} |
+    <strong>Livraison ID :</strong> {{ f.livraison?.id }}
+  </li>
+</ul>
+
+<ng-template #aucuneFacture>
+  <p>Aucune facture trouvée.</p>
+</ng-template>
+<form (ngSubmit)="ajouterFacture()">
+  <input type="date" [(ngModel)]="newFacture.dateEmission" name="dateEmission" placeholder="Date d'émission" required>
+  <input type="number" [(ngModel)]="newFacture.montantTotal" name="montant" placeholder="Montant" required>
+  <input type="text" [(ngModel)]="newFacture.statut" name="statut" placeholder="Statut" required>
+  <button type="submit">Ajouter</button>
+</form>
+
+<table>
+  <tr *ngFor="let facture of factures">
+    <td>{{ facture.id }}</td>
+    <td>{{ facture.statut }}</td>
+    <td>
+      <button (click)="facture.id !== undefined && marquerCommePayee(facture.id)" [disabled]="facture.statut === 'PAYÉ'">
+        Marquer comme payée
+      </button>
+    </td>
+    <td>
+      <button (click)="facture.id !== undefined && supprimerFacture(facture.id)">Supprimer</button>
+    </td>
+  </tr>
+</table>

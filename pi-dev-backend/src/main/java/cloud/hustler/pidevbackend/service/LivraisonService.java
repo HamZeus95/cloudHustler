@@ -38,5 +38,8 @@ public class LivraisonService implements ILivraisonService {
         }
         livraisonRepository.deleteById(id);
     }
+    public Livraison getLastLivraison() {
+        return livraisonRepository.findTopByOrderByIdDesc();  // Récupère la dernière Livraison par ID
+    }
 
 }

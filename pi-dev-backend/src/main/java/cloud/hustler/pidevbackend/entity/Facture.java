@@ -2,6 +2,7 @@ package cloud.hustler.pidevbackend.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import jakarta.validation.constraints.*;
@@ -31,10 +32,9 @@ public class Facture {
     @Pattern(regexp = "^(PAYÉ|EN ATTENTE|ANNULÉ)$", message = "Le statut doit être 'PAYÉ', 'EN ATTENTE' ou 'ANNULÉ'.")
     private String statut; // "PAYÉ", "EN ATTENTE", "ANNULÉ"
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)  // Retirer CascadeType.ALL pour éviter de supprimer la livraison avec la facture
     @JoinColumn(name = "livraison_id")
     @NotNull(message = "La livraison ne peut pas être nulle.")
-    @JsonIgnore
     private Livraison livraison;
 
 
