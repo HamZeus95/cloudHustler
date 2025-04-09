@@ -2,8 +2,8 @@
 
 <p *ngIf="posts.length === 0">Aucun post à afficher.</p>
 
-<div class="card-container" *ngIf="posts.length > 0">
-  <div class="post-card" *ngFor="let post of posts" (click)="viewPost(post.uuid_post!)">
+<div class="card-container">
+  <div class="post-card" *ngFor="let post of posts" (click)="post.idPost ? viewPost(post.idPost) : null">
     <img *ngIf="post.mediaUrl" [src]="post.mediaUrl" alt="Image du post" />
     <h2>{{ post.title }}</h2>
     <p>{{ post.content | slice:0:100 }}...</p>

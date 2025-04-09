@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.service;
 
+import cloud.hustler.pidevbackend.entity.Comment;
 import cloud.hustler.pidevbackend.entity.Post;
 import cloud.hustler.pidevbackend.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,4 +43,8 @@ public class PostServiceImplement implements IPostService {
     public Post getPostById(UUID uuid_post) {
         return postRepository.findById(uuid_post).get();
     }
+
+
+
+
 }

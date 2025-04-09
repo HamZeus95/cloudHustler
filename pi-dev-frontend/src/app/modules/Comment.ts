@@ -1,9 +1,8 @@
-import { Post } from './Post';
+import { Post } from "./Post";
 
 export interface Comment {
-  uuid_comment: string;
+  commentId: string;
   content: string;
-  createdAt: Date;
-  updatedAt: Date;
-  post: Post;
+  createdAt: string;
+  updatedAt: string;
 }

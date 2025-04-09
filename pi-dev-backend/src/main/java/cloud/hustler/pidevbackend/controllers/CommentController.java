@@ -4,6 +4,7 @@ import cloud.hustler.pidevbackend.entity.Comment;
 import cloud.hustler.pidevbackend.entity.Post;
 import cloud.hustler.pidevbackend.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,5 +45,10 @@ public class CommentController {
     Comment getCommentById(@PathVariable UUID uuid_comment) {
         System.out.println("Get comment by id: " + uuid_comment);
         return commentService.getCommentById(uuid_comment);
+    }
+
+    @GetMapping("/getCommentsByPostId/{idPost}")
+    List<Comment> findByPostId(@PathVariable UUID idPost) {
+        return commentService.findByPostIdPost(idPost);
     }
 }

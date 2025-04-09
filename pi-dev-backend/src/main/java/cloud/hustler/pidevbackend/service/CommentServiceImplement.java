@@ -40,4 +40,11 @@ public class CommentServiceImplement implements ICommentService {
         System.out.println("dff"+uuid_comment);
         return commentRepository.findById(uuid_comment).get();
     }
+
+    @Override
+    public List<Comment> findByPostIdPost(UUID idPost) {
+        return commentRepository.findByPostIdPost(idPost);
+    }
+
+
 }

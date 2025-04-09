@@ -7,7 +7,7 @@ export enum TypeReaction {
 }
 
 export interface Reaction {
-  uuid_reaction: string;
+  reactionId: string;
   typeReaction: TypeReaction;
   post: Post;
 }

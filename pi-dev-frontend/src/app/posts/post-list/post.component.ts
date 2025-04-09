@@ -9,6 +9,7 @@ import { Post } from '../../modules/Post';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
+
   posts: Post[] = [];
 
   constructor(
@@ -28,7 +29,8 @@ export class PostComponent implements OnInit {
     });
   }
 
-  viewPost(uuid: string): void {
-    this.router.navigate(['/posts', uuid]);
+  // Méthode pour naviguer vers les détails du post
+  viewPost(postId: string): void {
+    this.router.navigate(['/posts', postId]);
   }
 }

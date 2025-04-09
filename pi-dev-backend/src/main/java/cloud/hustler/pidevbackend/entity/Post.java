@@ -20,7 +20,7 @@ import java.util.*;
 public class Post {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
-    UUID uuid_post;
+    UUID idPost;
     String title;
     String content;
     String mediaUrl;

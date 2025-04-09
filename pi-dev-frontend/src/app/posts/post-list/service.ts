@@ -32,4 +32,10 @@ export class PostService {
   deletePost(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
+  getCommentsByPostId(postId: string): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${this.baseUrl}/getCommentsByPostId/${postId}`);
+  }
+
+
 }

@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -24,7 +25,7 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
-    UUID uuid_comment;
+    UUID commentId;
     String content;
 
     @CreationTimestamp
@@ -37,6 +38,7 @@ public class Comment {
 
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "post_uuid", nullable = false)
     Post post;
 

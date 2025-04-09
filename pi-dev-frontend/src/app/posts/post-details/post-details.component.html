@@ -1,1 +1,19 @@
-<p>post-details works!</p>
+<div *ngIf="post">
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+  
+    <div *ngIf="comments.length > 0">
+      <h3>Commentaires</h3>
+      <ul>
+        <li *ngFor="let comment of comments">
+          <p><strong>{{ comment.commentId }}</strong>: {{ comment.content }}</p>
+          <p><small>Créé le: {{ comment.createdAt | date: 'short' }}</small></p>
+          <p><small>Mis à jour le: {{ comment.updatedAt | date: 'short' }}</small></p>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="comments.length === 0">
+      <p>Aucun commentaire disponible pour ce post.</p>
+    </div>
+  </div>
+  

@@ -1,9 +1,11 @@
 package cloud.hustler.pidevbackend.controllers;
 
+import cloud.hustler.pidevbackend.entity.Comment;
 import cloud.hustler.pidevbackend.entity.Farmer;
 import cloud.hustler.pidevbackend.entity.Post;
 import cloud.hustler.pidevbackend.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,4 +49,6 @@ public class PostController {
     public Post getPostById(@PathVariable UUID uuid_post) {  // Change le type en UUID
         return postService.getPostById(uuid_post);
     }
+
+
 }

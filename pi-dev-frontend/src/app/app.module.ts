@@ -8,13 +8,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { AddPostComponent } from './posts/add-post/add-post.component';
 import { FormsModule } from '@angular/forms';
 import { PostDetailsComponent } from './posts/post-details/post-details.component';
+import { ListCommentComponent } from './comment/list-comment/list-comment.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PostComponent,
     AddPostComponent,
-    PostDetailsComponent
+    PostDetailsComponent,
+    ListCommentComponent
   ],
   imports: [
     BrowserModule,

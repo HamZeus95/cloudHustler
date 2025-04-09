@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.service;
 
+import cloud.hustler.pidevbackend.entity.Comment;
 import cloud.hustler.pidevbackend.entity.Post;
 
 import java.util.List;
@@ -11,5 +12,5 @@ public interface IPostService {
     void deletePost(UUID uuid_post);
     List<Post> getAllPosts();
     Post getPostById(UUID uuid_post);
-    
+
 }
