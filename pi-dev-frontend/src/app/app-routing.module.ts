@@ -18,11 +18,11 @@ const routes: Routes = [
   {path:'event',component:EventComponent},
   {path:'jobs',component:JobsComponent},
   {path:'contact',component:ContactComponent},
-
-
   {path: 'farms', loadChildren: () => import('./farms/farms.module').then(m => m.FarmsModule)},
   {path: '',redirectTo: '/farms',pathMatch: 'full'},
-  // {path: 'farms', loadChildren: () => import('./farms/farms.module').then(m => m.FarmsModule)},
+
+  
+  { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
 ];
 
 @NgModule({
