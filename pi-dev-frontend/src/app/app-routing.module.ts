@@ -1,21 +1,29 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PostComponent } from './posts/post-list/post.component';
-import { AddPostComponent } from './posts/add-post/add-post.component';
-import { PostDetailsComponent } from './posts/post-details/post-details.component';
-import { AddCommentComponent } from './comment/add-comment/add-comment.component';
+import { AppComponent } from './app.component';
+import { AboutComponent } from './about/about.component';
+import { HomeComponent } from './home/home.component';
+import { MarketComponent } from './market/market.component';
+import { BlogComponent } from './blog/blog.component';
+import { EventComponent } from './event/event.component';
+import { JobsComponent } from './jobs/jobs.component';
+import { ContactComponent } from './contact/contact.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
-  { path :"home",component: PostComponent },
-  { path :"add-comment",component: AddCommentComponent},
-  { path :"add-post",component: AddPostComponent },
-  { path :"edit-post/:postId",component: AddPostComponent },
-  { path :"posts/:postId",component: PostDetailsComponent },
-
-
-
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-
+  
+  {path:"about",component:AboutComponent},
+  {path:"home",component:HomeComponent},
+  {path:'market', component: MarketComponent},
+  {path: 'blog', component: BlogComponent},
+  {path:'event',component:EventComponent},
+  {path:'jobs',component:JobsComponent},
+  {path:'contact',component:ContactComponent},
+  {path: 'not-found', component: NotFoundComponent},
+  {path: 'farms', loadChildren: () => import('./farms/farms.module').then(m => m.FarmsModule)},  
+  {path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
+  {path: '',redirectTo: 'home',pathMatch: 'full'},
+  {path: '**', redirectTo: 'not-found'},
 ];
 
 @NgModule({
