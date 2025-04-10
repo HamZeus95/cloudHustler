@@ -4,18 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+
 
 import java.util.*;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
+
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Post {
     @Id
@@ -39,14 +34,19 @@ public class Post {
     Set<Comment> comments= new HashSet<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
+  @JsonIgnore
     Set<Reaction> reactions= new HashSet<>();
+
 
     @ManyToOne
     @JsonIgnore
 
     @JoinColumn(name = "farmer_id")
     private Farmer farmer;  // Relation avec le Farmer qui a écrit ce post
+
+
+
+
 
 
 }

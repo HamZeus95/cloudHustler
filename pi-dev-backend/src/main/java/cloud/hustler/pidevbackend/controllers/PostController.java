@@ -1,7 +1,6 @@
 package cloud.hustler.pidevbackend.controllers;
 
 import cloud.hustler.pidevbackend.entity.Comment;
-import cloud.hustler.pidevbackend.entity.Farmer;
 import cloud.hustler.pidevbackend.entity.Post;
 import cloud.hustler.pidevbackend.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
