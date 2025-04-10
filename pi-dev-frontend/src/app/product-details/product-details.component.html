@@ -1,0 +1,51 @@
+<!-- product-details.component.html -->
+<div class="container mt-4">
+    <div *ngIf="isLoading" class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <div *ngIf="product && !isLoading" class="card">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img [src]="product.imageUrl || 'https://via.placeholder.com/300'" class="img-fluid rounded-start" alt="{{product.name}}">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h2 class="card-title">{{product.name}}</h2>
+            <p class="card-text">{{product.description}}</p>
+            <p class="h4">${{product.price | number:'1.2-2'}}</p>
+            
+            <div class="mb-3">
+              <span class="badge" [ngClass]="product.isAvailable ? 'bg-success' : 'bg-danger'">
+                {{product.isAvailable ? 'In Stock' : 'Out of Stock'}}
+              </span>
+              <span class="ms-2">Quantity: {{product.quantity}}</span>
+            </div>
+  
+            <div *ngIf="product.productCategory" class="mb-3">
+              <h5>Category</h5>
+              <p>{{product.productCategory.name}}</p>
+            </div>
+  
+            <div *ngIf="product.farmer" class="mb-3">
+              <h5>Farmer</h5>
+              <p>{{product.farmer.name}}</p>
+              <p>{{product.farmer.contactInfo}}</p>
+            </div>
+  
+            <div class="mt-4">
+              <button [routerLink]="['/products']" class="btn btn-outline-secondary me-2">Back to List</button>
+              <button [routerLink]="['/products', product.uuid_product, 'edit']" class="btn btn-primary me-2">Edit</button>
+              <button (click)="deleteProduct()" class="btn btn-danger">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

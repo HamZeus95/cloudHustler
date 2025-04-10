@@ -11,6 +11,7 @@
     <groupId>cloud.hustler</groupId>
     <artifactId>piDevBackend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
     <name>pi-dev-backend</name>
     <description>pi-dev-backend</description>
     <url/>

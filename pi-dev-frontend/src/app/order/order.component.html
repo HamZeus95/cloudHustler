@@ -1,0 +1,29 @@
+<div class="container mt-4">
+    <h2>Orders</h2>
+  
+    <button class="btn btn-primary mb-3" (click)="checkout()">Checkout</button>
+  
+    <div *ngIf="orders.length > 0; else noOrders">
+      <div *ngFor="let order of orders" class="card mb-3">
+        <div class="card-header">
+          Order #{{ order.uuid_order }} - Status: {{ order.status }}
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li *ngFor="let item of order.orderItems" class="list-group-item d-flex justify-content-between">
+              {{ item.product.name }} x {{ item.quantity }}
+              <span>{{ item.product.price * item.quantity | currency }}</span>
+            </li>
+          </ul>
+          <div class="mt-3 text-end">
+            <strong>Total: {{ order.totalPrice || 0 | currency }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <ng-template #noOrders>
+      <p>You haven't placed any orders yet.</p>
+    </ng-template>
+  </div>
+  
