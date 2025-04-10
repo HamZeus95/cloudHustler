@@ -6,9 +6,13 @@ import { AppComponent } from './app.component';
 import { PostComponent } from './posts/post-list/post.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AddPostComponent } from './posts/add-post/add-post.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PostDetailsComponent } from './posts/post-details/post-details.component';
 import { ListCommentComponent } from './comment/list-comment/list-comment.component';
+import { AddCommentComponent } from './comment/add-comment/add-comment.component';
+import { AddReactionComponent } from './reaction/add-reaction/add-reaction.component';
+import { EditPostComponent } from './posts/edit-post/edit-post.component';
+
 
 @NgModule({
   declarations: [
@@ -16,13 +20,17 @@ import { ListCommentComponent } from './comment/list-comment/list-comment.compon
     PostComponent,
     AddPostComponent,
     PostDetailsComponent,
-    ListCommentComponent
+    ListCommentComponent,
+    AddCommentComponent,
+    AddReactionComponent,
+    EditPostComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -11,6 +11,7 @@ public interface IPostService {
     Post updatePost(Post post);
     void deletePost(UUID uuid_post);
     List<Post> getAllPosts();
-    Post getPostById(UUID uuid_post);
+    Post getPostById(UUID postId);
+    Post updatePostById(UUID postId, Post post);
 
 }

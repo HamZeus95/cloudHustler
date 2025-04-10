@@ -46,6 +46,10 @@ public class CommentController {
         System.out.println("Get comment by id: " + uuid_comment);
         return commentService.getCommentById(uuid_comment);
     }
+    @PostMapping("/ajouterCommentEtAffecterPost/{postId}")
+    Comment ajouterCommentEtAffecterPost(@PathVariable UUID postId, @RequestBody Comment comment) {
+        return commentService.ajouterCommentEtAffecterPost(comment, postId);
+    }
 
     @GetMapping("/getCommentsByPostId/{idPost}")
     List<Comment> findByPostId(@PathVariable UUID idPost) {

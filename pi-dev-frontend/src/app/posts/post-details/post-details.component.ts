@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PostService } from '../post-list/service';
-import { Post } from '../../modules/Post';
-import { Comment } from '../../modules/Comment'; // Importer le modèle Comment
+import { Post } from 'src/app/modules/Post';
+import { commentaires } from 'src/app/modules/Comment';
 
 @Component({
   selector: 'app-post-details',
@@ -10,29 +10,29 @@ import { Comment } from '../../modules/Comment'; // Importer le modèle Comment
   styleUrls: ['./post-details.component.css']
 })
 export class PostDetailsComponent implements OnInit {
-  post: Post | null = null;
-  comments: Comment[] = []; // Ajouter un tableau pour les commentaires
+  postId!: string;
+  post!: Post;
+  comments: commentaires[] = [];
 
-  constructor(
-    private route: ActivatedRoute,
-    private postService: PostService
-  ) {}
+  constructor(private route: ActivatedRoute, private postService: PostService) {}
 
   ngOnInit(): void {
-    const postId = this.route.snapshot.paramMap.get('postId');
-    if (postId) {
-      // Récupérer le post par son ID
-      this.postService.getPostById(postId).subscribe((data) => {
+    this.postId = this.route.snapshot.paramMap.get('postId') || '';
+    
+    // Charger le post
+    this.postService.getPostById(this.postId).subscribe({
+      next: (data: Post) => {
         this.post = data;
-      });
+      },
+      error: (err) => console.error(err)
+    });
 
-      // Récupérer les commentaires pour ce post
-      this.postService.getCommentsByPostId(postId).subscribe((commentsData) => {
-        console.log(commentsData);  // Affichez les données pour vérifier leur structure
-        this.comments // Assignez les commentaires récupérés directement
-      });
-      
-      
-    }
+    // Charger les commentaires
+    this.postService.getCommentsByPostId(this.postId).subscribe({
+      next: (data: commentaires[]) => {
+        this.comments = data;
+      },
+      error: (err) => console.error(err)
+    });
   }
 }

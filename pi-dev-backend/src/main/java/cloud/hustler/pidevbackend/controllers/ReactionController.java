@@ -40,5 +40,9 @@ public class ReactionController {
     Reaction getReactionById(@PathVariable UUID uuid_reaction) {
         return reactionService.getReactionById(uuid_reaction);
     }
+    @PostMapping("/ajouterReactionEtAffecterPost/{postId}")
+    Reaction ajouterReactionEtAffecterPost(@PathVariable UUID postId, @RequestBody Reaction reaction) {
+        return reactionService.ajouterReactionEtAffecterPost(reaction, postId);
+    }
 
 }

@@ -1,7 +1,9 @@
 package cloud.hustler.pidevbackend.service;
 
 import cloud.hustler.pidevbackend.entity.Comment;
+import cloud.hustler.pidevbackend.entity.Post;
 import cloud.hustler.pidevbackend.repository.CommentRepository;
+import cloud.hustler.pidevbackend.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,18 @@ public class CommentServiceImplement implements ICommentService {
 
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private PostRepository postRepository;
     @Override
     public Comment addComment(Comment comment) {
         return commentRepository.save(comment);
     }
+
+    @Override
+    public Comment ajouterCommentEtAffecterPost(Comment comment, UUID postId) {
+    Post post = postRepository.findById(postId).get();
+    comment.setPost(post);
+    return commentRepository.save(comment);}
 
     @Override
     public Comment updateComment(Comment comment) {

@@ -7,6 +7,7 @@ import java.util.UUID;
 
 public interface ICommentService {
     Comment addComment(Comment comment);
+    Comment ajouterCommentEtAffecterPost(Comment comment,UUID postId);
     Comment updateComment(Comment comment);
     void deleteComment(UUID uuid_comment);
     List<Comment> getAllComments();

@@ -43,6 +43,8 @@ public class Post {
     Set<Reaction> reactions= new HashSet<>();
 
     @ManyToOne
+    @JsonIgnore
+
     @JoinColumn(name = "farmer_id")
     private Farmer farmer;  // Relation avec le Farmer qui a écrit ce post
 

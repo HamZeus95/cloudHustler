@@ -45,10 +45,14 @@ public class PostController {
     }
 
     // Récupérer un post par UUID
-    @GetMapping("/getPostById/{uuid_post}")
-    public Post getPostById(@PathVariable UUID uuid_post) {  // Change le type en UUID
-        return postService.getPostById(uuid_post);
+    @GetMapping("/getPostById/{postId}")
+    public Post getPostById(@PathVariable UUID postId) {  // Change le type en UUID
+        return postService.getPostById(postId);
     }
 
+    @PutMapping("/updatePostById/{postId}")
+    public Post updatePostById(@PathVariable UUID postId, @RequestBody Post post) {
+        return postService.updatePost(post);
+    }
 
 }

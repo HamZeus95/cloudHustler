@@ -1,7 +1,6 @@
-import { Post } from "./Post";
 
-export interface Comment {
-  commentId: string;
+export interface commentaires {
+  commentId?: string;
   content: string;
   createdAt: string;
   updatedAt: string;

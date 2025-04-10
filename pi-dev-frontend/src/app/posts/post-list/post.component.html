@@ -8,5 +8,38 @@
     <h2>{{ post.title }}</h2>
     <p>{{ post.content | slice:0:100 }}...</p>
     <small>{{ post.createdAt | date:'short' }}</small>
+
+    <button *ngIf="post.idPost" (click)="editPost(post.idPost)">Modifier</button>
+
+    
+
+    <!-- Ajouter les boutons de réaction -->
+    <div class="reactions">
+      <!-- Existing reactions -->
+      <button (click)="$event.stopPropagation(); addReaction(TypeReaction.LIKE, post.idPost || '')">
+        👍 LIKE <span>{{ getReactionCount(post, TypeReaction.LIKE) }}</span>
+      </button>
+      
+      
+      
+      <button (click)="$event.stopPropagation(); addReaction(TypeReaction.LOVE, post.idPost || '')">
+        ❤️ LOVE <span>{{ getReactionCount(post, TypeReaction.LOVE) }}</span>
+      </button>
+    
+      <!-- New reactions -->
+      <button (click)="$event.stopPropagation(); addReaction(TypeReaction.INSIGHTFUL, post.idPost || '')">
+        💡 INSIGHTFUL <span>{{ getReactionCount(post, TypeReaction.INSIGHTFUL) }}</span>
+      </button>
+      
+      <button (click)="$event.stopPropagation(); addReaction(TypeReaction.SUPPORT, post.idPost || '')">
+        🤝 SUPPORT <span>{{ getReactionCount(post, TypeReaction.SUPPORT) }}</span>
+      </button>
+      
+      <button (click)="$event.stopPropagation(); addReaction(TypeReaction.CURIOUS, post.idPost || '')">
+        🤔 CURIOUS <span>{{ getReactionCount(post, TypeReaction.CURIOUS) }}</span>
+      </button>
+    </div>
   </div>
 </div>
+
+<app-add-post></app-add-post>

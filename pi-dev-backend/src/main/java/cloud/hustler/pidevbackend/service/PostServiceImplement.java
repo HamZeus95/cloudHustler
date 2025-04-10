@@ -40,11 +40,14 @@ public class PostServiceImplement implements IPostService {
     }
 
     @Override
-    public Post getPostById(UUID uuid_post) {
-        return postRepository.findById(uuid_post).get();
+    public Post getPostById(UUID postId) {
+        return postRepository.findById(postId).get();
     }
 
-
+    @Override
+    public Post updatePostById(UUID postId, Post post) {
+        return postRepository.save(post);
+    }
 
 
 }

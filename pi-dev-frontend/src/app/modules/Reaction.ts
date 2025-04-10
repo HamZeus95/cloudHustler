@@ -1,10 +1,6 @@
 import { Post } from './Post';
+import { TypeReaction } from './TypeReaction';
 
-export enum TypeReaction {
-  LIKE = 'LIKE',
-  DISLIKE = 'DISLIKE',
-  LOVE = 'LOVE'
-}
 
 export interface Reaction {
   reactionId: string;

@@ -6,7 +6,7 @@
       <h3>Commentaires</h3>
       <ul>
         <li *ngFor="let comment of comments">
-          <p><strong>{{ comment.commentId }}</strong>: {{ comment.content }}</p>
+          <p><strong>{{ comment.content }}</strong>: {{ comment.content }}</p>
           <p><small>Créé le: {{ comment.createdAt | date: 'short' }}</small></p>
           <p><small>Mis à jour le: {{ comment.updatedAt | date: 'short' }}</small></p>
         </li>
@@ -16,4 +16,5 @@
       <p>Aucun commentaire disponible pour ce post.</p>
     </div>
   </div>
+    <app-add-comment  [postId]="postId"></app-add-comment>
   

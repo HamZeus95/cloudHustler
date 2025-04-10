@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.service;
 
+import cloud.hustler.pidevbackend.entity.Comment;
 import cloud.hustler.pidevbackend.entity.Reaction;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface IReactionService {
     void deleteReaction(UUID uuid_reaction);
     Reaction getReactionById(UUID uuid_reaction);
     List<Reaction> getAllReactions();
+    Reaction ajouterReactionEtAffecterPost(Reaction reaction, UUID postId);
 }

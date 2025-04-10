@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,6 +19,7 @@ import java.util.UUID;
 public class Reaction {
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "post_uuid", nullable = false)
     Post post;
 
