@@ -27,7 +27,6 @@ public class Product {
 
 
 
-
     @ManyToOne
     Farmer farmer;
 
