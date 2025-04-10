@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,11 +25,12 @@ public class Event {
     String description;
     String location;
     String banner;
-    String startDate;
+    LocalDate startDate;
     String endDate;
     @ElementCollection
     List<String> imgsUrls;
-
+    @ElementCollection
+    List<String> participants = new ArrayList<>();
 
     @ManyToOne
     @JsonIgnore

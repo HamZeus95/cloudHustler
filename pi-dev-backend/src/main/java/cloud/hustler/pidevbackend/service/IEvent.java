@@ -11,4 +11,5 @@ public interface IEvent {
     // Optional<Event> getEventById(UUID id);
     Event updateEvent(Event event);
     void deleteEvent(UUID id);
+    Event getEventById(UUID id);
 }
