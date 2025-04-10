@@ -1,27 +1,41 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';  // Assurez-vous que ceci est importé
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ServiceeComponent } from './servicee/servicee.component';
-import { ServiceRequestsComponent } from './service-requests/service-requests.component';
-import { ServiceeService } from './services/servicee.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ServiceRequestsService } from './services/service-requests.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
+import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { MarketComponent } from './market/market.component';
+import { BlogComponent } from './blog/blog.component';
+import { EventComponent } from './event/event.component';
+import { JobsComponent } from './jobs/jobs.component';
+import { ContactComponent } from './contact/contact.component';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ServiceeComponent,
-    ServiceRequestsComponent,
-    
-  ],
+    NavbarComponent,
+    FooterComponent,
+    HomeComponent,
+    AboutComponent,
+    NotFoundComponent,
+    MarketComponent,
+    BlogComponent,
+    EventComponent,
+    JobsComponent,
+    ContactComponent  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule, 
-    HttpClientModule// Ajoutez FormsModule ici
-
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    DashboardModule
   ],
   providers: [ServiceeService,ServiceRequestsService],
   bootstrap: [AppComponent]
