@@ -22,11 +22,18 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+
+                "glob": "**/*",
+                "input": "src/assets/fonts",
+                "output": "/assets/fonts"
+              }
             ],
             "styles": [
-              "src/assets/css/soft-ui-dashboard.min.css",
-              "src/assets/css/soft-ui-dashboard.css",
+              "src/assets/css/nucleo-icons.css",
+              "src/assets/css/argon-dashboard.css",
+              "src/assets/css/nucleo-svg.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/css/font-awesome.min.css",
               "src/assets/css/animate.css",
@@ -34,7 +41,7 @@
               "src/assets/css/owl.carousel.min.css",
               "src/assets/css/magnific-popup.css",
               "src/assets/css/style.css",
-              "src/styles.css" 
+              "src/styles.css"
 ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
@@ -49,7 +56,11 @@
               "src/assets/js/jarallax-video.min.js",
               "src/assets/js/classynav.js",
               "src/assets/js/jquery.sticky.js",
-              "src/assets/js/active.js"
+              "src/assets/js/active.js",
+              "src/assets/js/core/popper.min.js",
+              "src/assets/js/core/bootstrap.min.js",
+              "src/assets/js/plugins/perfect-scrollbar.min.js",
+              "src/assets/js/plugins/smooth-scrollbar.min.js"
 
 
             ]

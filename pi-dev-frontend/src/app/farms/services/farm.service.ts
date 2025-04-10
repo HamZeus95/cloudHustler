@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Farm } from 'src/app/core/modules/farm';
+import { Farm } from 'src/app/core/models/famrs/farm';
 
 
 @Injectable()

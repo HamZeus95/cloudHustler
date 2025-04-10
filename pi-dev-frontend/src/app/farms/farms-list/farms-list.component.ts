@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FarmService } from '../services/farm.service';
-import { Farm } from 'src/app/core/modules/farm';
+import { Farm } from 'src/app/core/models/famrs/farm';
 import { Router } from '@angular/router';
 
 @Component({

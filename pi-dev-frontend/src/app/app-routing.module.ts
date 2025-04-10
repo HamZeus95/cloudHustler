@@ -8,6 +8,7 @@ import { BlogComponent } from './blog/blog.component';
 import { EventComponent } from './event/event.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { ContactComponent } from './contact/contact.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   
@@ -18,11 +19,11 @@ const routes: Routes = [
   {path:'event',component:EventComponent},
   {path:'jobs',component:JobsComponent},
   {path:'contact',component:ContactComponent},
-  {path: 'farms', loadChildren: () => import('./farms/farms.module').then(m => m.FarmsModule)},
-  {path: '',redirectTo: '/farms',pathMatch: 'full'},
-
-  
-  { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
+  {path: 'not-found', component: NotFoundComponent},
+  {path: 'farms', loadChildren: () => import('./farms/farms.module').then(m => m.FarmsModule)},  
+  {path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
+  {path: '',redirectTo: 'home',pathMatch: 'full'},
+  {path: '**', redirectTo: 'not-found'},
 ];
 
 @NgModule({
