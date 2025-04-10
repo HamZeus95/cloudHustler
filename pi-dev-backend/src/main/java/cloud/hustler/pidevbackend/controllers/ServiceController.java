@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/services")
+@RequestMapping("/services")
 
 @AllArgsConstructor
 public class ServiceController {
 
     private final IServiceService serviceService;
 
-    @GetMapping
+    @GetMapping("/getService")
     public ResponseEntity<List<Servicee>> getAllServices() {
         return new ResponseEntity<>(serviceService.getAllServices(), HttpStatus.OK);
     }
@@ -30,23 +30,23 @@ public class ServiceController {
         return new ResponseEntity<>(serviceService.getServiceById(id), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/addService")
     public ResponseEntity<Servicee> createService(@RequestBody Servicee servicee) {
         return new ResponseEntity<>(serviceService.createService(servicee), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("updateService/{id}")
     public ResponseEntity<Servicee> updateService(@PathVariable UUID id, @RequestBody Servicee servicee) {
         return new ResponseEntity<>(serviceService.updateService(id, servicee), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("DeleteService/{id}")
     public ResponseEntity<Void> deleteService(@PathVariable UUID id) {
         serviceService.deleteService(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/hiring/{status}")
+   /*@GetMapping("/hiring/{status}")
     public ResponseEntity<List<Servicee>> getServicesByHiringStatus(@PathVariable boolean status) {
         return new ResponseEntity<>(serviceService.getServicesByHiringStatus(status), HttpStatus.OK);
     }
@@ -56,8 +56,8 @@ public class ServiceController {
         return new ResponseEntity<>(serviceService.getServicesByCategory(category), HttpStatus.OK);
     }
 
-    //@GetMapping("/farmer/{farmerUuid}")
-   // public ResponseEntity<List<Servicee>> getServicesByFarmer(@PathVariable UUID farmerUuid) {
-     //   return new ResponseEntity<>(serviceService.getServicesByFarmer(farmerUuid), HttpStatus.OK);
-    //}
+    /*@GetMapping("/farmer/{farmerUuid}")
+    public ResponseEntity<List<Servicee>> getServicesByFarmer(@PathVariable UUID farmerUuid) {
+        return new ResponseEntity<>(serviceService.getServicesByFarmer(farmerUuid), HttpStatus.OK);
+    }*/
 }

@@ -11,7 +11,7 @@ public interface IServiceService {
     Servicee createService(Servicee servicee);
     Servicee updateService(UUID id, Servicee servicee);
     void deleteService(UUID id);
-    List<Servicee> getServicesByHiringStatus(boolean isHiring);
-    List<Servicee> getServicesByCategory(String category);
-    //List<Servicee> getServicesByFarmer(UUID farmerUuid);
+   // List<Servicee> getServicesByHiringStatus(boolean isHiring);
+    //List<Servicee> getServicesByCategory(String category);
+  //  List<Servicee> getServicesByFarmer(UUID farmerUuid);
 }

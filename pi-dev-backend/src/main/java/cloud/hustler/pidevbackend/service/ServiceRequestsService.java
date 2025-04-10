@@ -38,7 +38,13 @@ public class ServiceRequestsService implements IServiceRequestsService {
         serviceRequest.setStatus(serviceRequestDetails.getStatus());
         serviceRequest.setServicee(serviceRequestDetails.getServicee());
         serviceRequest.setUsers_applying(serviceRequestDetails.getUsers_applying());
+        if (serviceRequestDetails.getLettreMotivation() != null) {
+            serviceRequest.setLettreMotivation(serviceRequestDetails.getLettreMotivation());
+        }
 
+        if (serviceRequestDetails.getUploadCv() != null) {
+            serviceRequest.setUploadCv(serviceRequestDetails.getUploadCv());
+        }
         return serviceRequestsRepository.save(serviceRequest);
     }
 

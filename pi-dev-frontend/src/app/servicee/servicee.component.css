@@ -1,0 +1,40 @@
+/* Styles personnalisés pour améliorer l'apparence */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-header {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .list-group-item {
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .list-group-item:hover {
+    background-color: #f8f9fa;
+  }
+  
+  button {
+    border-radius: 5px;
+  }
+  
+  form input,
+  form button {
+    border-radius: 5px;
+  }
+  
+  button.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+  
+  button.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+  }
+  

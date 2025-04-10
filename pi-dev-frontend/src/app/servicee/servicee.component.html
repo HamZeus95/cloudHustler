@@ -1,0 +1,146 @@
+<div class="container mt-5">
+    <!-- Titre principal -->
+    <h1 class="text-center mb-4">Liste des Services</h1>
+
+    <!-- Formulaire pour ajouter ou modifier un service -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h4>{{ serviceToUpdate ? 'Modifier un service' : 'Ajouter un nouveau service' }}</h4>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="addService()">
+          <!-- Champ Titre -->
+          <div class="form-group mb-3">
+            <label for="title" class="form-label">Nom du service</label>
+            <input
+              [(ngModel)]="newService.title"
+              name="title"
+              id="title"
+              class="form-control"
+              placeholder="Nom du service"
+              required
+            />
+          </div>
+
+          <!-- Champ Description -->
+          <div class="form-group mb-3">
+            <label for="description" class="form-label">Description du service</label>
+            <input
+              [(ngModel)]="newService.description"
+              name="description"
+              id="description"
+              class="form-control"
+              placeholder="Description du service"
+              required
+            />
+          </div>
+
+          <!-- Champ Catégorie -->
+          <div class="form-group mb-3">
+            <label for="category" class="form-label">Catégorie du service</label>
+            <input
+              [(ngModel)]="newService.category"
+              name="category"
+              id="category"
+              class="form-control"
+              placeholder="Catégorie du service"
+              required
+            />
+          </div>
+
+          <!-- Champ Salaire -->
+          <div class="form-group mb-3">
+            <label for="salary" class="form-label">Salaire</label>
+            <input
+              [(ngModel)]="newService.salary"
+              name="salary"
+              id="salary"
+              class="form-control"
+              type="number"
+              placeholder="Salaire du service"
+              required
+            />
+          </div>
+
+          <!-- Champ Recrutement -->
+          <div class="form-group mb-3">
+            <label for="isHiring" class="form-label">Recrutement</label>
+            <input
+              [(ngModel)]="newService.isHiring"
+              name="isHiring"
+              id="isHiring"
+              class="form-check-input"
+              type="checkbox"
+            />
+            <label for="isHiring" class="form-check-label">Le service recrute</label>
+          </div>
+
+          <!-- Champ Image URL -->
+          <div class="form-group mb-3">
+            <label for="imageUrl" class="form-label">URL de l'image</label>
+            <input
+              [(ngModel)]="newService.imageUrl"
+              name="imageUrl"
+              id="imageUrl"
+              class="form-control"
+              placeholder="URL de l'image"
+            />
+          </div>
+
+          <!-- Champ Nombre de Travailleurs -->
+          <div class="form-group mb-3">
+            <label for="nbWorkers" class="form-label">Nombre de travailleurs</label>
+            <input
+              [(ngModel)]="newService.nbWorkers"
+              name="nbWorkers"
+              id="nbWorkers"
+              class="form-control"
+              type="number"
+              placeholder="Nombre de travailleurs"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">{{ serviceToUpdate ? 'Mettre à jour le service' : 'Ajouter le service' }}</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Liste des services -->
+    <div *ngIf="services.length > 0">
+        <h4>Services Disponibles</h4>
+        <div class="row">
+          <div *ngFor="let service of services" class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">{{ service.title }}</h5>
+                <p class="card-text">{{ service.description }}</p>
+                <small><strong>Catégorie:</strong> {{ service.category }}</small><br />
+                <small><strong>Salaire:</strong> {{ service.salary | currency }}</small><br />
+                <small><strong>Recrutement:</strong> {{ service.isHiring ? 'Oui' : 'Non' }}</small><br />
+                <small><strong>Travailleurs:</strong> {{ service.nbWorkers }}</small><br />
+                <img *ngIf="service.imageUrl" [src]="service.imageUrl" class="card-img-top" alt="{{ service.title }}">
+      
+                <!-- Bouton pour postuler -->
+               <!-- Bouton "Postuler" avec vérification de uuid_service -->
+<button 
+*ngIf="service.uuid_service" 
+class="btn btn-success btn-sm mt-3" 
+(click)="postuler(service.uuid_service)">
+Postuler
+</button>
+
+      
+                <!-- Boutons Modifier et Supprimer -->
+                <button class="btn btn-warning btn-sm mt-3" (click)="editService(service)">Modifier</button>
+                <button class="btn btn-danger btn-sm mt-3" (click)="service.uuid_service ? deleteService(service.uuid_service) : null">Supprimer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    <div *ngIf="services.length === 0" class="text-center">
+      <p>Aucun service trouvé.</p>
+    </div>
+</div>

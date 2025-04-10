@@ -55,7 +55,7 @@ public class ServiceService implements IServiceService {
         serviceRepository.delete(servicee);
     }
 
-    @Override
+   /* @Override
     public List<Servicee> getServicesByHiringStatus(boolean isHiring) {
         return serviceRepository.findByIsHiring(isHiring);
     }
@@ -63,7 +63,9 @@ public class ServiceService implements IServiceService {
     @Override
     public List<Servicee> getServicesByCategory(String category) {
         return serviceRepository.findByCategory(category);
-    }
+    }*/
+
+
 
 
 }

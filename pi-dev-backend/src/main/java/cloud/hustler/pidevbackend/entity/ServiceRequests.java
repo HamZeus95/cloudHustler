@@ -24,6 +24,8 @@ public class ServiceRequests {
     @Enumerated(EnumType.STRING)
     TypeStatus status;
 
+    String lettreMotivation;
+    String uploadCv;
 
     @ManyToOne
     Servicee servicee;

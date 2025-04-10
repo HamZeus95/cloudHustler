@@ -1,0 +1,15 @@
+/* Style personnalisé pour les éléments de la liste */
+.list-group-item {
+    cursor: pointer;
+  }
+  
+  .list-group-item:hover {
+    background-color: #f1f1f1;  /* Changer la couleur de fond au survol */
+  }
+  
+  /* Personnalisation du badge de statut */
+  .badge {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+  

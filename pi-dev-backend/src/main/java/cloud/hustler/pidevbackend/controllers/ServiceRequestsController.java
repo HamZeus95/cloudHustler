@@ -11,16 +11,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/service-requests")
+@RequestMapping("/service-requests")
 @AllArgsConstructor
-@CrossOrigin("*")
 public class ServiceRequestsController {
     @Autowired
     private final IServiceRequestsService serviceRequestsService;
 
-    @GetMapping
+    @GetMapping("/getAll")
     public ResponseEntity<List<ServiceRequests>> getAllServiceRequests() {
         return new ResponseEntity<>(serviceRequestsService.getAllServiceRequests(), HttpStatus.OK);
     }
@@ -30,8 +29,9 @@ public class ServiceRequestsController {
         return new ResponseEntity<>(serviceRequestsService.getServiceRequestById(id), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/submit")
     public ResponseEntity<ServiceRequests> createServiceRequest(@RequestBody ServiceRequests serviceRequest) {
+        
         return new ResponseEntity<>(serviceRequestsService.createServiceRequest(serviceRequest), HttpStatus.CREATED);
     }
 
@@ -40,7 +40,7 @@ public class ServiceRequestsController {
         return new ResponseEntity<>(serviceRequestsService.updateServiceRequest(id, serviceRequest), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/Delete/{id}")
     public ResponseEntity<Void> deleteServiceRequest(@PathVariable UUID id) {
         serviceRequestsService.deleteServiceRequest(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
