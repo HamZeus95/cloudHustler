@@ -1,32 +1,41 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ProductListComponent } from './product-list/product-list.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
-import { CreateProductComponent } from './create-product/create-product.component';
-import { ProductService } from './product.service';
-import { CartComponent } from './cart/cart.component';
-import { OrderComponent } from './order/order.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
+import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { MarketComponent } from './market/market.component';
+import { BlogComponent } from './blog/blog.component';
+import { EventComponent } from './event/event.component';
+import { JobsComponent } from './jobs/jobs.component';
+import { ContactComponent } from './contact/contact.component';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProductListComponent,
-    ProductDetailsComponent,
-    CreateProductComponent,
-    CartComponent,
-    OrderComponent
-  ],
+    NavbarComponent,
+    FooterComponent,
+    HomeComponent,
+    AboutComponent,
+    NotFoundComponent,
+    MarketComponent,
+    BlogComponent,
+    EventComponent,
+    JobsComponent,
+    ContactComponent  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    DashboardModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

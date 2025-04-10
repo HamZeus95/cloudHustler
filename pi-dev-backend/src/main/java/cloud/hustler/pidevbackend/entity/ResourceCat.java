@@ -25,8 +25,7 @@ public class ResourceCat {
     String name;
     String description;
 
-    @OneToMany(mappedBy = "resourceCat")
-    Set<Ressource> resources= new HashSet<>();
+
 
 
 

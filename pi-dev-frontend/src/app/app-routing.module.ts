@@ -1,19 +1,29 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProductListComponent } from './product-list/product-list.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
-import { CreateProductComponent } from './create-product/create-product.component';
-import { CartComponent } from './cart/cart.component';
-import { OrderComponent } from './order/order.component';
+import { AppComponent } from './app.component';
+import { AboutComponent } from './about/about.component';
+import { HomeComponent } from './home/home.component';
+import { MarketComponent } from './market/market.component';
+import { BlogComponent } from './blog/blog.component';
+import { EventComponent } from './event/event.component';
+import { JobsComponent } from './jobs/jobs.component';
+import { ContactComponent } from './contact/contact.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
-  { path: 'products', component: ProductListComponent },
-  { path: 'products/new', component: CreateProductComponent },
-  { path: 'products/:id', component: ProductDetailsComponent },
-  { path: 'cart', component: CartComponent },
-  { path: 'order', component: OrderComponent },
-  { path: '', redirectTo: '/products', pathMatch: 'full' }, // Default route
-  { path: '**', redirectTo: '/products' } // Fallback route
+  
+  {path:"about",component:AboutComponent},
+  {path:"home",component:HomeComponent},
+  {path:'market', component: MarketComponent},
+  {path: 'blog', component: BlogComponent},
+  {path:'event',component:EventComponent},
+  {path:'jobs',component:JobsComponent},
+  {path:'contact',component:ContactComponent},
+  {path: 'not-found', component: NotFoundComponent},
+  {path: 'farms', loadChildren: () => import('./farms/farms.module').then(m => m.FarmsModule)},  
+  {path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
+  {path: '',redirectTo: 'home',pathMatch: 'full'},
+  {path: '**', redirectTo: 'not-found'},
 ];
 
 @NgModule({
