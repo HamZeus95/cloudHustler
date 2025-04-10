@@ -24,6 +24,12 @@ public class Livraison {
     @Pattern(regexp = "^(En attente|En transit|Livrée)$", message = "Le statut doit être 'En attente', 'En transit', 'Livrée'.")
     private String statut;
 
+    @NotNull
+    private  String adresseLivraison;
+
+    @NotNull
+    private  LocalDateTime dateLivraison;
+
     @NotNull(message = "La date de creation ne peut pas être nulle.")
     private LocalDateTime dateCreation;
 
@@ -66,6 +72,22 @@ public class Livraison {
     }
 
     // Getter pour facture
+
+    public String getAdresseLivraison() {
+        return adresseLivraison;
+    }
+
+    public void setAdresseLivraison(String adresseLivraison) {
+        this.adresseLivraison = adresseLivraison;
+    }
+
+    public LocalDateTime getDateLivraison() {
+        return dateLivraison;
+    }
+
+    public void setDateLivraison(LocalDateTime dateLivraison) {
+        this.dateLivraison = dateLivraison;
+    }
    /* public Facture getFacture() {
         return facture;
     }

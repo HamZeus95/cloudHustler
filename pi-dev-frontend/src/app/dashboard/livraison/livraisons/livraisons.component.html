@@ -1,0 +1,56 @@
+<app-navbar></app-navbar>
+<div class="livraison-container">
+  <div *ngFor="let l of livraisons" class="livraison-card" (click)="openDialog(l)">
+    <!-- Image d'arrière-plan dynamique -->
+    <div class="card-bg-image" [ngStyle]="{'background-image': 'url(assets/images/livraison.jpg)'}"></div>
+
+    <div class="card-content">
+      <div class="card-header">
+        <h3>Livraison #{{ l.id }}</h3>
+        <span class="status-badge" [ngClass]="getStatutClass(l.statut ?? '')">
+            {{ l.statut }}
+        </span>
+      </div>
+
+      <div class="card-details">
+        <p><i class="fas fa-calendar"></i> <strong>Créée le:</strong> {{ l.dateCreation | date:'dd/MM/yyyy' }}</p>
+        <p><i class="fas fa-map-marker-alt"></i> <strong>Addresse:</strong>{{ l.adresseLivraison }}</p>
+        <p *ngIf="l.dateLivraison"><i class="fas fa-truck"></i><strong>Livrée le:</strong>  {{ l.dateLivraison | date:'dd/MM/yyyy' }}</p>
+      </div>
+
+      <div class="card-actions">
+        <button class="btn-delete" (click)="$event.stopPropagation(); l.id && supprimerLivraison(l.id)">
+          <i class="fas fa-trash"></i> Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+  <p-dialog [(visible)]="displayModal" [modal]="true" [style]="{width: '500px'}" header="Modifier Livraison" [closable]="true" (onHide)="closeDialog()">
+    <app-updatelivraison [livraison]="selectedLivraison" (close)="closeDialog()"></app-updatelivraison>
+  </p-dialog>
+</div>
+
+
+
+
+<!-- Formulaire d'ajout / modification >
+<h3>{{ livraisonForm.id ? 'Modifier' : 'Ajouter' }} Livraison</h3>
+<form (ngSubmit)="ajouterLivraison()">
+  <label for="dateLivraison">Date Livraison :</label>
+  <input type="date" id="dateLivraison" [(ngModel)]="livraisonForm.dateLivraison" name="dateLivraison" required />
+
+  <label for="adresse">Adresse :</label>
+  <input type="text" id="adresse" [(ngModel)]="livraisonForm.adresse" name="adresse" required />
+
+  <label for="statut">Statut :</label>
+  <select id="statut" [(ngModel)]="livraisonForm.statut" name="statut">
+    <option value="EN ATTENTE">EN ATTENTE</option>
+    <option value="PAYÉ">PAYÉ</option>
+  </select>
+
+  <button type="submit">{{ livraisonForm.id ? 'Mettre à jour' : 'Ajouter' }}</button>
+</form-->
+
+<app-createlivraison [livraison]="selectedLivraison"></app-createlivraison>
+<app-footer></app-footer>
+

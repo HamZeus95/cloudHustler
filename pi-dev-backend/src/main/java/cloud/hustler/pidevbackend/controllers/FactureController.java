@@ -1,6 +1,7 @@
 package cloud.hustler.pidevbackend.controllers;
 
 import cloud.hustler.pidevbackend.entity.Facture;
+import cloud.hustler.pidevbackend.repository.FactureRepository;
 import cloud.hustler.pidevbackend.service.FactureService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -18,6 +19,8 @@ public class FactureController {
 
     @Autowired
     private FactureService factureService;
+    @Autowired
+    private FactureRepository factureRepository;
 
     @PostMapping
     public Facture creerFacture(@Valid @RequestBody Facture facture) {
@@ -29,10 +32,24 @@ public class FactureController {
         return factureService.getAllFactures();
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Facture> updateFacture(@Valid @PathVariable Long id, @RequestBody Facture facture) {
-        Facture updatedFacture = factureService.updateFacture(id, facture);
-        return ResponseEntity.ok(updatedFacture);
+    public ResponseEntity<Facture> updateFacture(@PathVariable Long id, @RequestBody Facture facture) {
+        Facture existingFacture = factureRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Facture non trouvée pour l'ID : " + id));
+
+        // Mettre à jour les champs de la facture avec les nouvelles valeurs
+        existingFacture.setDateEmission(facture.getDateEmission());
+        existingFacture.setMontantTotal(facture.getMontantTotal());
+        existingFacture.setStatut(facture.getStatut());
+
+        // On s'assure que la livraison ne change pas
+        // existingFacture.setLivraison(facture.getLivraison()); // ne pas mettre à jour la livraison
+
+        // Sauvegarder la facture mise à jour dans la base de données
+        factureRepository.save(existingFacture);
+
+        return ResponseEntity.ok(existingFacture); // Retourne la facture mise à jour
     }
+
 
     @GetMapping("/{id}")
     public Optional<Facture> getFactureById(@PathVariable Long id) {

@@ -25,20 +25,13 @@ public class FactureService implements IFactureService{
         Livraison lastLivraison = livraisonRepository.findTopByOrderByIdDesc();
 
         if (lastLivraison != null) {
-            // Créer une nouvelle facture
-             facture = new Facture();
-            facture.setLivraison(lastLivraison); // Associer la dernière Livraison à la Facture
-           /* facture.setDateEmission(LocalDate.now()); // Exemple de date
-            facture.setMontantTotal(100.0); // Exemple de montant
-            facture.setStatut("En cours"); // Exemple de statut*/
-
-            // Sauvegarder la facture dans la base de données
-             return factureRepository.save(facture);
+            facture.setLivraison(lastLivraison); // Associer la dernière livraison automatiquement
+            return factureRepository.save(facture); // Sauvegarder avec les autres champs déjà fournis
         } else {
-            // Si aucune Livraison n'est trouvée
             throw new RuntimeException("Aucune Livraison trouvée pour créer une Facture");
         }
     }
+
 
 
     public List<Facture> getAllFactures() {

@@ -1,7 +1,0 @@
-<h2>Liste des Livraisons</h2>
-<ul>
-  <li *ngFor="let livraison of livraisons">
-    <p>{{ livraison.statut }} - {{ livraison.dateCreation | date }}</p>
-    <app-suivi-livraison [livraisonId]="livraison.id || 0"></app-suivi-livraison>
-  </li>
-</ul>
