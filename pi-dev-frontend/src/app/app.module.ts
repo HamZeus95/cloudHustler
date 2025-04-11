@@ -14,7 +14,6 @@ import { BlogComponent } from './blog/blog.component';
 import { EventComponent } from './event/event.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { ContactComponent } from './contact/contact.component';
-import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +34,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DashboardModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

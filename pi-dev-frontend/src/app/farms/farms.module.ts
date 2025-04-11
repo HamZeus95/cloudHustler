@@ -6,13 +6,11 @@ import { FarmsRoutingModule } from './farms-routing.module';
 import { FarmsListComponent } from './farms-list/farms-list.component';
 import { AddFarmComponent } from './add-farm/add-farm.component';
 import { FarmService } from './services/farm.service';
-import { FarmDetailsComponent } from './farm-details/farm-details.component';
 
 @NgModule({
   declarations: [
     FarmsListComponent,
     AddFarmComponent,
-    FarmDetailsComponent
   ],
   imports: [
     CommonModule,

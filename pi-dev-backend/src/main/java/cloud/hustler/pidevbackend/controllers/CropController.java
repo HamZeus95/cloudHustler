@@ -33,18 +33,12 @@ public class CropController {
         }
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Crop> addCrop(@RequestBody Crop crop) {
-        Crop createdCrop = cropService.addCrop(crop);
+    @PostMapping("/add/{idFarm}")
+    public ResponseEntity<Crop> addCrop(@RequestBody Crop crop,@PathVariable UUID idFarm) {
+        Crop createdCrop = cropService.addCrop(crop,idFarm);
         return ResponseEntity.status(201).body(createdCrop);
     }
-    @PostMapping("addCropToFarm")
-    public ResponseEntity<Crop> addCropToFarm(@RequestBody Crop crop,UUID farmId) {
 
-
-
-
-    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteCrop(@PathVariable UUID id) {
@@ -63,13 +57,5 @@ public class CropController {
     }
 
     // New endpoint to get crops by farm
-    @GetMapping("/farm/{farmId}")
-    public ResponseEntity<List<Crop>> getCropsByFarm(@PathVariable UUID farmId) {
-        List<Crop> crops = cropService.getCropsByFarm(farmId);
-        if (crops != null && !crops.isEmpty()) {
-            return ResponseEntity.ok(crops);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+
 }

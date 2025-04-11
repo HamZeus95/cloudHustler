@@ -1,39 +1,37 @@
-<div class="container mx-auto px-4 py-8">
-    <!-- Loading state -->
-    <div *ngIf="isLoading" class="text-center text-gray-500">
-      <p class="text-lg">Loading farm details...</p>
+<div class="card shadow-sm border-0 animate__animated animate__fadeInUp">
+  <div class="card-body">
+    <h5 class="card-title mb-3">🌾 Farm Details</h5>
+
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        <p class="mb-1 text-muted">📍 Coordinates</p>
+        <p><strong>{{ farm.latitude }}, {{ farm.longitude }}</strong></p>
+      </div>
+      <div class="col-sm-6">
+        <p class="mb-1 text-muted">💧 Irrigation Type</p>
+        <p><span class="badge bg-info text-white">{{ farm.irrigation_type }}</span></p>
+      </div>
     </div>
-  
-    <!-- Farm details section -->
-    <div *ngIf="!isLoading && farm" class="bg-white p-6 rounded-lg shadow-lg space-y-6">
-      <h2 class="text-3xl font-semibold text-gray-800">{{ farm.name }}</h2>
-  
-      <div class="space-y-4">
-        <!-- Farm Details -->
-        <div class="space-y-2">
-          <p class="text-gray-700"><strong>Size:</strong> {{ farm.size }} hectares</p>
-          <p class="text-gray-700"><strong>Longitude:</strong> {{ farm.longitude }}</p>
-          <p class="text-gray-700"><strong>Latitude:</strong> {{ farm.latitude }}</p>
-          <p class="text-gray-700"><strong>Irrigation Type:</strong> {{ farm.irrigation_type }}</p>
-          <!-- Show surface area if calculated -->
-          <ng-container *ngIf="farmArea">
-            <p class="text-gray-700"><strong>Surface Area:</strong> {{ farmArea | number: '1.0' }} m²</p>
-          </ng-container>
+
+    <hr />
+
+    <h6 class="text-secondary mb-3">🌱 Crops</h6>
+
+    <div *ngIf="(farm.crops?.length ?? 0) > 0; else noCrops">
+      <div class="row g-2">
+        <div class="col-md-4" *ngFor="let crop of farm.crops">
+          <div class="card card-body border shadow-sm h-100">
+            <h6 class="mb-1">{{ crop.name }}</h6>
+            <small class="text-muted">{{ crop.type }}</small>
+          </div>
         </div>
       </div>
-  
-      <!-- Back Button -->
-      <div class="text-center mt-6">
-        <button routerLink="farms"
-          class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200">
-          ← Back to Farm List
-        </button>
-      </div>
     </div>
-  
-    <!-- Farm Not Found -->
-    <div *ngIf="!isLoading && !farm" class="text-center text-red-500">
-      <p class="text-lg">Farm not found.</p>
-    </div>
+
+    <ng-template #noCrops>
+      <p class="text-muted fst-italic">No crops assigned to this farm.</p>
+    </ng-template>
+
+    <button class="btn btn-outline-success btn-sm mt-4" (click)="onAddCrop()">+ Add Crop</button>
   </div>
-  
+</div>

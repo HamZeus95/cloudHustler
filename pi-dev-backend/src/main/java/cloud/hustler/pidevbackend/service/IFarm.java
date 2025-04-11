@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.service;
 
+import cloud.hustler.pidevbackend.entity.Crop;
 import cloud.hustler.pidevbackend.entity.Farm;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface IFarm {
     void deleteFarm(UUID idFarm);
     List<Farm> getAll();
     Farm getFarm(UUID idFarm);
+    List<Crop> getCropsByFarm(UUID idFarm);
 }

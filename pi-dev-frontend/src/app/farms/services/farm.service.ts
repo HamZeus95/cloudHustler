@@ -17,10 +17,10 @@ export class FarmService {
   getFarmById(id: string): Observable<Farm> {
     return this.http.get<Farm>(`${this.apiUrl}/farm/${id}`);
   }
-
-  addFarm(farm: Farm): Observable<Farm> {
+  addFarm(farm: Omit<Farm, 'uuid_farm' | 'farmer'>): Observable<Farm> {
     return this.http.post<Farm>(`${this.apiUrl}/add`, farm);
   }
+  
 
   updateFarm(farm: Farm): Observable<Farm> {
     return this.http.put<Farm>(`${this.apiUrl}/update`, farm);

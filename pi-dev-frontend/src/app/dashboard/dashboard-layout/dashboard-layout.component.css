@@ -1,0 +1,23 @@
+.table th {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #6c757d;
+  }
+  
+  .table td {
+    vertical-align: middle;
+    font-size: 0.875rem;
+  }
+  
+  .badge {
+    font-size: 0.75rem;
+    padding: 0.4em 0.6em;
+    border-radius: 0.5rem;
+  }
+  
+  .avatar-sm {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+  }
