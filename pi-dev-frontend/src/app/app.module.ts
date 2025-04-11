@@ -14,7 +14,16 @@ import { BlogComponent } from './blog/blog.component';
 import { EventComponent } from './event/event.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { ContactComponent } from './contact/contact.component';
-import { DashboardModule } from './dashboard/dashboard.module';
+
+
+import { ServiceRequestsService } from './services/service-requests.service';
+import { ServiceeService } from './services/servicee.service';
+import { JobRequestsComponent } from './job-requests/job-requests.component';
+import { DashboardRoutingModule } from './dashboard/dashboard-routing.module';
+import { JobFormComponent } from './job-requests/job-form/job-form.component';
+import { JobsRequestsDashboardComponent } from './dashboard/jobs-requests-dashboard/jobs-requests-dashboard.component';
+import { DipslayComponent } from './dipslay/dipslay.component';
+ 
 
 @NgModule({
   declarations: [
@@ -28,14 +37,20 @@ import { DashboardModule } from './dashboard/dashboard.module';
     BlogComponent,
     EventComponent,
     JobsComponent,
-    ContactComponent  ],
+    ContactComponent,
+    JobRequestsComponent,
+    JobFormComponent,
+    JobsRequestsDashboardComponent,
+    DipslayComponent,
+    
+     ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DashboardModule
+    DashboardRoutingModule
   ],
   providers: [ServiceeService,ServiceRequestsService],
   bootstrap: [AppComponent]

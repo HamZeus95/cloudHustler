@@ -1,0 +1,26 @@
+<form (ngSubmit)="onSubmit()" class="container mt-4">
+    <div class="mb-3">
+      <label for="lettre" class="form-label">Lettre de motivation :</label>
+      <textarea
+        id="lettre"
+        name="lettreMotivation"
+        class="form-control"
+        [(ngModel)]="request.lettreMotivation"
+        rows="6"
+      ></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="cv" class="form-label">Ajouter votre CV :</label>
+        <input
+          type="file"
+          id="cv"
+          name="uploadCv"
+          class="form-control"
+          (change)="onFileSelected($event)"
+          required
+        />
+      </div>
+  
+    <button type="submit" class="btn  btn-success btn-sm">Envoyer ma candidature</button>
+  </form>
+  

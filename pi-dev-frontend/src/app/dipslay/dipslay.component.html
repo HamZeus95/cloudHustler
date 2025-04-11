@@ -1,0 +1,15 @@
+<div *ngIf="cvUrl">
+    <!-- Si le fichier est une image -->
+    <img *ngIf="isImage(cvUrl)" [src]="cvUrl" alt="CV" class="img-fluid" />
+  
+    <!-- Si le fichier est un PDF -->
+    <object *ngIf="isPdf(cvUrl)" [data]="cvUrl" type="application/pdf" width="100%" height="600px">
+      <p>Votre navigateur ne prend pas en charge l'affichage des PDF.</p>
+    </object>
+  
+    <!-- Si le fichier n'est ni une image ni un PDF -->
+    <p *ngIf="!isImage(cvUrl) && !isPdf(cvUrl)">
+     <a [href]="cvUrl" target="_blank">voir cv</a>
+    </p>
+  </div>
+  

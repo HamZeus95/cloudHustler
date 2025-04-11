@@ -9,6 +9,9 @@ import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { TablesComponent } from './tables/tables.component';
+import { JobsDashboardComponent } from './jobs-dashboard/jobs-dashboard.component';
+import { FormComponent } from './jobs-dashboard/form/form.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,13 +21,18 @@ import { TablesComponent } from './tables/tables.component';
     DashboardLayoutComponent,
     SideBarComponent,
     TablesComponent,
+    JobsDashboardComponent,
+    FormComponent,
+    
+
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     HttpClientModule,
     RouterModule,
-    
+    FormsModule,  // <-- Add FormsModule here
+
 
     
 

@@ -25,7 +25,7 @@ export class ServiceRequestsService {
     }
   
     // Ajouter une nouvelle demande de service
-    createServiceRequest(serviceRequest: ServiceRequest): Observable<ServiceRequest> {
+    createServiceRequest(serviceRequest:any): Observable<ServiceRequest> {
       return this.http.post<ServiceRequest>(`${this.apiUrl}/add`, serviceRequest);
     }
   

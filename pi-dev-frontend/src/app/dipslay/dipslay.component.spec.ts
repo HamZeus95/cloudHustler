@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ServiceeComponent } from './servicee.component';
+import { DipslayComponent } from './dipslay.component';
 
-describe('ServiceeComponent', () => {
-  let component: ServiceeComponent;
-  let fixture: ComponentFixture<ServiceeComponent>;
+describe('DipslayComponent', () => {
+  let component: DipslayComponent;
+  let fixture: ComponentFixture<DipslayComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ServiceeComponent]
+      declarations: [DipslayComponent]
     });
-    fixture = TestBed.createComponent(ServiceeComponent);
+    fixture = TestBed.createComponent(DipslayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

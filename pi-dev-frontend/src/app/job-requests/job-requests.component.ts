@@ -4,17 +4,17 @@ import { ServiceeService } from '../services/servicee.service';
 import { ServiceRequest } from 'src/core/modules/serviceRequests';
 import { Servicee } from 'src/core/modules/servicee';
 import { ActivatedRoute } from '@angular/router';
-
 @Component({
-  selector: 'app-service-requests',
-  templateUrl: './service-requests.component.html',
-  styleUrls: ['./service-requests.component.css']
+  selector: 'app-job-requests',
+  templateUrl: './job-requests.component.html',
+  styleUrls: ['./job-requests.component.css']
 })
-export class ServiceRequestsComponent implements OnInit {
+export class JobRequestsComponent {
   serviceRequests: ServiceRequest[] = [];
   selectedService: Servicee | null = null; 
   cvUrl: string = ''; 
   uuid_service: string = '';
+  fomrSubmitedd=false;
 
   constructor(
     private serviceRequestsService: ServiceRequestsService,
@@ -23,10 +23,12 @@ export class ServiceRequestsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const serviceId = this.route.snapshot.paramMap.get('uuid'); // Utilisez 'uuid' et non 'uuid_service'
+    const serviceId = this.route.snapshot.paramMap.get('jobId');
   if (serviceId) {
     this.loadServiceById(serviceId);  
+  }else{
     console.error('UUID du service manquant dans l\'URL');
+
   }
   }
 
@@ -40,6 +42,9 @@ export class ServiceRequestsComponent implements OnInit {
         console.error('Erreur lors de la récupération du service', err);
       }
     });
+  }
+  onFormSubmit(){
+    this.fomrSubmitedd=true;
   }
 
 
@@ -68,4 +73,5 @@ export class ServiceRequestsComponent implements OnInit {
   
   
   
+
 }

@@ -9,6 +9,9 @@ import { EventComponent } from './event/event.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { ContactComponent } from './contact/contact.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+ import { JobRequestsComponent } from './job-requests/job-requests.component';
+import { JobsRequestsDashboardComponent } from './dashboard/jobs-requests-dashboard/jobs-requests-dashboard.component';
+import { DipslayComponent } from './dipslay/dipslay.component';
 
 const routes: Routes = [
   
@@ -20,7 +23,13 @@ const routes: Routes = [
   {path:'jobs',component:JobsComponent},
   {path:'contact',component:ContactComponent},
   {path: 'not-found', component: NotFoundComponent},
-  {path: 'farms', loadChildren: () => import('./farms/farms.module').then(m => m.FarmsModule)},  
+   { path: 'job-request/:jobId', component: JobRequestsComponent },
+   {path:'jobsRequests', component:JobsRequestsDashboardComponent},
+   { path: 'cv/:cvUrl', component: DipslayComponent },
+
+
+   
+ {path: 'farms', loadChildren: () => import('./farms/farms.module').then(m => m.FarmsModule)},  
   {path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
   {path: '',redirectTo: 'home',pathMatch: 'full'},
   {path: '**', redirectTo: 'not-found'},
