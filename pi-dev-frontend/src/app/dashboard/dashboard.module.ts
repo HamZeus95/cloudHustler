@@ -9,7 +9,10 @@ import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { TablesComponent } from './tables/tables.component';
-
+import { AddEventComponent } from './add-event/add-event.component';
+import { FormsModule } from '@angular/forms';
+import { EditEventComponent } from './edit-event/edit-event.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,12 +21,18 @@ import { TablesComponent } from './tables/tables.component';
     DashboardLayoutComponent,
     SideBarComponent,
     TablesComponent,
+    AddEventComponent,
+    AddEventComponent,
+    EditEventComponent,
+ 
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     HttpClientModule,
     RouterModule,
+    FormsModule ,
+    ReactiveFormsModule
     
 
     
