@@ -15,6 +15,7 @@ import { SettingsPanelComponent } from './components/settings-panel/settings-pan
 import { EventComponent } from './pages/event/event.component';
 import { FarmManagmentComponent } from './pages/farm-managment/farm-managment.component';
 import { FarmTableComponent } from './components/farm-table/farm-table.component';
+import { BlogManagmentComponent } from './pages/blog-managment/blog-managment.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { FarmTableComponent } from './components/farm-table/farm-table.component
     FarmTableComponent,
     //declarations of pages
     FarmManagmentComponent,
-    EventComponent
+    EventComponent,
+    BlogManagmentComponent
   ],
   imports: [
     CommonModule,

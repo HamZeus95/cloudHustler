@@ -8,6 +8,8 @@ import { EventComponent } from './pages/event/event.component';
 const routes: Routes = [
   { path: '', component: FarmManagmentComponent },
   { path: 'event', component: EventComponent },
+  { path: 'blog', component: EventComponent },
+
 
 ];
 
