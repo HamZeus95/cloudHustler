@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Farm } from 'src/app/core/models/famrs/farm';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable()
 export class FarmService {
-  private apiUrl = 'http://localhost:8090/pidb/farm'; 
+  private apiUrl = environment.apiUrl+'farm'; 
 
   constructor(private http: HttpClient) {}
 

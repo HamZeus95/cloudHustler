@@ -1,0 +1,30 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './pages/home/home.component';
+import { BlogComponent } from './pages/blog/blog.component';
+import { AboutComponent } from './pages/about/about.component';
+import { MarketComponent } from './pages/market/market.component';
+import { EventComponent } from './pages/event/event.component';
+import { JobsComponent } from './pages/jobs/jobs.component';
+import { ContactComponent } from './pages/contact/contact.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+
+const routes: Routes = [
+
+  { path: '', component:HomeComponent },
+  { path: 'blog', component: BlogComponent },
+    {path:"about",component:AboutComponent},
+    {path:"home",component:HomeComponent},
+    {path:'market', component: MarketComponent},
+    {path: 'blog', component: BlogComponent},
+    {path:'event',component:EventComponent},
+    {path:'jobs',component:JobsComponent},
+    {path:'contact',component:ContactComponent},
+    {path: 'not-found', component: NotFoundComponent},
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class FrontofficeRoutingModule { }

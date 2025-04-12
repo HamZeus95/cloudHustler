@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Crop } from 'src/app/core/models/famrs/crop';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable()
 export class CropService {
-  private apiUrl = 'http://localhost:8090/pidb/crop'; 
+  private apiUrl = environment.apiUrl+'crop'; 
 
   constructor(private http: HttpClient) {}
 
