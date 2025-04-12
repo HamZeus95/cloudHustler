@@ -17,6 +17,7 @@ import { ContactComponent } from './contact/contact.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { EventServiceService } from './event-service.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,

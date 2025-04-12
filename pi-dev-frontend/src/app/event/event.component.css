@@ -1,0 +1,27 @@
+/* Style pour chaque carte et la carte dans la section */
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Espacement de la carte par rapport au reste du contenu */
+.card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Espacement et positionnement de la carte */
+
+
+/* Ajustement des boutons */
+button {
+  margin-top: 15px;
+}
+
+/* Adaptation responsive */
+
+  
+

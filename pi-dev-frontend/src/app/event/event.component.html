@@ -34,6 +34,16 @@
 </div>
 
 <!-- ***** Blog Area Start ***** -->
+<!-- ##### Breadcrumb Area Start ##### -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+<!-- ##### Breadcrumb Area End ##### -->
+
+
+
+<!-- ***** Blog Area Start ***** -->
+<!-- ***** Blog Area Start ***** -->
 <section class="blog-area section-padding-100">
   <div class="container">
     <div class="row">
@@ -45,7 +55,6 @@
         </div>
       </div>
     </div>
-
     <div class="row">
       <!-- Loop through filtered events -->
       <div class="col-12 col-md-6 col-lg-4" *ngFor="let event of filteredEvents">
@@ -58,23 +67,48 @@
             <!-- Title -->
             <h5 class="card-title text-center fw-bold text-success">{{ event.name }}</h5>
 
+            <!-- Cadre pour les infos -->
+            <div class="p-3 mt-2" style="border: 1px solid #ccc; border-radius: 6px; background-color: #f9f9f9;">
+              <!-- Description -->
+              <p class="card-text mb-2">
+                {{ event.description | slice:0:100 }}...
+              </p>
 
-       <!-- Cadre pour les infos -->
-<div class="p-3 mt-2" style="border: 1px solid #ccc; border-radius: 6px; background-color: #f9f9f9;">
-  <!-- Description -->
-  <p class="card-text mb-2">
-    {{ event.description | slice:0:100 }}...
-  </p>
+              <!-- Location and Dates -->
+              <p class="mb-1"><i class="fas fa-map-marker-alt text-danger"></i> {{ event.location }}</p>
+              <p class="mb-1"><strong>Début :</strong> {{ event.startDate | date:'dd MMM yyyy' }}</p>
+              <p class="mb-0"><strong>Fin :</strong> {{ event.endDate | date:'dd MMM yyyy' }}</p>
+              
+              <!-- Ajoutez un bouton pour afficher la carte en pop-up -->
+              <button class="btn btn-info mt-3" (click)="toggleMap(event.uuid_event)">Afficher la carte</button>
 
-  <!-- Location and Dates -->
-  <p class="mb-1"><i class="fas fa-map-marker-alt text-danger"></i> {{ event.location }}</p>
-  <p class="mb-1"><strong>Début :</strong> {{ event.startDate | date:'dd MMM yyyy' }}</p>
-  <p class="mb-0"><strong>Fin :</strong> {{ event.endDate | date:'dd MMM yyyy' }}</p>
-</div>
-
+              <!-- Fenêtre modale pour afficher la carte -->
+              <div class="modal fade" [ngClass]="{'show': mapVisibility[event.uuid_event]}" tabindex="-1" *ngIf="mapVisibility[event.uuid_event]" style="display: block;">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Emplacement de l'événement</h5>
+                      <button type="button" class="close" (click)="toggleMap(event.uuid_event)">
+                        <span>&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body" style="padding: 0; height: 400px; overflow: hidden;">
+                      <!-- Carte avec position fixe -->
+                      <div id="map{{ event.uuid_event }}" style="height: 100%; width: 100%; position: fixed;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <!-- Participate button -->
-            <button class="btn btn-success mt-3" (click)="participate(event.uuid_event)">Participer</button>
+<!-- Affichage du nombre de participants -->
+<p>Participants : {{ event.participants?.length || 0 }}</p>
+
+
+<button (click)="participate(event.uuid_event)">
+  Participer
+</button>
           </div>
         </div>
       </div>
@@ -91,6 +125,10 @@
 
   </div>
 </section>
+
+
+
+
 <!-- ***** Blog Area End ***** -->
 
 <app-footer></app-footer>

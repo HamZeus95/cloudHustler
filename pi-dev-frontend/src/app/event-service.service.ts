@@ -36,4 +36,10 @@ export class EventServiceService {
     const url = `${this.apiUrl}/events/${id}`;
     return this.http.get<Event>(url);
   }
+  getCoordinates(location: string): Observable<any> {
+    // Utilisez Nominatim pour obtenir les coordonnées à partir du lieu
+    return this.http.get<any>(
+      `https://nominatim.openstreetmap.org/search?q=${location}&format=json&addressdetails=1`
+    );
+  }
 }
