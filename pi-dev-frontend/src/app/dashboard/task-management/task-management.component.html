@@ -1,0 +1,27 @@
+<div *ngIf="showAddTaskForm" class="card mt-3">
+    <div class="card-header">
+      <h5>Add New Task</h5>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="addTask()">
+        <div class="mb-3">
+          <label for="title" class="form-label">Task Title</label>
+          <input type="text" id="title" class="form-control" [(ngModel)]="newTask.title" name="title" required />
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea id="description" class="form-control" [(ngModel)]="newTask.description" name="description" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="startDate" class="form-label">Start Date</label>
+          <input type="date" id="startDate" class="form-control" [(ngModel)]="newTask.startDate" name="startDate" required />
+        </div>
+        <div class="mb-3">
+          <label for="endDate" class="form-label">End Date</label>
+          <input type="date" id="endDate" class="form-control" [(ngModel)]="newTask.endDate" name="endDate" required />
+        </div>
+        <button type="submit" class="btn btn-success">Add Task</button>
+      </form>
+    </div>
+  </div>
+  

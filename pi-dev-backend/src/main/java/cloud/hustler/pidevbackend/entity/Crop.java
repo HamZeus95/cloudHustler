@@ -22,10 +22,13 @@ public class Crop {
     private LocalDate harvestDate;
     private double expectedYield;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name = "farm_id")
     private Farm farm;
+
+
 
     public void setFarm(Farm farm) {
         if (this.farm != null) {

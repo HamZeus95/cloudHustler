@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FarmService } from '../services/farm.service';
+import { FarmService } from '../../core/services/farm.service';
 
 @Component({
   selector: 'app-add-farm',

@@ -18,8 +18,8 @@ export class CropService {
     return this.http.get<Crop>(`${this.apiUrl}/crop/${id}`);
   }
 
-  addCrop(crop: Crop): Observable<Crop> {
-    return this.http.post<Crop>(`${this.apiUrl}/add`, crop);
+  addCrop(crop: Crop, idFarm: string): Observable<Crop> {
+    return this.http.post<Crop>(`${this.apiUrl}/add/${idFarm}`, crop);
   }
 
   updateCrop(crop: Crop): Observable<Crop> {

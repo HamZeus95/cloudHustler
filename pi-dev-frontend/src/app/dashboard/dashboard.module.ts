@@ -8,10 +8,11 @@ import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { TablesComponent } from './tables/tables.component';
-import { FarmService } from '../farms/services/farm.service';
-import { CropService } from '../farms/services/crop.service';
-import { FormsModule } from '@angular/forms';
+import { FarmService } from '../core/services/farm.service';
+import { CropService } from '../core/services/crop.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FarmDetailsComponent } from '../farms/farm-details/farm-details.component';
+import { TaskManagementComponent } from './task-management/task-management.component';
 
 
 
@@ -22,11 +23,13 @@ import { FarmDetailsComponent } from '../farms/farm-details/farm-details.compone
     DashboardLayoutComponent,
     SideBarComponent,
     TablesComponent,
-    FarmDetailsComponent
+    FarmDetailsComponent,
+    TaskManagementComponent
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
+    ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
     FormsModule

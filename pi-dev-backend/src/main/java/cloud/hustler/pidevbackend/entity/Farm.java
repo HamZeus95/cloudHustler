@@ -30,18 +30,26 @@ public class Farm {
     @JoinColumn(name = "farmer_id")
     private Farmer farmer;
 
+    // each farm has a set of resources
     @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL)
     private Set<Ressource> resources = new HashSet<>();
 
+    // each farm has a set of crops
     @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Crop> crops = new HashSet<>();
 
+    // each farm has a set of tasks
     @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL)
     private Set<Task> tasks = new HashSet<>();
 
+
+    // each farm has a set of expenses
     @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL)
     private Set<Expense> expenses = new HashSet<>();
 
+
+
+    //MDA
     // Relationship management methods
     public void addCrop(Crop crop) {
         crops.add(crop);

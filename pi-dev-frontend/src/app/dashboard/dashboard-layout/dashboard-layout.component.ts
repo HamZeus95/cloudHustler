@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Crop } from 'src/app/core/models/famrs/crop';
 import { Farm } from 'src/app/core/models/famrs/farm';
-import { CropService } from 'src/app/farms/services/crop.service';
-import { FarmService } from 'src/app/farms/services/farm.service';
+import { CropService } from 'src/app/core/services/crop.service';
+import { FarmService } from 'src/app/core/services/farm.service';
 
 import {
   Chart,

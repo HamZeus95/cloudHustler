@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FarmService } from '../services/farm.service';
+import { FarmService } from '../../core/services/farm.service';
 import { Farm } from 'src/app/core/models/famrs/farm';
 import { Router } from '@angular/router';
 

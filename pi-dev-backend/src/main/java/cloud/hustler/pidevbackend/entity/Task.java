@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-
 public class Task {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
@@ -20,12 +20,13 @@ public class Task {
     private String title;
     private String description;
     @Enumerated(EnumType.STRING)
-    private taskStatus status;
+    private TypeStatus status;
     private LocalDate startDate;
     private LocalDate endDate;
 
-    //les relations
 
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "farm_id")
     private Farm farm;
