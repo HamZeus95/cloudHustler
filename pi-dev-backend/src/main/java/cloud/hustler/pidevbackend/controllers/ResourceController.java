@@ -16,7 +16,6 @@ import java.util.UUID;
 public class ResourceController {
     @Autowired
     private ResourceService resourceService;
-
     @GetMapping("/ressources")
     public List<Ressource> ressources(){
         return resourceService.getAll();

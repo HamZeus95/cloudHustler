@@ -17,11 +17,11 @@ public class FarmController {
     @Autowired
     private FarmService farmService;
 
+
     @GetMapping("/farms")
     public List<Farm> farms(){
         return farmService.getAll();
     }
-
     @GetMapping("/farm/{id}")
     public Farm farm(@PathVariable UUID id){
         return farmService.getFarm(id);
@@ -38,7 +38,6 @@ public class FarmController {
     public Farm updateFarm(@RequestBody Farm farm){
         return farmService.updateFarm(farm);
     }
-
     @GetMapping("/cropsByFarm/{idFarm}")
     public List<Crop> getCropsByFarm(@PathVariable UUID idFarm){
         return farmService.getCropsByFarm(idFarm);
