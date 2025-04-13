@@ -264,14 +264,26 @@
             </button>
           </div>
     
+          <!-- Recherche des événements -->
+          <div class="search-bar p-3">
+            <input 
+              type="text" 
+              class="form-control" 
+              placeholder="Search events..." 
+              [(ngModel)]="searchQuery" 
+              (input)="filterEvents()" 
+            />
+          </div>
+    
+          <!-- Liste des événements -->
           <div class="event-list p-3">
-            <!-- Vérifier si des événements existent -->
-            <div *ngIf="events.length === 0">
-              <p class="text-center">Aucun événement disponible.</p> 
+            <!-- Message si aucun événement n'est trouvé -->
+            <div *ngIf="filteredEvents.length === 0">
+              <p class="text-center">Aucun événement disponible.</p>
             </div>
     
-            <!-- Afficher les événements sous forme de tableau -->
-            <div *ngIf="events.length > 0">
+            <!-- Affichage des événements filtrés -->
+            <div *ngIf="filteredEvents.length > 0">
               <table class="event-table table table-bordered table-striped">
                 <thead>
                   <tr>
@@ -284,7 +296,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let event of events">
+                  <tr *ngFor="let event of filteredEvents">
                     <td>{{ event.name }}</td>
                     <td>{{ event.startDate | date:'dd/MM/yyyy' }}</td>
                     <td>{{ event.endDate | date:'dd/MM/yyyy' }}</td>
@@ -302,11 +314,40 @@
                 </tbody>
               </table>
             </div>
-    
           </div>
+    
+          <!-- Pagination -->
+          <ul class="pagination justify-content-center mt-3">
+            <li class="page-item" [ngClass]="{'disabled': currentPage === 1}">
+              <a class="page-link" href="#" (click)="changePage(currentPage - 1); $event.preventDefault()">
+                <i class="fa fa-angle-left"></i>
+              </a>
+            </li>
+    
+            <!-- Affichage des pages -->
+            <li *ngFor="let page of [].constructor(totalPages); let i = index" class="page-item" [ngClass]="{'active': currentPage === (i + 1)}">
+              <a class="page-link" href="#" (click)="changePage(i + 1); $event.preventDefault()">
+                {{ i + 1 }}
+              </a>
+            </li>
+    
+            <li class="page-item" [ngClass]="{'disabled': currentPage === totalPages}">
+              <a class="page-link" href="#" (click)="changePage(currentPage + 1); $event.preventDefault()">
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     <footer class="footer pt-3  ">

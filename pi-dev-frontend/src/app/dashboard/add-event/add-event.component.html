@@ -346,7 +346,26 @@
                   formControlName="banner"
                 />
               </div>
-          
+              <div class="form-group form-check">
+                <input
+                  type="checkbox"
+                  id="isOnline"
+                  class="form-check-input"
+                  formControlName="isOnline"
+                />
+                <label class="form-check-label" for="isOnline">Événement en ligne</label>
+              </div>
+              
+              <div class="form-group" *ngIf="eventForm.get('isOnline')!.value">
+                <label for="onlineLink">Lien de l'événement en ligne</label>
+                <input
+                  type="text"
+                  id="onlineLink"
+                  class="form-control"
+                  formControlName="onlineLink"
+                />
+              </div>
+              
               <button type="submit" class="btn btn-primary" [disabled]="eventForm.invalid">
                 Add Event
               </button>

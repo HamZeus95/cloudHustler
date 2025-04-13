@@ -10,5 +10,8 @@ export class Event {
     imgsUrls!: string[]; 
     participants!: string[];
     maxParticipants?: number;
+    isOnline?: boolean;
+    onlineLink?: string;
+  
   }
   

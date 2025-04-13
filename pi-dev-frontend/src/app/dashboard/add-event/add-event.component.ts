@@ -26,7 +26,9 @@ export class AddEventComponent implements OnInit {
       max: ['', Validators.required],
       location: ['', Validators.required],
       description: [''],
-      banner: ['']
+      banner: [''],
+      isOnline: [false],
+      onlineLink: ['']
     });
   }
 
@@ -60,7 +62,10 @@ export class AddEventComponent implements OnInit {
         endDate: this.eventForm.value.endDate || '',
         maxParticipants: this.eventForm.value.max || '',
         imgsUrls: [],
-        participants: []
+        participants: [],
+        isOnline: this.eventForm.value.isOnline,
+        onlineLink: this.eventForm.value.onlineLink
+    
       };
 
       this.eventService.addEvent(newEvent).subscribe(
