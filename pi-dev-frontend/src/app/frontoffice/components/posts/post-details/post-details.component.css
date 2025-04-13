@@ -1,0 +1,178 @@
+/* Style général */
+.post-detail-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0 15px;
+}
+
+/* Carte du post */
+.post-card {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.post-title {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+}
+
+.post-meta {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.post-text {
+  color: #34495e;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.post-image {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-top: 15px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* Section commentaires */
+.section-header {
+  margin: 30px 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.section-header h3 {
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Liste des commentaires */
+.comments-list {
+  margin-top: 20px;
+}
+
+.comment-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  transition: transform 0.2s;
+}
+
+.comment-card:hover {
+  transform: translateY(-2px);
+}
+
+.comment-text {
+  color: #34495e;
+  margin-bottom: 10px;
+}
+
+.comment-meta {
+  display: flex;
+  gap: 15px;
+  color: #7f8c8d;
+  font-size: 0.85rem;
+}
+
+/* Boutons d'action */
+.comment-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.edit-btn {
+  background: #f1f8fe;
+  color: #4CAF50;
+}
+
+.edit-btn:hover {
+  background: #4CAF50;
+  color: white;
+}
+
+.delete-btn {
+  background: #fef1f1;
+  color: #e74c3c;
+}
+
+.delete-btn:hover {
+  background: #e74c3c;
+  color: white;
+}
+
+/* Aucun commentaire */
+.no-comments {
+  text-align: center;
+  padding: 30px;
+  color: #7f8c8d;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.no-comments i {
+  margin-right: 8px;
+}
+/* Styles existants conservés */
+.post-header {
+  margin-bottom: 1rem;
+}
+
+/* Nouvelle mise en page */
+.post-content-wrapper {
+  display: flex;
+  gap: 20px; /* Espace entre l'image et le texte */
+  align-items: flex-start; /* Alignement en haut */
+}
+
+.post-image {
+  width: 200px; /* Largeur fixe ou utilisez max-width */
+  height: auto;
+  object-fit: cover;
+  flex-shrink: 0; /* Empêche le rétrécissement */
+}
+
+.post-text-content {
+  flex: 1; /* Occupe l'espace restant */
+}
+
+/* Version responsive (mobile) */
+@media (max-width: 768px) {
+  .post-content-wrapper {
+    flex-direction: column;
+  }
+  .post-image {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+}

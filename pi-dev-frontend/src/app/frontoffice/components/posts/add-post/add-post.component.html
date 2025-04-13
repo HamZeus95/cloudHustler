@@ -1,0 +1,51 @@
+<div class="contact-form-area post-form-container">
+  
+  
+  <form (ngSubmit)="onSubmit()" #postForm="ngForm">
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <input type="text" class="form-control" id="title" name="title" 
+                 [(ngModel)]="post.title" required 
+                 placeholder="Titre de votre post">
+        </div>
+      </div>
+      
+      <div class="col-12">
+        <div class="form-group">
+          <textarea class="form-control" id="content" name="content" 
+                    [(ngModel)]="post.content" required cols="30" rows="10"
+                    placeholder="Contenu de votre post"></textarea>
+        </div>
+      </div>
+      
+      <div class="col-12">
+        <div class="form-group">
+          <label for="media" class="file-input-label">
+            <span>Ajouter un média (image, vidéo ou PDF)</span>
+            <input type="file" class="form-control-file" id="media" name="media" 
+                   (change)="onFileChange($event)"
+                   accept="image/*,video/*,.pdf">
+          </label>
+        </div>
+      </div>
+      
+      <div *ngIf="post.mediaUrl" class="col-12 media-preview">
+        <div class="preview-container">
+          <img *ngIf="isImage(post.mediaUrl)" [src]="post.mediaUrl" alt="Preview" class="img-fluid">
+          <video *ngIf="isVideo(post.mediaUrl)" [src]="post.mediaUrl" controls class="img-fluid"></video>
+          <div *ngIf="isPDF(post.mediaUrl)" class="pdf-preview">
+            <p>PDF sélectionné</p>
+            <a [href]="post.mediaUrl" target="_blank" class="btn famie-btn">Aperçu</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-12">
+        <button type="submit" class="btn famie-btn" [disabled]="postForm.invalid">
+          Publier
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -13,4 +13,6 @@ public interface ICommentService {
     List<Comment> getAllComments();
     Comment getCommentById(UUID uuid_comment);
     List<Comment> findByPostIdPost(UUID idPost);
+    void deleteAllByPostId(UUID postId);
+    Comment updateCommentById(UUID uuid_comment,Comment commentUpdate  );
 }

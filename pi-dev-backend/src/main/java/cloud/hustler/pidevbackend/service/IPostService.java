@@ -9,9 +9,8 @@ import java.util.UUID;
 public interface IPostService {
     Post addPost(Post post);
     Post updatePost(Post post);
-    void deletePost(UUID uuid_post);
+    void deletePostByIdWithCommentAndReaction(UUID postID);
     List<Post> getAllPosts();
     Post getPostById(UUID postId);
-    Post updatePostById(UUID postId, Post post);
-
+    Post updatePostById(UUID postId, Post postUpdates);
 }

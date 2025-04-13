@@ -1,0 +1,39 @@
+<app-navbar></app-navbar>
+<div class="edit-comment-container">
+    <h2>Edit Comment</h2>
+    
+    <div *ngIf="isLoading" class="loading">
+      Loading comment...
+    </div>
+  
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  
+    <form *ngIf="!isLoading && !errorMessage" [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="content">Comment Content</label>
+        <textarea 
+          id="content" 
+          formControlName="content" 
+          class="form-control" 
+          rows="5"
+          placeholder="Enter your comment here..."></textarea>
+        
+        <div *ngIf="commentForm.get('content')?.invalid && commentForm.get('content')?.touched" 
+             class="validation-error">
+          Comment content is required
+        </div>
+      </div>
+  
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">
+          Update Comment
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+  <app-footer></app-footer>

@@ -13,4 +13,6 @@ public interface IReactionService {
     Reaction getReactionById(UUID uuid_reaction);
     List<Reaction> getAllReactions();
     Reaction ajouterReactionEtAffecterPost(Reaction reaction, UUID postId);
+
+
 }

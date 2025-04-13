@@ -7,6 +7,7 @@ import cloud.hustler.pidevbackend.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,6 +56,20 @@ public class CommentServiceImplement implements ICommentService {
     public List<Comment> findByPostIdPost(UUID idPost) {
         return commentRepository.findByPostIdPost(idPost);
     }
+
+    @Override
+    public void deleteAllByPostId(UUID postId) {
+
+    }
+
+    @Override
+    public Comment updateCommentById(UUID uuid_comment,Comment commentUpdate) {
+        Comment existingcomment = commentRepository.findById(uuid_comment).orElseThrow();
+        if (commentUpdate.getContent() != null) existingcomment.setContent(commentUpdate.getContent());
+        existingcomment.setUpdatedAt(new Date(System.currentTimeMillis()));
+    return commentRepository.save(existingcomment);
+    }
+
 
 
 }

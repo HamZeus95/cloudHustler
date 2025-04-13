@@ -1,0 +1,42 @@
+<!-- No Posts Message -->
+<p *ngIf="posts.length === 0" class="no-posts-message">Aucun post à afficher.</p>
+
+<!-- List View Container -->
+<div class="list-view-container">
+  <!-- Post List Item -->
+  <div class="post-list-item" *ngFor="let post of posts">
+    <div class="post-content-wrapper" (click)="viewPost(post.idPost)">
+      <!-- Post Image (Left Side) -->
+      <div class="post-image-container" *ngIf="post.mediaUrl && isImage(post.mediaUrl)">
+        <img [src]="getFullMediaUrl(post.mediaUrl)" 
+             alt="Post image"
+             class="post-image-list"
+             (error)="handleImageError($event)">
+      </div>
+      
+      <!-- Post Content (Middle) -->
+      <div class="post-content-main">
+        <div class="post-header">
+          <h3 class="post-title">{{ post.title || 'Sans titre' }}</h3>
+          <span class="post-date">{{ post.createdAt | date:'medium' }}</span>
+        </div>
+        <p class="post-excerpt">{{ (post.content || '').slice(0, 200) }}{{ (post.content?.length || 0) > 200 ? '...' : '' }}</p>
+      </div>
+      
+      <!-- Post Actions (Right Side) -->
+      <div class="post-actions-list" (click)="$event.stopPropagation()">
+        <div class="action-buttons">
+          
+          <button (click)="deletePost(post.idPost)" class="btn-delete" *ngIf="post.idPost">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Post Section -->
+

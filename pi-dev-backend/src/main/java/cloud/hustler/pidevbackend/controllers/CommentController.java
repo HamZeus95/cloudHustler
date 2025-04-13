@@ -4,6 +4,7 @@ import cloud.hustler.pidevbackend.entity.Comment;
 import cloud.hustler.pidevbackend.entity.Post;
 import cloud.hustler.pidevbackend.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +26,16 @@ public class CommentController {
 
 
 
-    @PutMapping("/updateComment")
-    Comment updateComment(@RequestBody Comment comment) {
-        return commentService.updateComment(comment);
+    @PutMapping("/updateCommentById/{commentId}")
+    public ResponseEntity<Comment> updateCommentById(@PathVariable UUID commentId, @RequestBody Comment comment) {
+        try {
+            Comment updatedComment = commentService.updateCommentById(commentId, comment);
+            return ResponseEntity.ok(updatedComment);
+        }catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 
 
     @DeleteMapping ("/deleteComment/{uuid_Comment}")
