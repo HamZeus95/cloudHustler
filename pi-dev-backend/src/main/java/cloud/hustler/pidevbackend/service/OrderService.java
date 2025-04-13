@@ -61,6 +61,7 @@ public class OrderService implements IOrderService {
         order = orderRepository.save(order);
         cartItemRepository.deleteAll(cart.getCartItems());
         cart.getCartItems().clear();
+        cart.setTotalPrice(0);
         cartRepository.save(cart);
 
         return order;

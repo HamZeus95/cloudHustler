@@ -15,9 +15,9 @@
         <tbody>
           <tr *ngFor="let item of cart.cartItems">
             <td>{{ item.product.name }}</td>
-            <td>{{ item.product.price | currency }}</td>
+            <td>{{ item.product.price  }}</td>
             <td>{{ item.quantity }}</td>
-            <td>{{ item.product.price * item.quantity | currency }}</td>
+            <td>{{ item.product.price * item.quantity }}</td>
             <td>
               <button class="btn btn-danger btn-sm" (click)="removeFromCart(item.product.uuid_product)">
                 Remove

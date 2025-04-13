@@ -15,6 +15,7 @@ import { EventComponent } from './event/event.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { ContactComponent } from './contact/contact.component';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { ProductService } from './core/services/product.service';
 
 @NgModule({
   declarations: [

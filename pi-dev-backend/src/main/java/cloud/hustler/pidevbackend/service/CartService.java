@@ -43,6 +43,7 @@ public class CartService implements ICartService {
         Cart cart = getOrCreateCart(customerUuid);
         Product product = productRepository.findById(productUuid).orElseThrow();
 
+
         Optional<CartItem> existingItem = cart.getCartItems().stream()
                 .filter(item -> item.getProduct().getUuid_product().equals(productUuid))
                 .findFirst();
@@ -50,6 +51,9 @@ public class CartService implements ICartService {
         if (existingItem.isPresent()) {
             CartItem item = existingItem.get();
             item.setQuantity(item.getQuantity() + quantity);
+            product.setQuantity(product.getQuantity() - quantity);
+            cart.setTotalPrice(cart.getTotalPrice() + item.getProduct().getPrice() * quantity);
+            productRepository.save(product);
             cartItemRepository.save(item);
         } else {
             CartItem newItem = new CartItem();
@@ -57,6 +61,9 @@ public class CartService implements ICartService {
             newItem.setProduct(product);
             newItem.setQuantity(quantity);
             cart.getCartItems().add(newItem);
+            product.setQuantity(product.getQuantity() - quantity);
+            cart.setTotalPrice(cart.getTotalPrice() + newItem.getProduct().getPrice() * quantity);
+            productRepository.save(product);
             cartItemRepository.save(newItem);
         }
 
@@ -65,7 +72,7 @@ public class CartService implements ICartService {
 
     public void removeProductFromCart(UUID customerUuid, UUID productUuid) {
         Cart cart = getOrCreateCart(customerUuid);
-
+        Product product = productRepository.findById(productUuid).orElseThrow();
         // Find the item to remove
         CartItem itemToRemove = cart.getCartItems().stream()
                 .filter(item -> item.getProduct().getUuid_product().equals(productUuid))
@@ -74,6 +81,9 @@ public class CartService implements ICartService {
 
         if (itemToRemove != null) {
             cart.getCartItems().remove(itemToRemove);
+            product.setQuantity(product.getQuantity()+itemToRemove.getQuantity());
+            cart.setTotalPrice(cart.getTotalPrice() - itemToRemove.getProduct().getPrice() * itemToRemove.getQuantity());
+            productRepository.save(product);
             cartItemRepository.delete(itemToRemove); // Delete from DB
             cartRepository.save(cart); // Save updated cart
         }
@@ -82,7 +92,7 @@ public class CartService implements ICartService {
 
     public void clearCart(UUID customerUuid) {
         Cart cart = getOrCreateCart(customerUuid);
-
+        cart.setTotalPrice(0);
         // Delete all cart items associated with this cart
         cartItemRepository.deleteAll(cart.getCartItems());
 

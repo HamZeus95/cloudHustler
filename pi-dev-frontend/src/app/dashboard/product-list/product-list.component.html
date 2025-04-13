@@ -19,14 +19,11 @@
           <div class="card-body">
             <h5 class="card-title">{{product.name}}</h5>
             <p class="card-text">{{product.description}}</p>
-            <p class="text-muted">Price: ${{product.price | number:'1.2-2'}}</p>
+            <p class="text-muted">Price: ${{product.price }}</p>
             <p class="text-muted">Quantity: {{product.quantity}}</p>
-            <span class="badge" [ngClass]="product.isAvailable ? 'bg-success' : 'bg-danger'">
-              {{product.isAvailable ? 'Available' : 'Out of Stock'}}
-            </span>
+            
           </div>
           <div class="card-footer bg-transparent">
-            <a [routerLink]="['/products', product.uuid_product]" class="btn btn-primary btn-sm me-2">Details</a>
             <button (click)="deleteProduct(product.uuid_product)" class="btn btn-danger btn-sm">Delete</button>
           </div>
           <div class="card-footer">

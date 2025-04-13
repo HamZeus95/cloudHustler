@@ -1,10 +1,10 @@
 // create-product.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProductService } from '../product.service';
+import { ProductService } from '../core/services/product.service';
 import { Router } from '@angular/router';
-import { ProductCategoryService } from '../productCategory.service';
-import { ProductCategory } from '../product';
+import { ProductCategoryService } from '../core/services/productCategory.service';
+import { ProductCategory } from '../core/models/market/product';
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',

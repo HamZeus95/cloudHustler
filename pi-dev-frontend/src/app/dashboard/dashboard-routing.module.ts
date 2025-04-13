@@ -5,6 +5,7 @@ import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.co
 import { DashboardComponent } from './dashboard.component';
 import { CommonModule } from '@angular/common';
 import { TablesComponent } from './tables/tables.component';
+import { ProductListComponent } from './product-list/product-list.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
       { path: 'layout', component: DashboardLayoutComponent },
       { path: 'billing', component: BillingComponent },
       {path :'tables',component:TablesComponent},
+      {path :'products',component:ProductListComponent},
     ]
   }
 

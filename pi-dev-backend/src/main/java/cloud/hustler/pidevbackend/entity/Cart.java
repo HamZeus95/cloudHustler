@@ -31,6 +31,8 @@ public class Cart {
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     Set<CartItem> cartItems = new HashSet<>();
 
+
+    double totalPrice;
     public UUID getUuid_cart() {
         return uuid_cart;
     }
@@ -53,6 +55,14 @@ public class Cart {
 
     public void setCartItems(Set<CartItem> cartItems) {
         this.cartItems = cartItems;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
     }
 
     @Override

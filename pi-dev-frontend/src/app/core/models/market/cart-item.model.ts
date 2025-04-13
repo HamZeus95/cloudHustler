@@ -1,4 +1,4 @@
-import { Product } from '../product';
+import { Product } from './product';
 
 export interface CartItem {
   uuid_cartItem: string;
