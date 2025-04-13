@@ -2,43 +2,34 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NavbarComponent } from './navbar/navbar.component';
-import { FooterComponent } from './footer/footer.component';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { MarketComponent } from './market/market.component';
-import { BlogComponent } from './blog/blog.component';
-import { EventComponent } from './event/event.component';
-import { JobsComponent } from './jobs/jobs.component';
-import { ContactComponent } from './contact/contact.component';
-import { DashboardModule } from './dashboard/dashboard.module';
-import { ProductService } from './core/services/product.service';
+import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FrontofficeModule } from './frontoffice/frontoffice.module';
+import { BackofficeModule } from './backoffice/backoffice.module';
+import { CommonModule } from '@angular/common';
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    NavbarComponent,
-    FooterComponent,
-    HomeComponent,
-    AboutComponent,
-    NotFoundComponent,
-    MarketComponent,
-    BlogComponent,
-    EventComponent,
-    JobsComponent,
-    ContactComponent  ],
+    AppComponent
+    
+
+    
+   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DashboardModule
+    FormsModule,
+    RouterModule,
+    FrontofficeModule,
+    BackofficeModule,
+    
   ],
-  providers: [ProductService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

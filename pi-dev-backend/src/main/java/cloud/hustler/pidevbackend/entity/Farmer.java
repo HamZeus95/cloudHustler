@@ -26,7 +26,7 @@ public class Farmer extends User {
     Set<Service> services= new HashSet<>();
 
     @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL)
-     Set<Farm> farms= new HashSet<>();
+    Set<Farm> farms= new HashSet<>();
 
     @OneToMany(mappedBy = "farmer")
     Set<Product> products= new HashSet<>();
