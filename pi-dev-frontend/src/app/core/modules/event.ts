@@ -9,6 +9,6 @@ export class Event {
     endDate!: string;
     imgsUrls!: string[]; 
     participants!: string[];
- 
+    maxParticipants?: number;
   }
   

@@ -29,9 +29,7 @@ export class EventServiceService {
   deleteEvent(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/deleteEvent/${id}`);
   }
-  addParticipant(eventId: string, participantName: string): Observable<Event> {
-    return this.http.post<Event>(`${this.apiUrl}/${eventId}/participate`, { participantName });
-  }
+ 
   getEventById(id: string): Observable<Event> {
     const url = `${this.apiUrl}/events/${id}`;
     return this.http.get<Event>(url);
@@ -42,4 +40,10 @@ export class EventServiceService {
       `https://nominatim.openstreetmap.org/search?q=${location}&format=json&addressdetails=1`
     );
   }
+  addParticipant(eventId: string, participantName: string) {
+    return this.http.put<Event>(`http://localhost:8089/pi/Event/${eventId}/add-participant`, participantName, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+  
 }

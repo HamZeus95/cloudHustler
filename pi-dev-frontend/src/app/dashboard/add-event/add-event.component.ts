@@ -23,6 +23,7 @@ export class AddEventComponent implements OnInit {
       name: ['', Validators.required],
       date: ['', [Validators.required, this.validateFutureDate]],
       endDate: ['', Validators.required],
+      max: ['', Validators.required],
       location: ['', Validators.required],
       description: [''],
       banner: ['']
@@ -57,11 +58,11 @@ export class AddEventComponent implements OnInit {
         description: this.eventForm.value.description || '',
         banner: this.eventForm.value.banner || '',
         endDate: this.eventForm.value.endDate || '',
+        maxParticipants: this.eventForm.value.max || '',
         imgsUrls: [],
         participants: []
       };
 
-      // Appel au service pour ajouter l'événement
       this.eventService.addEvent(newEvent).subscribe(
         (event) => {
           console.log('Événement ajouté:', event);
