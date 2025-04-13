@@ -2,7 +2,10 @@ package cloud.hustler.pidevbackend.service;
 
 
 import cloud.hustler.pidevbackend.entity.Expense;
+import cloud.hustler.pidevbackend.entity.Farm;
+import cloud.hustler.pidevbackend.entity.Expense;
 import cloud.hustler.pidevbackend.repository.ExpenseRepository;
+import cloud.hustler.pidevbackend.repository.FarmRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +19,14 @@ public class ExpenseService implements IExpense{
 
     @Autowired
     private ExpenseRepository expenseRepository;
+    private FarmRepository farmRepository;
+
 
     @Override
-    public Expense addExpense(Expense expense) {
+    public Expense addExpense(Expense expense, UUID idFarm) {
+        Farm farm = farmRepository.findById(idFarm).get();
+        farm.addExpense(expense);
+        expense.setFarm(farm);
         return expenseRepository.save(expense);
     }
 
@@ -30,7 +38,6 @@ public class ExpenseService implements IExpense{
     @Override
     public void deleteExpense(UUID idExpense) {
         expenseRepository.deleteById(idExpense);
-
     }
 
     @Override
@@ -40,6 +47,7 @@ public class ExpenseService implements IExpense{
 
     @Override
     public Expense getExpense(UUID idExpense) {
-        return expenseRepository.findById(idExpense).get();
+        return expenseRepository.findById(idExpense).orElse(null);
     }
+
 }

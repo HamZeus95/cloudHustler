@@ -28,7 +28,4 @@ public class Ressource {
     @ManyToOne
     @JoinColumn(name = "farm_id")
     private Farm farm;
-
-
-
 }
