@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Farm } from 'src/app/core/models/famrs/farm';
-import { CropService } from 'src/app/core/services/crop.service';
 import { Crop } from 'src/app/core/models/famrs/crop';
+import { CropService } from 'src/app/core/services/crop.service';
+import { Farm } from 'src/app/core/models/famrs/farm';
 
 @Component({
   selector: 'app-farm-details',
@@ -25,18 +25,18 @@ export class FarmDetailsComponent implements OnInit {
     });
   }
 
-  toggleAddCropForm(): void {
+  toggleAddCropForm() {
     this.isAddCropFormVisible = !this.isAddCropFormVisible;
   }
 
-  onAddCrop(): void {
+  onAddCrop() {
     if (this.addCropForm.valid) {
       const newCrop: Crop = {
         name: this.addCropForm.value.name,
         plantingDate: this.addCropForm.value.plantingDate,
         harvestDate: this.addCropForm.value.harvestDate,
         expectedYield: this.addCropForm.value.expectedYield,
-        farm_id: this.farm.uuid_farm, // Make sure farm_id is included
+        farm_id: this.farm.uuid_farm,
       };
 
       this.cropService.addCrop(newCrop, this.farm.uuid_farm).subscribe((crop: Crop) => {
@@ -47,7 +47,7 @@ export class FarmDetailsComponent implements OnInit {
     }
   }
 
-  onDeleteCrop(cropId: string): void {
+  onDeleteCrop(cropId: string) {
     this.cropService.deleteCrop(cropId).subscribe(() => {
       this.farm.crops = this.farm.crops.filter(crop => crop.uuid_crop !== cropId);
     });
@@ -58,7 +58,6 @@ export class FarmDetailsComponent implements OnInit {
     const plantingDate = crop.plantingDate ? new Date(crop.plantingDate) : new Date();
     const harvestDate = new Date(crop.harvestDate ?? new Date());
 
-    // Determine the status based on the crop's dates
     if (currentDate < plantingDate) {
       return 'Pending';
     } else if (currentDate > harvestDate) {

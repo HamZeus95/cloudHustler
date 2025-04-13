@@ -12,8 +12,8 @@ import java.util.UUID;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/crop")
-public class CropController {
 
+public class CropController {
     @Autowired
     private CropService cropService;
 

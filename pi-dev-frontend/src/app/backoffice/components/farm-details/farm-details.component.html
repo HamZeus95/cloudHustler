@@ -23,7 +23,6 @@
       <div class="row g-3">
         <div class="col-md-4" *ngFor="let crop of farm.crops">
           <div class="card card-body border shadow-sm h-100 bg-white">
-            <!-- Status Container -->
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h6 class="mb-1">{{ crop.name }}</h6>
               <span class="badge rounded-pill" [ngClass]="{
@@ -32,11 +31,9 @@
                   'bg-primary': getCropStatus(crop) === 'Harvested'
                 }">{{ getCropStatus(crop) }}</span>
             </div>
-            <!-- Crop Details -->
             <small class="text-muted">{{ crop.plantingDate | date }}</small>
             <p class="mt-2 text-muted">Expected Yield: {{ crop.expectedYield }} kg</p>
 
-            <!-- Delete Button -->
             <button class="btn btn-outline-danger btn-sm mt-3" (click)="crop.uuid_crop ? onDeleteCrop(crop.uuid_crop) : null">Delete</button>
           </div>
         </div>
@@ -69,11 +66,12 @@
         </div>
         <div class="mb-3">
           <label for="expectedYield" class="form-label">Expected Yield (kg)</label>
-          <input id="expectedYield" formControlName="expectedYield" type="number" class="form-control" placeholder="Enter expected yield" />
+          <input id="expectedYield" formControlName="expectedYield" type="number" class="form-control" />
         </div>
-
-        <button class="btn btn-outline-success btn-sm mt-4" type="submit" [disabled]="addCropForm.invalid">+ Add Crop</button>
-        <button class="btn btn-outline-danger btn-sm mt-4" (click)="toggleAddCropForm()">Cancel</button>
+        <div class="text-end">
+          <button type="submit" class="btn btn-success" [disabled]="addCropForm.invalid">Add Crop</button>
+          <button type="button" class="btn btn-secondary ms-2" (click)="toggleAddCropForm()">Cancel</button>
+        </div>
       </form>
     </div>
   </div>

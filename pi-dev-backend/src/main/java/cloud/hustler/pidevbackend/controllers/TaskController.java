@@ -3,51 +3,69 @@ package cloud.hustler.pidevbackend.controllers;
 import cloud.hustler.pidevbackend.entity.Task;
 import cloud.hustler.pidevbackend.entity.TypeStatus;
 import cloud.hustler.pidevbackend.service.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
-
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/task")
 public class TaskController {
 
-    @Autowired
-    private TaskService taskService;
+    private final TaskService taskService;
 
-
-
-
-    @GetMapping("/tasks")
-    public List<Task> getTasks() {
-        return taskService.getAllTasks();
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
     }
 
-    @PostMapping
+    // Get all tasks
+    @GetMapping("/tasks")
+    public ResponseEntity<List<Task>> getTasks() {
+        return ResponseEntity.ok(taskService.getAllTasks());
+    }
+
+    // Get task by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Task> getTask(@PathVariable UUID id) {
+        Task task = taskService.getTaskById(id);
+        return task != null ? ResponseEntity.ok(task) : ResponseEntity.notFound().build();
+    }
+
+    // Create a new task
+    @PostMapping("/add")
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
         Task createdTask = taskService.addTask(task);
         return ResponseEntity.status(201).body(createdTask);
     }
 
-    @PutMapping("/updateStatus/{taskId}")
-    public ResponseEntity<Task> updateTaskStatus(@PathVariable UUID taskId, @RequestBody TypeStatus status) {
-        Task updatedTask = taskService.updateTaskStatus(taskId, status);
-        return updatedTask != null ? ResponseEntity.ok(updatedTask) : ResponseEntity.notFound().build();
-    }
-    @PostMapping("/add")
-    public ResponseEntity<Task> addTask(@RequestBody Task task) {
-        Task createdTask = taskService.addTask(task);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
+    // Update an existing task (full object)
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable UUID id, @RequestBody Task updatedTask) {
+        Task existing = taskService.getTaskById(id);
+        if (existing == null) {
+            return ResponseEntity.notFound().build();
+        }
+        updatedTask.setUuid_task(id);
+        return ResponseEntity.ok(taskService.updateTask(updatedTask));
     }
 
-    @DeleteMapping("/delete/{taskId}")
-    public ResponseEntity<Void> deleteTask(@PathVariable UUID taskId) {
-        taskService.deleteTask(taskId);
+    // Update only the task status
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Task> updateStatus(@PathVariable UUID id, @RequestBody TypeStatus status) {
+        Task updated = taskService.updateTaskStatus(id, status);
+        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
+    }
+
+    // Delete a task
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable UUID id) {
+        Task task = taskService.getTaskById(id);
+        if (task == null) {
+            return ResponseEntity.notFound().build();
+        }
+        taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
     }
 }

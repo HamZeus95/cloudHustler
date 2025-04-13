@@ -4,23 +4,18 @@ import cloud.hustler.pidevbackend.entity.Task;
 import cloud.hustler.pidevbackend.entity.TypeStatus;
 import cloud.hustler.pidevbackend.repository.TaskRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
-
 @Service
 @AllArgsConstructor
 public class TaskService implements ITask {
 
-    @Autowired
-    private TaskRepository taskRepository;
-
+    private final TaskRepository taskRepository;
 
     @Override
     public List<Task> getAllTasks() {

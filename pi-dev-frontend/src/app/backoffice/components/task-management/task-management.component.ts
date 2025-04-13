@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from 'src/app/core/models/famrs/task';
 import { TaskService } from 'src/app/core/services/task.service';
-
+import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-task-management',
@@ -9,27 +9,23 @@ import { TaskService } from 'src/app/core/services/task.service';
   styleUrls: ['./task-management.component.css'],
 })
 export class TaskManagementComponent implements OnInit {
-  
-  tasks: Task[] = [];
-  tasksByStatus: { [key: string]: Task[] } = {};
-  columns = {
-    TO_DO: 'To Do',
-    IN_PROGRESS: 'In Progress',
-    DONE: 'Done',
-  };
+  toDoTasks: Task[] = [];
+  inProgressTasks: Task[] = [];
+  doneTasks: Task[] = [];
 
-  // Boolean flag to control form visibility
-  showAddTaskForm: boolean = false;
-
-  // Initialize newTask with default values (null for dates, empty string for title and description)
-  newTask: Task = {
+  selectedTask: Task | null = null;
+  isModalOpen = false;
+  newTask: Omit<Task, 'uuid_task'> = {
     title: '',
     description: '',
     status: 'TO_DO',
     startDate: null,
     endDate: null,
-    farm: null,  // Assuming farm is set later or is optional
+    farm: null // Will be set based on context (e.g., selected farm)
   };
+
+  // Mock farm for demo; replace with actual farm selection logic
+  selectedFarm: any = { id: 'farm-1', name: 'Sample Farm' };
 
   constructor(private taskService: TaskService) {}
 
@@ -38,65 +34,139 @@ export class TaskManagementComponent implements OnInit {
   }
 
   loadTasks(): void {
-    this.taskService.getTasks().subscribe(
-      (tasks) => {
-        this.tasks = tasks || [];
-        this.filterTasksByStatus();
+    this.taskService.getTasks().subscribe({
+      next: (tasks) => {
+        this.toDoTasks = tasks.filter(t => t.status === 'TO_DO');
+        this.inProgressTasks = tasks.filter(t => t.status === 'IN_PROGRESS');
+        this.doneTasks = tasks.filter(t => t.status === 'DONE');
       },
-      (error) => {
-        console.error('Error loading tasks', error);
+      error: (err) => {
+        console.error('Error fetching tasks:', err);
+        alert('Failed to load tasks. Please try again.');
       }
-    );
+    });
   }
 
-  filterTasksByStatus(): void {
-    this.tasksByStatus = {
-      TO_DO: this.tasks.filter(task => task.status === 'TO_DO'),
-      IN_PROGRESS: this.tasks.filter(task => task.status === 'IN_PROGRESS'),
-      DONE: this.tasks.filter(task => task.status === 'DONE'),
+  openAddTaskModal(status: Task['status']): void {
+    this.newTask = {
+      title: '',
+      description: '',
+      status,
+      startDate: null,
+      endDate: null,
+      farm: this.selectedFarm // Assign selected farm
     };
+    this.selectedTask = null;
+    this.isModalOpen = true;
   }
 
-  onTaskStatusChange(task: Task, status: 'TO_DO' | 'IN_PROGRESS' | 'DONE'): void {
-    this.taskService.updateTaskStatus(task.uuid_task!, status).subscribe(() => {
-      task.status = status;
-      this.filterTasksByStatus();
-    });
+  openEditTaskModal(task: Task): void {
+    this.selectedTask = { ...task };
+    this.isModalOpen = true;
   }
 
-  deleteTask(task: Task): void {
-    this.taskService.deleteTask(task.uuid_task!).subscribe(() => {
-      this.loadTasks(); // Refresh tasks after deletion
-    });
-  }
-
-  // Add task method
-  addTask(): void {
-    if (this.newTask.title && this.newTask.description && this.newTask.startDate && this.newTask.endDate) {
-      this.taskService.addTask(this.newTask).subscribe((createdTask) => {
-        this.tasks.push(createdTask);
-        this.filterTasksByStatus();
-        this.resetNewTask(); // Reset the form
-        this.showAddTaskForm = false; // Hide form after adding task
-      }, (error) => {
-        console.error('Error adding task', error);
-      });
-    }
-  }
-
-  resetNewTask(): void {
+  closeModal(): void {
+    this.isModalOpen = false;
+    this.selectedTask = null;
     this.newTask = {
       title: '',
       description: '',
       status: 'TO_DO',
       startDate: null,
       endDate: null,
-      farm: null,
+      farm: this.selectedFarm
     };
   }
 
-  // Show the add task form
-  toggleAddTaskForm(): void {
-    this.showAddTaskForm = !this.showAddTaskForm;
+  saveTask(): void {
+    if (this.selectedTask) {
+      // Edit existing task (only update status for simplicity; extend for other fields if needed)
+      this.taskService.updateTaskStatus(this.selectedTask.uuid_task!, this.selectedTask.status).subscribe({
+        next: () => {
+          this.loadTasks();
+          this.closeModal();
+        },
+        error: (err) => {
+          console.error('Error updating task:', err);
+          alert('Failed to update task. Please try again.');
+        }
+      });
+    } else {
+      // Add new task
+      this.taskService.addTask(this.newTask).subscribe({
+        next: () => {
+          this.loadTasks();
+          this.closeModal();
+        },
+        error: (err) => {
+          console.error('Error adding task:', err);
+          alert('Failed to add task. Please try again.');
+        }
+      });
+    }
   }
+
+  deleteTask(uuid_task: string): void {
+    if (confirm('Are you sure you want to delete this task?')) {
+      this.taskService.deleteTask(uuid_task).subscribe({
+        next: () => {
+          this.loadTasks();
+        },
+        error: (err) => {
+          console.error('Error deleting task:', err);
+          alert('Failed to delete task. Please try again.');
+        }
+      });
+    }
+  }
+
+  drop(event: CdkDragDrop<Task[]>): void {
+    if (event.previousContainer === event.container) {
+      // Reorder within the same column
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      // Move to a different column
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+
+      // Update task status
+      const movedTask = event.container.data[event.currentIndex];
+      const newStatus = event.container.id as Task['status'];
+      this.taskService.updateTaskStatus(movedTask.uuid_task!, newStatus).subscribe({
+        next: () => {
+          this.loadTasks(); // Refresh to sync with backend
+        },
+        error: (err) => {
+          console.error('Error updating task status:', err);
+          alert('Failed to update task status. Please try again.');
+          // Revert UI change on error
+          this.loadTasks();
+        }
+      });
+    }
+  }
+
+  getFieldValue(field: keyof Task): any {
+    if (field === 'uuid_task') {
+      return this.selectedTask ? this.selectedTask[field] : undefined;
+    }
+    return this.selectedTask ? this.selectedTask[field] : this.newTask[field as keyof Omit<Task, 'uuid_task'>];
+  }
+  
+  setFieldValue(field: keyof Task, value: any): void {
+    if (this.selectedTask) {
+      this.selectedTask[field] = value;
+    } else {
+      this.newTask[field as keyof Omit<Task, 'uuid_task'>] = value;
+    }
+  }
+  
+  getFarmName(): string {
+    return this.selectedTask?.farm?.name ?? this.newTask.farm?.name ?? '';
+  }
+  
 }

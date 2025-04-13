@@ -1,9 +1,7 @@
 <div class="card mb-4">
-  <div class="card-header pb-0">
-    <div class="d-flex justify-content-between align-items-center">
-      <h6 class="mb-0">My Farms</h6>
-      <button class="btn btn-outline-success btn-sm" (click)="toggleAddFarm()">+ Add Farm</button>
-    </div>
+  <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+    <h6 class="mb-0">My Farms</h6>
+    <button class="btn btn-outline-success btn-sm" (click)="toggleAddFarm()">+ Add Farm</button>
   </div>
   <div class="card-body px-0 pt-0 pb-2">
     <div class="table-responsive">
@@ -20,12 +18,13 @@
           </tr>
         </thead>
         <tbody>
+          <!-- Add Form -->
           <tr *ngIf="showAddForm" class="bg-light">
             <td><input type="text" [(ngModel)]="newFarm.name" class="form-control form-control-sm" placeholder="Farm Name"></td>
             <td><input type="number" [(ngModel)]="newFarm.size" class="form-control form-control-sm" placeholder="Size (ha)"></td>
             <td>
               <select [(ngModel)]="newFarm.irrigation_type" class="form-select form-select-sm">
-                <option *ngFor="let type of irrigationTypes" [value]="type">{{type}}</option>
+                <option *ngFor="let type of irrigationTypes" [value]="type">{{ type }}</option>
               </select>
             </td>
             <td>
@@ -41,6 +40,8 @@
               <button class="btn btn-secondary btn-sm" (click)="cancelAdd()">Cancel</button>
             </td>
           </tr>
+
+          <!-- List Farms -->
           <ng-container *ngFor="let farm of farms">
             <tr>
               <td>

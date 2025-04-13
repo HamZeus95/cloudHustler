@@ -8,7 +8,7 @@
       <div class="container-fluid py-4">
         <app-dashboard-cards [farms]="farms" [crops]="crops"></app-dashboard-cards>
         <div style="height: 20px;"></div>
-        <app-farm-table [farms]="farms" (deleteFarm)="onDelete($event)"></app-farm-table>
+        <app-farm-table [farms]="farms"></app-farm-table>
         <div class="row mt-4">
           <div class="col-lg-7 mb-lg-0 mb-4">
             <!-- <app-chart [farms]="farms"></app-chart> -->
@@ -29,5 +29,5 @@
       </div>
     </main>
     
-    <app-settings-panel></app-settings-panel>
+    <!-- <app-settings-panel></app-settings-panel> -->
   </div>
