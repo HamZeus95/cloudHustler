@@ -16,7 +16,8 @@ import { BlogManagmentComponent } from '../backoffice/pages/blog-managment/blog-
 @NgModule({
   declarations: [
     //declarations of components
-    
+    //declarations of components
+
     PostBackComponent,
     SideBarComponent,
     BillingComponent,
@@ -32,7 +33,7 @@ import { BlogManagmentComponent } from '../backoffice/pages/blog-managment/blog-
     BackofficeRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    
+
   ]
   //styles
 
