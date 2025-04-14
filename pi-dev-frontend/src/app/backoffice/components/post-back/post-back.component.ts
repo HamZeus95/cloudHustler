@@ -68,11 +68,7 @@ selectedPostId: any;
     img.onerror = null; // Prévenir les boucles d'erreur
   }
 
-  viewPost(postId: string | undefined): void {
-    if (postId) {
-      this.router.navigate(['/posts', postId]);
-    }
-  }
+  
 
   editPost(id: string) {
     if (id) {

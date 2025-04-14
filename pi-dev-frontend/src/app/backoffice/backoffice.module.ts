@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BackofficeRoutingModule } from './dashboard-routing.module';
+import { BackofficeRoutingModule } from './backoffice-routing.module';
 import { BillingComponent } from './components/billing/billing.component';
 import { TablesComponent } from './components/tables/tables.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,7 +8,8 @@ import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SettingsPanelComponent } from './components/settings-panel/settings-panel.component';
 import { PostBackComponent } from './components/post-back/post-back.component';
-import { BlogManagmentComponent } from '../backoffice/pages/blog-managment/blog-managment.component';
+import { BlogManagmentComponent } from './pages/blog-managment/blog-managment.component';
+import { CommentBackComponent } from './components/comment-back/comment-back.component';
 
 
 
@@ -26,7 +27,8 @@ import { BlogManagmentComponent } from '../backoffice/pages/blog-managment/blog-
     SettingsPanelComponent,
 
     //declarations of pages
-    BlogManagmentComponent
+    BlogManagmentComponent,
+      CommentBackComponent
   ],
   imports: [
     CommonModule,

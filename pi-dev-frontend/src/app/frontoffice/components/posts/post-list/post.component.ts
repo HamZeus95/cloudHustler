@@ -5,6 +5,7 @@ import { Post } from '../../../../core/models/Post';
 import { TypeReaction } from '../../../../core/models/TypeReaction';
 import { environment } from '../../../../../environments/environment';
 
+
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
@@ -67,13 +68,13 @@ selectedPostId: any;
 
   viewPost(postId: string | undefined): void {
     if (postId) {
-      this.router.navigate(['/posts', postId]);
+      this.router.navigate(['frontoffice/posts', postId]);
     }
   }
 
   editPost(id: string) {
     if (id) {
-      this.router.navigate(['/edit-post', id]);
+      this.router.navigate(['frontoffice/edit-post', id]);
     } else {
       console.error("ID du post manquant pour la navigation.");
     }
@@ -116,7 +117,25 @@ selectedPostId: any;
         }
       });
     }
+    
+  }
+  getTotalReactions(post: Post): number {
+    return post.reactions?.length || 0;
   }
 
+  hasReacted(post: Post, type: TypeReaction): boolean {
+    // Implémentez cette méthode selon votre logique d'authentification
+    return post.reactions?.some(r => r.typeReaction === type) || false;
+  }
+
+  isLandscapeImage(url: string): boolean {
+    // Logique pour détecter si l'image est en paysage
+    return true; // À adapter
+  }
+
+  focusCommentInput(postId: string): void {
+    // Logique pour focus l'input de commentaire
+  }
+  
   
 }

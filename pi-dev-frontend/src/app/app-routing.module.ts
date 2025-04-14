@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 const routes: Routes = [
   {
     path: 'backoffice',
-    loadChildren: () => import('./backoffice/dashboard.module').then(m => m.BackofficeModule)
+    loadChildren: () => import('./backoffice/backoffice.module').then(m => m.BackofficeModule)
   },
 
   {

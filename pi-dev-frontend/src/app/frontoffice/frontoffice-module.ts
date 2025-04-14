@@ -44,7 +44,8 @@ import { EditCommentComponent } from '../frontoffice/components/comment/edit-com
         AddCommentComponent,
         AddReactionComponent,
         EditPostComponent,
-        EditCommentComponent 
+        EditCommentComponent,
+        ListCommentComponent 
         
   ],
   imports: [

@@ -1,15 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import {  Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PostService } from '../../../../core/services/service';
-import { commentaires } from '../../../../core/models/Comment'; // Adjust path as needed
+import { PostService } from '../../..//core/services/service';
+import { commentaires } from '../../../core/models/Comment'; // Adjust path as needed
 
 @Component({
-  selector: 'app-list-comment',
-  templateUrl: './list-comment.component.html',
-  styleUrls: ['./list-comment.component.css']
+  selector: 'app-comment-back',
+  templateUrl: './comment-back.component.html',
+  styleUrls: ['./comment-back.component.css']
 })
-export class ListCommentComponent implements OnInit {
-  @Input() postId!: string;
+export class CommentBackComponent implements OnInit {
+@Input() postId!: string;
   comments: commentaires[] = [];
   isLoading = false;
 

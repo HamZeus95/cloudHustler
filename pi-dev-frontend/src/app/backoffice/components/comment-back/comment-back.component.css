@@ -1,8 +1,8 @@
 /* Style pour la section commentaires */
 .comments-section {
-    margin-top: 2rem;
     border-top: 1px solid #eee;
     padding-top: 1rem;
+    margin-left: 4rem;
   }
   
   .section-header {
@@ -122,15 +122,18 @@
     color: white;
   }
   
-  .delete-btn {
-    background: #fef1f1;
-    color: #e74c3c;
-  }
-  
   .delete-btn:hover {
-    background: #e74c3c;
-    color: white;
-  }
+  background-color: #fdeaea; /* Fond rouge très clair */
+  text-decoration: underline;
+}
+
+.delete-btn:active {
+  transform: translateY(1px);
+}
+
+.delete-btn i {
+  font-size: 16px;
+}
   
   /* Aucun commentaire */
   .no-comments {
@@ -177,3 +180,39 @@
       margin-bottom: 15px;
     }
   }
+  /* Styles pour le bouton Supprimer */
+.delete-btn {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+  }
+  
+  .delete-btn:hover {
+    background-color: #fdeaea;
+    color: #c0392b;
+    text-decoration: none;
+  }
+  
+  .delete-btn:active {
+    transform: translateY(1px);
+    background-color: #fadbd8;
+  }
+  
+  .delete-btn i {
+    font-size: 14px;
+  }
+  
+  .delete-text {
+    display: inline;
+  }
+   
+  
+ 

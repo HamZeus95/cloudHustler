@@ -20,7 +20,7 @@
            [src]="getFullMediaUrl(post.mediaUrl)" 
            alt="Post image"
            class="post-image"
-           (error)="handleImageError($event)">
+           >
       <div class="post-text-content">
         <p class="post-text">{{ post.content }}</p>
       </div>
@@ -69,5 +69,6 @@
   </div>
 
 </div>
+
 
 <app-footer></app-footer>

@@ -1,15 +1,23 @@
 <app-navbar></app-navbar>
-<div class="edit-comment-container">
-    <h2>Edit Comment</h2>
-    
+
+<!-- Modal Overlay -->
+<div *ngIf="true" class="modal-overlay" (click)="onCancel()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Edit Comment</h2>
+      <button class="close-btn" (click)="onCancel()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
     <div *ngIf="isLoading" class="loading">
-      Loading comment...
+      <i class="fas fa-spinner fa-spin"></i> Loading comment...
     </div>
-  
+
     <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
+      <i class="fas fa-exclamation-circle"></i> {{ errorMessage }}
     </div>
-  
+
     <form *ngIf="!isLoading && !errorMessage" [formGroup]="commentForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="content">Comment Content</label>
@@ -25,15 +33,17 @@
           Comment content is required
         </div>
       </div>
-  
+
       <div class="form-actions">
         <button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">
-          Update Comment
+          <i class="fas fa-save"></i> Update Comment
         </button>
         <button type="button" class="btn btn-secondary" (click)="onCancel()">
-          Cancel
+          <i class="fas fa-times"></i> Cancel
         </button>
       </div>
     </form>
   </div>
-  <app-footer></app-footer>
+</div>
+
+<app-footer></app-footer>

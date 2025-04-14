@@ -1,172 +1,80 @@
-/* Style général du formulaire */
-.compact-post-form {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 25px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+.post-form-container {
+  margin-bottom: 30px;
 }
 
-.form-title {
-  text-align: center;
-  color: #2c3e50;
-  margin-bottom: 25px;
-  font-size: 1.4rem;
-  font-weight: 600;
+.toggle-form-btn {
+  background-color: #77b122;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
 }
 
-/* Styles des champs */
+.toggle-form-btn:hover {
+  background-color: #2980b9;
+}
+
+.contact-form-area {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.contact-form-area.expanded {
+  max-height: 1000px; /* Valeur suffisamment grande */
+  opacity: 1;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.contact-form-area.expanded form {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Styles existants conservés */
 .form-group {
   margin-bottom: 20px;
 }
 
-.form-input, .form-textarea {
-  width: 100%;
-  padding: 12px 15px;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: all 0.3s;
-}
-
-.form-input:focus, .form-textarea:focus {
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52,152,219,0.1);
-  outline: none;
-}
-
-.form-textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-/* Style pour l'upload de fichier */
-.file-upload-wrapper {
-  margin-bottom: 20px;
-}
-
-.file-upload-label {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 15px;
-  background: #f8f9fa;
-  border: 1px dashed #ccc;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.file-upload-label:hover {
-  background: #e9ecef;
-  border-color: #999;
-}
-
-.file-upload-label i {
-  margin-right: 8px;
-  color: #3498db;
-}
-
-.file-upload-label input[type="file"] {
-  display: none;
-}
-
-.file-name {
-  margin-left: 10px;
-  font-size: 13px;
-  color: #555;
-}
-
-/* Prévisualisation du média */
-.media-preview.compact {
-  margin: 15px 0;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.preview-content {
-  position: relative;
-  max-height: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #f5f5f5;
-  border-radius: 6px;
+.file-input-label {
+  display: block;
   padding: 10px;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.3s;
 }
 
-.media-preview img {
-  max-width: 100%;
-  max-height: 180px;
-  border-radius: 4px;
+.file-input-label:hover {
+  border-color: #3498db;
 }
 
-.media-preview video {
-  max-width: 100%;
-  max-height: 180px;
-  border-radius: 4px;
+.media-preview {
+  margin: 15px 0;
+}
+
+.preview-container {
+  border: 1px solid #eee;
+  padding: 15px;
+  border-radius: 8px;
 }
 
 .pdf-preview {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #e74c3c;
-}
-
-.pdf-preview i {
-  font-size: 40px;
-  margin-bottom: 5px;
-}
-
-.remove-media {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background: rgba(0,0,0,0.5);
-  color: white;
-  border: none;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.remove-media:hover {
-  background: rgba(231,76,60,0.8);
-}
-
-/* Bouton de soumission */
-.submit-btn {
-  width: 100%;
-  padding: 12px;
-  background: #3498db;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.submit-btn i {
-  margin-right: 8px;
-}
-
-.submit-btn:hover {
-  background: #2980b9;
-  transform: translateY(-2px);
-}
-
-.submit-btn:disabled {
-  background: #95a5a6;
-  cursor: not-allowed;
-  transform: none;
+  text-align: center;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
 }

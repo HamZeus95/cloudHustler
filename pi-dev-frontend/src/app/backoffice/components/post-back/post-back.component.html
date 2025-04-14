@@ -2,10 +2,13 @@
 <p *ngIf="posts.length === 0" class="no-posts-message">Aucun post à afficher.</p>
 
 <!-- List View Container -->
-<div class="list-view-container">
-  <!-- Post List Item -->
+<div class="list-view-container bg-gray-100">
+  <h2 class="section-title">
+    <span class="title-text">Liste des posts</span>
+    <span class="title-count">{{ posts.length }} post{{ posts.length !== 1 ? 's' : '' }}</span>
+  </h2>  <!-- Post List Item -->
   <div class="post-list-item" *ngFor="let post of posts">
-    <div class="post-content-wrapper" (click)="viewPost(post.idPost)">
+    <div class="post-content-wrapper" >
       <!-- Post Image (Left Side) -->
       <div class="post-image-container" *ngIf="post.mediaUrl && isImage(post.mediaUrl)">
         <img [src]="getFullMediaUrl(post.mediaUrl)" 
@@ -27,15 +30,25 @@
       <div class="post-actions-list" (click)="$event.stopPropagation()">
         <div class="action-buttons">
           
-          <button (click)="deletePost(post.idPost)" class="btn-delete" *ngIf="post.idPost">
-            <i class="fas fa-trash"></i>
-          </button>
+          <button (click)="deletePost(post.idPost)" 
+          class="delete-btn"
+          *ngIf="post.idPost"
+          matTooltip="Supprimer le post"
+          aria-label="Supprimer le post">
+    <i class="fas fa-trash"></i>
+    <span class="delete-text">Supprimer</span>
+  </button>
         </div>
+
         
         
       </div>
+
     </div>
+    <app-comment-back [postId]="post.idPost || ''"></app-comment-back>
+
   </div>
+
 </div>
 
 <!-- Add Post Section -->

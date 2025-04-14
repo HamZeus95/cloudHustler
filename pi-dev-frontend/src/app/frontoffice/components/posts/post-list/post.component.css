@@ -1,177 +1,167 @@
-.card-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: flex-start;
-  }
-  
-  .post-card {
-    width: 300px;
-    border: 1px solid #ccc;
-    padding: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    background-color: #f9f9f9;
-  }
-  
-  .post-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-  
-  .post-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-  }
-  .reactions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 12px;
-  }
-  
-  .reactions button {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 6px 12px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    background: white;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  
-  .reactions button:hover {
-    background: #f5f5f5;
-  }
-  
-  .reactions button:active {
-    transform: scale(0.95);
-  }
-  
-  .reactions span {
-    font-size: 0.9em;
-    color: #666;
-  }
-  .post-image {
-    max-width: 100%;
-    max-height: 300px;
-    object-fit: contain;
-    margin: 10px 0;
-    border-radius: 8px;
-    background-color: #f5f5f5; /* Fond visible pendant le chargement */
-  }
-  .post-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .action-buttons {
-    display: flex;
-    gap: 8px;
-  }
-  
-  .btn-edit {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .btn-delete {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .btn-edit:hover {
-    background-color: #45a049;
-  }
-  
-  .btn-delete:hover {
-    background-color: #d32f2f;
-  }
-  .reactions-container {
-    display: flex;
-    gap: 6px;
-    margin-top: 16px;
-  }
-  
-  .reaction-btn {
-    display: flex;
-    align-items: center;
-    padding: 6px 6px;
-    border-radius: 24px;
-    border: 1px solid #e0e0e0;
-    background: #f8f8f8;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    overflow: hidden;
-    max-width: 40px; /* Largeur réduite par défaut */
-    height: 36px;
-    position: relative;
-  }
-  
-  .reaction-btn:hover {
-    max-width: 200px; /* Largeur étendue au survol */
-    background: #f0f0f0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  
-  .emoji {
-    font-size: 18px;
-    min-width: 24px;
-    text-align: center;
-  }
-  
-  .reaction-text {
-    opacity: 0;
-    white-space: nowrap;
-    padding: 0 8px 0 4px;
-    transform: translateX(-10px);
-    transition: all 0.3s ease;
-  }
-  
-  .count {
-    background: rgba(0,0,0,0.08);
-    border-radius: 12px;
-    padding: 2px 6px;
-    font-size: 12px;
-    margin-left: auto;
-    transition: all 0.3s ease;
-  }
-  
-  /* Animation au survol */
-  .reaction-btn:hover .reaction-text {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  
-  .reaction-btn:hover .count {
-    background: rgba(0,0,0,0.12);
-  }
-  
-  /* Animation au clic */
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-  }
-  
-  .reaction-btn:active {
-    transform: scale(0.95);
-  }
-  
-  .reaction-btn.active {
-    animation: pulse 0.4s ease;
-    border-color: #4CAF50;
-    background-color: rgba(76, 175, 80, 0.1);
-  }
+/* Styles généraux */
+.social-feed {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Carte de post */
+.post-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  padding: 15px;
+}
+
+/* En-tête */
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.post-time {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+}
+
+/* Image statique */
+.static-image-container {
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.post-image-static {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+/* Contenu */
+.post-content {
+  margin: 10px 0;
+}
+
+.post-content h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.2em;
+}
+
+.post-content p {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+/* Commentaires */
+.comments-section {
+  margin: 10px 0;
+  padding: 10px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+/* Actions */
+.post-actions {
+  display: flex;
+  gap: 15px;
+  padding-top: 10px;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+/* Aucun post */
+.no-posts {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+}
+
+.empty-illustration {
+  max-width: 150px;
+  margin-bottom: 15px;
+  opacity: 0.6;
+}
+/* Styles pour l'avatar utilisateur */
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+  border: 2px solid #3498db;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Styles existants à conserver */
+.post-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.static-image-container {
+  margin: 15px 0;
+}
+
+.post-image-static {
+  width: 100%;
+  border-radius: 8px;
+  max-height: 500px;
+  object-fit: contain;
+}
+.delete-btn {
+  background: none;
+  border: none;
+  color: #e74c3c; /* Rouge vif */
+  cursor: pointer;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.delete-btn:hover {
+  background-color: #fdeaea; /* Fond rouge très clair */
+  text-decoration: underline;
+}
+
+.delete-btn:active {
+  transform: translateY(1px);
+}
+
+.delete-btn i {
+  font-size: 16px;
+}

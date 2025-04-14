@@ -19,6 +19,11 @@ export class PostDetailsComponent implements OnInit {
   public TypeReaction = TypeReaction;
   defaultImage = 'assets/images/default-image.png'; // Correction du nom de variable
   selectedPostId: any;
+  showDeleteModal = false;
+commentToDelete: string | null = null;
+deleteInProgress = false;
+toastMessage = '';
+showToast = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private postService: PostService) {}
 
@@ -46,7 +51,7 @@ export class PostDetailsComponent implements OnInit {
   
   editComment(commentId: string): void {
     if (!commentId) return;
-    this.router.navigate(['/post', this.postId, 'edit-comment', commentId]);
+    this.router.navigate(['/frontoffice/post', this.postId, 'edit-comment', commentId]);
   }
   
   deleteComment(commentId: string): void {
@@ -84,10 +89,10 @@ export class PostDetailsComponent implements OnInit {
     return `${environment.apiBaseUrl}${url.startsWith('/') ? '' : '/'}${url}`;
   }
 
-  handleImageError(event: Event): void {
+  
+  handleAvatarError(event: Event): void {
     const img = event.target as HTMLImageElement;
-    console.warn('Image load failed:', img.src);
-    img.src = this.defaultImage;
-    img.onerror = null; // Prévenir les boucles d'erreur
+    console.warn("Erreur de chargement de l'avatar", img.src);
+    img.style.display = 'none'; // Cache l'image défectueuse
   }
 }

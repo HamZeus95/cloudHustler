@@ -9,6 +9,8 @@ import { Post } from '../../../../core/models/Post';
 })
 export class AddPostComponent {
   @Output() postAdded = new EventEmitter<void>();
+  showForm = false; // État initial: formulaire masqué
+
   post: Post = {
     title: '',
     content: '',
@@ -22,6 +24,10 @@ export class AddPostComponent {
     if (!url) return false;
     return url.startsWith('data:image');
   }
+  toggleForm(): void {
+    this.showForm = !this.showForm;
+  }
+
 
   isVideo(url: string | undefined): boolean {
     if (!url) return false;
@@ -72,4 +78,5 @@ export class AddPostComponent {
     this.post = { title: '', content: '', mediaUrl: '' };
     this.fileToUpload = null;
   }
+  
 }

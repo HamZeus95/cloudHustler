@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../../../../core/services/service'
@@ -9,12 +9,17 @@ import { commentaires } from 'src/app/core/models/Comment';
   templateUrl: './edit-comment.component.html',
   styleUrls: ['./edit-comment.component.css']
 })
+
 export class EditCommentComponent implements OnInit {
   commentForm: FormGroup;
   commentId!: string;
   postId!: string;
   isLoading = true;
   errorMessage = '';
+  @HostListener('document:keydown.escape', ['$event'])
+  onKeydownHandler(event: KeyboardEvent) {
+    this.onCancel();
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -63,7 +68,7 @@ export class EditCommentComponent implements OnInit {
 
     this.postService.updateCommentById(this.commentId, updatedComment).subscribe({
       next: () => {
-        this.router.navigate(['/posts', this.postId]);
+        this.router.navigate(['/frontoffice/blog']);
       },
       error: (err) => {
         this.errorMessage = 'Failed to update comment';
@@ -71,8 +76,9 @@ export class EditCommentComponent implements OnInit {
       }
     });
   }
+  
 
   onCancel(): void {
-    this.router.navigate(['/posts', this.postId]);
+    this.router.navigate(['/frontoffice/blog']);
   }
 }

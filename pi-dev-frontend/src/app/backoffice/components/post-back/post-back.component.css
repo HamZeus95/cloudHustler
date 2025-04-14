@@ -31,7 +31,6 @@
     display: flex;
     align-items: center;
     padding: 15px;
-    cursor: pointer;
   }
   
   .post-image-container {
@@ -190,3 +189,126 @@
       max-width: 100%;
     }
   }
+  /* Remplacez les anciens styles .btn-delete par ceci : */
+.delete-btn {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.delete-btn:hover {
+  background-color: #fdeaea;
+  color: #c0392b;
+  text-decoration: none;
+}
+
+.delete-btn:active {
+  transform: translateY(1px);
+  background-color: #fadbd8;
+}
+
+.delete-btn i {
+  font-size: 14px;
+}
+
+.delete-text {
+  display: inline;
+}
+
+/* Gardez le style existant pour le bouton edit */
+.btn-edit {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #45a049;
+}
+
+/* Sur mobile, cachez le texte "Supprimer" */
+@media (max-width: 768px) {
+  .delete-text {
+    display: none;
+  }
+  
+  .delete-btn {
+    padding: 8px;
+  }
+  
+  /* Optionnel: vous pouvez aussi rendre le bouton edit plus petit sur mobile */
+  .btn-edit {
+    width: 32px;
+    height: 32px;
+  }
+}
+.section-title {
+  font-size: 1.8rem;
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  border-radius: 3px;
+}
+
+.title-text {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.title-count {
+  background-color: #e2e8f0;
+  color: #4a5568;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-title {
+  padding-top: 12px;
+  margin: 2rem;
+  animation: fadeInSlide 0.5s ease-out forwards;
+}

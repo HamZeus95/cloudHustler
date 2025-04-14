@@ -25,12 +25,12 @@ export class AddCommentComponent {
       const comment: Comment = this.commentForm.value;
       this.postService.addCommentToPost(this.postId, comment).subscribe({
         next: (res: any) => {
-          
           console.log('Commentaire ajouté !', res);
           this.commentForm.reset();
+          window.location.reload(); // Rafraîchit toute la page
         },
         error: (err: any) => {
-          console.error('Erreur lors de l’ajout', err);
+          console.error('Erreur lors de lajout', err);
         }
       });
     }

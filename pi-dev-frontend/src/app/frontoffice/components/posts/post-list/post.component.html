@@ -1,73 +1,64 @@
+<div class="social-feed">
+  <!-- Message si aucun post -->
+  <div *ngIf="posts.length === 0" class="no-posts">
+    <img src="assets/images/empty-feed.svg" alt="Aucun post" class="empty-illustration">
+    <h3>Votre fil d'actualité est vide</h3>
+    <p>Soyez le premier à partager quelque chose !</p>
+  </div>
 
-<p *ngIf="posts.length === 0">Aucun post à afficher.</p>
+  <!-- Formulaire de création de post -->
+  <div class="create-post-card">
+    <app-add-post (postAdded)="loadPosts()"></app-add-post>
+  </div>
 
-<div class="card-container">
-  <div class="post-card" *ngFor="let post of posts">
-    <div class="post-content" (click)="viewPost(post.idPost)">
-      <img *ngIf="post.mediaUrl && isImage(post.mediaUrl)" 
-           [src]="getFullMediaUrl(post.mediaUrl)" 
-           alt="Post image"
-           class="post-image"
-           (error)="handleImageError($event)">
+  <!-- Liste des posts -->
+  <div class="post-list">
+    <div *ngFor="let post of posts" class="post-card">
+      <!-- En-tête du post -->
+      <div class="post-header">
+        <div class="user-info">
+          <img src="assets/med.jpg" alt="Utilisateur" class="user-avatar">
+          <div>
+            <div class="post-time">{{post.createdAt | date:'dd MMM yyyy à HH:mm'}}</div>
+          </div>
+        </div>
+        <button *ngIf="post.idPost" 
+        (click)="deletePost(post.idPost); $event.stopPropagation()" 
+        class="delete-btn">
+  <i class="fas fa-trash"></i> Supprimer
+</button>
+      </div>
       
-      <h2>{{ post.title || 'Sans titre' }}</h2>
-      <p>{{ (post.content || '').slice(0, 100) }}{{ (post.content?.length || 0) > 100 ? '...' : '' }}</p>
-      <small>{{ post.createdAt | date:'medium' }}</small>
-    </div>
+      
 
-    <div class="post-actions">
-      <div class="action-buttons">
-        <button (click)="editPost(post.idPost); $event.stopPropagation()"
-                class="btn-edit"
-                *ngIf="post.idPost">
-          Modifier
-        </button>
+      <!-- Contenu du post -->
+      <div class="post-content">
+        <h3>{{ post.title || 'Publication sans titre' }}</h3>
+        <p>{{ post.content }}</p>
         
-        <button (click)="deletePost(post.idPost); $event.stopPropagation()"
-                class="btn-delete"
-                *ngIf="post.idPost">
-          Supprimer
-        </button>
+        <!-- Image statique -->
+        <div *ngIf="post.mediaUrl && isImage(post.mediaUrl)" class="static-image-container">
+          <img [src]="post.mediaUrl"
+               alt="Contenu média"
+               class="post-image-static"
+               (error)="handleImageError($event)">
+        </div>
       </div>
-      
-      <div class="reactions-container" *ngIf="post.idPost">
-        <button class="reaction-btn" 
-                *ngFor="let reaction of reactions" 
-                (click)="$event.stopPropagation(); addReaction(reaction.type, post.idPost)"
-                [title]="reaction.label">
-          <span class="emoji">{{ reaction.emoji }}</span>
-          <span class="reaction-text">{{ reaction.label }}</span>
-          <span class="count">{{ getReactionCount(post, reaction.type) }}</span>
-        </button>
+      <app-add-reaction [post]="post"></app-add-reaction>
+
+      <!-- Section commentaires au DÉBUT du post -->
+      <div class="comments-section" *ngIf="post.idPost">
+        <app-add-comment [postId]="post.idPost" (commentAdded)="loadPosts()"></app-add-comment>
       </div>
+
+      <!-- Section commentaires au DÉBUT du post -->
+      <div class="comments-section" *ngIf="post.idPost">
+        <app-list-comment [postId]="post.idPost" (commentAdded)="loadPosts()"></app-list-comment>
+      </div>
+
+
+      <!-- Actions -->
+
     </div>
   </div>
 </div>
-<section class="contact-area bg-gray section-padding-100-0">
-  <div class="container">
-    <div class="row align-items-end">
-
-      <!-- Contact Content -->
-      <div class="col-12 col-lg-7">
-        <div class="contact-content section-padding-0-100">
-          <!-- Section Heading -->
-          <div class="section-heading">
-            <p>BECOME a FARMER</p>
-            <h2><span>Ajouter un Post</span> </h2>
-            <img src="assets/img/core-img/decor.png" alt="">
-          </div>
-          <!-- Contact Form Area -->
-          <app-add-post (postAdded)="loadPosts()"></app-add-post>
-        </div>
-      </div>
-
-      <!-- Contact Maps -->
-      <div class="col-lg-5">
-        <div class="consaltant-thumbnail text-center">
-          <img src="assets/img/bg-img/25.png" alt="">
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-

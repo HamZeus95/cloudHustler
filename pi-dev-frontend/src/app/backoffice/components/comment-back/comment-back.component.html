@@ -26,17 +26,15 @@
             </div>
           </div>
           
-          <div class="comment-actions">
-            <button (click)="editComment(comment.commentId)" 
-                    class="action-btn edit-btn"
-                    *ngIf="comment.commentId">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button (click)="deleteComment(comment.commentId)" 
-                    class="action-btn delete-btn"
-                    *ngIf="comment.commentId">
-              <i class="fas fa-trash"></i>
-            </button>
+          
+          <button (click)="deleteComment(comment.commentId)" 
+          class="delete-btn"
+          *ngIf="comment.commentId"
+          matTooltip="Supprimer le commentaire"
+          aria-label="Supprimer le commentaire">
+    <i class="fas fa-trash"></i>
+    <span class="delete-text">Supprimer</span>
+  </button>
           </div>
         </div>
       </div>
@@ -47,4 +45,3 @@
     </div>
   
     
-  </div>
