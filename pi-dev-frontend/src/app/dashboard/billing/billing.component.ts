@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./billing.component.css']
 })
 export class BillingComponent {
+  isMenuVisible: boolean = false;
+
+  // Méthode pour activer ou désactiver le menu
+  toggleMenu() {
+    this.isMenuVisible = !this.isMenuVisible;
+  }
 
 }

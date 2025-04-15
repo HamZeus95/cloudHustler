@@ -1,0 +1,52 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-9">
+      <!-- Votre contenu Livraison ici -->
+    </div>
+  </div>
+</div>
+<div class="dashboard-container p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Gestion des Livraisons</h1>
+    <!--button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2" 
+            (click)="openCreateDialog()">
+      <i class="fas fa-plus"></i>
+      Nouvelle Livraison
+    </button-->
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let l of livraisons" class="livraison-card" (click)="openDialog(l)">
+      <!-- Image d'arrière-plan dynamique -->
+      <div class="card-bg-image" [ngStyle]="{'background-image': 'url(assets/images/livraison.jpg)'}"></div>
+
+      <div class="card-content">
+        <div class="card-header">
+          <h3>Livraison #{{ l.id }}</h3>
+          <span class="status-badge" [ngClass]="getStatutClass(l.statut ?? '')">
+              {{ l.statut }}
+          </span>
+        </div>
+
+        <div class="card-details">
+          <p><i class="fas fa-calendar"></i> <strong>Créée le:</strong> {{ l.dateCreation | date:'dd/MM/yyyy' }}</p>
+          <p><i class="fas fa-map-marker-alt"></i> <strong>Addresse:</strong>{{ l.adresseLivraison }}</p>
+          <p *ngIf="l.dateLivraison"><i class="fas fa-truck"></i><strong>Livrée le:</strong>  {{ l.dateLivraison | date:'dd/MM/yyyy' }}</p>
+        </div>
+
+        <div class="card-actions">
+          <button class="btn-delete" (click)="$event.stopPropagation(); l.id && supprimerLivraison(l.id)">
+            <i class="fas fa-trash"></i> Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+</div>
+<app-footer></app-footer>
+

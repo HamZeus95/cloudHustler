@@ -9,14 +9,15 @@ import { EventComponent } from './event/event.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { ContactComponent } from './contact/contact.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { FactureComponent } from './dashboard/livraison/factures/factures.component';
-import { LivraisonComponent } from './dashboard/livraison/livraisons/livraisons.component';
-import { CreatefactureComponent } from './dashboard/livraison/createfacture/createfacture.component';
-import { CreatelivraisonComponent } from './dashboard/livraison/createlivraison/createlivraison.component';
-import { SuiviLivraisonComponent } from './dashboard/livraison/suivilivraisons/suivilivraisons.component';
+import { FactureClientComponent } from './livraison/facture-client/facture-client.component';
+import { LivraisonClientComponent } from './livraison/livraison-client/livraison-client.component';
+
+
 
 const routes: Routes = [
-  
+  //{ path: 'facture/:id', component: DetailsFactureComponent },
+  //{ path: 'livraison/:id', component: DetailsLivraisonComponent },
+
   {path:"about",component:AboutComponent},
   {path:"home",component:HomeComponent},
   {path:'market', component: MarketComponent},
@@ -25,17 +26,8 @@ const routes: Routes = [
   {path:'jobs',component:JobsComponent},
   {path:'contact',component:ContactComponent},
   {path: 'not-found', component: NotFoundComponent},
-  { path:'factures',  component: FactureComponent},
-  { path:'factures/add/:id',  component: FactureComponent},
-  { path:'livraisons',  component: LivraisonComponent},
-  { path:'livraisons/add',  component: LivraisonComponent},
-  { path:'livraisons/update/:id',  component: LivraisonComponent},
-  { path:'livraisons/details/:id', component: LivraisonComponent},
-  { path:'suivilivraison',  component: SuiviLivraisonComponent},
-  { path: 'facture/ajouter', component: CreatefactureComponent },
-  { path: 'facture/modifier/:id', component: CreatefactureComponent },
-  { path: 'livraison/ajouter', component: CreatelivraisonComponent },
-  { path: 'livraison/modifier/:id', component: CreatelivraisonComponent },
+  { path:'factures',  component: FactureClientComponent},
+  { path:'livraisons',  component: LivraisonClientComponent},
 
   {path: 'farms', loadChildren: () => import('./farms/farms.module').then(m => m.FarmsModule)},  
   {path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },

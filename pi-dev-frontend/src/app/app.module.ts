@@ -6,6 +6,9 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogModule } from 'primeng/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,13 +21,14 @@ import { EventComponent } from './event/event.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { ContactComponent } from './contact/contact.component';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { FactureComponent } from './dashboard/livraison/factures/factures.component';
-import { CreatelivraisonComponent } from './dashboard/livraison/createlivraison/createlivraison.component';
-import { LivraisonComponent } from './dashboard/livraison/livraisons/livraisons.component';
-import { CreatefactureComponent } from './dashboard/livraison/createfacture/createfacture.component';
-import { SuiviLivraisonComponent } from './dashboard/livraison/suivilivraisons/suivilivraisons.component';
+
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { NgChartsModule } from 'ng2-charts';
+import { FactureClientComponent } from './livraison/facture-client/facture-client.component';
+import { LivraisonClientComponent } from './livraison/livraison-client/livraison-client.component';
+
+
 
 @NgModule({
   declarations: [
@@ -37,13 +41,10 @@ import { FooterComponent } from './footer/footer.component';
     EventComponent,
     JobsComponent,
     ContactComponent,
-    FactureComponent,
-    LivraisonComponent,
-    SuiviLivraisonComponent,
-    CreatelivraisonComponent,
-    CreatefactureComponent,
+    FactureClientComponent,
     NavbarComponent,
     FooterComponent,
+    LivraisonClientComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +56,11 @@ import { FooterComponent } from './footer/footer.component';
     CommonModule,
     RouterModule,
     DialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgChartsModule,
+    MatSnackBarModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // Permet l'utilisation de composants personnalisés
   providers: [],

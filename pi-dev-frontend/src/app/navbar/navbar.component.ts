@@ -11,5 +11,11 @@ export class NavbarComponent {
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
+  isMenuVisible: boolean = false;
+
+  // Méthode pour activer ou désactiver le menu
+  toggleMenu() {
+    this.isMenuVisible = !this.isMenuVisible;
+  }
 
 }

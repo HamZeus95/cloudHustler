@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./tables.component.css']
 })
 export class TablesComponent {
+  isMenuVisible: boolean = false;
+
+  // Méthode pour activer ou désactiver le menu
+  toggleMenu() {
+    this.isMenuVisible = !this.isMenuVisible;
+  }
 
 }

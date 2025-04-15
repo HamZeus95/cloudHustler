@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard-layout.component.css']
 })
 export class DashboardLayoutComponent {
+  isMenuVisible: boolean = false;
+
+  // Méthode pour activer ou désactiver le menu
+  toggleMenu() {
+    this.isMenuVisible = !this.isMenuVisible;
+  }
 
 }

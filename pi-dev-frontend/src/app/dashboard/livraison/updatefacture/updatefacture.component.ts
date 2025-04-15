@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Facture } from 'src/app/models/facture';
-import { FactureService } from 'src/app/services/facture.service';
+import { FactureService } from 'src/app/services/livraison/facture.service';
+import { PrimeIcons } from 'primeng/api';
+
 
 @Component({
   selector: 'app-updatefacture',

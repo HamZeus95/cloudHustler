@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -28,17 +29,17 @@ public class Livraison {
     private  String adresseLivraison;
 
     @NotNull
-    private  LocalDateTime dateLivraison;
+    private  LocalDate dateLivraison;
 
     @NotNull(message = "La date de creation ne peut pas être nulle.")
-    private LocalDateTime dateCreation;
+    private LocalDate dateCreation;
 
     /*@OneToOne(mappedBy = "livraison", cascade = CascadeType.ALL)
     @JsonBackReference
     private Facture facture;*/
 
     public Livraison() {
-        this.dateCreation = LocalDateTime.now();
+        this.dateCreation = LocalDate.now();
     }
 
     // Getter pour id
@@ -62,12 +63,12 @@ public class Livraison {
     }
 
     // Getter pour dateCreation
-    public LocalDateTime getDateCreation() {
+    public LocalDate getDateCreation() {
         return dateCreation;
     }
 
     // Setter pour dateCreation
-    public void setDateCreation(LocalDateTime dateCreation) {
+    public void setDateCreation(LocalDate dateCreation) {
         this.dateCreation = dateCreation;
     }
 
@@ -81,11 +82,11 @@ public class Livraison {
         this.adresseLivraison = adresseLivraison;
     }
 
-    public LocalDateTime getDateLivraison() {
+    public LocalDate getDateLivraison() {
         return dateLivraison;
     }
 
-    public void setDateLivraison(LocalDateTime dateLivraison) {
+    public void setDateLivraison(LocalDate dateLivraison) {
         this.dateLivraison = dateLivraison;
     }
    /* public Facture getFacture() {
