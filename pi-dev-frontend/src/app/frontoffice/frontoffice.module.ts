@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import {CoreDirectivesModule} from "../core/directives/directives"
 
@@ -33,6 +34,7 @@ import { LoginComponent } from './pages/auth/login/login.component';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     FrontofficeRoutingModule,
     CoreDirectivesModule
   ]

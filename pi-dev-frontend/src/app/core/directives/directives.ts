@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 
-import { FeatherIconDirective } from './core-feather-icons/core-feather-icons'; 
+import { IconDirective } from './core-feather-icons/core-feather-icons'; 
 
 @NgModule({
-  declarations: [ FeatherIconDirective],
-  exports: [FeatherIconDirective],
+  declarations: [ IconDirective],
+  exports: [IconDirective],
 })
 export class CoreDirectivesModule {}

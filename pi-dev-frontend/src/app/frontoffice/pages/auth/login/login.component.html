@@ -18,10 +18,29 @@
                                 <h4 class="card-title mb-1">Welcome to AgeroPulse!  👋</h4>
                                 <p class="card-text mb-2">Please sign-in to your account and start the adventure</p>
 
-                                <form class="auth-login-form mt-2" action="index.html" method="POST">
+                                <!-- Alert for login errors -->
+                                <div *ngIf="loginError" class="alert alert-danger mb-2" role="alert">
+                                    <div class="alert-body">{{ loginError }}</div>
+                                </div>
+
+                                <form class="auth-login-form mt-2" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                                     <div class="mb-1">
                                         <label for="login-email" class="form-label">Email</label>
-                                        <input type="text" class="form-control" id="login-email" name="login-email" placeholder="john@example.com" aria-describedby="login-email" tabindex="1" autofocus />
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="login-email" 
+                                            formControlName="email" 
+                                            placeholder="john@example.com" 
+                                            aria-describedby="login-email" 
+                                            tabindex="1" 
+                                            autofocus
+                                            [ngClass]="{'is-invalid': f['email'].touched && f['email'].errors}"
+                                        />
+                                        <div *ngIf="f['email'].touched && f['email'].errors" class="invalid-feedback">
+                                            <div *ngIf="f['email'].errors['required']">Email is required</div>
+                                            <div *ngIf="f['email'].errors['email']">Enter a valid email address</div>
+                                        </div>
                                     </div>
 
                                     <div class="mb-1">
@@ -32,22 +51,44 @@
                                             </a>
                                         </div>
                                         <div class="input-group input-group-merge form-password-toggle">
-                                            <input type="password" class="form-control form-control-merge" id="login-password" name="login-password" tabindex="2" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="login-password" />
-                                            <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                                            <input 
+                                                [type]="showPassword ? 'text' : 'password'" 
+                                                class="form-control form-control-merge" 
+                                                id="login-password" 
+                                                formControlName="password"
+                                                tabindex="2" 
+                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" 
+                                                aria-describedby="login-password"
+                                                [ngClass]="{'is-invalid': f['password'].touched && f['password'].errors}"
+                                            />
+                                            <span class="input-group-text cursor-pointer" (click)="togglePasswordVisibility()">
+                                                <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                            </span>
+                                        </div>
+                                        <div *ngIf="f['password'].touched && f['password'].errors" class="invalid-feedback d-block">
+                                            <div *ngIf="f['password'].errors['required']">Password is required</div>
                                         </div>
                                     </div>
+
                                     <div class="mb-1">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="remember-me" tabindex="3" />
+                                            <input class="form-check-input" type="checkbox" id="remember-me" formControlName="rememberMe" tabindex="3" />
                                             <label class="form-check-label" for="remember-me"> Remember Me </label>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary w-100" tabindex="4">Sign in</button>
+                                    <button 
+                                        type="submit" 
+                                        class="btn btn-primary w-100" 
+                                        tabindex="4" 
+                                        [disabled]="loginForm.invalid || isSubmitting">
+                                        <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                                        Sign in
+                                    </button>
                                 </form>
 
                                 <p class="text-center mt-2">
                                     <span>New on our platform?</span>
-                                    <a href="#">
+                                    <a routerLink="/register">
                                         <span>Create an account</span>
                                     </a>
                                 </p>
@@ -58,16 +99,16 @@
 
                                 <div class="auth-footer-btn d-flex justify-content-center">
                                     <a href="#" class="btn btn-facebook">
-                                        <i data-feather="facebook"></i>
+                                        <i app-icon="facebook"></i>
                                     </a>
                                     <a href="#" class="btn btn-twitter white">
-                                        <i data-feather="twitter"></i>
+                                        <i app-icon="twitter"></i>
                                     </a>
                                     <a href="#" class="btn btn-google">
-                                        <i data-feather="mail"></i>
+                                        <i app-icon="mail"></i>
                                     </a>
                                     <a href="#" class="btn btn-github">
-                                        <i data-feather="github"></i>
+                                        <i app-icon="github"></i>
                                     </a>
                                 </div>
                             </div>

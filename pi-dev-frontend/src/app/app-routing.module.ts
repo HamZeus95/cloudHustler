@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+// Import AuthGuard correctly with the default import
+import AuthGuard from './auth/guards/auth.guard';
 import { AppComponent } from './app.component';
-import {AuthGuard} from "./auth/guards/auth.guard";
 import {RoleGuard} from "./auth/guards/role.guard";
 
 const routes: Routes = [
@@ -16,11 +17,8 @@ const routes: Routes = [
     loadChildren: () => import('./frontoffice/frontoffice.module').then(m => m.FrontofficeModule)
   },
 
-  {path: '',redirectTo: 'frontoffice',pathMatch: 'full'},
+  {path: '',redirectTo: 'frontoffice',pathMatch: 'full'}, 
   {path: '**', redirectTo: 'not-found'},
-
-  
-
 ];
 
 @NgModule({
