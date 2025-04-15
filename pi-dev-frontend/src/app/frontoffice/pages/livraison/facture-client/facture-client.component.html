@@ -1,0 +1,44 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<app-navbar></app-navbar>
+<div class="facture-container">
+  <div *ngFor="let f of factures" class="facture-card" (click)="openDialog(f)">
+    <!-- Image d'arrière-plan dynamique -->
+    <div class="card-bg-image" [ngStyle]="{'background-image': 'url(assets/images/facture.jpg)'}"></div>
+
+    <div class="card-content">
+      <div class="card-header">
+        <h3>Facture #{{ f.id }}</h3>
+        <span class="status-badge" [ngClass]="getStatutClass(f.statut ?? '')">
+            {{ f.statut }}
+        </span>
+      </div>
+
+      <div class="card-details">
+        <p><i class="fas fa-calendar"></i> <strong>Date d'Émission:</strong> {{ f.dateEmission | date:'dd/MM/yyyy' }}</p>
+        <p><i class="fas fa-money-bill-alt"></i> <strong>Montant Total:</strong> {{ f.montantTotal | currency }}</p>
+        <h6>Livraison Accordée num #{{ f.livraison?.id }}</h6>
+        <p><i class="fas fa-money-bill-alt"></i> <strong>Date de Creation:</strong> {{ f.livraison?.dateCreation | date:'dd/MM/yyyy'}}</p>
+        <p><i class="fas fa-money-bill-alt"></i> <strong>Date de Livraison:</strong> {{ f.livraison?.dateLivraison }}</p>
+        <p><i class="fas fa-money-bill-alt"></i> <strong>Address de Livraison:</strong> {{ f.livraison?.adresseLivraison }}</p>
+        <p><i class="fas fa-money-bill-alt"></i> <strong>Statut:</strong> {{ f.livraison?.statut }}</p>
+
+      </div>
+
+      <div class="card-actions">
+        <!--button class="btn-delete" (click)="$event.stopPropagation(); f.id && supprimerFacture(f.id)">
+          <i class="fas fa-trash"></i> Supprimer
+        </button-->
+        <button class="btn-delete" (click)="$event.stopPropagation(); f.id && marquerCommeAnnule(f.id)">
+          <i class="fas fa-trash"></i> Annuler
+        </button>
+      </div>
+    </div>
+  </div>
+
+  
+</div>
+<app-footer></app-footer>

@@ -1,3 +1,5 @@
+import { Crop } from "./crop";
+
 export interface Farm {
     uuid_farm: string;
     name: string;
@@ -7,7 +9,7 @@ export interface Farm {
     irrigation_type: string;
     farmer: any; // or a specific interface if you have it
     resources: any[];
-    crops: any[];
+    crops: Crop[];
     tasks: any[];
     expenses: any[];
   }

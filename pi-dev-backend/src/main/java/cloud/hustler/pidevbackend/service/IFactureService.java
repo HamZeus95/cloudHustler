@@ -11,6 +11,7 @@ public interface IFactureService {
     Optional<Facture> getFactureById(Long id);
     public Facture updateFacture(Long id, Facture facture);
     public void deleteFacture(Long id);
-    public void marquerCommePayee(Long id) ;
+   // public void marquerCommePayee(Long id) ;
+    public void marquerCommeAnnulee(Long id) ;
 
     }

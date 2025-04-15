@@ -24,33 +24,52 @@
               "src/favicon.ico",
               "src/assets",
               {
+
                 "glob": "**/*",
                 "input": "src/assets/fonts",
                 "output": "/assets/fonts"
               }
             ],
             "styles": [
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "src/assets/css/nucleo-icons.css",
+              "src/assets/css/argon-dashboard.css",
+              "src/assets/css/nucleo-svg.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/assets/css/font-awesome.min.css",
+              "src/assets/css/animate.css",
+              "src/assets/css/classy-nav.css",
+              "src/assets/css/owl.carousel.min.css",
+              "src/assets/css/magnific-popup.css",
+              "src/assets/css/style.css",
               "src/styles.css",
-              "@angular/material/prebuilt-themes/indigo-pink.css"
-            ],
+              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+
+              
+
+
+],
             "scripts": [
-              {"input": "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js", "bundleName": "bootstrap-bundle", "inject": true},
-              {"input": "src/assets/js/jquery.min.js", "bundleName": "jquery", "inject": true},
-              {"input": "src/assets/js/popper.min.js", "bundleName": "popper", "inject": true},
-              {"input": "src/assets/js/bootstrap.min.js", "bundleName": "bootstrap", "inject": true},
-              {"input": "src/assets/js/owl.carousel.min.js", "bundleName": "owl-carousel", "inject": true},
-              {"input": "src/assets/js/jquery.magnific-popup.min.js", "bundleName": "magnific-popup", "inject": true},
-              {"input": "src/assets/js/wow.min.js", "bundleName": "wow", "inject": true},
-              {"input": "src/assets/js/jquery.scrollup.min.js", "bundleName": "scrollup", "inject": true},
-              {"input": "src/assets/js/jarallax.min.js", "bundleName": "jarallax", "inject": true},
-              {"input": "src/assets/js/jarallax-video.min.js", "bundleName": "jarallax-video", "inject": true},
-              {"input": "src/assets/js/classynav.js", "bundleName": "classynav", "inject": true},
-              {"input": "src/assets/js/jquery.sticky.js", "bundleName": "sticky", "inject": true},
-              {"input": "src/assets/js/active.js", "bundleName": "active", "inject": true},
-              {"input": "src/assets/js/core/popper.min.js", "bundleName": "core-popper", "inject": true},
-              {"input": "src/assets/js/core/bootstrap.min.js", "bundleName": "core-bootstrap", "inject": true},
-              {"input": "src/assets/js/plugins/perfect-scrollbar.min.js", "bundleName": "perfect-scrollbar", "inject": true},
-              {"input": "src/assets/js/plugins/smooth-scrollbar.min.js", "bundleName": "smooth-scrollbar", "inject": true}
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "src/assets/js/jquery.min.js",
+              "src/assets/js/popper.min.js",
+              "src/assets/js/bootstrap.min.js",
+              "src/assets/js/owl.carousel.min.js",
+              "src/assets/js/jquery.magnific-popup.min.js",
+              "src/assets/js/wow.min.js",
+              "src/assets/js/jquery.scrollup.min.js",
+              "src/assets/js/jarallax.min.js",
+              "src/assets/js/jarallax-video.min.js",
+              "src/assets/js/classynav.js",
+              "src/assets/js/jquery.sticky.js",
+              "src/assets/js/active.js",
+              "src/assets/js/core/popper.min.js",
+              "src/assets/js/core/bootstrap.min.js",
+              "src/assets/js/plugins/perfect-scrollbar.min.js",
+              "src/assets/js/plugins/smooth-scrollbar.min.js"
+
+
             ]
           },
           "configurations": {
@@ -111,9 +130,6 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
-              "node_modules/primeng/resources/primeng.min.css",
-              "node_modules/primeicons/primeicons.css",
               "src/styles.css"
             ],
             "scripts": []

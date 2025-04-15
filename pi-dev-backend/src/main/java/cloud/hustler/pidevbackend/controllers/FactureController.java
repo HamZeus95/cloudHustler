@@ -61,11 +61,24 @@ public class FactureController {
         factureService.deleteFacture(id);
         return ResponseEntity.noContent().build();
     }
-    @PostMapping("/{id}")
+    /*@PostMapping("/payer/{id}")
     public ResponseEntity<String> marquerCommePayee(@PathVariable Long id) {
         try {
             factureService.marquerCommePayee(id);
             return ResponseEntity.ok("Facture marquée comme payée");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Facture non trouvée");
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de la mise à jour de la facture");
+        }
+    }*/
+    @PostMapping("/annuler/{id}")
+    public ResponseEntity<String> marquerCommeAnnulee(@PathVariable Long id) {
+        try {
+            factureService.marquerCommeAnnulee(id);
+            return ResponseEntity.ok("Facture marquée comme Annulée");
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Facture non trouvée");
         } catch (IllegalStateException e) {

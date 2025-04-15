@@ -58,7 +58,7 @@ public class FactureService implements IFactureService{
             throw new EntityNotFoundException("Facture not found with id " + id);
         }
     }
-    @Transactional
+    /*@Transactional
     public void marquerCommePayee(Long id) {
         // Récupérer la facture à partir de l'ID
         Facture facture = factureRepository.findById(id)
@@ -74,8 +74,26 @@ public class FactureService implements IFactureService{
 
         // Sauvegarder les modifications dans la base de données
         factureRepository.save(facture);
-    }
+    }*/
 
+
+    public void marquerCommeAnnulee(Long id) {
+        // Récupérer la facture à partir de l'ID
+        Facture facture = factureRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Facture non trouvée pour l'ID " + id));
+
+        // Vérifier si la facture n'est pas déjà payée
+        if ("Annulée".equals(facture.getStatut())||"ANNULÉE".equals(facture.getStatut())) {
+            throw new IllegalStateException("La facture est déjà marquée comme annulée.");
+        }
+
+        // Modifier le statut de la facture
+        facture.setStatut("ANNULÉE");
+
+        // Sauvegarder les modifications dans la base de données
+        factureRepository.save(facture);
+
+    }
 
 
 }
