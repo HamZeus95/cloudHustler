@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -91,7 +92,40 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
 
     }
 
-
+    @Override
+    public AuthenticationResponse refreshUserSession(String token, UserDetails userDetails) {
+        // Extract email from userDetails
+        String email = userDetails.getUsername();
+        
+        // Find the user in the database
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found during session validation"));
+        
+        // Generate new tokens
+        String newAccessToken = jwtService.generateToken(user);
+        String newRefreshToken = jwtService.generateRefreshToken(user);
+        
+        // Create user response object
+        UserResponse foundUser = UserResponse.builder()
+                .address(user.getAddress())
+                .userUUID(user.getUuid_user())
+                .image(user.getImage())
+                .birthDate(user.getBirthDate())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .phone(user.getPhone())
+                .email(user.getEmail())
+                .Role(user.getRole())
+                .isActif(user.isActif())
+                .build();
+                
+        // Build and return response
+        return AuthenticationResponse.builder()
+                .accessToken(newAccessToken)
+                .refreshToken(newRefreshToken)
+                .userResponse(foundUser)
+                .build();
+    }
 
     @Override
     public void revokeAllUserToken(User user) {
@@ -162,6 +196,51 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
             sendErrorResponse(response, "Refresh token failed: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
+    
+    @Override
+    public AuthenticationResponse refreshTokenFromCookie(String refreshToken) {
+        // Extract username from the refresh token
+        String username = jwtService.extractUsername(refreshToken);
+        
+        if (username == null) {
+            throw new RuntimeException("Invalid refresh token");
+        }
+        
+        // Get user details
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
+        
+        // Validate refresh token
+        if (!jwtService.isTokenValid(refreshToken, user)) {
+            throw new RuntimeException("Refresh token is expired or invalid");
+        }
+        
+        // Generate new tokens
+        String newAccessToken = jwtService.generateToken(user);
+        String newRefreshToken = jwtService.generateRefreshToken(user);
+        
+        // Create user response
+        UserResponse userResponse = UserResponse.builder()
+                .address(user.getAddress())
+                .userUUID(user.getUuid_user())
+                .image(user.getImage())
+                .birthDate(user.getBirthDate())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .phone(user.getPhone())
+                .email(user.getEmail())
+                .Role(user.getRole())
+                .isActif(user.isActif())
+                .build();
+        
+        // Return authentication response with new tokens
+        return AuthenticationResponse.builder()
+                .accessToken(newAccessToken)
+                .refreshToken(newRefreshToken)
+                .userResponse(userResponse)
+                .build();
+    }
+
     private void sendErrorResponse(HttpServletResponse response, String message, HttpStatus status) throws IOException {
         response.setStatus(status.value());
         response.setContentType("application/json");
