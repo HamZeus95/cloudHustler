@@ -1,9 +1,18 @@
 <div class="social-feed">
+  <!-- Barre de recherche -->
+  <div class="search-bar">
+    <input type="text" 
+           [(ngModel)]="searchTerm" 
+           (input)="filterPosts()"
+           placeholder="Rechercher des posts...">
+    <i class="fas fa-search"></i>
+  </div>
+
   <!-- Message si aucun post -->
-  <div *ngIf="posts.length === 0" class="no-posts">
+  <div *ngIf="filteredPosts.length === 0" class="no-posts">
     <img src="assets/images/empty-feed.svg" alt="Aucun post" class="empty-illustration">
-    <h3>Votre fil d'actualité est vide</h3>
-    <p>Soyez le premier à partager quelque chose !</p>
+    <h3>{{ searchTerm ? 'Aucun résultat trouvé' : 'Votre fil d\'actualité est vide' }}</h3>
+    <p>{{ searchTerm ? 'Essayez avec d\'autres termes' : 'Soyez le premier à partager quelque chose !' }}</p>
   </div>
 
   <!-- Formulaire de création de post -->
@@ -13,7 +22,7 @@
 
   <!-- Liste des posts -->
   <div class="post-list">
-    <div *ngFor="let post of posts" class="post-card">
+    <div *ngFor="let post of filteredPosts" class="post-card" [id]="'post-' + (post.idPost || '')" #postElement>
       <!-- En-tête du post -->
       <div class="post-header">
         <div class="user-info">
@@ -22,14 +31,20 @@
             <div class="post-time">{{post.createdAt | date:'dd MMM yyyy à HH:mm'}}</div>
           </div>
         </div>
-        <button *ngIf="post.idPost" 
-        (click)="deletePost(post.idPost); $event.stopPropagation()" 
-        class="delete-btn">
-  <i class="fas fa-trash"></i> Supprimer
-</button>
+        <div class="post-actions">
+          <button *ngIf="post.idPost" 
+                  (click)="deletePost(post.idPost); $event.stopPropagation()" 
+                  class="delete-btn">
+            <i class="fas fa-trash"></i> Supprimer
+          </button>
+          <button (click)="exportToPdf(post.idPost || '', postElement); $event.stopPropagation()" 
+                  class="export-btn"
+                  [disabled]="isGeneratingPdf">
+            <i class="fas" [ngClass]="{'fa-file-pdf': !isGeneratingPdf, 'fa-spinner fa-spin': isGeneratingPdf}"></i> 
+            {{ isGeneratingPdf ? 'Génération...' : 'PDF' }}
+          </button>
+        </div>
       </div>
-      
-      
 
       <!-- Contenu du post -->
       <div class="post-content">
@@ -46,19 +61,14 @@
       </div>
       <app-add-reaction [post]="post"></app-add-reaction>
 
-      <!-- Section commentaires au DÉBUT du post -->
+      <!-- Section commentaires -->
       <div class="comments-section" *ngIf="post.idPost">
         <app-add-comment [postId]="post.idPost" (commentAdded)="loadPosts()"></app-add-comment>
       </div>
 
-      <!-- Section commentaires au DÉBUT du post -->
       <div class="comments-section" *ngIf="post.idPost">
         <app-list-comment [postId]="post.idPost" (commentAdded)="loadPosts()"></app-list-comment>
       </div>
-
-
-      <!-- Actions -->
-
     </div>
   </div>
 </div>

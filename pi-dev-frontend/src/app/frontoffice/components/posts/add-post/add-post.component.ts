@@ -69,6 +69,8 @@ export class AddPostComponent {
       next: () => {
         this.resetForm();
         this.postAdded.emit();
+        this.showForm = false;
+
       },
       error: (err) => console.error('Error adding post', err)
     });

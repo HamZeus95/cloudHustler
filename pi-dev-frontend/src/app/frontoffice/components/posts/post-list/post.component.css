@@ -165,3 +165,68 @@
 .delete-btn i {
   font-size: 16px;
 }
+.search-bar {
+  position: relative;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 12px 20px;
+  padding-left: 40px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.2);
+}
+
+.search-bar i {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.no-posts {
+  text-align: center;
+  padding: 40px 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.empty-illustration {
+  max-width: 200px;
+  margin-bottom: 20px;
+  opacity: 0.7;
+}
+.post-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.export-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.export-btn:hover {
+  background-color: #c0392b;
+}

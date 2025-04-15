@@ -23,6 +23,13 @@ import { AddCommentComponent } from '../frontoffice/components/comment/add-comme
 import { AddReactionComponent } from '../frontoffice/components/reaction/add-reaction/add-reaction.component';
 import { EditPostComponent } from '../frontoffice/components/posts/edit-post/edit-post.component';
 import { EditCommentComponent } from '../frontoffice/components/comment/edit-comment/edit-comment.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -48,7 +55,18 @@ import { EditCommentComponent } from '../frontoffice/components/comment/edit-com
         ListCommentComponent 
         
   ],
-  imports: [
+
+    imports: [
+      HttpClientModule,
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+        }
+      }),
+  
+
     CommonModule,
     FrontofficeRoutingModule,
     FormsModule,        // Required for Template-Driven Forms (ngModel)

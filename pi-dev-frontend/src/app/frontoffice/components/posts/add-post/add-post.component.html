@@ -12,16 +12,43 @@
         <div class="col-12">
           <div class="form-group">
             <input type="text" class="form-control" id="title" name="title" 
-                   [(ngModel)]="post.title" required 
-                   placeholder="Titre de votre post">
+                   [(ngModel)]="post.title" required minlength="5" maxlength="100"
+                   #title="ngModel"
+                   placeholder="Titre de votre post (5-100 caractères)">
+            <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
+              <div *ngIf="title.errors?.['required']">
+                Le titre est obligatoire.
+              </div>
+              <div *ngIf="title.errors?.['minlength']">
+                Le titre doit faire au moins 5 caractères.
+              </div>
+              <div *ngIf="title.errors?.['maxlength']">
+                Le titre ne doit pas dépasser 100 caractères.
+              </div>
+            </div>
           </div>
         </div>
         
         <div class="col-12">
           <div class="form-group">
             <textarea class="form-control" id="content" name="content" 
-                      [(ngModel)]="post.content" required cols="30" rows="10"
-                      placeholder="Contenu de votre post"></textarea>
+                      [(ngModel)]="post.content" required minlength="20" maxlength="2000"
+                      #content="ngModel" cols="30" rows="10"
+                      placeholder="Contenu de votre post (20-2000 caractères)"></textarea>
+            <div *ngIf="content.invalid && (content.dirty || content.touched)" class="alert alert-danger">
+              <div *ngIf="content.errors?.['required']">
+                Le contenu est obligatoire.
+              </div>
+              <div *ngIf="content.errors?.['minlength']">
+                Le contenu doit faire au moins 20 caractères.
+              </div>
+              <div *ngIf="content.errors?.['maxlength']">
+                Le contenu ne doit pas dépasser 2000 caractères.
+              </div>
+            </div>
+            <div class="character-count">
+              {{ post.content?.length || 0 }}/2000 caractères
+            </div>
           </div>
         </div>
         

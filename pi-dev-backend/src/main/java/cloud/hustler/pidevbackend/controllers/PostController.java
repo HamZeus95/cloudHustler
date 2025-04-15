@@ -58,6 +58,8 @@ public class PostController {
                 Path filePath = uploadPath.resolve(filename);
 
                 // 3. Sauvegarde du fichier
+                // 3. Sauvegarde du fichier
+
                 Files.copy(media.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
                 // 4. Génération de l'URL accessible via API
