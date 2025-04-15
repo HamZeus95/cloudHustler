@@ -22,4 +22,12 @@ export class OrderService {
   getOrderById(orderUuid: string): Observable<Order> {
     return this.http.get<Order>(`${this.apiUrl}/order/${orderUuid}`);
   }
+
+  confirmOrder(orderUuid: string): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/confirm/${orderUuid}`, {});
+  }
+
+  rejectOrder(orderUuid: string): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/cancel/${orderUuid}`, {});
+  }
 }

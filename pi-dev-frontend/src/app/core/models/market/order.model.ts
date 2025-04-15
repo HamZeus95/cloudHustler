@@ -5,4 +5,10 @@ export interface Order {
   orderItems: OrderItem[];
   totalPrice: number;
   status: string;
+  consumer: Consumer;
+}
+export interface Consumer {
+  uuid_consumer: string;
+  firstName: string;
+  lastName: string;
 }

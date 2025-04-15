@@ -30,4 +30,12 @@ export class ProductService {
   deleteProduct(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/deleteProduct/${id}`);
   }
+
+  applyDiscount(id: string, discount: number): Observable<Product> {
+    return this.http.put<Product>(`${this.apiUrl}/applyDiscount/${id}?discount=${discount}`, {});
+  }
+
+  removeDiscount(id: string): Observable<Product> {
+    return this.http.put<Product>(`${this.apiUrl}/removeDiscount/${id}`, {});
+  }
 }

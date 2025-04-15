@@ -39,6 +39,27 @@ public class Product {
     @ManyToOne
     ProductCategory productCategory;
 
+    @Column(nullable = true)
+    private Integer discount;
+
+    private Double originalPrice;
+    public void applyDiscount(int discount) {
+        if (discount > 0 && discount <= 100) {
+            if (this.originalPrice == null) {
+                this.originalPrice = this.price; // Store original price only once
+            }
+            this.discount = discount;
+            this.price = this.originalPrice - (this.originalPrice * discount / 100.0);
+        }
+    }
+
+    public void removeDiscount() {
+        if (this.originalPrice != null) {
+            this.price = this.originalPrice;
+            this.originalPrice = null;
+            this.discount = null;
+        }
+    }
 
     public UUID getUuid_product() {
         return uuid_product;
@@ -118,5 +139,13 @@ public class Product {
 
     public void setProductCategory(ProductCategory productCategory) {
         this.productCategory = productCategory;
+    }
+
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
     }
 }

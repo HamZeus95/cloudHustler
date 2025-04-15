@@ -42,5 +42,15 @@ public class ProductController {
         return productService.retrieveProduct(idProduct);
     }
 
+    @PutMapping("/applyDiscount/{idProduct}")
+    public Product applyDiscount(@PathVariable UUID idProduct, @RequestParam int discount) {
+        return productService.applyDiscount(idProduct, discount);
+    }
+
+    @PutMapping("/removeDiscount/{idProduct}")
+    public Product removeDiscount(@PathVariable UUID idProduct) {
+        return productService.removeDiscount(idProduct);
+    }
+
 
 }

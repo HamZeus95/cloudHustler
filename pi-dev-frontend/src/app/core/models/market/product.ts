@@ -8,6 +8,7 @@ export interface Product {
     imageUrl: string;
     productCategory?: ProductCategory;
     farmer?: Farmer;
+    discount?: number | null;
   }
   
   export interface ProductCategory {

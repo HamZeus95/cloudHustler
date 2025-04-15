@@ -1,0 +1,45 @@
+/* Modal animation */
+.modal {
+    display: none;
+  }
+  
+  .modal.show {
+    display: block;
+    animation: fadeIn 0.3s;
+  }
+  
+  .modal-backdrop {
+    display: none;
+  }
+  
+  .modal-backdrop.show {
+    display: block;
+    opacity: 0.5;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  /* Order card styles */
+  .order-card {
+    transition: transform 0.2s;
+  }
+  
+  .order-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .order-management-container {
+      padding: 0 10px;
+    }
+    
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }

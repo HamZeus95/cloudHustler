@@ -11,4 +11,6 @@ public interface IProductService {
     void deleteProduct(UUID idProduct);
     List<Product> retrieveAllProducts();
     Product retrieveProduct(UUID idProduct);
+    Product applyDiscount(UUID idProduct, int discount);
+    Product removeDiscount(UUID idProduct);
 }

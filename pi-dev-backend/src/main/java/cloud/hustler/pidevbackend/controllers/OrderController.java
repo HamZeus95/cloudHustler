@@ -33,4 +33,13 @@ public class OrderController {
     public Order getOrderById(@PathVariable UUID orderUuid) {
         return orderService.getOrderById(orderUuid);
     }
+
+    @PutMapping("/confirm/{orderUuid}")
+    public void confirm(@PathVariable UUID orderUuid) {
+        orderService.confirmOrder(orderUuid);
+    }
+    @PutMapping("/cancel/{orderUuid}")
+    public void cancel(@PathVariable UUID orderUuid) {
+        orderService.rejectOrder(orderUuid);
+    }
 }

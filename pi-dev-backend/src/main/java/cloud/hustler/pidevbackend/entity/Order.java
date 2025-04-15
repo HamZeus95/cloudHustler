@@ -31,7 +31,6 @@ public class Order {
     double totalPrice;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "customer_uuid")
     Consumer consumer;
 

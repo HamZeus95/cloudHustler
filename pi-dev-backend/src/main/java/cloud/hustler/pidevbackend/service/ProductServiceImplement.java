@@ -32,8 +32,18 @@ public class ProductServiceImplement implements IProductService {
 
     @Override
     public Product updateProduct(Product product) {
+        UUID id = product.getUuid_product(); // or whatever your ID field is
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+
+        // Optional: preserve original ProductCategory if it's not being updated
+        if (product.getProductCategory() == null) {
+            product.setProductCategory(existingProduct.getProductCategory());
+        }
+
         return productRepository.save(product);
     }
+
 
     @Override
     public void deleteProduct(UUID idProduct) {
@@ -48,5 +58,21 @@ public class ProductServiceImplement implements IProductService {
     @Override
     public Product retrieveProduct(UUID idProduct) {
         return productRepository.findById(idProduct).get();
+    }
+
+    @Override
+    public Product applyDiscount(UUID idProduct, int discount) {
+        Product product = productRepository.findById(idProduct).orElseThrow();
+        product.setDiscount(discount);
+        product.applyDiscount(discount);
+        return productRepository.save(product);
+    }
+
+    @Override
+    public Product removeDiscount(UUID idProduct) {
+        Product product = productRepository.findById(idProduct).orElseThrow();
+        product.setDiscount(null);
+        product.removeDiscount();
+        return productRepository.save(product);
     }
 }

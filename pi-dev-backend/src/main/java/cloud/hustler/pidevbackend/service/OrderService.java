@@ -74,4 +74,18 @@ public class OrderService implements IOrderService {
     public Order getOrderById( UUID orderUuid) {
         return orderRepository.findById(orderUuid).orElseThrow();
     }
+
+    @Override
+    public void confirmOrder(UUID orderUuid) {
+        Order order = orderRepository.findById(orderUuid).orElseThrow();
+        order.setStatus(OrderStatus.SUCCEEDED);
+        orderRepository.save(order);
+    }
+
+    @Override
+    public void rejectOrder(UUID orderUuid) {
+        Order order = orderRepository.findById(orderUuid).orElseThrow();
+        order.setStatus(OrderStatus.CANCELLED);
+        orderRepository.save(order);
+    }
 }

@@ -15,6 +15,11 @@ import { FarmManagmentComponent } from './pages/farm-managment/farm-managment.co
 import { FarmTableComponent } from './components/farm-table/farm-table.component';
 import { BlogManagmentComponent } from './pages/blog-managment/blog-managment.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MarketplaceManagementComponent } from './pages/marketplace-management/marketplace-management.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ProductslistComponent } from './components/productslist/productslist.component';
+import { ProductCategorieslistComponent } from './components/product-categorieslist/product-categorieslist.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
 
 
 @NgModule({
@@ -32,14 +37,19 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     //declarations of pages
     FarmManagmentComponent,
     EventComponent,
-    BlogManagmentComponent
+    BlogManagmentComponent,
+    MarketplaceManagementComponent,
+    ProductslistComponent,
+    ProductCategorieslistComponent,
+    OrderListComponent
   ],
   imports: [
     CommonModule,
     BackofficeRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    DragDropModule
+    DragDropModule,
+    HttpClientModule
     
   ]
   //styles

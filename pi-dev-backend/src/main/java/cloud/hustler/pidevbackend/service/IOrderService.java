@@ -9,4 +9,6 @@ public interface IOrderService {
     Order checkout(UUID customerUuid);
     List<Order> getOrdersByCustomer(UUID customerUuid);
     Order getOrderById( UUID orderUuid);
+    void confirmOrder(UUID orderUuid);
+    void rejectOrder(UUID orderUuid);
 }

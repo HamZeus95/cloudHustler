@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.*;
@@ -17,6 +18,7 @@ import java.util.Set;
 public class Consumer extends User {
 
     @OneToMany(mappedBy = "consumer")
+    @JsonIgnore
     Set<Order> orders= new HashSet<>();
 
 

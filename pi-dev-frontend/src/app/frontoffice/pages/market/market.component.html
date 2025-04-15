@@ -208,11 +208,22 @@
                   <img [src]="product.imageUrl" alt="">
                   <!-- Product Tags -->
                   <span class="product-tags">{{product.description}}</span>
+
+                  <span *ngIf="product.discount" class="discount-ribbon">
+                    -{{ product.discount }}%
+                  </span>
+                  
                   <!-- Product Meta Data -->
                   <div class="product-meta-data">
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                    <a  data-toggle="tooltip" (click)="addToCart(product.uuid_product)" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
+                    <a 
+                    data-toggle="tooltip" 
+                    data-placement="top" 
+                    title="Add To Cart" 
+                    (click)="product.quantity > 0 && addToCart(product.uuid_product)">
+                    <i class="icon_cart_alt"></i>
+                  </a>
+                                      <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
                     
                     <br><br><span class="badge" [ngClass]="{
                       'bg-success':  product.quantity > 0,
