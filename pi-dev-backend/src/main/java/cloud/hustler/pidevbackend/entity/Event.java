@@ -27,6 +27,9 @@ public class Event {
     String banner;
     LocalDate startDate;
     String endDate;
+    int maxParticipants;
+    private boolean isOnline; 
+    private String onlineLink;
     @ElementCollection
     List<String> imgsUrls;
     @ElementCollection
