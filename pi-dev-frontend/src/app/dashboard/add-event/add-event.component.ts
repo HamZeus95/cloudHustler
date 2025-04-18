@@ -10,10 +10,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-event.component.css']
 })
 export class AddEventComponent implements OnInit {
-  eventForm!: FormGroup ;
+  eventForm!: FormGroup;
+  http: any;
 
   constructor(
-    private fb: FormBuilder, // Injecter FormBuilder
+    private fb: FormBuilder,
     private eventService: EventServiceService,
     private router: Router
   ) {}
@@ -25,58 +26,109 @@ export class AddEventComponent implements OnInit {
       endDate: ['', Validators.required],
       max: ['', Validators.required],
       location: ['', Validators.required],
-      description: [''],
       banner: [''],
       isOnline: [false],
+      description: ['', Validators.required],
+
+
       onlineLink: ['']
     });
+
+    // 👉 Mise à jour dynamique des validateurs selon le type d’événement
+    this.eventForm.get('isOnline')!.valueChanges.subscribe((isOnline: boolean) => {
+      this.toggleLocationValidators(isOnline);
+    });
+
+    // 👇 Pour l’état initial
+    this.toggleLocationValidators(this.eventForm.get('isOnline')!.value);
   }
 
-  // Validation personnalisée pour vérifier si la date est dans le futur
+  toggleLocationValidators(isOnline: boolean) {
+    const locationControl = this.eventForm.get('location');
+    const onlineLinkControl = this.eventForm.get('onlineLink');
+
+    if (isOnline) {
+      locationControl?.clearValidators();
+      locationControl?.updateValueAndValidity();
+
+      onlineLinkControl?.setValidators([Validators.required]);
+      onlineLinkControl?.updateValueAndValidity();
+    } else {
+      locationControl?.setValidators([Validators.required]);
+      locationControl?.updateValueAndValidity();
+
+      onlineLinkControl?.clearValidators();
+      onlineLinkControl?.updateValueAndValidity();
+    }
+  }
+
   validateFutureDate(control: AbstractControl) {
     const today = new Date();
     const selectedDate = new Date(control.value);
-    
+    today.setHours(0, 0, 0, 0); // ignore heure
+    selectedDate.setHours(0, 0, 0, 0);
+
     if (selectedDate < today) {
-      return { 'pastDate': true };
+      return { pastDate: true };
     }
     return null;
   }
 
-  // Méthode pour obtenir la date actuelle pour l'attribut min dans l'input de date
   todayDate() {
     const today = new Date();
     return today.toISOString().split('T')[0]; // Format YYYY-MM-DD
   }
 
-  // Soumettre le formulaire
   onSubmit() {
     if (this.eventForm.valid) {
       const newEvent: Event = {
         name: this.eventForm.value.name,
         startDate: this.eventForm.value.date,
-        location: this.eventForm.value.location,
+        endDate: this.eventForm.value.endDate,
+        location: this.eventForm.value.location || '',
         uuid_event: '',
         description: this.eventForm.value.description || '',
         banner: this.eventForm.value.banner || '',
-        endDate: this.eventForm.value.endDate || '',
         maxParticipants: this.eventForm.value.max || '',
         imgsUrls: [],
         participants: [],
         isOnline: this.eventForm.value.isOnline,
-        onlineLink: this.eventForm.value.onlineLink
-    
+        onlineLink: this.eventForm.value.onlineLink || ''
       };
+    
 
-      this.eventService.addEvent(newEvent).subscribe(
-        (event) => {
-          console.log('Événement ajouté:', event);
-          this.router.navigate(['/dashboard/billing']);
-        },
-        (error) => {
-          console.error('Erreur lors de l\'ajout de l\'événement:', error);
+          // Une fois la description générée, envoyer l'événement avec la description au backend
+          this.eventService.addEvent(newEvent).subscribe(
+            (event) => {
+              console.log('Événement ajouté:', event);
+              this.router.navigate(['/dashboard/billing']);
+            },
+            (error) => {
+              console.error('Erreur lors de l\'ajout de l\'événement:', error);
+            }
+          );
         }
-      );
     }
+
+    generateDescription() {
+      const { name, location, date } = this.eventForm.value;
+    
+      if (name && location && date) {
+        this.eventService.generateDescription(name, location, date).subscribe(
+          (response: any) => {
+            // Injecte la description dans le champ
+            this.eventForm.patchValue({ description: response });
+          },
+          (error) => {
+            console.error("Erreur lors de la génération de la description :", error);
+          }
+        );
+      }
+    }
+    
   }
-}
+  
+ 
+  
+
+

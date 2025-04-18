@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Event } from 'src/app/core/modules/event';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable()
 export class EventServiceService {
@@ -45,5 +45,19 @@ export class EventServiceService {
       headers: { 'Content-Type': 'application/json' }
     });
   }
+  uploadImage(eventId: string, formData: FormData) {
+    return this.http.post<any>(`http://localhost:8089/Event/${eventId}/upload-image
+`, formData);
+  }
+
+  generateDescription(name: string, location: string, date: string) {
+    return this.http.post('http://localhost:8089/pi/Event/generate-description', {
+      name,
+      location,
+      date
+    }, { responseType: 'text' }); // Important pour récupérer une chaîne simple
+  }
+  
+
   
 }

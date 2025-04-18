@@ -3,6 +3,7 @@ import { EventServiceService } from '../event-service.service';
 import { Event } from '../core/modules/event';
 import * as L from 'leaflet';
 import { Subscription, interval } from 'rxjs';
+import { HttpClient } from '@angular/common/http';  // Importation de HttpClient
 
 @Component({
   selector: 'app-event',
@@ -12,7 +13,7 @@ import { Subscription, interval } from 'rxjs';
 export class EventComponent implements OnInit, OnDestroy {
   events: Event[] = [];
   filteredEvents: Event[] = [];
-  participantName: string = 'hey';
+  participantName: string = 'mmm';
   isLoading: boolean = true;
   errorMessage: string = '';
   searchText: string = '';
@@ -22,10 +23,16 @@ export class EventComponent implements OnInit, OnDestroy {
   eventsPerPage: number = 3; // Nombre d'événements par page
   totalPages: number = 0;
   private countdownSubscription: Subscription | null = null;
+  selectedImages: { [key: string]: File } = {};
+  selectedFile!: File;
+  imageLink: string = '';
+  uploadedImageUrls: { [key: string]: string } = {};
 
+  // Injection de HttpClient dans le constructeur
   constructor(
     private eventService: EventServiceService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private http: HttpClient  // Injection de HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -73,7 +80,6 @@ export class EventComponent implements OnInit, OnDestroy {
     return this.eventService.getCoordinates(location);
   }
 
-  // Applique le filtrage et la pagination
   filterEvents(): void {
     const lowerSearch = this.searchText.toLowerCase();
     let filtered = this.events.filter(event =>
@@ -90,7 +96,6 @@ export class EventComponent implements OnInit, OnDestroy {
     this.filteredEvents = filtered;
   }
 
-  // Change de page et applique le filtrage
   changePage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
@@ -169,4 +174,46 @@ export class EventComponent implements OnInit, OnDestroy {
       this.cdRef.detectChanges();
     });
   }
-}
+
+  hasEventStarted(event: any): boolean {
+    return new Date(event.startDate) <= new Date();
+  }
+  
+  onFileSelected(event: any, currentEvent: any) {
+    const file = event.target.files[0];
+  
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      this.http.post<{ imageUrl: string }>('http://localhost:8089/pi/Event/upload', formData)
+        .subscribe({
+          next: (response) => {
+            console.log('Réponse du serveur :', response);  // Afficher la réponse pour vérifier l'URL
+            // Vérifier que l'URL est bien présente dans la réponse
+            if (response && response.imageUrl) {
+              this.uploadedImageUrls[currentEvent.uuid_event] = response.imageUrl;
+            } else {
+              console.error('URL de l\'image non trouvée dans la réponse');
+            }
+          },
+          error: (err) => {
+            console.error('Erreur lors de l\'upload :', err);
+          }
+        });
+    }
+  }
+  
+  }
+  
+ 
+  
+
+  
+  
+  
+  
+  
+ 
+  
+  

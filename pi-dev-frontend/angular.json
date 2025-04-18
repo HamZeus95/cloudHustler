@@ -98,8 +98,10 @@
             "production": {
               "browserTarget": "pi-dev-frontend:build:production"
             },
+            
             "development": {
               "browserTarget": "pi-dev-frontend:build:development"
+        
             }
           },
           "defaultConfiguration": "development"

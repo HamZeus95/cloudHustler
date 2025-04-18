@@ -70,7 +70,7 @@
 
             <div *ngIf="event.startDate && countdown[event.uuid_event]" class="event-countdown-container">
               <div class="countdown-ring"></div>
-              <div class="event-countdown-text">
+              <div class="event-countdown-text" style="font-size: 10px;">
                 {{ countdown[event.uuid_event] }}
               </div>
             </div>
@@ -114,6 +114,25 @@
             <button class="btn btn-success w-100" (click)="participate(event.uuid_event)">
               Participer
             </button>
+
+<!-- Upload d’image si événement commencé -->
+<div *ngIf="hasEventStarted(event)" class="mt-3">
+  <label for="fileUpload">Uploader une image :</label>
+  <input type="file" (change)="onFileSelected($event, event)" class="form-control" />
+
+  <!-- Afficher le lien de l'image -->
+  <div *ngIf="uploadedImageUrls[event.uuid_event]" class="mt-2">
+    <a [href]="uploadedImageUrls[event.uuid_event]" target="_blank">Voir l’image uploadée</a>
+  </div>
+</div>
+
+
+<!-- Prévisualisation de l'image locale avant l'upload -->
+
+
+
+
+
 
             <div *ngIf="event.participants?.includes(participantName)" class="mt-3 text-center">
               <a class="btn btn-success" [href]="event.onlineLink" target="_blank">

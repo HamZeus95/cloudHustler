@@ -314,7 +314,7 @@
                   max is required.
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group" *ngIf="!eventForm.get('isOnline')!.value">
                 <label for="location">Location</label>
                 <input
                   type="text"
@@ -326,8 +326,9 @@
                   Location is required.
                 </div>
               </div>
+              
           
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="description">Description </label>
                 <textarea
                   id="description"
@@ -335,8 +336,15 @@
                   formControlName="description"
                   rows="3"
                 ></textarea>
+              </div> -->
+              <button type="button" (click)="generateDescription()">Générer une description</button>
+
+              <!-- Champ description éditable -->
+              <div>
+                <label for="description">Description</label>
+                <textarea id="description" formControlName="description" rows="5" cols="50"></textarea>
               </div>
-          
+              
               <div class="form-group">
                 <label for="banner">URL Poster</label>
                 <input
