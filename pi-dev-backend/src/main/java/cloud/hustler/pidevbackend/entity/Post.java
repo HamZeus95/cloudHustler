@@ -10,6 +10,12 @@ import java.util.*;
 
 @Entity
 
+@Getter
+@Setter
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
+
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Post {
