@@ -18,6 +18,7 @@
   <!-- Formulaire de création de post -->
   <div class="create-post-card">
     <app-add-post (postAdded)="loadPosts()"></app-add-post>
+
   </div>
 
   <!-- Liste des posts -->
@@ -69,6 +70,9 @@
       <div class="comments-section" *ngIf="post.idPost">
         <app-list-comment [postId]="post.idPost" (commentAdded)="loadPosts()"></app-list-comment>
       </div>
+
+      
     </div>
   </div>
 </div>
+<app-chat-ai></app-chat-ai>

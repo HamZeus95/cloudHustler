@@ -1,7 +1,9 @@
 package cloud.hustler.pidevbackend.controllers;
 
 import cloud.hustler.pidevbackend.entity.Post;
+import cloud.hustler.pidevbackend.service.EmailService;
 import cloud.hustler.pidevbackend.service.IPostService;
+import cloud.hustler.pidevbackend.service.SmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -12,18 +14,11 @@ import java.nio.file.Paths;
 import java.io.IOException;
 import java.nio.file.Files;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
-
-import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.UUID;
-
 import java.nio.file.StandardCopyOption;
-
 import java.util.Date;
 import java.text.SimpleDateFormat;
-
 import java.text.ParseException;
 import java.util.List;
 
@@ -35,6 +30,10 @@ public class PostController {
     @Autowired
     private IPostService postService;
 
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private SmsService smsService;
 
     public static final String UPLOAD_DIR = "uploads/";
 
@@ -49,32 +48,19 @@ public class PostController {
         String mediaUrl = null;
         if (media != null && !media.isEmpty()) {
             try {
-                // 1. Création du nom de fichier unique
                 String filename = UUID.randomUUID() + "_" + StringUtils.cleanPath(media.getOriginalFilename());
-
-                // 2. Chemin absolu du fichier
                 Path uploadPath = Paths.get(UPLOAD_DIR).toAbsolutePath().normalize();
                 Files.createDirectories(uploadPath);
                 Path filePath = uploadPath.resolve(filename);
-
-                // 3. Sauvegarde du fichier
-                // 3. Sauvegarde du fichier
-
                 Files.copy(media.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-                // 4. Génération de l'URL accessible via API
                 mediaUrl = "/pi-dev-backend/uploads/" + filename;
-
             } catch (IOException ex) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(null);
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
             } catch (Exception ex) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(null);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
             }
         }
 
-        // Gestion des dates (version simplifiée)
         Date createdDate = createdAt != null ? parseDate(createdAt) : new Date();
         Date updatedDate = updatedAt != null ? parseDate(updatedAt) : new Date();
 
@@ -85,23 +71,48 @@ public class PostController {
         post.setCreatedAt(createdDate);
         post.setUpdatedAt(updatedDate);
 
-        return ResponseEntity.ok(postService.addPost(post));
+        Post savedPost = postService.addPost(post);
+
+        // Envoi de l'email après création réussie du post
+        try {
+            emailService.sendPostNotification("mohamed242001taher@gmail.com", savedPost);
+        } catch (Exception e) {
+            System.err.println("Erreur lors de l'envoi de l'email: " + e.getMessage());
+            // Ne pas interrompre le flux même si l'email échoue
+        }
+
+
+        try {
+            // SMS
+            String smsContent = String.format(
+                    "Nouveau post créé:\nTitre: %s\n%s",
+                    savedPost.getTitle(),
+                    content.length() > 100 ? content.substring(0, 100) + "..." : content
+            );
+
+            smsService.sendSms("+21694790194", smsContent); // Numéro tunisien format E.164
+
+        } catch (Exception e) {
+            System.err.println("Erreur notification: " + e.getMessage());
+            // Continuer même si l'envoi échoue
+        }
+
+
+
+        return ResponseEntity.ok(savedPost);
     }
 
-    // Méthode helper pour parser les dates
-    private Date parseDate(String dateString) throws ParseException {
-        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(dateString);
-    }
-
+    // ... (le reste de vos méthodes existantes reste inchangé)
     @PutMapping("/updatePostById/{postId}")
     public ResponseEntity<Post> updatePostById(@PathVariable UUID postId, @RequestBody Post postUpdates) {
         try {
             Post updatedPost = postService.updatePostById(postId, postUpdates);
             return ResponseEntity.ok(updatedPost);
         } catch (Exception e) {
-            return ResponseEntity.notFound().build(); // ou un message d'erreur plus précis
+            return ResponseEntity.notFound().build();
         }
     }
+
     @DeleteMapping("/deletePost/{postId}")
     public ResponseEntity<Void> deletePostByIdWithCommentAndReaction(@PathVariable UUID postId) {
         postService.deletePostByIdWithCommentAndReaction(postId);
@@ -116,6 +127,10 @@ public class PostController {
     @GetMapping("/getPostById/{postId}")
     public Post getPostById(@PathVariable UUID postId) {
         return postService.getPostById(postId);
+    }
+
+    private Date parseDate(String dateString) throws ParseException {
+        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(dateString);
     }
 
     private Date parseDate(String dateString, Date defaultDate) {

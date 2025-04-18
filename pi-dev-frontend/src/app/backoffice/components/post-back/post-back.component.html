@@ -25,7 +25,7 @@
           <h3 class="post-title">{{ post.title || 'Sans titre' }}</h3>
           <span class="post-date">{{ post.createdAt | date:'medium' }}</span>
         </div>
-        <p class="post-excerpt">{{ (post.content || '').slice(0, 200) }}{{ (post.content?.length || 0) > 200 ? '...' : '' }}</p>
+        <p class="post-excerpt">{{ (post.content || '').slice(0, 200) }}{{ ((post.content || '').length > 200) ? '...' : '' }}</p>
       </div>
       
       <!-- Post Actions (Right Side) -->
@@ -68,4 +68,16 @@
       Suivant <i class="fas fa-chevron-right"></i>
     </button>
   </div>
+  
+
+</div>
+<div *ngIf="posts.length > 0" class="stats-section">
+  <h3 class="section-title">Statistiques des publications</h3>
+  
+  <!-- Composant de statistiques -->
+  <app-stats 
+    *ngIf="posts && comments"
+    [posts]="filteredPostsWithDates()" 
+    [comments]="validComments()">
+  </app-stats>
 </div>

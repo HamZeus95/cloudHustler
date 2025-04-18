@@ -4,6 +4,7 @@ import { PostService } from '../../../core/services/service';
 import { Post } from '../../../core/models/Post';
 import { TypeReaction } from '../../../core/models/TypeReaction';
 import { environment } from '../../../../environments/environment';
+import { commentaires } from 'src/app/core/models/Comment';
 
 @Component({
   selector: 'app-post-back',
@@ -13,6 +14,9 @@ import { environment } from '../../../../environments/environment';
 export class PostBackComponent {
   public TypeReaction = TypeReaction;
   posts: Post[] = [];
+  comments: commentaires[] = [];
+  isLoading = false; // Ajout de la propriété manquante
+
   paginatedPosts: Post[] = [];
   defaultImage = 'assets/images/default-image.png';
   selectedPostId: any;
@@ -31,6 +35,7 @@ export class PostBackComponent {
   ngOnInit(): void {
     this.loadPosts();
   }
+  
 
   reactions = [
     { type: TypeReaction.LIKE, emoji: '👍', label: 'Like' },
@@ -60,6 +65,8 @@ export class PostBackComponent {
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedPosts = this.posts.slice(startIndex, endIndex);
   }
+
+ 
 
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
@@ -172,5 +179,34 @@ export class PostBackComponent {
     }
     
     return pages;
+  }
+  loadAllData(): void {
+    this.isLoading = true;
+    
+    this.postService.getAllPosts().subscribe(posts => {
+      this.posts = posts;
+      
+      this.postService.getAllComment().subscribe((comments: commentaires[]) => {
+        this.comments = comments;
+        this.isLoading = false;
+      });
+    });
+  }
+  filteredPostsWithDates(): Post[] {
+    return this.posts
+      .filter(post => post.idPost && post.createdAt && !isNaN(new Date(post.createdAt).getTime()))
+      .map(post => ({
+        ...post,
+        createdAt: post.createdAt ? new Date(post.createdAt).toISOString() : new Date().toISOString()
+      }));
+  }
+
+  validComments(): commentaires[] {
+    return this.comments.filter(comment => 
+      this.getCommentPostId(comment) && comment.content);
+  }
+
+  private getCommentPostId(comment: commentaires): string | undefined {
+    return (comment as any).idPost;
   }
 }

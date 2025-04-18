@@ -26,6 +26,8 @@ import { CommonModule } from '@angular/common';
     FrontofficeModule,
     BackofficeModule,
     
+    
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

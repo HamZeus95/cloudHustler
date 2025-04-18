@@ -15,8 +15,7 @@ import { EditPostComponent } from './components/posts/edit-post/edit-post.compon
 import { AddCommentComponent } from './components/comment/add-comment/add-comment.component';
 import { EditCommentComponent } from './components/comment/edit-comment/edit-comment.component';
 import { PostBackComponent } from '../backoffice/components/post-back/post-back.component';
-import { PostService } from '../core/services/service';
-
+import { ChatAiComponent } from './components/chat-ai/chat-ai.component';
 const routes: Routes = [
 
 
@@ -30,6 +29,7 @@ const routes: Routes = [
         component: EditCommentComponent 
       },
       {path: "post-back",component: PostBackComponent},
+      {path: 'ia', component: ChatAiComponent},
 
   { path: '', component:HomeComponent },
   { path: 'blog', component: BlogComponent },
@@ -43,7 +43,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [
+    
+    RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class FrontofficeRoutingModule { }

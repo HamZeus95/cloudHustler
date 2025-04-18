@@ -366,3 +366,18 @@
   color: white;
   border-color: #007bff;
 }
+/* Ajoutez dans post-back.component.css */
+.stats-section {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #eaeaea;
+}
+
+.section-title {
+  color: #2c3e50;
+  border-bottom: 2px solid #ecf0f1;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}

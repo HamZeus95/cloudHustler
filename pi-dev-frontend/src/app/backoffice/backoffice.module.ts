@@ -10,6 +10,8 @@ import { SettingsPanelComponent } from './components/settings-panel/settings-pan
 import { PostBackComponent } from './components/post-back/post-back.component';
 import { BlogManagmentComponent } from './pages/blog-managment/blog-managment.component';
 import { CommentBackComponent } from './components/comment-back/comment-back.component';
+import { StatsComponent } from './components/stats/stats.component';
+import { NgChartsModule } from 'ng2-charts';
 
 
 
@@ -28,15 +30,18 @@ import { CommentBackComponent } from './components/comment-back/comment-back.com
 
     //declarations of pages
     BlogManagmentComponent,
-      CommentBackComponent
+      CommentBackComponent,
+      StatsComponent
   ],
   imports: [
     CommonModule,
     BackofficeRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    NgChartsModule,
 
   ]
+  
   //styles
 
 
