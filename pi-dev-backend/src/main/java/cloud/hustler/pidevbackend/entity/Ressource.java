@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -17,9 +17,12 @@ import java.util.UUID;
 public class Ressource {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
-    UUID uuid_ressource;
-    String name;
-    int Quantity;
+    private UUID uuid_ressource;
+    private String name;
+    private double quantity;
+    private String unit;
+    private double cost;
+
 
 
 
