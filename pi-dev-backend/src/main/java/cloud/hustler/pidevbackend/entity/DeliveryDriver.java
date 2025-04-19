@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -16,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Builder
+@SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @DiscriminatorValue("DeliveryDriver")
 public class DeliveryDriver extends User {

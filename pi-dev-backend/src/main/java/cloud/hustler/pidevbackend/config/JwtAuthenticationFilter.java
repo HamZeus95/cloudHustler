@@ -31,10 +31,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().contains("/auth")) {
+        // Skip authentication for auth endpoints and error pages
+        String path = request.getServletPath();
+        if (path.contains("/auth") || path.contains("/error")) {
             filterChain.doFilter(request, response);
             return;
         }
+        
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;

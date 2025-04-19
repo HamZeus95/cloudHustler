@@ -9,6 +9,9 @@ import { JobsComponent } from './pages/jobs/jobs.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { LoginComponent } from './pages/auth/login/login.component';
+import { RegisterComponent } from './pages/auth/register/register.component';
+import { OtpComponent } from './pages/auth/otp/otp.component';
+import { LogoutComponent } from './pages/auth/logout/logout.component';
 
 const routes: Routes = [
 
@@ -22,8 +25,11 @@ const routes: Routes = [
     {path:'jobs',component:JobsComponent},
     {path:'contact',component:ContactComponent},
     {path: 'login', component: LoginComponent},
+    {path: 'register', component: RegisterComponent},
+    {path: "verify-email", component: OtpComponent},
+    {path: 'logout', component: LogoutComponent},
     {path: 'not-found', component: NotFoundComponent}
-   
+
 ];
 
 @NgModule({

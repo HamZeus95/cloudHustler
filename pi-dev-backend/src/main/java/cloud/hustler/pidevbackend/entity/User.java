@@ -53,6 +53,10 @@ public abstract class User implements UserDetails {
     @JsonIgnore
     Set<Token> tokens = new HashSet<>();
 */
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
+  Set<Otp> otps = new HashSet<>();
+
     @Transient
     public String getRole(){
         DiscriminatorValue discriminator = this.getClass().getAnnotation(DiscriminatorValue.class);

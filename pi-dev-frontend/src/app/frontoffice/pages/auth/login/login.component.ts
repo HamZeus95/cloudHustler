@@ -53,6 +53,9 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(credentials).subscribe({
       next: (response) => {
+        // Clear the logged_out flag on successful login
+        localStorage.removeItem('logged_out');
+        
         this.isSubmitting = false;
         // Navigate to dashboard or home page after successful login
         this.router.navigate(['/backoffice']);

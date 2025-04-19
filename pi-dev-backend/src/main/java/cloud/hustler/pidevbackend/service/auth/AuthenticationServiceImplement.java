@@ -4,15 +4,20 @@ import cloud.hustler.pidevbackend.dto.AuthenticationRequest;
 import cloud.hustler.pidevbackend.dto.AuthenticationResponse;
 import cloud.hustler.pidevbackend.dto.RegisterRequest;
 import cloud.hustler.pidevbackend.dto.UserResponse;
-import cloud.hustler.pidevbackend.entity.Consumer;
-import cloud.hustler.pidevbackend.entity.User;
+import cloud.hustler.pidevbackend.entity.*;
+import cloud.hustler.pidevbackend.exception.UserAlreadyExistsException;
+import cloud.hustler.pidevbackend.repository.OtpRepository;
 import cloud.hustler.pidevbackend.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +26,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Random;
 
 @Service
 public class AuthenticationServiceImplement implements IAuthenticationService {
@@ -33,32 +40,120 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
     AuthenticationManager authenticationManager;
     @Autowired
     JwtServiceImplement jwtService;
+    @Autowired
+    private JavaMailSenderImpl mailSender;
+    @Autowired
+    private OtpRepository otpRepository;
+
 
     @Override
     public AuthenticationResponse register(RegisterRequest registerRequest) {
-        // register consumer user
-        var user = Consumer
-                .builder()
-                .email(registerRequest.getEmail())
-                .firstName(registerRequest.getFirstName())
-                .lastName(registerRequest.getLastName())
-                .birthDate(registerRequest.getBirthDate())
-                .address(registerRequest.getAddress())
-                .image(registerRequest.getImage())
-                .phone(registerRequest.getPhone())
-                .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .build();
-        userRepository.save(user);
+        // check if user already exists
+        if (userRepository.existsByEmail(registerRequest.getEmail())) {
+            throw new UserAlreadyExistsException("Email already registered. Please use a different email address or login to your existing account.");
+        }
+        // if registerRequest has getYearsOfExperience then build and expert else build a consumer
+        // check if user is a consumer or an expert
+        // Create either an user based on presence of speciality type
+        User user = createUser(registerRequest);
+        
+        // Make sure the user is not active until OTP verification
+        user.setActif(false);
+
+        // Save user and generate tokens
+        var savedUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
 
-            return AuthenticationResponse.builder()
-                                         .accessToken(jwtToken)
-                                         .refreshToken(refreshToken)
-                                         .build();
+        System.out.printf("User registered with email: %s\n", user);
+        
+        // Generate and send OTP
+        try {
+            Otp otp = generateOtp(savedUser);
+            sendOtpEmail(savedUser, otp.getOtpValue());
+        } catch (MessagingException e) {
+            System.err.println("Failed to send OTP email: " + e.getMessage());
+            // Continue with registration process even if email fails
+        }
+
+        return AuthenticationResponse.builder()
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken) 
+                .userResponse(UserResponse.builder()
+                        .address(savedUser.getAddress())
+                        .userUUID(savedUser.getUuid_user())
+                        .image(savedUser.getImage())
+                        .birthDate(savedUser.getBirthDate())
+                        .firstName(savedUser.getFirstName())
+                        .lastName(savedUser.getLastName())
+                        .phone(savedUser.getPhone())
+                        .email(savedUser.getEmail())
+                        .Role(savedUser.getRole())
+                        .isActif(savedUser.isActif())
+                        .build())
+                .build();
 
     }
+    private User createUser(RegisterRequest request) {
 
+        System.out.printf("Creating user with email: %s\n", request);
+        // Common user properties builder
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
+
+        // Create Expert or Consumer based on speciality type
+        if (request.getRole() != null && request.getRole().equals("expert")) {
+            return Expert.builder()
+                    .email(request.getEmail())
+                    .firstName(request.getFirstName())
+                    .lastName(request.getLastName())
+                    .birthDate(request.getBirthDate())
+                    .address(request.getAddress())
+                    .image(request.getImage())
+                    .phone(request.getPhone())
+                    .password(encodedPassword)
+                    .yearsOfExperience(request.getYearsOfExperience())
+                    .typeSpeciality(request.getTypeSpeciality())
+                    .build();
+        } else if (request.getRole() != null && request.getRole().equals("farmer")) {
+
+            return Farmer.builder()
+                    .email(request.getEmail())
+                    .lastName(request.getLastName())
+                    .birthDate(request.getBirthDate())
+                    .address(request.getAddress())
+                    .image(request.getImage())
+                    .phone(request.getPhone())
+                    .password(encodedPassword)
+                    .experience(request.getExperience())
+                    .build();
+        }
+        else if (request.getRole() != null && request.getRole().equals("delivery")) {
+            return DeliveryDriver.builder()
+                    .email(request.getEmail())
+                    .firstName(request.getFirstName())
+                    .lastName(request.getLastName())
+                    .birthDate(request.getBirthDate())
+                    .address(request.getAddress())
+                    .image(request.getImage())
+                    .phone(request.getPhone())
+                    .password(encodedPassword)
+                    .isAvailable(request.isAvailable()) // Using isAvailable() getter that matches our renamed field
+                    .build();
+        }
+
+            return Consumer.builder()
+                    .email(request.getEmail())
+                    .firstName(request.getFirstName())
+                    .lastName(request.getLastName())
+                    .birthDate(request.getBirthDate())
+                    .address(request.getAddress())
+                    .image(request.getImage())
+                    .phone(request.getPhone())
+                    .password(encodedPassword)
+                    .build();
+
+    }
+   
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
         authenticationManager.authenticate(
@@ -241,6 +336,30 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
                 .build();
     }
 
+    @Override
+    public void sendVerificationEmail(String emailTo, String subject, String htmlContent) throws MessagingException {
+        try {
+            System.out.println("Attempting to send email to: " + emailTo);
+            System.out.println("Using mail server: " + mailSender.getHost() + ":" + mailSender.getPort());
+            
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setTo(emailTo);
+            helper.setSubject(subject);
+            helper.setText(htmlContent, true); // Set HTML content
+            helper.setFrom(mailSender.getUsername()); // Explicitly set sender
+
+            mailSender.send(message);
+            System.out.println("Email sent successfully to: " + emailTo);
+        } catch (Exception e) {
+            System.err.println("Failed to send email to: " + emailTo);
+            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            throw e; // Re-throw to be handled by caller
+        }
+    }
+
     private void sendErrorResponse(HttpServletResponse response, String message, HttpStatus status) throws IOException {
         response.setStatus(status.value());
         response.setContentType("application/json");
@@ -248,5 +367,64 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
                 "error", status.getReasonPhrase(),
                 "message", message
         ));
+    }
+    
+    // OTP implementation methods
+    @Override
+    public Otp generateOtp(User user) {
+        // Generate a random 6-digit OTP
+        Random random = new Random();
+        String otpValue = String.format("%06d", random.nextInt(1000000));
+        
+        // Create OTP object with 15 minutes expiration
+        Otp otp = new Otp(user, otpValue, 15);
+        
+        // Save to database
+        return otpRepository.save(otp);
+    }
+    
+    @Override
+    public boolean verifyOtp(String otpValue, String email) {
+        // Find user by email
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+        
+        // Find OTP by value and user
+        return otpRepository.findByOtpValueAndUserAndUsedFalse(otpValue, user)
+                .map(otp -> {
+                    // Check if OTP is expired
+                    if (otp.isExpired()) {
+                        return false;
+                    }
+                    
+                    // Mark OTP as used
+                    otp.markAsUsed();
+                    otpRepository.save(otp);
+                    
+                    // Activate user
+                    user.setActif(true);
+                    userRepository.save(user);
+                    
+                    return true;
+                })
+                .orElse(false);
+    }
+    
+    @Override
+    public void sendOtpEmail(User user, String otpValue) throws MessagingException {
+        String subject = "Account Verification OTP";
+        String htmlContent = "<div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>"
+                + "<h2 style='color: #4CAF50;'>Account Verification</h2>"
+                + "<p>Hello " + user.getFirstName() + ",</p>"
+                + "<p>Thank you for registering with us. To verify your account, please use the following OTP (One Time Password):</p>"
+                + "<div style='background-color: #f2f2f2; padding: 15px; text-align: center; font-size: 24px; letter-spacing: 5px; font-weight: bold;'>" 
+                + otpValue 
+                + "</div>"
+                + "<p>This OTP is valid for 15 minutes.</p>"
+                + "<p>If you did not request this verification, please ignore this email.</p>"
+                + "<p>Best regards,<br>The Team</p>"
+                + "</div>";
+        
+        sendVerificationEmail(user.getEmail(), subject, htmlContent);
     }
 }

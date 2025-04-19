@@ -16,6 +16,8 @@ import { FarmTableComponent } from './components/farm-table/farm-table.component
 import { BlogManagmentComponent } from './pages/blog-managment/blog-managment.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
+ 
+
 
 @NgModule({
   declarations: [
@@ -39,7 +41,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     BackofficeRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    DragDropModule
+    DragDropModule,
     
   ]
   //styles

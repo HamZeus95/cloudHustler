@@ -2,9 +2,15 @@ package cloud.hustler.pidevbackend.controllers;
 
 import cloud.hustler.pidevbackend.dto.AuthenticationRequest;
 import cloud.hustler.pidevbackend.dto.AuthenticationResponse;
+import cloud.hustler.pidevbackend.dto.OtpVerificationRequest;
 import cloud.hustler.pidevbackend.dto.RegisterRequest;
-import cloud.hustler.pidevbackend.service.auth.IAuthenticationService;
+import cloud.hustler.pidevbackend.entity.Otp;
+import cloud.hustler.pidevbackend.entity.User;
+import cloud.hustler.pidevbackend.repository.OtpRepository;
+import cloud.hustler.pidevbackend.repository.UserRepository;
+import cloud.hustler.pidevbackend.service.auth.AuthenticationServiceImplement;
 import cloud.hustler.pidevbackend.service.auth.JwtServiceImplement;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,23 +20,35 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
     @Autowired
-    IAuthenticationService authenticationService;
+    AuthenticationServiceImplement authenticationService;
     
     @Autowired
     JwtServiceImplement jwtService;
     
     @Autowired
     UserDetailsService userDetailsService;
+    
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    OtpRepository otpRepository;
+    
     
     @Value("${application.security.jwt.refresh-token.expiration}")
     private long refreshExpiration;
@@ -45,11 +63,71 @@ public class AuthenticationController {
         // Set the refresh token in an HttpOnly cookie
         addRefreshTokenCookie(response, authResponse.getRefreshToken());
         
-        // Return the auth response without the refresh token in the JSON body
+        // Return the auth response with the access token but without the refresh token in the JSON body
         return ResponseEntity.ok(AuthenticationResponse.builder()
                 .accessToken(authResponse.getAccessToken())
                 .userResponse(authResponse.getUserResponse())
                 .build());
+    }
+    
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verifyOtp(@RequestBody OtpVerificationRequest request) {
+        boolean isVerified = authenticationService.verifyOtp(request.getOtpValue(), request.getEmail());
+        
+        if (isVerified) {
+            // If OTP verification is successful, find the user and return their updated info with tokens
+            User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + request.getEmail()));
+            
+            var jwtToken = jwtService.generateToken(user);
+            var refreshToken = jwtService.generateRefreshToken(user);
+            
+            // Return success response with new tokens
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "Email verification successful");
+            response.put("accessToken", jwtToken);
+            response.put("refreshToken", refreshToken);
+            response.put("user", user);
+            
+            return ResponseEntity.ok(response);
+        } else {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Invalid or expired OTP");
+            
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
+    }
+    
+    @PostMapping("/resend-otp")
+    public ResponseEntity<?> resendOtp(@RequestParam String email) {
+        try {
+            User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+            
+            // Generate new OTP and send email
+            var otp = authenticationService.generateOtp(user);
+            authenticationService.sendOtpEmail(user, otp.getOtpValue());
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "OTP has been sent to your email");
+            
+            return ResponseEntity.ok(response);
+        } catch (MessagingException e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Failed to send OTP email");
+            
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        } catch (UsernameNotFoundException e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", e.getMessage());
+            
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
     }
     
     @PostMapping("/authenticate")
@@ -105,17 +183,25 @@ public class AuthenticationController {
     }
     
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletResponse response) {
-        // Clear the refresh token cookie
-        Cookie cookie = new Cookie("refresh_token", null);
-        cookie.setMaxAge(0);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true); // Set to true in production with HTTPS
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+        // Create a cookie with matching parameters to clear the refresh token
+        Cookie cookie = new Cookie("refresh_token", "");
+        cookie.setMaxAge(0);  // Expire immediately
+        cookie.setPath("/");  // Same path as original
+        cookie.setHttpOnly(true); // Same HttpOnly setting as original
+        // Don't set domain for localhost
+        
+        // Add the cookie to the response
         response.addCookie(cookie);
         
+        // Add specific header for SameSite=Lax attribute (matching original cookie)
+        response.addHeader("Set-Cookie", 
+            "refresh_token=; Path=/; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; SameSite=Lax");
+
+        // Return success response
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("message", "Logged out successfully");
+        responseBody.put("status", "success");
         
         return ResponseEntity.ok(responseBody);
     }
@@ -193,13 +279,63 @@ public class AuthenticationController {
         }
     }
     
+    @GetMapping("/check-otp/{email}")
+    public ResponseEntity<?> checkOtpStatus(@PathVariable String email) {
+        try {
+            User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+            
+            // Get all OTPs for this user
+            List<Otp> otps = otpRepository.findAll().stream()
+                    .filter(otp -> otp.getUser() != null &&
+                            otp.getUser().getEmail() != null &&
+                            otp.getUser().getEmail().equals(email))
+                    .collect(Collectors.toList());
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("userEmail", email);
+            response.put("userActive", user.isActif());
+            response.put("otpCount", otps.size());
+            
+            if (!otps.isEmpty()) {
+                List<Map<String, Object>> otpDetails = otps.stream()
+                    .map(otp -> {
+                        Map<String, Object> details = new HashMap<>();
+                        details.put("otpValue", otp.getOtpValue());
+                        details.put("createdAt", otp.getCreated_at());
+                        details.put("expiresAt", otp.getExpires_at());
+                        details.put("used", otp.isUsed());
+                        details.put("expired", otp.isExpired());
+                        return details;
+                    })
+                    .collect(Collectors.toList());
+                
+                response.put("otpDetails", otpDetails);
+            }
+            
+            return ResponseEntity.ok(response);
+        } catch (UsernameNotFoundException e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
+    }
+    
     private void addRefreshTokenCookie(HttpServletResponse response, String refreshToken) {
+        // Standard cookie approach
         Cookie cookie = new Cookie("refresh_token", refreshToken);
         cookie.setMaxAge((int) (refreshExpiration / 1000)); // Convert from ms to seconds
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         cookie.setSecure(false); // Set to true in production with HTTPS
         response.addCookie(cookie);
+        
+        // Also set as header for better cross-browser compatibility with explicit SameSite=Lax
+        response.addHeader("Set-Cookie", 
+            String.format("refresh_token=%s; Path=/; Max-Age=%d; Expires=%s; HttpOnly; SameSite=Lax",
+                refreshToken,
+                (int) (refreshExpiration / 1000),
+                new java.util.Date(System.currentTimeMillis() + refreshExpiration).toGMTString()));
     }
     
     private String extractRefreshTokenFromCookie(HttpServletRequest request) {

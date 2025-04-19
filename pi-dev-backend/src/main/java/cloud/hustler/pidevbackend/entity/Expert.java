@@ -3,6 +3,7 @@ package cloud.hustler.pidevbackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -16,7 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Builder
+@SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @DiscriminatorValue("Expert")
 public class Expert extends User {

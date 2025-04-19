@@ -14,10 +14,7 @@ import { JwtInterceptor } from './auth/interceptors/jwt';
 import { TokenStorageService } from './auth/service/token-storage.service';
 import { AuthService } from './auth/service/authentication.service';
 
-// Token getter function for JWT module
-export function tokenGetter() {
-  return localStorage.getItem('auth-token');
-}
+ 
 
 @NgModule({
   declarations: [
@@ -35,14 +32,14 @@ export function tokenGetter() {
     BackofficeModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: tokenGetter,
+        tokenGetter: () => { return null; },
         allowedDomains: ["localhost:4200"],
         disallowedRoutes: [
-          "localhost:4200/api/v1/auth/authenticate",
-          "localhost:4200/api/v1/auth/register",
-          "localhost:4200/api/v1/auth/refresh-token",
-          "localhost:4200/api/v1/auth/logout",
-          "localhost:4200/api/v1/auth/validate-session"
+          "/api/v1/auth/authenticate",
+          "/api/v1/auth/register",
+          "/api/v1/auth/refresh-token",
+          "/api/v1/auth/logout",
+          "/api/v1/auth/validate-session"
         ]
       }
     })

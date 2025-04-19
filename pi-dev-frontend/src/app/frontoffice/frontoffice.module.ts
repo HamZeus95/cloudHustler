@@ -16,6 +16,10 @@ import { JobsComponent } from './pages/jobs/jobs.component';
 import { MarketComponent } from './pages/market/market.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { LoginComponent } from './pages/auth/login/login.component';
+import { RegisterComponent } from './pages/auth/register/register.component';
+import { OtpComponent } from './pages/auth/otp/otp.component';
+import { LogoutComponent } from './pages/auth/logout/logout.component';
+ 
 
 @NgModule({
   declarations: [
@@ -29,8 +33,10 @@ import { LoginComponent } from './pages/auth/login/login.component';
     JobsComponent,
     MarketComponent,
     NotFoundComponent,
-    LoginComponent
-
+    LoginComponent,
+    RegisterComponent,
+    OtpComponent,
+    LogoutComponent
   ],
   imports: [
     CommonModule,

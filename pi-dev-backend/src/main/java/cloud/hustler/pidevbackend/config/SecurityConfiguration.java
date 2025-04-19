@@ -22,6 +22,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class SecurityConfiguration {
+    // Note: The application has a context path of /api/v1, so these paths are relative to that
     private static final String[] WHITE_LIST_URL = {
             "/auth/**",
             "/v2/api-docs",
@@ -33,7 +34,8 @@ public class SecurityConfiguration {
             "/configuration/security",
             "/swagger-ui/**",
             "/webjars/**",
-            "/swagger-ui.html"
+            "/swagger-ui.html",
+            "/error"  // Added error path to allow access to error pages
     };
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
@@ -56,7 +58,7 @@ public class SecurityConfiguration {
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout ->
-                        logout.logoutUrl("/api/v1/auth/logout")
+                        logout.logoutUrl("/auth/logout")  // Changed from /api/v1/auth/logout since context path is already /api/v1
                                 .addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 )
