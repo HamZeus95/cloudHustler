@@ -1,9 +1,6 @@
 package cloud.hustler.pidevbackend.controllers;
 
-import cloud.hustler.pidevbackend.dto.AuthenticationRequest;
-import cloud.hustler.pidevbackend.dto.AuthenticationResponse;
-import cloud.hustler.pidevbackend.dto.OtpVerificationRequest;
-import cloud.hustler.pidevbackend.dto.RegisterRequest;
+import cloud.hustler.pidevbackend.dto.*;
 import cloud.hustler.pidevbackend.entity.Otp;
 import cloud.hustler.pidevbackend.entity.User;
 import cloud.hustler.pidevbackend.repository.OtpRepository;
@@ -319,6 +316,74 @@ public class AuthenticationController {
             errorResponse.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
+    }
+    
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+        try {
+            authenticationService.createPasswordResetTokenForUser(request.getEmail());
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "Password reset email has been sent to your email address");
+            
+            return ResponseEntity.ok(response);
+        } catch (UsernameNotFoundException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "If an account with this email exists, a password reset link has been sent");
+            
+            // Return 200 even if email doesn't exist (security best practice)
+            return ResponseEntity.ok(response);
+        } catch (MessagingException e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Failed to send reset email. Please try again.");
+            
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+    
+    @GetMapping("/validate-reset-token")
+    public ResponseEntity<?> validateResetToken(@RequestParam String token) {
+        boolean isValid = authenticationService.validatePasswordResetToken(token);
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("valid", isValid);
+        
+        if (!isValid) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request) {
+        // Validate password and confirm password match
+        if (!request.getPassword().equals(request.getConfirmPassword())) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Passwords do not match");
+            
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
+        
+        boolean result = authenticationService.resetPassword(request.getToken(), request.getPassword());
+        
+        if (!result) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Invalid or expired token");
+            
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("message", "Password has been reset successfully");
+        
+        return ResponseEntity.ok(response);
     }
     
     private void addRefreshTokenCookie(HttpServletResponse response, String refreshToken) {

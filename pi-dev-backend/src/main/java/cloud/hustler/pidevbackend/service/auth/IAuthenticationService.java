@@ -4,6 +4,7 @@ import cloud.hustler.pidevbackend.dto.AuthenticationRequest;
 import cloud.hustler.pidevbackend.dto.AuthenticationResponse;
 import cloud.hustler.pidevbackend.dto.RegisterRequest;
 import cloud.hustler.pidevbackend.entity.Otp;
+import cloud.hustler.pidevbackend.entity.PasswordResetToken;
 import cloud.hustler.pidevbackend.entity.User;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,4 +27,10 @@ public interface IAuthenticationService {
     public Otp generateOtp(User user);
     public boolean verifyOtp(String otpValue, String email);
     public void sendOtpEmail(User user, String otpValue) throws MessagingException;
+    
+    // Password reset methods
+    public PasswordResetToken createPasswordResetTokenForUser(String email) throws MessagingException;
+    public boolean validatePasswordResetToken(String token);
+    public boolean resetPassword(String token, String newPassword);
+    public void sendPasswordResetEmail(User user, String token) throws MessagingException;
 }

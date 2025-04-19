@@ -305,6 +305,66 @@ export class AuthService {
       );
   }
 
+  // Method to request password reset email
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/forgot-password`, { email })
+      .pipe(
+        tap(response => {
+          console.log('Forgot password response:', response);
+        }),
+        catchError(error => {
+          console.error('Forgot password error:', error);
+          let errorMessage = 'Failed to process reset password request';
+          
+          if (error.error && error.error.message) {
+            errorMessage = error.error.message;
+          }
+          
+          return throwError(() => new Error(errorMessage));
+        })
+      );
+  }
+  
+  // Method to validate reset token
+  validateResetToken(token: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/validate-reset-token`, { params: { token } })
+      .pipe(
+        tap(response => {
+          console.log('Validate reset token response:', response);
+        }),
+        catchError(error => {
+          console.error('Validate reset token error:', error);
+          let errorMessage = 'Invalid or expired reset token';
+          
+          if (error.error && error.error.message) {
+            errorMessage = error.error.message;
+          }
+          
+          return throwError(() => new Error(errorMessage));
+        })
+      );
+  }
+  
+  // Method to reset password
+  resetPassword(token: string, password: string, confirmPassword: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/reset-password`, { token, password, confirmPassword })
+      .pipe(
+        tap(response => {
+          console.log('Reset password response:', response);
+        }),
+        catchError(error => {
+          console.error('Reset password error:', error);
+          let errorMessage = 'Failed to reset password';
+          
+          if (error.error && error.error.message) {
+            errorMessage = error.error.message;
+          }
+          
+          return throwError(() => new Error(errorMessage));
+        })
+      );
+  }
+
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred';
     if (error.error instanceof ErrorEvent) {

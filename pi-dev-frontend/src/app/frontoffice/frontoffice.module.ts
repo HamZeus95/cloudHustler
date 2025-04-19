@@ -19,6 +19,8 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { OtpComponent } from './pages/auth/otp/otp.component';
 import { LogoutComponent } from './pages/auth/logout/logout.component';
+import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
  
 
 @NgModule({
@@ -36,7 +38,9 @@ import { LogoutComponent } from './pages/auth/logout/logout.component';
     LoginComponent,
     RegisterComponent,
     OtpComponent,
-    LogoutComponent
+    LogoutComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,

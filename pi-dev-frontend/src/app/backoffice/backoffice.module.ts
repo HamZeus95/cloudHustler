@@ -15,6 +15,8 @@ import { FarmManagmentComponent } from './pages/farm-managment/farm-managment.co
 import { FarmTableComponent } from './components/farm-table/farm-table.component';
 import { BlogManagmentComponent } from './pages/blog-managment/blog-managment.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CoreDirectivesModule } from '../core/directives/directives';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
  
 
@@ -34,14 +36,16 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     //declarations of pages
     FarmManagmentComponent,
     EventComponent,
-    BlogManagmentComponent
+    BlogManagmentComponent,
+    DashboardComponent,
   ],
   imports: [
     CommonModule,
     BackofficeRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    DragDropModule,
+    DragDropModule, 
+    CoreDirectivesModule
     
   ]
   //styles

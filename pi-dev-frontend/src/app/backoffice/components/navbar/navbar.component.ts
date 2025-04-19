@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../auth/service/authentication.service';
 import { TokenStorageService } from '../../../auth/service/token-storage.service';
 import { InitialsPipe } from '../../../core/pipes/initials.pipe';
+import { SidebarService } from '../../../core/services/sidebar.service';
 
 @Component({
   selector: 'app-navbar',
@@ -21,7 +22,8 @@ export class NavbarComponent implements OnInit {
     private authService: AuthService,
     private tokenStorageService: TokenStorageService,
     private router: Router,
-    private initialsPipe: InitialsPipe
+    private initialsPipe: InitialsPipe,
+    private sidebarService: SidebarService
   ) {}
 
   ngOnInit(): void {
@@ -37,11 +39,54 @@ export class NavbarComponent implements OnInit {
     this.tokenStorageService.getUser().subscribe(user => {
       this.currentUser = user;
     });
+    
+    // Add click handler to close dropdowns when clicking outside
+    document.addEventListener('click', (event: Event) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.dropdown')) {
+        this.closeAllDropdowns();
+      }
+    });
   }
 
-  onSearch(): void {
-    console.log('Search query:', this.searchQuery);
-    // Implement search logic
+  // Custom dropdown toggle handlers
+  toggleUserDropdown(event: Event): void {
+    event.stopPropagation(); // Prevent the document click handler from firing
+    const dropdown = document.getElementById('userDropdownMenuList');
+    
+    // Close other dropdowns
+    const notificationDropdown = document.getElementById('notificationDropdownList');
+    if (notificationDropdown) {
+      notificationDropdown.classList.remove('show');
+    }
+    
+    // Toggle current dropdown
+    if (dropdown) {
+      dropdown.classList.toggle('show');
+    }
+  }
+  
+  toggleNotificationDropdown(event: Event): void {
+    event.stopPropagation(); // Prevent the document click handler from firing
+    const dropdown = document.getElementById('notificationDropdownList');
+    
+    // Close other dropdowns
+    const userDropdown = document.getElementById('userDropdownMenuList');
+    if (userDropdown) {
+      userDropdown.classList.remove('show');
+    }
+    
+    // Toggle current dropdown
+    if (dropdown) {
+      dropdown.classList.toggle('show');
+    }
+  }
+  
+  closeAllDropdowns(): void {
+    const dropdowns = document.querySelectorAll('.dropdown-menu');
+    dropdowns.forEach(dropdown => {
+      dropdown.classList.remove('show');
+    });
   }
 
   getUserInitials(): string {
@@ -76,6 +121,10 @@ export class NavbarComponent implements OnInit {
   }
 
   toggleSidebar(): void {
+    // Use the sidebar service to toggle
+    this.sidebarService.toggleSidebar();
+    
+    // Also emit the event for backward compatibility
     this.toggleSidebarEvent.emit();
   }
 

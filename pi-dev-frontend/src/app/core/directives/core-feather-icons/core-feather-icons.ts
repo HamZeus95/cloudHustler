@@ -3,6 +3,11 @@ import * as Feather from 'feather-icons';
 // FontAwesome imports
 import { icon, Icon } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+// Material Design Icons
+import * as mdi from '@mdi/js';
+ 
 
 @Directive({
   selector: '[app-icon]'
@@ -11,7 +16,8 @@ export class IconDirective implements OnChanges {
   private _nativeElement: any;
 
   @Input('app-icon') name!: string;
-  @Input() library: 'feather' | 'fontawesome'= 'feather';
+  @Input() library: 'feather' | 'fontawesome' | 'mdi'= 'feather';
+  @Input() variant: 'solid' | 'regular' | 'brands' = 'solid'; // For FontAwesome
   @Input() class!: string;
   @Input() size!: string;
   @Input() inner!: boolean;
@@ -28,6 +34,7 @@ export class IconDirective implements OnChanges {
     // Extract parameters
     this.name = changes['name']?.currentValue || this.name || '';
     this.library = changes['library']?.currentValue || this.library || 'feather';
+    this.variant = changes['variant']?.currentValue || this.variant || 'solid';
     this.size = changes['size']?.currentValue || this.size || '25';
     this.class = changes['class']?.currentValue || this.class || '';
 
@@ -40,7 +47,10 @@ export class IconDirective implements OnChanges {
         break;
       case 'fontawesome':
         svg = this.renderFontAwesomeIcon();
-        break; 
+        break;
+      case 'mdi':
+        svg = this.renderMaterialDesignIcon();
+        break;
       default:
         console.error(`Unsupported icon library: ${this.library}`);
     }
@@ -79,28 +89,52 @@ export class IconDirective implements OnChanges {
     try {
       // Parse the icon name to handle prefixes like 'fas fa-home'
       let iconName = this.name;
-      let iconPrefix = 'fas'; // default to solid (only solid supported in this version)
+      let iconPrefix = 'fas'; // default to solid
 
       if (this.name.includes(' ')) {
         const parts = this.name.split(' ');
+        // Handle different prefix notations (fas, far, fab)
+        if (parts[0] === 'fas' || parts[0] === 'far' || parts[0] === 'fab') {
+          iconPrefix = parts[0];
+          this.variant = iconPrefix === 'fas' ? 'solid' : 
+                         iconPrefix === 'far' ? 'regular' : 'brands';
+        }
         iconName = parts.length > 1 ? parts[1].replace('fa-', '') : parts[0].replace('fa-', '');
       } else if (this.name.startsWith('fa-')) {
         iconName = this.name.replace('fa-', '');
       }
 
-      // With only free-solid-svg-icons installed, we only support 'fas' icons
-      if (iconPrefix !== 'fas') {
-        console.warn(`Only 'fas' (solid) FontAwesome icons are supported. Using solid version of "${iconName}"`);
+      // Convert kebab-case to camelCase for FontAwesome
+      // Example: "power-off" should become "PowerOff" for faIconName construction
+      iconName = iconName.split('-')
+        .map(part => this.capitalize(part))
+        .join('');
+
+      // Select icon collection based on variant
+      let iconCollection;
+      switch (this.variant) {
+        case 'solid':
+          iconCollection = fas;
+          break;
+        case 'regular':
+          iconCollection = far;
+          break;
+        case 'brands':
+          iconCollection = fab;
+          break;
+        default:
+          iconCollection = fas;
       }
 
-      // Check if the icon exists in the solid icon set
-      if (!fas[`fa${this.capitalize(iconName)}`]) {
-        console.error(`FontAwesome icon "${iconName}" not found in solid icons`);
+      // Check if the icon exists in the selected collection
+      const faIconName = `fa${iconName}`;
+      if (!iconCollection[faIconName as keyof typeof iconCollection]) {
+        console.error(`FontAwesome icon "${this.name}" (${faIconName}) not found in ${this.variant} icons`);
         return null;
       }
 
       // Create the icon
-      const faIcon: Icon = icon(fas[`fa${this.capitalize(iconName)}`]);
+      const faIcon: Icon = icon(iconCollection[faIconName as keyof typeof iconCollection]);
       
       if (!faIcon) {
         console.error(`Could not create FontAwesome icon for "${this.name}"`);
@@ -133,6 +167,47 @@ export class IconDirective implements OnChanges {
       return svg;
     } catch (error) {
       console.error(`Error rendering FontAwesome icon "${this.name}":`, error);
+      return null;
+    }
+  }
+
+  private renderMaterialDesignIcon(): string | null {
+    if (!this.name) {
+      console.error('Material Design icon name not provided');
+      return null;
+    }
+
+    try {
+      // MDI icons in @mdi/js are named like mdiAccountCircle
+      let iconName = this.name;
+      
+      // Handle different naming formats
+      if (this.name.startsWith('mdi-')) {
+        // Convert from kebab-case (mdi-account-circle) to camelCase (mdiAccountCircle)
+        iconName = 'mdi' + this.name.substring(4)
+          .split('-')
+          .map((part, index) => index === 0 ? part : this.capitalize(part))
+          .join('');
+      } else if (!this.name.startsWith('mdi')) {
+        // If no prefix, assume it's just the name and add mdi prefix
+        iconName = 'mdi' + this.capitalize(this.name);
+      }
+
+      // Check if icon exists
+      if (!(mdi as any)[iconName]) {
+        console.error(`Material Design icon "${iconName}" not found`);
+        return null;
+      }
+
+      // Get icon path
+      const path = (mdi as any)[iconName];
+      
+      // Build SVG
+      const svgAttrs = `class="${this.class || ''}" width="${this.size}" height="${this.size}" viewBox="0 0 24 24"`;
+      return `<svg ${svgAttrs}><path d="${path}" /></svg>`;
+      
+    } catch (error) {
+      console.error(`Error rendering Material Design icon "${this.name}":`, error);
       return null;
     }
   }

@@ -5,9 +5,11 @@ import { CropService } from '../core/services/crop.service';
 import { FarmManagmentComponent } from './pages/farm-managment/farm-managment.component';
 import { EventComponent } from './pages/event/event.component';
 import { TaskManagementComponent } from './components/task-management/task-management.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 const routes: Routes = [
-  { path: '', component: FarmManagmentComponent },
+  { path: '', component: DashboardComponent },
+  { path: 'farm', component: FarmManagmentComponent },
   { path: 'event', component: EventComponent },
   { path: 'blog', component: EventComponent },
   { path: 'task', component: TaskManagementComponent },

@@ -7,6 +7,7 @@ import cloud.hustler.pidevbackend.dto.UserResponse;
 import cloud.hustler.pidevbackend.entity.*;
 import cloud.hustler.pidevbackend.exception.UserAlreadyExistsException;
 import cloud.hustler.pidevbackend.repository.OtpRepository;
+import cloud.hustler.pidevbackend.repository.PasswordResetTokenRepository;
 import cloud.hustler.pidevbackend.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.mail.MessagingException;
@@ -29,6 +30,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Random;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AuthenticationServiceImplement implements IAuthenticationService {
@@ -44,7 +48,8 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
     private JavaMailSenderImpl mailSender;
     @Autowired
     private OtpRepository otpRepository;
-
+    @Autowired
+    private PasswordResetTokenRepository passwordResetTokenRepository;
 
     @Override
     public AuthenticationResponse register(RegisterRequest registerRequest) {
@@ -425,6 +430,101 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
                 + "<p>Best regards,<br>The Team</p>"
                 + "</div>";
         
+        sendVerificationEmail(user.getEmail(), subject, htmlContent);
+    }
+
+    // Password reset implementation methods
+    @Override
+    public PasswordResetToken createPasswordResetTokenForUser(String email) throws MessagingException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+        // Invalidate any existing tokens for this user
+        List<PasswordResetToken> existingTokens = passwordResetTokenRepository.findByUser(user);
+        existingTokens.forEach(token -> {
+            token.setUsed(true);
+            passwordResetTokenRepository.save(token);
+        });
+
+        // Create new token
+        PasswordResetToken resetToken = PasswordResetToken.builder()
+                .user(user)
+                .token(UUID.randomUUID().toString())
+                .createdAt(LocalDateTime.now())
+                .expiryDate(LocalDateTime.now().plusHours(1)) // Token expires in 1 hour
+                .used(false)
+                .build();
+
+        PasswordResetToken savedToken = passwordResetTokenRepository.save(resetToken);
+        
+        // Send email with reset link
+        sendPasswordResetEmail(user, savedToken.getToken());
+        
+        return savedToken;
+    }
+
+    @Override
+    public boolean validatePasswordResetToken(String token) {
+        Optional<PasswordResetToken> resetTokenOpt = passwordResetTokenRepository.findByTokenAndUsed(token, false);
+
+        if (resetTokenOpt.isEmpty()) {
+            return false; // Token not found or already used
+        }
+
+        PasswordResetToken resetToken = resetTokenOpt.get();
+        
+        // Check if token is expired
+        if (resetToken.isExpired()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean resetPassword(String token, String newPassword) {
+        Optional<PasswordResetToken> resetTokenOpt = passwordResetTokenRepository.findByTokenAndUsed(token, false);
+
+        if (resetTokenOpt.isEmpty()) {
+            return false; // Token not found or already used
+        }
+
+        PasswordResetToken resetToken = resetTokenOpt.get();
+        
+        // Check if token is expired
+        if (resetToken.isExpired()) {
+            return false;
+        }
+
+        // Update password
+        User user = resetToken.getUser();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        // Mark token as used
+        resetToken.setUsed(true);
+        passwordResetTokenRepository.save(resetToken);
+
+        return true;
+    }
+
+    @Override
+    public void sendPasswordResetEmail(User user, String token) throws MessagingException {
+        String resetUrl = "http://localhost:4200/frontoffice/reset-password?token=" + token;
+        String subject = "Password Reset Request";
+        String htmlContent = 
+            "<div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;'>" +
+            "<h2 style='color: #333; text-align: center;'>Password Reset Request</h2>" +
+            "<p style='font-size: 16px; line-height: 1.5; color: #555;'>Hello " + user.getFirstName() + ",</p>" +
+            "<p style='font-size: 16px; line-height: 1.5; color: #555;'>We received a request to reset your password. Click the button below to create a new password:</p>" +
+            "<div style='text-align: center; margin: 30px 0;'>" +
+            "<a href='" + resetUrl + "' style='display: inline-block; background-color: #4CAF50; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;'>Reset Password</a>" +
+            "</div>" +
+            "<p style='font-size: 16px; line-height: 1.5; color: #555;'>If you did not request a password reset, please ignore this email or contact support if you have concerns.</p>" +
+            "<p style='font-size: 16px; line-height: 1.5; color: #555;'>This link will expire in 1 hour for security reasons.</p>" +
+            "<p style='font-size: 16px; line-height: 1.5; color: #555; margin-top: 30px;'>Best regards,<br>The Support Team</p>" +
+            "</div>";
+
         sendVerificationEmail(user.getEmail(), subject, htmlContent);
     }
 }
