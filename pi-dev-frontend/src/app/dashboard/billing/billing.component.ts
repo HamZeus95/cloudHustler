@@ -10,12 +10,16 @@ import { Event } from 'src/app/core/modules/event';
 })
 export class BillingComponent implements OnInit {
   events: Event[] = [];
-  allFilteredEvents: Event[] = []; // Liste filtrée complète
-  filteredEvents: Event[] = [];    // Liste affichée selon la page
-  searchQuery: string = ''; 
+  allFilteredEvents: Event[] = [];
+  filteredEvents: Event[] = [];
+  searchQuery: string = '';
   currentPage: number = 1;
   eventsPerPage: number = 2;
   totalPages: number = 0;
+
+  // Variables pour la modal
+  isModalVisible: boolean = false;
+  fullDescription: string = '';
 
   constructor(
     private eventService: EventServiceService,
@@ -23,15 +27,15 @@ export class BillingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getEvents();  // Récupérer les événements au démarrage
+    this.getEvents();
   }
 
-  // Récupération des événements depuis le service
+  // Récupérer les événements depuis le service
   getEvents(): void {
     this.eventService.getEvents().subscribe(
       (events) => {
         this.events = events;
-        this.filterEvents();  // Appliquer le filtrage dès réception
+        this.filterEvents();
       },
       (error) => {
         console.error('Erreur lors de la récupération des événements :', error);
@@ -82,12 +86,29 @@ export class BillingComponent implements OnInit {
       this.eventService.deleteEvent(eventId).subscribe(
         () => {
           this.events = this.events.filter(event => event.uuid_event !== eventId);
-          this.filterEvents();  // Re-filtrer après suppression
+          this.filterEvents();
         },
         (error) => {
           console.error('Erreur lors de la suppression :', error);
         }
       );
     }
+  }
+
+  // Afficher la description complète dans la modal
+  showFullDescription(description: string): void {
+    this.fullDescription = description;
+    this.isModalVisible = true; // Ouvrir la modal
+  }
+
+  // Fermer la modal
+  closeModal(): void {
+    this.isModalVisible = false; // Fermer la modal
+  }
+
+  // Récupérer les 2 premiers mots de la description
+  getFirstTwoWords(description: string): string {
+    const words = description.split(' ');
+    return words.slice(0, 2).join(' '); // Affiche les 2 premiers mots
   }
 }

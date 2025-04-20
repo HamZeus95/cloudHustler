@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';  // Importation de HttpClient
 export class EventComponent implements OnInit, OnDestroy {
   events: Event[] = [];
   filteredEvents: Event[] = [];
-  participantName: string = 'mmm';
+  participantName: string = 'lll';
   isLoading: boolean = true;
   errorMessage: string = '';
   searchText: string = '';
@@ -26,8 +26,12 @@ export class EventComponent implements OnInit, OnDestroy {
   selectedImages: { [key: string]: File } = {};
   selectedFile!: File;
   imageLink: string = '';
-  uploadedImageUrls: { [key: string]: string } = {};
+  imageUrls: { [eventId: string]: string } = {};
+  private maps: { [key: string]: L.Map } = {};
 
+  // Variables pour la modal
+  isModalVisible: boolean = false;
+  fullDescription: string = '';
   // Injection de HttpClient dans le constructeur
   constructor(
     private eventService: EventServiceService,
@@ -40,9 +44,7 @@ export class EventComponent implements OnInit, OnDestroy {
     this.startCountdown();
   }
 
-  ngOnDestroy(): void {
-    this.countdownSubscription?.unsubscribe();
-  }
+ 
 
   loadEvents(): void {
     this.isLoading = true;
@@ -55,6 +57,9 @@ export class EventComponent implements OnInit, OnDestroy {
         this.isLoading = false;
 
         this.filteredEvents.forEach(event => {
+          if (!event.participants) {
+            event.participants = [];
+          }
           this.mapVisibility[event.uuid_event] = false;
 
           if (event.location) {
@@ -122,22 +127,57 @@ export class EventComponent implements OnInit, OnDestroy {
     });
   }
 
-  initializeMap(latitude: number, longitude: number, eventId: string): void {
+  private initializeMap(latitude: number, longitude: number, eventId: string): void {
     const mapId = `map${eventId}`;
-    const map = L.map(mapId).setView([latitude, longitude], 13);
+    
+    // Détruire la carte existante si elle existe
+    if (this.maps[eventId]) {
+      this.maps[eventId].remove();
+    }
 
+    // Configuration des icônes par défaut
+    this.setDefaultIcon();
+
+    // Création de la carte
+    this.maps[eventId] = L.map(mapId, {
+      center: [latitude, longitude],
+      zoom: 13,
+      preferCanvas: true
+    });
+
+    // Ajout des tuiles OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19
+    }).addTo(this.maps[eventId]);
 
-    L.marker([latitude, longitude]).addTo(map)
+    // Ajout du marqueur
+    L.marker([latitude, longitude], {
+      title: 'Lieu de l\'événement'
+    }).addTo(this.maps[eventId])
       .bindPopup('Lieu de l\'événement')
       .openPopup();
   }
 
+  private setDefaultIcon(): void {
+    const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
+    const iconUrl = 'assets/leaflet/marker-icon.png';
+    const shadowUrl = 'assets/leaflet/marker-shadow.png';
+
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl,
+      iconUrl,
+      shadowUrl,
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+  }
+
   toggleMap(eventId: string): void {
     this.mapVisibility[eventId] = !this.mapVisibility[eventId];
-
+    
     if (this.mapVisibility[eventId]) {
       const event = this.events.find(e => e.uuid_event === eventId);
       if (event && event.location) {
@@ -145,12 +185,32 @@ export class EventComponent implements OnInit, OnDestroy {
           if (coords && coords[0]) {
             const latitude = parseFloat(coords[0].lat);
             const longitude = parseFloat(coords[0].lon);
-            this.initializeMap(latitude, longitude, eventId);
+            
+            // Utiliser setTimeout pour s'assurer que le conteneur est rendu
+            setTimeout(() => {
+              this.initializeMap(latitude, longitude, eventId);
+            }, 50);
           }
         });
       }
+    } else {
+      // Détruire la carte quand elle est cachée
+      if (this.maps[eventId]) {
+        this.maps[eventId].remove();
+        delete this.maps[eventId];
+      }
     }
   }
+
+  ngOnDestroy(): void {
+    // Nettoyer toutes les cartes
+    Object.keys(this.maps).forEach(eventId => {
+      this.maps[eventId].remove();
+    });
+    this.countdownSubscription?.unsubscribe();
+  }
+  
+  
 
   startCountdown(): void {
     this.countdownSubscription = interval(1000).subscribe(() => {
@@ -179,31 +239,78 @@ export class EventComponent implements OnInit, OnDestroy {
     return new Date(event.startDate) <= new Date();
   }
   
-  onFileSelected(event: any, currentEvent: any) {
-    const file = event.target.files[0];
+  // onFileSelected(event: any, currentEvent: any) {
+  //   const file = event.target.files[0];
   
-    if (file) {
-      const formData = new FormData();
-      formData.append('file', file);
+  //   if (file) {
+  //     const formData = new FormData();
+  //     formData.append('file', file);
   
-      this.http.post<{ imageUrl: string }>('http://localhost:8089/pi/Event/upload', formData)
-        .subscribe({
-          next: (response) => {
-            console.log('Réponse du serveur :', response);  // Afficher la réponse pour vérifier l'URL
-            // Vérifier que l'URL est bien présente dans la réponse
-            if (response && response.imageUrl) {
-              this.uploadedImageUrls[currentEvent.uuid_event] = response.imageUrl;
-            } else {
-              console.error('URL de l\'image non trouvée dans la réponse');
-            }
-          },
-          error: (err) => {
-            console.error('Erreur lors de l\'upload :', err);
-          }
-        });
-    }
+  //     this.http.post<{ imageUrl: string }>('http://localhost:8089/pi/Event/upload', formData)
+  //       .subscribe({
+  //         next: (response) => {
+  //           console.log('Réponse du serveur :', response);  // Afficher la réponse pour vérifier l'URL
+  //           // Vérifier que l'URL est bien présente dans la réponse
+  //           if (response && response.imageUrl) {
+  //             this.uploadedImageUrls[currentEvent.uuid_event] = response.imageUrl;
+  //           } else {
+  //             console.error('URL de l\'image non trouvée dans la réponse');
+  //           }
+  //         },
+  //         error: (err) => {
+  //           console.error('Erreur lors de l\'upload :', err);
+  //         }
+  //       });
+  //   }
+  // }
+
+  showFullDescription(description: string): void {
+    this.fullDescription = description;
+    this.isModalVisible = true; // Ouvrir la modal
   }
-  
+
+  // Fermer la modal
+  closeModal(): void {
+    this.isModalVisible = false; // Fermer la modal
+  }
+
+  selectedImage: { [key: string]: File } = {};
+
+onImageSelected(event: any, eventId: string) {
+  const file = event.target.files[0];
+  if (file) {
+    this.selectedImage[eventId] = file;
+  }
+}
+
+uploadImage(eventId: string) {
+  const file = this.selectedImage[eventId];
+  if (file) {
+    const formData = new FormData();
+    formData.append('file', file); // <-- changement ici
+
+    
+    this.eventService.uploadImage(eventId, formData).subscribe({
+      next: (res) => {
+        console.log('Image upload successful:', res);
+        alert('Image envoyée avec succès !');
+
+        this.imageUrls[eventId] = res.imageUrl; 
+      },
+      error: (err) => {
+        console.error('Erreur lors de l\'upload :', err);
+        alert('Erreur lors de l\'upload.');
+      }
+    });
+  } else {
+    alert('Veuillez sélectionner une image avant d\'envoyer.');
+  }
+}
+openImage(url: string) {
+  window.open(url, '_blank');
+}
+
+
   }
   
  

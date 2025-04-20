@@ -45,10 +45,7 @@ export class EventServiceService {
       headers: { 'Content-Type': 'application/json' }
     });
   }
-  uploadImage(eventId: string, formData: FormData) {
-    return this.http.post<any>(`http://localhost:8089/Event/${eventId}/upload-image
-`, formData);
-  }
+
 
   generateDescription(name: string, location: string, date: string) {
     return this.http.post('http://localhost:8089/pi/Event/generate-description', {
@@ -58,6 +55,9 @@ export class EventServiceService {
     }, { responseType: 'text' }); // Important pour récupérer une chaîne simple
   }
   
-
+  uploadImage(eventId: string, formData: FormData) {
+    return this.http.post<any>(`http://localhost:8089/pi/Event/${eventId}/upload-image`, formData);
+  }
+  
   
 }

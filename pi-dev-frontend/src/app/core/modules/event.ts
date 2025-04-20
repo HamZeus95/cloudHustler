@@ -8,7 +8,7 @@ export class Event {
     startDate!: string; 
     endDate!: string;
     imgsUrls!: string[]; 
-    participants!: string[];
+    participants: string[] = [];;
     maxParticipants?: number;
     isOnline?: boolean;
     onlineLink?: string;

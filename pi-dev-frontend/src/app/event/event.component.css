@@ -1,99 +1,25 @@
-/* Style pour chaque carte et la carte dans la section */
-.card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-/* Espacement de la carte par rapport au reste du contenu */
-.card-body {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-/* Espacement et positionnement de la carte */
-
-
-/* Ajustement des boutons */
-button {
-  margin-top: 15px;
-}
-/* Style global du compte à rebours */
-
-/* Style global du compte à rebours */
-.event-countdown-container {
-  position: absolute;  /* Utilisation de position absolute pour le centrer */
-  top: 50%;            /* Centrage vertical */
-  left: 50%;           /* Centrage horizontal */
-  transform: translate(-50%, -50%); /* Ajuste pour être parfaitement centré */
-  width: 80px;         /* Taille réduite */
-  height: 80px;        /* Taille réduite */
-  border-radius: 50%;
-  background: linear-gradient(45deg, #08400c, #0c470f); /* Dégradé Instagram */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+.full-screen-modal {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
   overflow: hidden;
-  animation: pulse 1.5s infinite alternate; /* Animation dynamique */
 }
-
-/* Animation de pulsation */
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-  }
-  100% {
-    transform: scale(1.1);
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.4);
-  }
+.full-screen-modal .modal-dialog {
+  margin: 0;
+  max-width: 100%;
+  height: 100%;
 }
-
-/* Style pour le texte du compte à rebours */
-.event-countdown-text {
-  font-size: 1.2rem;   /* Taille de police réduite */
-  font-weight: bold;
-  color: white;
-  text-align: center;
-  z-index: 1;
+.full-screen-modal .modal-content {
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  background-color: #ede1e1;
 }
-
-/* Style pour les cercles de progression */
-.countdown-ring {
-  position: absolute;
-  width: 70px;         /* Taille réduite du cercle de progression */
-  height: 70px;        /* Taille réduite du cercle de progression */
-  border-radius: 50%;
-  border: 6px solid transparent;
-  border-top: 6px solid white; /* Cercle de progression */
-  animation: rotate 60s linear infinite; /* Simule la progression */
+.full-screen-modal .modal-body {
+  padding: 0;
+  height: 100%;
 }
-
-/* Animation de rotation du cercle */
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.event-countdown-container.active .countdown-ring {
-  animation-play-state: running;
-}
-
-/* Styles additionnels pour rendre le compteur plus élégant */
-.event-countdown-text {
-  position: absolute;
-  z-index: 2;
-}
-
-
-/* Adaptation responsive */
-
-  
-

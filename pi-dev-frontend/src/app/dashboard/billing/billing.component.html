@@ -301,7 +301,18 @@
                     <td>{{ event.startDate | date:'dd/MM/yyyy' }}</td>
                     <td>{{ event.endDate | date:'dd/MM/yyyy' }}</td>
                     <td>{{ event.location }}</td>
-                    <td>{{ event.description }}</td>
+                    <td>
+                      <div>
+                        {{ getFirstTwoWords(event.description) }}
+                        <span *ngIf="event.description.length > 50">...</span>
+                      </div>
+                      <div *ngIf="event.description.length > 50">
+                        <a (click)="showFullDescription(event.description)" style="cursor:pointer; color: #007bff; font-weight: 500;">
+                          Voir plus
+                        </a>
+                      </div>
+                    </td>
+    
                     <td class="actions">
                       <button (click)="editEvent(event)" class="btn btn-success btn-sm me-1" title="Modifier">
                         <i class="fas fa-edit"></i>
@@ -341,14 +352,17 @@
       </div>
     </div>
     
+ 
+    <!-- Modal pour afficher la description complète -->
+    <div *ngIf="isModalVisible" class="modal" style="display: block;">
+      <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <p>{{ fullDescription }}</p>
+      </div>
+    </div>
     
-    
-    
-    
-    
-    
-    
-    
+  
+
     
     <footer class="footer pt-3  ">
       <div class="container-fluid">
