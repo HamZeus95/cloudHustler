@@ -1,0 +1,20 @@
+<app-navbar></app-navbar>
+<div class="map-container">
+  <div class="search-container">
+    <input 
+      type="text" 
+      [(ngModel)]="searchAddress" 
+      placeholder="Entrer l'adresse de livraison"
+      class="search-input">
+    <button (click)="searchRoute()" class="search-button">
+      <i class="fas fa-search"></i> Rechercher
+    </button>
+  </div>
+  <button class="btn btn-dark" (click)="predictDeliveryTime()">Estimer Temps de Livraison</button>
+
+<div *ngIf="predictedTime">
+  🕒 Temps estimé : <strong>{{ predictedTime }} minutes</strong>
+</div>
+  <div id="map"></div>
+</div>
+<app-footer>   </app-footer>

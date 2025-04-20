@@ -26,6 +26,14 @@ public class FactureController {
     @Autowired
     private FactureRepository factureRepository;
 
+<<<<<<< Updated upstream
+=======
+    @GetMapping("/predict-time")
+    public int predictTime(@RequestParam String start, @RequestParam String end) throws Exception {
+        return factureService.getEstimatedTime(start, end);
+    }
+
+>>>>>>> Stashed changes
 
     @PostMapping
     public Facture creerFacture(@Valid @RequestBody Facture facture) {

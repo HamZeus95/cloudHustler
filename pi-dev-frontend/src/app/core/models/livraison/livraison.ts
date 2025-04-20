@@ -13,7 +13,11 @@ export interface Livraison {
   id: number;
   statut: string;
   adresseLivraison: string;
+<<<<<<< Updated upstream
   dateLivraison: string;
+=======
+    dateLivraison: string;
+>>>>>>> Stashed changes
   dateCreation: string;
   order?: Order;
   deliveryDriver?: DeliveryDriver;

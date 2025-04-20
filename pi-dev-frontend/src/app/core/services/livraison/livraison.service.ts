@@ -96,4 +96,12 @@ export class LivraisonService {
              status.includes('EN TRANSIT') || 
              status.includes('ENTRANSIT') ;
     }
+<<<<<<< Updated upstream
 }
+=======
+    getPrediction(origin: string, destination: string): Observable<number> {
+      return this.http.get<number>('http://localhost:8090/tpfoyer/livraison/predict-time', {
+        params: { origin, destination }
+      });
+}}
+>>>>>>> Stashed changes

@@ -16,6 +16,12 @@ export class LivraisonClientComponent implements OnInit {
     closeDialog(): void {
       this.displayModal = false;
     }
+<<<<<<< Updated upstream
+=======
+    navigateToMap(livraisonId: number) {
+      this.router.navigate(['/frontoffice/suivrelivraison', livraisonId]);
+    }
+>>>>>>> Stashed changes
     openDialog(livraison: Livraison) {
       this.selectedLivraison = livraison;
       this.displayModal = true;
@@ -145,6 +151,7 @@ export class LivraisonClientComponent implements OnInit {
     }
   }
 
+<<<<<<< Updated upstream
   // Exemple d'utilisation dans loadLivraisons():
   /* 
   loadLivraisons() {
@@ -158,6 +165,11 @@ export class LivraisonClientComponent implements OnInit {
     });
   }
   */
+=======
+  navigateToSuivre(id: number) {
+    this.router.navigate(['/frontoffice/suivrelivraison', id]);
+  }
+>>>>>>> Stashed changes
 }
 
 

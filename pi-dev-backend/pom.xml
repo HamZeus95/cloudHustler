@@ -90,6 +90,14 @@
             <artifactId>jtidy</artifactId>
             <version>r938</version>
         </dependency>
+<<<<<<< Updated upstream
+=======
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20210307</version>
+        </dependency>
+>>>>>>> Stashed changes
     </dependencies>
 
     <build>

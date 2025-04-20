@@ -14,11 +14,28 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+<<<<<<< Updated upstream
+=======
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+>>>>>>> Stashed changes
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+<<<<<<< Updated upstream
 
+=======
+import org.json.JSONObject;
+import org.springframework.stereotype.Service;
+
+import java.io.*;
+import java.net.*;
+>>>>>>> Stashed changes
 @Service
 public class FactureService implements IFactureService{
 
@@ -122,5 +139,38 @@ public class FactureService implements IFactureService{
         return factureRepository.findAllByLivraison_Order_Consumer_Uuid_user(uuid_user);
     }*/
 
+<<<<<<< Updated upstream
 
+=======
+    private final String API_KEY = "5b3ce3597851110001cf6248ec4e8d3388d446e689cae8efed77351e"; // Remplace par ta clé API gratuite
+
+    public int getEstimatedTime(String start, String end) throws IOException {
+        String urlStr = String.format(
+                "https://api.openrouteservice.org/v2/directions/driving-car?api_key=%s&start=%s&end=%s",
+                API_KEY,
+                URLEncoder.encode(start, "UTF-8"),
+                URLEncoder.encode(end, "UTF-8")
+        );
+
+        URL url = new URL(urlStr);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuilder response = new StringBuilder();
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        JSONObject json = new JSONObject(response.toString());
+        int durationInSeconds = json
+                .getJSONArray("features").getJSONObject(0)
+                .getJSONObject("properties").getJSONArray("segments").getJSONObject(0)
+                .getInt("duration");
+
+        return durationInSeconds / 60; // Convertir en minutes
+    }
+>>>>>>> Stashed changes
 }

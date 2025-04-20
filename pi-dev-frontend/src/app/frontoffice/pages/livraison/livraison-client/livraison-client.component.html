@@ -35,6 +35,7 @@
         </div>
 
         <div class="card-details">
+<<<<<<< Updated upstream
           <p><i class="fas fa-calendar"></i> <strong>Date de Creation:</strong> {{ l.dateCreation | date:'dd/MM/yyyy'  }}</p>
           <!--p><i class="fas fa-dollar-sign"></i> <strong>Montant:</strong> {{ l.montantTotal | currency:'EUR' }}</p-->
           <p><i class="fas fa-map-marker-alt"></i> <strong>Adresse:</strong> {{ l.adresseLivraison }}</p>
@@ -53,6 +54,21 @@
   </div>
 
  
+=======
+          <p><i class="fas fa-calendar"></i> <strong>Date de Creation:</strong> {{ l.dateCreation | date:'dd/MM/yyyy' }}</p>
+          <p><i class="fas fa-map-marker-alt"></i> <strong>Adresse:</strong> {{ l.adresseLivraison }}</p>
+          <p><i class="fas fa-truck"></i> <strong>Date de livraison:</strong> {{ l.dateLivraison | date:'dd/MM/yyyy' }}</p>
+          
+          <div class="text-end my-3">
+            <button class="btn btn-dark" (click)="navigateToSuivre(l.id)">
+              <i class="bi bi-geo-alt-fill"></i> Suivre Livraison
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+>>>>>>> Stashed changes
 </div>
 <app-footer></app-footer>
 
