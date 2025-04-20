@@ -1,77 +1,68 @@
 package cloud.hustler.pidevbackend.controllers;
 
+import cloud.hustler.pidevbackend.service.MapboxService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import org.w3c.tidy.Tidy;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @RestController
-
+@CrossOrigin("*")
 public class PdfController {
 
     @PostMapping("/generate-pdf")
-    public byte[] generatePdf(@RequestBody Map<String, String> request) throws Exception {
-        String html = request.get("html");
-
-        // First clean with JTidy for thorough XHTML compliance
-        html = cleanHtmlWithTidy(html);
-
-        // Then apply additional fixes if needed
-        html = ensureXmlDeclaration(html);
+    public ResponseEntity<byte[]> generatePdf(@RequestBody Map<String, String> payload) throws Exception {
+        String html = payload.get("html");
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ITextRenderer renderer = new ITextRenderer();
-
-        // Configure renderer (optional)
-        renderer.getSharedContext().setPrint(true);
-        renderer.getSharedContext().setInteractive(false);
-
         renderer.setDocumentFromString(html);
         renderer.layout();
         renderer.createPDF(outputStream);
-        renderer.finishPDF();
 
-        return outputStream.toByteArray();
+        byte[] pdfBytes = outputStream.toByteArray();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("filename", "facture.pdf");
+
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
+    @Autowired
+    private MapboxService mapboxService;
 
-    private String cleanHtmlWithTidy(String html) {
-        try {
-            Tidy tidy = new Tidy();
-            tidy.setXHTML(true);
-            tidy.setShowWarnings(false);
-            tidy.setQuiet(true);
-            tidy.setMakeClean(true);
-            tidy.setFixComments(true);
-            tidy.setFixBackslash(true);
-            tidy.setLogicalEmphasis(true);
-
-            StringReader reader = new StringReader(html);
-            StringWriter writer = new StringWriter();
-            tidy.parse(reader, writer);
-            return writer.toString();
-        } catch (Exception e) {
-            // Fallback to basic cleaning if JTidy fails
-            return basicHtmlClean(html);
-        }
+    @GetMapping("/geocode")
+    public ResponseEntity<String> geocode(@RequestParam String address) throws IOException, InterruptedException {
+        String response = mapboxService.geocodeAddress(address);
+        return ResponseEntity.ok(response);
     }
-
-    private String basicHtmlClean(String html) {
-        // Basic replacements for common issues
-        return html
-                .replaceAll("<(input|img|br|hr)([^>]*)/>", "<$1$2></$1>")
-                .replaceAll("&(?!(amp|lt|gt|quot|apos);)", "&amp;");
-    }
-
-    private String ensureXmlDeclaration(String html) {
-        if (!html.contains("<?xml")) {
-            return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                    "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" " +
-                    "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
-                    "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + html + "</html>";
-        }
-        return html;
+    @GetMapping("/updates")
+    public SseEmitter streamLocation() {
+        SseEmitter emitter = new SseEmitter();
+        // Simule des mises à jour de position (ex: toutes les 3 secondes)
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+        executor.scheduleAtFixedRate(() -> {
+            try {
+                double lat = 48.8566 + Math.random() * 0.01;
+                double lng = 2.3522 + Math.random() * 0.01;
+                emitter.send("{\"lat\":" + lat + ", \"lng\":" + lng + "}");
+            } catch (IOException e) {
+                emitter.completeWithError(e);
+            }
+        }, 0, 3, TimeUnit.SECONDS);
+        return emitter;
     }
 }

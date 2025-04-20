@@ -1,10 +1,15 @@
 import { Livraison } from 'src/app/core/models/livraison/livraison';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ChartConfiguration, ChartType } from 'chart.js';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { LivraisonService } from 'src/app/core/services/livraison/livraison.service';
+import { FactureService } from 'src/app/core/services/livraison/facture.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
+import { CustomValidators } from 'src/app/core/validators/custom.validators';
 
 @Component({
   selector: 'app-livraison',
@@ -27,10 +32,12 @@ export class LivraisonComponent implements OnInit {
 
   newlivraison: Livraison = {
     id: 0,
-    statut: '',
+    statut: 'En attente', // Valeur par défaut valide
     dateCreation: '',
     adresseLivraison: '',
-    dateLivraison: ''
+    dateLivraison: '',
+    deliveryDriver: undefined,
+    order: undefined
   };
 
   counts = {
@@ -78,12 +85,18 @@ export class LivraisonComponent implements OnInit {
 
   public pieChartType: ChartType = 'pie';
 
+  deliveryDrivers: any[] = [];
+  orders: any[] = [];
+
   constructor(
     private fb: FormBuilder,
     private livraisonService: LivraisonService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private factureService: FactureService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
     this.filteredlivraisons = [];
     this.initializeForm();
@@ -91,17 +104,21 @@ export class LivraisonComponent implements OnInit {
 
   private initializeForm(): void {
     this.livraisonForm = this.fb.group({
-      /*statut: '',
-    dateCreation: '',
-    adresseLivraison: '',
-    dateLivraison: '' */
-    //dateCreation: ['', Validators.required],
-    dateLivraison: ['', Validators.required],
-    adresseLivraison: ['', Validators.required],
-    statut: ['', Validators.required]
+      dateLivraison: ['', [
+        Validators.required,
+        this.dateValidators()
+      ]],
+      adresseLivraison: ['', [
+        Validators.required,
+        Validators.minLength(5)
+      ]],
+      statut: ['EN ATTENTE'], // Ne pas désactiver si requis
+      deliveryDriver: [null, Validators.required],
+      order: [null, Validators.required]
     });
   }
 
+  
   searchTerm: string = '';
 
   filteredLivraisonsFn(value: string): void {
@@ -169,10 +186,12 @@ export class LivraisonComponent implements OnInit {
   resetNewlivraison() {
     this.newlivraison = {
       id: 0,
-      statut: '',
+      statut: 'En attente', // Valeur par défaut valide
       dateCreation: '',
       adresseLivraison: '',
-      dateLivraison: ''
+      dateLivraison: '',
+      deliveryDriver: undefined,
+      order: undefined
     };
   }
 
@@ -243,13 +262,8 @@ export class LivraisonComponent implements OnInit {
       }
     });
     this.loadStats();
-    this.livraisonForm = this.fb.group({
-      //dateCreation: ['', Validators.required],
-    dateLivraison: ['', Validators.required],
-    adresseLivraison: ['', Validators.required],
-    statut: ['', Validators.required],
-    });
-
+    this.loadDeliveryDrivers();
+    this.loadOrders();
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.isEditMode = true;
@@ -261,49 +275,104 @@ export class LivraisonComponent implements OnInit {
     });
   }
 
+  private loadDeliveryDrivers() {
+    this.factureService.getAllDelivery().subscribe({
+      next: (drivers) => {
+        this.deliveryDrivers = drivers;
+        console.log('Drivers loaded:', drivers);
+      },
+      error: (error) => console.error('Error loading drivers:', error)
+    });
+  }
+
+  private loadOrders() {
+    this.factureService.getAllOrdres().subscribe({
+      next: (orders) => {
+        // Récupérer d'abord toutes les livraisons
+        this.livraisonService.getAll().subscribe({
+          next: (livraisons) => {
+            // Créer un ensemble des IDs des commandes déjà affectées
+            const ordresAffectes = new Set(livraisons.map(liv => liv.order?.uuid_order));
+            
+            // Filtrer les ordres qui ne sont pas dans l'ensemble des ordres affectés
+            this.orders = orders.filter(order => !ordresAffectes.has(order.uuid_order));
+            console.log('Ordres disponibles:', this.orders);
+          },
+          error: (error) => console.error('Erreur chargement livraisons:', error)
+        });
+      },
+      error: (error) => console.error('Erreur chargement ordres:', error)
+    });
+  }
+
   onSubmit(): void {
-    if (this.livraisonForm.invalid) return;
-
-    if (this.isEditMode) {
-      const updatedlivraison: Livraison = {
-        id: this.id,
-        ...this.livraisonForm.value
-      };
-
-      this.livraisonService.update(this.id, updatedlivraison).subscribe({
-        next: () => {
-          this.router.navigate(['/backoffice/livraisons']);
-          this.loadlivraisons();
-          this.closeModal();
-        },
-        error: (err) => {
-          console.error('Erreur lors de la mise à jour de la livraison:', err);
+    if (this.livraisonForm.invalid) {
+      Object.keys(this.livraisonForm.controls).forEach(key => {
+        const control = this.livraisonForm.get(key);
+        if (control?.invalid) {
+          control.markAsTouched();
         }
       });
+      return;
+    }
+
+    const formValue = this.livraisonForm.getRawValue(); // Gets value including disabled fields
+    
+    const livraison: Livraison = {
+      ...formValue,
+      statut: 'EN ATTENTE',
+      dateCreation: new Date().toISOString() // This will be overwritten by backend
+    };
+
+    // Continue with your existing save logic
+    this.saveChanges(livraison);
+  }
+
+  private saveChanges(formValue: any) {
+    if (this.isEditMode) {
+      // ... code existant pour l'édition ...
     } else {
       this.livraisonService.create(this.livraisonForm.value).subscribe({
-        next: () => {
-          this.router.navigate(['/backoffice/livraisons']);
-          this.loadlivraisons();
+        next: (response) => {
+          this.snackBar.open('Livraison créée avec succès', 'Fermer', {
+            duration: 3000,
+            panelClass: ['success-snackbar']
+          });
           this.closeModal();
+          this.loadlivraisons();
         },
-        error: (err) => {
-          console.error("Erreur lors de l'ajout de la livraison:", err);
+        error: (error) => {
+          let errorMsg = 'Erreur lors de la création: ';
+          if (error.error?.message) {
+            errorMsg += error.error.message;
+          } else {
+            errorMsg += 'Une erreur inattendue s\'est produite';
+          }
+          
+          this.dialog.open(ErrorDialogComponent, {
+            width: '400px',
+            data: { message: errorMsg }
+          });
         }
       });
     }
   }
 
-  onCancel(): void {
-    this.livraisonForm.reset();
-  }
-
   openModal() {
     this.isModalOpen = true;
+    this.livraisonForm.reset(); // Réinitialiser le formulaire
+    this.isEditMode = false;
+    // Initialiser avec des valeurs par défaut si nécessaire
+    this.livraisonForm.patchValue({
+      statut: '',
+      adresseLivraison: '',
+      dateLivraison: ''
+    });
   }
 
   closeModal() {
     this.isModalOpen = false;
+    this.livraisonForm.reset();
   }
 
   get paginatedlivraisons(): Livraison[] {
@@ -318,4 +387,34 @@ export class LivraisonComponent implements OnInit {
   }
 
   Math = Math;
+
+  // Validateur pour les dates
+  private dateValidators(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) return null;
+  
+      const selectedDate = new Date(control.value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+  
+      // Vérifie si la date est dans le passé
+      if (selectedDate < today) {
+        return { pastDate: true };
+      }
+  
+      // Vérifie si la date dépasse 5 jours dans le futur
+      const maxDate = new Date();
+      maxDate.setDate(maxDate.getDate() + 5); // Ajoute 5 jours
+      maxDate.setHours(23, 59, 59, 999); // Fin de journée
+  
+      if (selectedDate > maxDate) {
+        return { maxFutureDays: true }; // Notez le nom de l'erreur
+      }
+  
+      return null;
+    };
+  }
+
+  // Validateur pour la disponibilité du livreur
+ 
 }

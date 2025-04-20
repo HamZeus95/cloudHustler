@@ -1,0 +1,145 @@
+.livraison-details-container {
+  padding: 30px;
+  max-width: 900px;
+  margin: 20px auto;
+}
+
+.details-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 30px;
+}
+
+.section {
+  margin-bottom: 30px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+h2 {
+  color: #2c3e50;
+  margin-bottom: 25px;
+  font-weight: 600;
+  font-size: 28px;
+}
+
+h3 {
+  color: #34495e;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+h4 {
+  color: #455a64;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.status {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status.en.attente {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.order-status {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.price {
+  color: #2e7d32;
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.product-card {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  transition: transform 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.product-card h5 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.product-price {
+  color: #546e7a;
+  margin: 5px 0;
+}
+
+.product-total {
+  color: #2e7d32;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.driver-card {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.driver-info p {
+  margin: 10px 0;
+  color: #455a64;
+}
+
+p {
+  margin: 12px 0;
+  color: #455a64;
+  line-height: 1.6;
+}
+
+strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.cancel-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-btn:hover {
+  background-color: #c82333;
+}
+
+.status.annulée {
+  background: #ffebee;
+  color: #d32f2f;
+}

@@ -79,12 +79,14 @@
       <div class="detail-item">
         <label class="detail-label" for="dateEmission">Date d'émission</label>
         <input 
-          class="edit-input"
-          type="date" 
-          id="dateEmission" 
-          formControlName="dateEmission"
-          [class.is-invalid]="editForm.get('dateEmission')?.invalid && editForm.get('dateEmission')?.touched"
-        >
+  class="edit-input"
+  type="date" 
+  id="dateEmission" 
+  formControlName="dateEmission"
+  [min]="creationDate" 
+  [max]="today"
+  [class.is-invalid]="editForm.get('dateEmission')?.invalid && editForm.get('dateEmission')?.touched"
+/>
       </div>
       <div class="detail-item">
         <label class="detail-label" for="montantTotal">Montant total</label>
@@ -119,11 +121,9 @@
       <button type="button" class="btn btn-cancel" (click)="cancelEdit()">
         <mat-icon>close</mat-icon> Annuler
       </button>
-      <button class="btn btn-pdf" (click)="generatePDF()">
-        <mat-icon>picture_as_pdf</mat-icon> Générer PDF
-      </button>
+      
     </div>
   </form>
-  <app-settings-panel></app-settings-panel>
+  <!--app-settings-panel></app-settings-panel-->
 
 </div>

@@ -1,9 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Facture } from 'src/app/core/models/livraison/facture';
-import { Livraison } from 'src/app/core/models/livraison/livraison';
+import { DeliveryDriver, Livraison } from 'src/app/core/models/livraison/livraison';
+import { Order } from 'src/app/core/models/market/order.model';
+import { FactureService } from 'src/app/core/services/livraison/facture.service';
 import { LivraisonService } from 'src/app/core/services/livraison/livraison.service';
 
 
@@ -14,7 +17,6 @@ import { LivraisonService } from 'src/app/core/services/livraison/livraison.serv
 })
 export class DetailsLivraisonComponent {
 
-
   @Input() livraison: Livraison | undefined;
   @Output() livraisonUpdated = new EventEmitter<Livraison>();
   
@@ -22,13 +24,18 @@ export class DetailsLivraisonComponent {
   isEditing = false;
   editForm!: FormGroup;
   isSaving = false;
+  deliveryDrivers: DeliveryDriver[] = [];
+  orders: Order[] = [];
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private livraisonService: LivraisonService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private http: HttpClient,
+    private factureService: FactureService,
+    
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +45,10 @@ export class DetailsLivraisonComponent {
         dateCreation: new Date().toISOString(),
         dateLivraison: new Date().toISOString(),
         adresseLivraison: '',
-        statut: '',
+        statut: 'En attente', // Replace 'Pending' with a valid LivraisonStatus value
+       // dateEmission: new Date().toISOString(),
+       // montantTotal: 0,
+       // totalPrice: 0
       };
     }
 
@@ -57,58 +67,117 @@ export class DetailsLivraisonComponent {
     } else {
       this.initForm(); // Initialize form with default data
     }
+
+    this.loadDeliveryDrivers();
+    this.loadOrders();
+  }
+
+  private loadDeliveryDrivers() {
+    this.factureService.getAllDelivery().subscribe({
+      next: (drivers) => {
+        this.deliveryDrivers = drivers;
+        console.log('Drivers loaded:', drivers);
+      },
+      error: (error) => console.error('Error loading drivers:', error)
+    });
+  }
+
+  private loadOrders() {
+    this.factureService.getAllOrdres().subscribe({
+      next: (orders) => {
+        this.orders = orders;
+        console.log('Orders loaded:', orders);
+      },
+      error: (error) => console.error('Error loading orders:', error)
+    });
   }
 
   private initForm(): void {
     if (!this.livraison) return;
     
     this.editForm = this.fb.group({
-      dateCreation: [this.livraison.dateCreation, Validators.required],
-      dateLivraison: [this.livraison.dateLivraison, Validators.required],
-      adresseLivraison: [this.livraison.adresseLivraison, [Validators.required]],
-      statut: [this.livraison.statut, Validators.required]
+      dateLivraison: [this.livraison.dateLivraison, [
+        Validators.required,
+        this.dateValidators()
+      ]],
+      adresseLivraison: [this.livraison.adresseLivraison, [
+        Validators.required,
+        Validators.minLength(5)
+      ]],
+      statut: [this.livraison.statut, Validators.required],
+      deliveryDriver: [this.livraison.deliveryDriver?.address || null, Validators.required]
     });
   }
-
+  
+  private dateValidators(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) return null;
+  
+      const selectedDate = new Date(control.value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+  
+      // Vérifie si la date est dans le passé
+      if (selectedDate < today) {
+        return { pastDate: true };
+      }
+  
+      // Vérifie si la date dépasse 5 jours dans le futur
+      const maxDate = new Date();
+      maxDate.setDate(maxDate.getDate() + 5);
+      maxDate.setHours(23, 59, 59, 999);
+  
+      if (selectedDate > maxDate) {
+        return { maxFutureDays: true };
+      }
+  
+      return null;
+    };
+  }
+  
   editLivraison(): void {
     if (!this.livraison) return;
     
     this.editForm = this.fb.group({
-      dateCreation: [this.livraison.dateCreation, Validators.required],
-      dateLivraison: [this.livraison.dateLivraison, Validators.required],
-      adresseLivraison: [this.livraison.adresseLivraison, [Validators.required]],
-      statut: [this.livraison.statut, Validators.required]
+      dateLivraison: [this.livraison.dateLivraison, [
+        Validators.required,
+        this.dateValidators()
+      ]],
+      adresseLivraison: [this.livraison.adresseLivraison, [
+        Validators.required,
+        Validators.minLength(5)
+      ]],
+      statut: [this.livraison.statut, Validators.required],
+      deliveryDriver: [this.livraison.deliveryDriver?.address || null, Validators.required]
     });
     
     this.isEditing = true;
   }
 
-  cancelEdit(): void {
-    this.isEditing = false;
-    this.editForm.reset();
-  }
-
   saveChanges(): void {
     if (!this.livraison || !this.editForm || this.editForm.invalid) {
-      this.snackBar.open('Formulaire invalide', 'Fermer', { duration: 3000 });
+      this.snackBar.open('Veuillez corriger les erreurs dans le formulaire', 'Fermer', { duration: 3000 });
       return;
     }
-
+  
     this.isSaving = true;
-    const updatedLivraison: Livraison = {
+    const formValue = this.editForm.value;
+    
+    const selectedDriver = this.deliveryDrivers.find(d => d.address === formValue.deliveryDriver);
+  
+    const updatedLivraison = {
       ...this.livraison,
-      dateCreation: this.editForm.get('dateCreation')?.value,
-      dateLivraison: this.editForm.get('dateLivraison')?.value,
-      adresseLivraison: this.editForm.get('adresseLivraison')?.value,
-      statut: this.editForm.get('statut')?.value
+      dateLivraison: formValue.dateLivraison,
+      adresseLivraison: formValue.adresseLivraison,
+      statut: formValue.statut,
+      deliveryDriver: selectedDriver
     };
-
-    this.livraisonService.update(updatedLivraison?.id!, updatedLivraison).subscribe({
+  
+    this.livraisonService.update(updatedLivraison.id, updatedLivraison).subscribe({
       next: (result) => {
-        this.livraison = {...result};
+        this.livraison = result;
         this.isEditing = false;
         this.isSaving = false;
-        this.livraisonUpdated.emit(this.livraison);
         this.snackBar.open('Livraison mise à jour avec succès', 'OK', { duration: 3000 });
       },
       error: (error) => {
@@ -131,6 +200,10 @@ export class DetailsLivraisonComponent {
     this.hideTimeout = setTimeout(() => {
       this.isNavbarVisible = false;
     }, 300); // 300ms de délai
+  }
+  cancelEdit(): void {
+    this.isEditing = false;
+    this.editForm.reset();
   }
 }
 

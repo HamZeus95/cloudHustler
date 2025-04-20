@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class LivraisonService implements ILivraisonService {
@@ -48,6 +49,12 @@ public class LivraisonService implements ILivraisonService {
         }
         livraisonRepository.deleteById(id);
     }
+
+    @Override
+    public List<Livraison> findByOrdreConsumerUuid(UUID uuid_user) {
+        return livraisonRepository.findByOrderConsumerUuid(uuid_user);
+    }
+
     public Livraison getLastLivraison() {
         return livraisonRepository.findTopByOrderByIdDesc();  // Récupère la dernière Livraison par ID
     }

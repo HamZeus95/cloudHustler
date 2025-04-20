@@ -115,8 +115,11 @@ th, td {
   border-radius: 6px;
   border: none;
   cursor: pointer;
-  margin-top: 100px; /* Ajustez la valeur selon vos besoins */
+  margin-top: 150px;
 
+}
+.ajouter-button:hover {
+  background-color: #3b4dd9;
 }
 
 
@@ -358,7 +361,7 @@ th, td {
 }
 h1{
   margin-left: 50px; /* Ajustez la valeur selon vos besoins */
-  margin-top: 100px; /* Ajustez la valeur selon vos besoins */
+  margin-top: 150px; /* Ajustez la valeur selon vos besoins */
 
 }
 
@@ -532,7 +535,7 @@ button[type="button"]:hover {
   flex-grow: 1;
   position: relative;
   max-width: 400px;
-  margin-top: 100px; /* Ajustez la valeur selon vos besoins */
+  margin-top: 150px; /* Ajustez la valeur selon vos besoins */
   
 }
 
@@ -550,4 +553,66 @@ button[type="button"]:hover {
   border: 1px solid #ced4da;
   border-radius: 8px;
   font-size: 1rem;
+}
+
+/* Styles pour la fenêtre modale */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1500; /* Augmenter le z-index */
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 500px;
+  max-width: 90%;
+  position: relative;
+  z-index: 1501; /* Doit être supérieur à modal-overlay */
+}
+
+/* S'assurer que le formulaire est visible */
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+/* Styles pour les messages d'erreur */
+.error-message {
+  color: #000000 !important; /* Noir */
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Pour les petits textes d'erreur */
+.error-message small {
+  color: #000000 !important; /* Noir */
+  display: block;
+  margin-top: 0.25rem;
+}
+
+/* Pour le formulaire modal spécifiquement */
+.modal-content .error-message,
+.modal-content .error-message small {
+  color: #000000 !important; /* Noir */
+}
+.modal-content {
+  background-color: #ffffff; /* Fond blanc pour la modal */
+  color: #333333; /* Texte principal foncé */
+  /* ... autres styles ... */
+}
+.is-invalid {
+  border-color: #dc3545 !important; /* Rouge pour les champs invalides */
+}
+
+.is-invalid:focus {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
 }

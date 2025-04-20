@@ -32,7 +32,7 @@ public class Facture {
     @Pattern(regexp = "^(PAYÉ|EN ATTENTE|ANNULÉ)$", message = "Le statut doit être 'PAYÉ', 'EN ATTENTE' ou 'ANNULÉ'.")
     private String statut; // "PAYÉ", "EN ATTENTE", "ANNULÉ"
 
-    @OneToOne(cascade = CascadeType.PERSIST)  // Retirer CascadeType.ALL pour éviter de supprimer la livraison avec la facture
+    @OneToOne(cascade = CascadeType.MERGE)  // Retirer CascadeType.ALL pour éviter de supprimer la livraison avec la facture
     @JoinColumn(name = "livraison_id")
     @NotNull(message = "La livraison ne peut pas être nulle.")
     private Livraison livraison;

@@ -1,0 +1,80 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+  <div id="pdf-content" class="invoice-container" *ngIf="factureDetails">
+    <!-- Header with Logo and Title -->
+    <div class="invoice-header">
+      <div class="logo-section">
+        <img src="assets/img/core-img/logo11.png" alt="Logo" class="company-logo">
+        <h1 class="company-name">Farmie</h1>
+      </div>
+      <div class="document-title">
+        <h1>FACTURE</h1>
+      </div>
+    </div>
+
+    <!-- Billing Info -->
+    <div class="billing-section">
+      <div class="bill-to">
+        <h4>FACTURER À:</h4>
+        <p>Client: {{factureDetails.livraison?.order?.consumer?.firstName}} {{factureDetails.livraison?.order?.consumer?.lastName}}</p>
+        <p>Adresse: {{factureDetails.livraison.adresseLivraison}}</p>
+      </div>
+      <div class="invoice-info">
+        <!--p><strong>Facture #:</strong> {{factureDetails.id}}</p-->
+        <p><strong>Date:</strong> {{factureDetails.dateEmission | date:'dd/MM/yyyy'}}</p>
+        <p><strong>Statut:</strong> {{factureDetails.statut}}</p>
+      </div>
+    </div>
+
+    <!-- Items Table -->
+    <table class="invoice-items">
+      <thead>
+        <tr>
+          <th>DESCRIPTION</th>
+          <th>PRIX UNITAIRE</th>
+          <th>QTÉ</th>
+          <th>MONTANT</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of factureDetails?.livraison?.order?.orderItems || []">
+          <td>{{item?.product?.name || 'N/A'}}</td>
+          <td>{{item?.product?.price || 0}} DT</td>
+          <td>{{item?.quantity || 0}}</td>
+          <td>{{(item?.product?.price || 0) * (item?.quantity || 0)}} DT</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Totals -->
+    <div class="totals-section" *ngIf="factureDetails?.montantTotal">
+      <div class="total-item">
+        <p><strong>Sous-total:</strong></p>
+        <p>{{factureDetails?.montantTotal || 0}} DT</p>
+      </div>
+      <div class="total-item">
+        <p><strong>TVA (19%):</strong></p>
+        <p>{{(factureDetails?.montantTotal || 0) * 0.19}} DT</p>
+      </div>
+      <div class="total-item grand-total">
+        <p><strong>Total:</strong></p>
+        <p>{{(factureDetails?.montantTotal || 0) * 1}} DT</p>
+      </div>
+    </div>
+    <div class="text-end my-3">
+      <button class="btn btn-dark" (click)="generatePDF()">
+        <i class="bi bi-file-earmark-pdf-fill"></i> Télécharger le PDF
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <div class="invoice-footer">
+      <p>Merci pour votre confiance!</p>
+      <div class="footer-contact">
+        <p>Farmie - Votre partenaire logistique</p>
+        <p>Email: farmie&#64;esprit.tn | Tel: +216 20 000 000</p>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

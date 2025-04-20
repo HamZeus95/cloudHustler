@@ -37,55 +37,80 @@
         />
       </div>
       <!-- Bouton pour ouvrir la fenêtre modale -->
-<button class="ajouter-button" (click)="openModal()">Ajouter une Livraison</button>
+<button class="ajouter-button" (click)="openModal()">
+  <i class="fas fa-plus"></i> Ajouter une Livraison
+</button>
 
-<!-- Fenêtre modale (initialement cachée) -->
-<div *ngIf="isModalOpen" class="modal-overlay" (click)="closeModal()">
+<!-- Fenêtre modale -->
+<div class="modal-overlay" *ngIf="isModalOpen" (click)="closeModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
-    <p class="titre-facture"><strong>Ajouter une Livraison</strong> </p>
+    <h2 class="titre-facture">Ajouter une Livraison</h2>
     <form [formGroup]="livraisonForm" (ngSubmit)="onSubmit()">
       <!-- Date livraison -->
      
-<div class="form-group">
-  <label for="dateLivraison">Date de Livraison</label>
-  <input
-    type="date"
-    id="dateLivraison"
-    formControlName="dateLivraison"
-    class="priority"
-    [ngClass]="{ 'is-invalid': livraisonForm.get('dateLivraison')?.invalid && livraisonForm.get('dateLivraison')?.touched }"
-  />
-</div>
+      <div class="form-group">
+        <label for="dateLivraison">Date de Livraison</label>
+        <input type="date" id="dateLivraison" formControlName="dateLivraison" class="priority"
+          [ngClass]="{ 'is-invalid': livraisonForm.get('dateLivraison')?.invalid && (livraisonForm.get('dateLivraison')?.touched || livraisonForm.get('dateLivraison')?.dirty) }">
+        
+        <div *ngIf="livraisonForm.get('dateLivraison')?.invalid && (livraisonForm.get('dateLivraison')?.touched || livraisonForm.get('dateLivraison')?.dirty)" class="error-message">
+          <small *ngIf="livraisonForm.get('dateLivraison')?.errors?.['required']">Date de livraison requise</small>
+          <small *ngIf="livraisonForm.get('dateLivraison')?.errors?.['pastDate']">La date ne peut pas être dans le passé</small>
+          <small *ngIf="livraisonForm.get('dateLivraison')?.errors?.['maxFutureDays']">La date ne peut pas dépasser 5 jours </small>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="statut">Statut</label>
+        <select id="statut" formControlName="statut" class="priority"
+          [ngClass]="{ 'is-invalid': livraisonForm.get('statut')?.invalid && (livraisonForm.get('statut')?.touched || livraisonForm.get('statut')?.dirty) }">
+          <option value="EN ATTENTE">En attente</option>
+          <!--option value="EN TRANSIT">En transit</option>
+          <option value="LIVRÉE">Livrée</option-->
+        </select>
+        <div *ngIf="livraisonForm.get('statut')?.invalid && (livraisonForm.get('statut')?.touched || livraisonForm.get('statut')?.dirty)" class="error-message">
+          <small *ngIf="livraisonForm.get('statut')?.errors?.['required']">Statut requis</small>
+        </div>
+      </div>
 
-<!-- Montant total -->
-<div class="form-group">
-  <label for="adresseLivraison">Adresse de Livraison</label>
-  <input
-    type="text"
-    id="adresseLivraison"
-    formControlName="adresseLivraison"
-    class="priority"
-    placeholder="Adresse Livraison"
-    min="0"
-    [ngClass]="{ 'is-invalid': livraisonForm.get('adresseLivraison')?.invalid && livraisonForm.get('adresseLivraison')?.touched }"
-  />
-</div>
+      <div class="form-group">
+        <label for="adresseLivraison">Adresse de Livraison</label>
+        <input type="text" id="adresseLivraison" formControlName="adresseLivraison" class="priority"
+          placeholder="Adresse Livraison" [ngClass]="{ 'is-invalid': livraisonForm.get('adresseLivraison')?.invalid && livraisonForm.get('adresseLivraison')?.touched }">
+        <div *ngIf="livraisonForm.get('adresseLivraison')?.invalid && livraisonForm.get('adresseLivraison')?.touched" class="error-message">
+          <small *ngIf="livraisonForm.get('adresseLivraison')?.errors?.['required']">Adresse requise</small>
+          <small *ngIf="livraisonForm.get('adresseLivraison')?.errors?.['minlength']">L'adresse doit contenir au moins 5 caractères</small>
+          <small *ngIf="livraisonForm.get('adresseLivraison')?.errors?.['pattern']">Format d'adresse invalide</small>
+        </div>
+      </div>
 
-<!-- Statut -->
-<div class="form-group">
-  <label for="statut">Statut</label>
-  <select
-    id="statut"
-    formControlName="statut"
-    class="priority"
-    [ngClass]="{ 'is-invalid': livraisonForm.get('statut')?.invalid && livraisonForm.get('statut')?.touched }"
-  >
-    <option value="">Sélectionner un statut</option>
-    <option value="Livrée">Livrée</option>
-    <option value="En attente">En attente</option>
-    <option value="En Transit">En Transit</option>
-  </select>
-</div>
+      
+
+      <div class="form-group">
+        <label for="deliveryDriver">Livreur</label>
+        <select id="deliveryDriver" formControlName="deliveryDriver" class="priority"
+          [ngClass]="{ 'is-invalid': livraisonForm.get('deliveryDriver')?.invalid && livraisonForm.get('deliveryDriver')?.touched }">
+          <option value="">Sélectionner un livreur</option>
+          <option *ngFor="let driver of deliveryDrivers" [ngValue]="driver">
+            {{driver.firstName}} {{driver.lastName}} - {{driver.phone}}
+          </option>
+        </select>
+        <div *ngIf="livraisonForm.get('deliveryDriver')?.invalid && livraisonForm.get('deliveryDriver')?.touched" class="error-message">
+          <small *ngIf="livraisonForm.get('deliveryDriver')?.errors?.['required']">Livreur requis</small>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="order">Ordre</label>
+        <select id="order" formControlName="order" class="priority"
+          [ngClass]="{ 'is-invalid': livraisonForm.get('order')?.invalid && livraisonForm.get('order')?.touched }">
+          <option value="">Sélectionner un Ordre</option>
+          <option *ngFor="let order of orders" [ngValue]="order">
+            Ordre #{{order.uuid_order}} - {{order.totalPrice}}€
+          </option>
+        </select>
+      </div>
 
      <div *ngIf="livraisonForm.invalid && livraisonForm.touched" class="error-message">
       <p>Veuillez remplir correctement tous les champs.</p>
@@ -170,9 +195,9 @@
               <span
                 class="badge"
                 [ngClass]="{
-                  'EN_ATTENTE': (livraison.statut?.toUpperCase() ?? '')  === 'EN ATTENTE',
-                  'PAYÉ': (livraison.statut?.toUpperCase() ?? '') === 'LIVRÉE',
-                  'EN_TRANSIT': (livraison.statut?.toUpperCase() ?? '') === 'EN TRANSIT'
+                  'EN_ATTENTE': livraison.statut.toUpperCase() === 'EN ATTENTE',
+                  'PAYÉ': livraison.statut.toUpperCase() === 'LIVRÉE',
+                  'EN_TRANSIT': livraison.statut.toUpperCase() === 'EN TRANSIT'
                 }"
               >
                 {{ livraison.statut }}
@@ -231,7 +256,7 @@
     </ul>
   </nav>
   
-  <app-settings-panel></app-settings-panel>
+  <!--app-settings-panel></app-settings-panel-->
 
 </body>
 </html>

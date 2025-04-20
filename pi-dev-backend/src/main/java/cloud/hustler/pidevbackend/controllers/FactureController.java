@@ -1,6 +1,9 @@
 package cloud.hustler.pidevbackend.controllers;
 
+import cloud.hustler.pidevbackend.entity.DeliveryDriver;
 import cloud.hustler.pidevbackend.entity.Facture;
+import cloud.hustler.pidevbackend.entity.Livraison;
+import cloud.hustler.pidevbackend.entity.Order;
 import cloud.hustler.pidevbackend.repository.FactureRepository;
 import cloud.hustler.pidevbackend.service.FactureService;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/factures")
@@ -21,6 +25,7 @@ public class FactureController {
     private FactureService factureService;
     @Autowired
     private FactureRepository factureRepository;
+
 
     @PostMapping
     public Facture creerFacture(@Valid @RequestBody Facture facture) {
@@ -86,5 +91,25 @@ public class FactureController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de la mise à jour de la facture");
         }
+    }
+   /* @GetMapping("/by-user/{uuid}")
+    public ResponseEntity<List<Facture>> getFacturesByUser(@PathVariable("uuid") UUID uuid) {
+        List<Facture> factures = factureService.findAllByLivraison_Order_Consumer_Uuid_user(uuid);
+        return ResponseEntity.ok(factures);
+    }*/
+   @GetMapping("/by-user/{uuid}")
+   public ResponseEntity<List<Facture>> getFactureByUser(@PathVariable("uuid") UUID uuid) {
+       List<Facture> factures = factureService.findByLivraisonOrderConsumerUuid(uuid);
+       return ResponseEntity.ok(factures);
+   }
+   @GetMapping("delivery")
+   public ResponseEntity<List<DeliveryDriver>> getAllDelivery() {
+       List<DeliveryDriver> deliveryDrivers = factureService.findDeliveryDriverByIsAvailable(true);
+       return ResponseEntity.ok(deliveryDrivers);
+   }
+    @GetMapping("ordres")
+    public ResponseEntity<List<Order>> getAllOrdres() {
+        List<Order> orders = factureService.getAllOrders();
+        return ResponseEntity.ok(orders);
     }
 }

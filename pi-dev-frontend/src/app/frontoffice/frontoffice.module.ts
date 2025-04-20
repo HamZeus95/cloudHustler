@@ -21,6 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { NgChartsModule } from 'ng2-charts';
 import { DialogModule } from 'primeng/dialog';
+import { LivraisonClientdetailsComponent } from './pages/livraison/livraison-clientdetails/livraison-clientdetails.component';
+import { FactureClientdetailsComponent } from './pages/livraison/facture-clientdetails/facture-clientdetails.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,10 @@ import { DialogModule } from 'primeng/dialog';
     MarketComponent,
     NotFoundComponent,
     FactureClientComponent,
-    LivraisonClientComponent
+    LivraisonClientComponent,
+    LivraisonClientdetailsComponent,
+    FactureClientdetailsComponent,
+    LivraisonClientdetailsComponent,
 
   ],
   imports: [

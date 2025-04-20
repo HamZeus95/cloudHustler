@@ -29,6 +29,14 @@ export class LivraisonService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
+  getLivraisonsByUser(uuid: string): Observable<Livraison[]> {
+    return this.http.get<Livraison[]>(`${this.baseUrl}/by-user/${uuid}`);
+  }
+  getLivraisonsById(id: number): Observable<Livraison[]> {
+    return this.http.get<Livraison[]>(`${this.baseUrl}/${id}`);
+  }
+
   getLivraisonsCountByStatus(): Observable<{
       livree: number;
       enAttente: number;

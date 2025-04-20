@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/livraisons")
@@ -44,5 +45,11 @@ public class LivraisonController {
         return livraison.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+    @GetMapping("/by-user/{uuid}")
+    public ResponseEntity<List<Livraison>> getLivraisonsByUser(@PathVariable("uuid") UUID uuid) {
+        List<Livraison> livraisons = livraisonService.findByOrdreConsumerUuid(uuid);
+        return ResponseEntity.ok(livraisons);
+    }
+
 
 }

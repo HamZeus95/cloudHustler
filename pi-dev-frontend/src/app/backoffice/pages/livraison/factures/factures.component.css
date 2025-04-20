@@ -75,7 +75,7 @@ body {
 h1{
   margin-left: 50px; /* Ajustez la valeur selon vos besoins */
 
-    margin-top: 100px; /* Ajustez la valeur selon vos besoins */
+    margin-top: 150px; /* Ajustez la valeur selon vos besoins */
   
   }
   
@@ -127,7 +127,7 @@ th, td {
   border-radius: 6px;
   border: none;
   cursor: pointer;
-  margin-top: 100px; /* Ajustez la valeur selon vos besoins */
+  margin-top: 150px;
 
 }
 
@@ -575,7 +575,7 @@ button[type="button"]:hover {
   flex-grow: 1;
   position: relative;
   max-width: 400px;
-  margin-top: 100px; /* Ajustez la valeur selon vos besoins */
+  margin-top: 150px; /* Ajustez la valeur selon vos besoins */
   
 }
 
@@ -593,4 +593,26 @@ button[type="button"]:hover {
   border: 1px solid #ced4da;
   border-radius: 8px;
   font-size: 1rem;
+}
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.is-invalid {
+  border-color: #dc3545 !important;
+}
+
+.priority {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.priority:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }

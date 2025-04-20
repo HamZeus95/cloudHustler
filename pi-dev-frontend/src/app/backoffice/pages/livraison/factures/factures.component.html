@@ -39,69 +39,119 @@
           class="search-input"
         />
       </div>
+      <button class="ajouter-button" (click)="openModal()">
+        <i class="fas fa-plus"></i> Ajouter une facture
+      </button>
+    
       <!-- Bouton pour ouvrir la fenêtre modale -->
-<button class="ajouter-button" (click)="openModal()">Ajouter une facture</button>
-
-<!-- Fenêtre modale (initialement cachée) -->
-<div *ngIf="isModalOpen" class="modal-overlay" (click)="closeModal()">
-  <div class="modal-content" (click)="$event.stopPropagation()">
-    <p class="titre-facture"><strong>Ajouter une facture</strong> </p>
-    <form [formGroup]="factureForm" (ngSubmit)="onSubmit()">
-      <!-- Date d'émission -->
-     <!-- Date d'émission -->
-<div class="form-group">
-  <label for="dateEmission">Date d'émission</label>
-  <input
-    type="date"
-    id="dateEmission"
-    formControlName="dateEmission"
-    class="priority"
-    [ngClass]="{ 'is-invalid': factureForm.get('dateEmission')?.invalid && factureForm.get('dateEmission')?.touched }"
-  />
-</div>
-
-<!-- Montant total -->
-<div class="form-group">
-  <label for="montantTotal">Montant total</label>
-  <input
-    type="number"
-    id="montantTotal"
-    formControlName="montantTotal"
-    class="priority"
-    placeholder="Montant total"
-    min="0"
-    [ngClass]="{ 'is-invalid': factureForm.get('montantTotal')?.invalid && factureForm.get('montantTotal')?.touched }"
-  />
-</div>
-
-<!-- Statut -->
-<div class="form-group">
-  <label for="statut">Statut</label>
-  <select
-    id="statut"
-    formControlName="statut"
-    class="priority"
-    [ngClass]="{ 'is-invalid': factureForm.get('statut')?.invalid && factureForm.get('statut')?.touched }"
-  >
-    <option value="">Sélectionner un statut</option>
-    <option value="Payée">Payée</option>
-    <option value="En attente">En attente</option>
-    <option value="ANNULÉE">Annulée</option>
-  </select>
-</div>
-
-     <div *ngIf="factureForm.invalid && factureForm.touched" class="error-message">
-      <p>Veuillez remplir correctement tous les champs.</p>
-    </div>
+       
+      <div *ngIf="isModalOpen" class="modal-overlay" (click)="closeModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+          <p class="titre-facture"><strong>Ajouter une facture</strong></p>
+          <form [formGroup]="factureForm" (ngSubmit)="onSubmit()">
+            <!-- Date d'émission -->
+            <div class="form-group">
+              <label for="dateEmission">Date d'émission*</label>
+              <input
+                type="date"
+                id="dateEmission"
+                formControlName="dateEmission"
+                class="priority"
+                [ngClass]="{ 'is-invalid': factureForm.get('dateEmission')?.invalid && 
+                               (factureForm.get('dateEmission')?.touched || factureForm.get('dateEmission')?.dirty) }"
+              />
+              <div *ngIf="factureForm.get('dateEmission')?.invalid && 
+                         (factureForm.get('dateEmission')?.touched || factureForm.get('dateEmission')?.dirty)" 
+                   class="error-message">
+                <small *ngIf="factureForm.get('dateEmission')?.errors?.['required']">Date requise</small>
+                <!--small *ngIf="factureForm.get('dateEmission')?.errors?.['futureDate']">La date ne peut pas être dans le futur</small>
+                <small *ngIf="factureForm.get('dateEmission')?.errors?.['futureDate']">La date ne peut pas être dans le futur</small-->
+                <small *ngIf="factureForm.get('dateEmission')?.errors?.['dateMismatch']">
+                  La date d'émission doit être égale à la date de création de la livraison
+                </small>
+              </div>
+            </div>
       
-      <div class="form-group">
-        <button type="submit" class="action-button">Enregistrer</button>
-        <button type="button" class="action-button" (click)="closeModal()">Annuler</button>
+            <!-- Livraison associée -->
+            <div class="form-group">
+              <label for="livraison">Livraison associée*</label>
+              <select
+                id="livraison"
+                formControlName="livraison"
+                class="priority"
+                [ngClass]="{ 'is-invalid': factureForm.get('livraison')?.invalid && 
+                               (factureForm.get('livraison')?.touched || factureForm.get('livraison')?.dirty) }"
+              >
+                
+                <option *ngFor="let livraison of livraisons" [ngValue]="livraison">
+                  Livraison #{{livraison.id}} -  {{livraison.order?.totalPrice}} DT  ({{livraison.dateCreation | date:'dd/MM/yyyy'}})  {{livraison.adresseLivraison}}
+              </select>
+              <div *ngIf="factureForm.get('livraison')?.invalid && 
+                         (factureForm.get('livraison')?.touched || factureForm.get('livraison')?.dirty)" 
+                   class="error-message">
+                <small *ngIf="factureForm.get('livraison')?.errors?.['required']">Livraison requise</small>
+              </div>
+            </div>
+      
+            <!-- Montant total -->
+            <div class="form-group">
+              <label for="montantTotal">Montant total*</label>
+              <input
+                id="montantTotal"
+                formControlName="montantTotal"
+                class="priority"
+                [ngClass]="{ 'is-invalid': factureForm.get('montantTotal')?.invalid && 
+                               (factureForm.get('montantTotal')?.touched || factureForm.get('montantTotal')?.dirty) }"
+              >
+             
+              <div *ngIf="factureForm.get('montantTotal')?.invalid && 
+                         (factureForm.get('montantTotal')?.touched || factureForm.get('montantTotal')?.dirty)" 
+                   class="error-message">
+                <small *ngIf="factureForm.get('montantTotal')?.errors?.['required']">Montant requis</small>
+                <small *ngIf="factureForm.get('montantTotal')?.errors?.['min']">Le montant doit être positif</small>
+                <small *ngIf="factureForm.get('montantTotal')?.errors?.['totalPriceMismatch']">
+                  Le montant doit correspondre au total de la livraison ({{ factureForm.get('livraison')?.value?.ordre?.totalPrice }} DT)
+                </small>
+              </div>
+            </div>
+      
+            <!-- Statut -->
+            <div class="form-group">
+              <label for="statut">Statut*</label>
+              <select
+                id="statut"
+                formControlName="statut"
+                class="priority"
+                [ngClass]="{ 'is-invalid': factureForm.get('statut')?.invalid && 
+                               (factureForm.get('statut')?.touched || factureForm.get('statut')?.dirty) }"
+              >
+                <option value="EN ATTENTE">En attente</option>
+                <!--option value="PAYÉE">Payée</option>
+                <option value="ANNULÉE">Annulée</option-->
+              </select>
+              <div *ngIf="factureForm.get('statut')?.invalid && 
+                         (factureForm.get('statut')?.touched || factureForm.get('statut')?.dirty)" 
+                   class="error-message">
+                <small *ngIf="factureForm.get('statut')?.errors?.['required']">Statut requis</small>
+                <small *ngIf="factureForm.get('statut')?.errors?.['invalidStatus']">Statut invalide</small>
+              </div>
+            </div>
+      
+            <div *ngIf="factureForm.invalid && factureForm.touched" class="error-message">
+              <p>Veuillez corriger les erreurs avant de soumettre</p>
+            </div>
+            
+            <div class="form-group">
+              <button type="submit" class="action-button" [disabled]="factureForm.invalid">
+                Enregistrer
+              </button>
+              <button type="button" class="action-button" (click)="closeModal()">
+                Annuler
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </form>
-  </div>
-</div>
-
     </div>
     <div class="status-cards-container">
       <div class="status-card">
@@ -232,7 +282,7 @@
     </ul>
   </nav>
   
-  <app-settings-panel></app-settings-panel>
+  <!--app-settings-panel></app-settings-panel-->
  
 </body>
 </html>

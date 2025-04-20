@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Facture } from 'src/app/core/models/livraison/facture';
 import { Livraison } from 'src/app/core/models/livraison/livraison';
 import { FactureService } from 'src/app/core/services/livraison/facture.service';
@@ -12,7 +13,9 @@ export class FactureClientComponent implements OnInit {
   factures: Facture[] = [];
     displayModal: boolean = false;
     selectedFacture: Facture | null = null;
-      @Output() factureSelected = new EventEmitter<Livraison>();
+      @Output() factureSelected = new EventEmitter<Facture>();
+      readonly userUuid = '01230000-0000-0000-0000-000000000000'; // Replace with actual UUID retrieval
+
     
   
   
@@ -20,15 +23,23 @@ export class FactureClientComponent implements OnInit {
       id: 0,
       dateEmission: '',
       montantTotal: 0,
-      statut: '',
+      statut: 'En attente', // Replace with a valid LivraisonStatus value
       livraison: {
         id: 0,
-        statut: '',
-        dateCreation: ''
+        statut: 'En attente', // Replace with a valid LivraisonStatus value
+        dateCreation: '',
+        adresseLivraison: '',
+        dateLivraison: '',
+       // dateEmission: '',
+       // montantTotal: 0,
+       // totalPrice: 0
       }
     };
   
-    constructor(private factureService: FactureService) {}
+    constructor(private factureService: FactureService,private router: Router) {
+            
+      
+    }
     ngOnInit(): void {
       this.loadFactures();
     }
@@ -38,14 +49,9 @@ export class FactureClientComponent implements OnInit {
   
     // Récupérer toutes les factures depuis le service
     loadFactures() {
-      this.factureService.getAll().subscribe(
-        (data: Facture[]) => {
-          this.factures = data;
-        },
-        error => {
-          console.error('Erreur lors de la récupération des factures', error);
-        }
-      );
+      this.factureService.getFacturesByUser(this.userUuid).subscribe((data: Facture[]) => {
+              this.factures = data;
+            });
     }
   
     // Ajouter une nouvelle facture
@@ -62,17 +68,7 @@ export class FactureClientComponent implements OnInit {
     }
   
     // Supprimer une facture
-    closeDialog(): void {
-      this.displayModal = false; // Fermer la fenêtre modale
-    }
-  
-    supprimerFacture(id: number): void {
-      if (confirm("Êtes-vous sûr de vouloir supprimer cette facture ?")) {
-        this.factureService.delete(id).subscribe(() => {
-          this.loadFactures(); // Recharge la liste après suppression
-        });
-      }
-    }
+   
     getStatutClass(statut: string): string {
       if (statut === 'Payée'|| statut === 'PAYÉ' || statut === 'PAYEE'|| statut === 'PAYÉE') {
         return 'status-paid';
@@ -98,7 +94,14 @@ export class FactureClientComponent implements OnInit {
         dateEmission: '',
         montantTotal: 0,
         statut: '',
-        livraison: { id: 0, statut: '', dateCreation: '' }
+        livraison: {
+          id: 0, statut: 'En attente', dateCreation: '',
+          adresseLivraison: '',
+          dateLivraison: '',
+          //dateEmission: '',
+          //montantTotal: 0,
+          //totalPrice: 0
+        }
       };
     }
     /*marquerCommePayee(id: number): void {
@@ -128,6 +131,22 @@ export class FactureClientComponent implements OnInit {
         this.selectedFacture = facture;
         this.displayModal = true;
       }
+      onCardClick(facture: Facture) {
+        if (facture && facture.id) {
+          this.selectedFacture = facture;
+          this.factureSelected.emit(facture);
+          this.router.navigate(['/frontoffice/facture-client-details', facture.id])
+            .then(() => {
+              console.log('Navigation successful');
+            })
+            .catch(error => {
+              console.error('Navigation error:', error);
+            });
+        } else {
+          console.error('Facture or facture.id is undefined');
+        }
+      }
+    
   }
 
 

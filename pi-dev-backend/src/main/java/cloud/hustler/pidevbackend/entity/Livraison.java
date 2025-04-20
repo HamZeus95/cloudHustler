@@ -66,6 +66,31 @@ public class Livraison {
     public LocalDate getDateCreation() {
         return dateCreation;
     }
+    @OneToOne
+    @JoinColumn(name = "order_id") // Clé étrangère vers Order
+    private Order order;
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "delivery_man_id") // Clé étrangère vers DeliveryMan
+    private DeliveryDriver deliveryDriver;
+
+    public DeliveryDriver getDeliveryDriver() {
+        return deliveryDriver;
+    }
+
+    public void setDeliveryDriver(DeliveryDriver deliveryDriver) {
+        this.deliveryDriver = deliveryDriver;
+    }
 
     // Setter pour dateCreation
     public void setDateCreation(LocalDate dateCreation) {
@@ -89,14 +114,7 @@ public class Livraison {
     public void setDateLivraison(LocalDate dateLivraison) {
         this.dateLivraison = dateLivraison;
     }
-   /* public Facture getFacture() {
-        return facture;
-    }
 
-    // Setter pour facture
-    public void setFacture(Facture facture) {
-        this.facture = facture;
-    }*/
 
 
 }

@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Facture } from 'src/app/core/models/livraison/facture';
 import { tap, catchError } from 'rxjs/operators';
+import { DeliveryDriver } from '../../models/livraison/livraison';
+import { Order } from '../../models/market/order.model';
 
 @Injectable({
   providedIn: 'root'
@@ -102,6 +104,17 @@ export class FactureService {
            
            status.includes('REFUSE');
   }
+   getFacturesByUser(uuid: string): Observable<Facture[]> {
+      return this.http.get<Facture[]>(`${this.baseUrl}/by-user/${uuid}`);
+    }
+    getFacturesById(id: number): Observable<Facture[]> {
+      return this.http.get<Facture[]>(`${this.baseUrl}/${id}`);
+    }
 
-  
+    getAllDelivery(): Observable<DeliveryDriver[]> {
+      return this.http.get<DeliveryDriver[]>(`${this.baseUrl}/delivery`);
+    }
+    getAllOrdres(): Observable<Order[]> {
+      return this.http.get<Order[]>(`${this.baseUrl}/ordres`);
+    }
 }

@@ -2,12 +2,15 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Facture } from 'src/app/core/models/livraison/facture';
 import { Livraison } from 'src/app/core/models/livraison/livraison';
 import { ChartConfiguration, ChartType } from 'chart.js';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { FactureService } from 'src/app/core/services/livraison/facture.service';
-
-
+import { LivraisonService } from 'src/app/core/services/livraison/livraison.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
+import { CustomValidators } from 'src/app/core/validators/custom.validators';
 
 @Component({
   selector: 'app-facture',
@@ -36,11 +39,16 @@ export class FactureComponent implements OnInit {
     id: 0,
     dateEmission: '',
     montantTotal: 0,
-    statut: '',
+    statut: 'En attente',
     livraison: {
       id: 0,
-      statut: '',
-      dateCreation: ''
+      statut: 'En attente',
+      dateCreation: '',
+      adresseLivraison: '',
+      dateLivraison: '',
+      //dateEmission: '',
+      //montantTotal: 0,
+      //totalPrice: 0
     }
   };
   counts = {
@@ -49,6 +57,7 @@ export class FactureComponent implements OnInit {
     annulee: 0,
     total: 0
   };
+  
   isLoading = true;
   public pieChartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -98,17 +107,50 @@ export class FactureComponent implements OnInit {
     private factureService: FactureService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private livraisonService: LivraisonService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
+
     this.filteredFactures = [];
     this.initializeForm();
   }
 
+  private dateEmissionMatchesCreationValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.parent) return null;
+  
+      const livraison = control.parent.get('livraison')?.value;
+      if (!livraison?.dateCreation) return null;
+  
+      const dateEmission = new Date(control.value).toDateString();
+      const dateCreation = new Date(livraison.dateCreation).toDateString();
+  
+      return dateEmission === dateCreation ? null : { dateMismatch: true };
+    };
+  }
+
   private initializeForm(): void {
     this.factureForm = this.fb.group({
-      dateEmission: ['', Validators.required],
-      montantTotal: [0, [Validators.required, Validators.min(0)]],
-      statut: ['', Validators.required],
+      dateEmission: ['', [
+        Validators.required,
+        this.dateEmissionMatchesCreationValidator()
+      ]],
+      montantTotal: ['', Validators.required],
+      statut: ['EN ATTENTE', [
+        Validators.required,
+        CustomValidators.validStatutFacture1()
+      ]],
+      livraison: [null, Validators.required]
+    }, { validators: this.montantTotalMatchLivraisonValidator() });
+    
+
+    // Update montantTotal when livraison changes
+    this.factureForm.get('livraison')?.valueChanges.subscribe((livraison) => {
+      const totalPrice = livraison?.ordre?.order.orderItems.product.price * livraison?.ordre?.order.orderItemsproduct.quantity || 0;
+      this.factureForm.get('montantTotal')?.setValue(totalPrice, { emitEvent: false });
+      console.log('Montant total mis à jour:', totalPrice);
     });
   }
   
@@ -186,7 +228,14 @@ export class FactureComponent implements OnInit {
       dateEmission: '',
       montantTotal: 0,
       statut: '',
-      livraison: { id: 0, statut: '', dateCreation: '' }
+      livraison: {
+        id: 0, statut: 'En attente', dateCreation: '',
+        adresseLivraison: '',
+        dateLivraison: '',
+        //dateEmission: '',
+        //montantTotal: 0,
+        //totalPrice: 0
+      }
     };
   }
   
@@ -248,8 +297,7 @@ getMiniChartData(count: number): ChartConfiguration['data'] {
 factureForm!: FormGroup;
   isEditMode = false;
   id!: number;
-
-
+  livraisons: Livraison[] = [];
 
   ngOnInit(): void {
     this.loadFactures();
@@ -264,12 +312,7 @@ factureForm!: FormGroup;
       }
     });
     this.loadStats();
-    this.factureForm = this.fb.group({
-      dateEmission: ['', Validators.required],
-      montantTotal: [0, Validators.required],
-      statut: ['', Validators.required],
- 
-    });
+   
 
     this.route.params.subscribe(params => {
       if (params['id']) {
@@ -281,55 +324,92 @@ factureForm!: FormGroup;
       }
     });
 
+    this.loadLivraisons();
+  }
 
-    
+  private loadLivraisons() {
+    // Fetch all factures to determine which livraisons are already associated
+    this.factureService.getAll().subscribe({
+      next: (factures) => {
+        // Create a set of livraison IDs that are already associated with factures
+        const associatedLivraisonIds = new Set(factures.map(facture => facture.livraison?.id));
 
+        // Fetch all livraisons and filter out the ones that are already associated
+        this.livraisonService.getAll().subscribe({
+          next: (livraisons) => {
+            this.livraisons = livraisons.filter(livraison => !associatedLivraisonIds.has(livraison.id));
+          },
+          error: (error) => console.error('Erreur chargement livraisons:', error)
+        });
+      },
+      error: (error) => console.error('Erreur chargement factures:', error)
+    });
+  }
+
+  onSubmit(): void {
+    if (this.factureForm.invalid) {
+      let errorMessage = 'Erreurs de validation:\n';
+      
+      const controls = this.factureForm.controls;
+      for (const key in controls) {
+        if (controls[key].invalid) {
+          switch (key) {
+            case 'dateEmission':
+              if (controls[key].errors?.['required']) errorMessage += '- Date d\'émission manquante\n';
+              if (controls[key].errors?.['futureDate']) errorMessage += '- Date d\'émission dans le futur\n';
+              break;
+            case 'montantTotal':
+              if (controls[key].errors?.['required']) errorMessage += '- Montant total manquant\n';
+              if (controls[key].errors?.['min']) errorMessage += '- Montant total doit être positif\n';
+              break;
+            case 'livraison':
+              if (controls[key].errors?.['required']) errorMessage += '- Livraison non sélectionnée\n';
+              if (controls[key].errors?.['invalidDate']) errorMessage += '- Date de livraison invalide\n';
+              break;
+          }
+        }
+      }
+
+      this.dialog.open(ErrorDialogComponent, {
+        width: '400px',
+        data: { message: errorMessage }
+      });
+      return;
     }
 
-    onSubmit(): void {
-      if (this.factureForm.invalid) {
-        // Empêcher la soumission si le formulaire est invalide
-        return;
-      }
-  
-      if (this.isEditMode) {
-        // Création de l'objet facture avec l'id et les données du formulaire
-        const updatedFacture: Facture = {
-          id: this.id,
-          ...this.factureForm.value
-        };
-    
-        // Appel de la méthode update avec l'id et l'objet facture
-        this.factureService.update(this.id, updatedFacture).subscribe({
-          next: () => {
-            this.router.navigate(['/backoffice/factures']);
-            this.loadFactures();
-            this.closeModal();
-          },
-          error: (err) => {
-            console.error('Erreur lors de la mise à jour de la facture:', err);
-          }
+    // Création de la facture
+    this.factureService.add(this.factureForm.value).subscribe({
+      next: (response) => {
+        this.snackBar.open('Facture créée avec succès', 'Fermer', {
+          duration: 3000,
+          panelClass: ['success-snackbar']
         });
-      } else {
-        // Création d'une nouvelle facture
-        this.factureService.add(this.factureForm.value).subscribe({
-          next: () => {
-            this.router.navigate(['/backoffice/factures']); // Rediriger après ajout
-            this.loadFactures(); // Recharger la liste des factures
-            this.closeModal();  // Fermer la modale
-          },
-          error: (err) => {
-            console.error('Erreur lors de l\'ajout de la facture:', err);
-          }
+        this.closeModal();
+        this.loadFactures();
+      },
+      error: (error) => {
+        let errorMsg = 'Erreur lors de la création: ';
+        if (error.error?.message) {
+          errorMsg += error.error.message;
+        } else {
+          errorMsg += 'Une erreur inattendue s\'est produite';
+        }
+        
+        this.dialog.open(ErrorDialogComponent, {
+          width: '400px',
+          data: { message: errorMsg }
         });
       }
-    }
-  
+    });
+  }
+
   onCancel(): void {
     this.factureForm.reset();
   }
   openModal() {
-    this.isModalOpen = true; // Ouvre la fenêtre modale
+    this.isModalOpen = true; 
+    console.log('Ouverture de la modale');
+    // Ouvre la fenêtre modale
   }
 
   closeModal() {
@@ -350,9 +430,87 @@ factureForm!: FormGroup;
   }
   Math = Math;
 
+  // Validateur pour vérifier que la date n'est pas dans le futur
+  futureDateValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const today = new Date();
+      const inputDate = new Date(control.value);
+      return inputDate > today ? { futureDate: true } : null;
+    };
+  }
 
-  
-  
-}
+  // Validateur pour vérifier la relation entre date d'émission et date de livraison
+  dateSequenceValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.parent) {
+        return null;
+      }
+
+      const dateEmission = new Date(control.parent.get('dateEmission')?.value);
+      const livraison = control.parent.get('livraison')?.value;
+
+      if (!dateEmission || !livraison?.dateLivraison) {
+        return null;
+      }
+
+      const dateLivraison = new Date(livraison.dateLivraison);
+      return dateEmission > dateLivraison ? { invalidDate: true } : null;
+    };
+  }
+
+  initForm() {
+    this.factureForm = this.fb.group({
+      dateEmission: ['', [Validators.required, this.futureDateValidator()]],
+      livraison: ['', [Validators.required, this.dateSequenceValidator()]],
+      montantTotal: ['', [Validators.required, Validators.min(0)]],
+      statut: ['', Validators.required]
+    });
+
+    // Réagir aux changements de la date d'émission pour revalider la livraison
+    this.factureForm.get('dateEmission')?.valueChanges.subscribe(() => {
+      this.factureForm.get('livraison')?.updateValueAndValidity();
+    });
+  }
+  private dateValidators(): ValidatorFn {
+      return (control: AbstractControl): ValidationErrors | null => {
+        if (!control.value) return null;
+    
+        const selectedDate = new Date(control.value);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+    
+      
+    
+        // Vérifie si la date dépasse 5 jours dans le futur
+        const maxDate = new Date();
+        maxDate.setDate(maxDate.getDate() + 5); // Ajoute 5 jours
+        maxDate.setHours(23, 59, 59, 999); // Fin de journée
+    
+        if (selectedDate > maxDate) {
+          return { maxFutureDays: true }; // Notez le nom de l'erreur
+        }
+    
+        return null;
+      };
+    }
+    private montantTotalMatchLivraisonValidator(): ValidatorFn {
+      return (group: AbstractControl): ValidationErrors | null => {
+        const montantTotal = group.get('montantTotal')?.value;
+        const livraison = group.get('livraison')?.value;
+    
+        const totalPrice = livraison?.ordre?.totalPrice;
+    
+        if (montantTotal != null && totalPrice != null && montantTotal !== totalPrice) {
+          group.get('montantTotal')?.setErrors({ totalPriceMismatch: true });
+          return { totalPriceMismatch: true };
+        }
+    
+        return null;
+      };
+    }
+    
+    
+    }
+
 
 

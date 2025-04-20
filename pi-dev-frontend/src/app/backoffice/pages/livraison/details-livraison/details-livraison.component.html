@@ -4,7 +4,7 @@
 <div class="g-sidenav-show bg-gray-100">
   <div style="position: absolute; min-height: 300px; width: 100%; overflow: hidden;">
       <img src="../../../../assets/img/bg-img/1.jpg" alt="Background Image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(5px) brightness(80%);">
-  </div>
+  <!-- Removed extra closing div -->
   <app-side-bar></app-side-bar>
   <main class="main-content position-relative border-radius-lg">
     <app-navbar></app-navbar>
@@ -21,25 +21,60 @@
     </div>
 
     <div class="details-section" *ngIf="!isEditing">
-      <h3 class="section-title">Informations Générales</h3>
-      <div class="detail-grid">
-        <div class="detail-item">
-          <span class="detail-label">Date de Création</span>
-          <span class="detail-value">{{livraison.dateCreation | date:'dd/MM/yyyy'}}</span>
+      <div class="information-block">
+        <h3 class="section-title">Informations Générales</h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">Date de Création</span>
+            <span class="detail-value">{{livraison.dateCreation | date:'dd/MM/yyyy'}}</span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Date de Livraison</span>
+            <span class="detail-value">{{livraison.dateLivraison | date:'dd/MM/yyyy'}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Adresse de Livraison</span>
+            <span class="detail-value">{{livraison.adresseLivraison}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Statut</span>
+            <span class="status-badge" [ngClass]="'status-' + livraison.statut.toLowerCase()">
+              {{livraison.statut}}
+            </span>
+          </div>
         </div>
-        <div class="detail-item">
-          <span class="detail-label">Date de Livraison</span>
-          <span class="detail-value">{{livraison.dateLivraison | date:'dd/MM/yyyy'}}</span>
+      </div>
+
+      <div class="information-block">
+        <h3 class="section-title">Informations du Livreur</h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">Nom & Prénom</span>
+            <span class="detail-value">{{livraison.deliveryDriver?.firstName}} {{livraison.deliveryDriver?.lastName}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Téléphone</span>
+            <span class="detail-value">{{livraison.deliveryDriver?.phone}}</span>
+          </div>
         </div>
-        <div class="detail-item">
-          <span class="detail-label">Adresse de Livraison</span>
-          <span class="detail-value">{{livraison.adresseLivraison}}</span>
-        </div>
-        <div class="detail-item">
-          <span class="detail-label">Statut</span>
-          <span class="status-badge" [ngClass]="'status-' + livraison.statut?.toLowerCase()">
-            {{livraison.statut}}
-          </span>
+      </div>
+
+      <div class="information-block">
+        <h3 class="section-title">Informations de la Commande</h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">ID Ordre</span>
+            <span class="detail-value">#{{livraison.order?.uuid_order}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Statut</span>
+            <span class="detail-value">{{livraison.order?.status}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Prix Total</span>
+            <span class="detail-value">{{livraison.order?.totalPrice}} DT</span>
+          </div>
         </div>
       </div>
     </div>
@@ -47,51 +82,77 @@
     <form [formGroup]="editForm" *ngIf="isEditing" class="details-section" (ngSubmit)="saveChanges()">
       <h3 class="section-title">Modifier la Livraison</h3>
       <div class="detail-grid">
+        <!-- Date de livraison -->
         <div class="detail-item">
-          <label class="detail-label" for="dateCreation">Date de Création</label>
-          <input 
-            class="edit-input"
-            type="date" 
-            id="dateCreation" 
-            formControlName="dateCreation"
-            [class.is-invalid]="editForm.get('dateCreation')?.invalid && editForm.get('dateCreation')?.touched"
-          >
-        </div>
-        <div class="detail-item">
-          <label class="detail-label" for="dateLivraison">Date de Livraison</label>
+          <label class="detail-label" for="dateLivraison">Date de Livraison*</label>
           <input 
             class="edit-input"
             type="date" 
             id="dateLivraison" 
             formControlName="dateLivraison"
-            [class.is-invalid]="editForm.get('dateLivraison')?.invalid && editForm.get('dateLivraison')?.touched"
+            [class.is-invalid]="editForm.get('dateLivraison')?.invalid && (editForm.get('dateLivraison')?.touched || editForm.get('dateLivraison')?.dirty)"
           >
+          <div *ngIf="editForm.get('dateLivraison')?.invalid && (editForm.get('dateLivraison')?.touched || editForm.get('dateLivraison')?.dirty)" class="error-message">
+            <small *ngIf="editForm.get('dateLivraison')?.errors?.['required']">Date requise</small>
+            <small *ngIf="editForm.get('dateLivraison')?.errors?.['pastDate']">La date ne peut pas être dans le passé</small>
+            <small *ngIf="editForm.get('dateLivraison')?.errors?.['maxFutureDays']">La date ne peut pas dépasser 5 jours</small>
+          </div>
         </div>
+    
+        <!-- Adresse de livraison -->
         <div class="detail-item">
-          <label class="detail-label" for="adresseLivraison">Adresse de Livraison</label>
+          <label class="detail-label" for="adresseLivraison">Adresse de Livraison*</label>
           <input 
             class="edit-input"
             type="text" 
             id="adresseLivraison" 
             formControlName="adresseLivraison"
-            [class.is-invalid]="editForm.get('adresseLivraison')?.invalid && editForm.get('adresseLivraison')?.touched"
+            [class.is-invalid]="editForm.get('adresseLivraison')?.invalid && (editForm.get('adresseLivraison')?.touched || editForm.get('adresseLivraison')?.dirty)"
           >
+          <div *ngIf="editForm.get('adresseLivraison')?.invalid && (editForm.get('adresseLivraison')?.touched || editForm.get('adresseLivraison')?.dirty)" class="error-message">
+            <small *ngIf="editForm.get('adresseLivraison')?.errors?.['required']">Adresse requise</small>
+            <small *ngIf="editForm.get('adresseLivraison')?.errors?.['minlength']">Minimum 5 caractères</small>
+          </div>
         </div>
+    
+        <!-- Statut -->
         <div class="detail-item">
-          <label class="detail-label" for="statut">Statut</label>
+          <label class="detail-label" for="statut">Statut*</label>
           <select 
             class="edit-select"
             id="statut" 
             formControlName="statut"
-            [class.is-invalid]="editForm.get('statut')?.invalid && editForm.get('statut')?.touched"
+            [class.is-invalid]="editForm.get('statut')?.invalid && (editForm.get('statut')?.touched || editForm.get('statut')?.dirty)"
           >
-            <option value="LIVRÉE">Livrée</option>
             <option value="EN ATTENTE">En attente</option>
             <option value="EN TRANSIT">En transit</option>
+            <option value="LIVRÉE">Livrée</option>
           </select>
+          <div *ngIf="editForm.get('statut')?.invalid && (editForm.get('statut')?.touched || editForm.get('statut')?.dirty)" class="error-message">
+            <small *ngIf="editForm.get('statut')?.errors?.['required']">Statut requis</small>
+          </div>
+        </div>
+      
+        <!-- Livreur -->
+        <div class="detail-item">
+          <label class="detail-label" for="deliveryDriver">Livreur*</label>
+          <select 
+            class="edit-select"
+            id="deliveryDriver" 
+            formControlName="deliveryDriver"
+            [class.is-invalid]="editForm.get('deliveryDriver')?.invalid && (editForm.get('deliveryDriver')?.touched || editForm.get('deliveryDriver')?.dirty)"
+          >
+            <option [ngValue]="null">Sélectionner un livreur</option>
+            <option *ngFor="let driver of deliveryDrivers" [ngValue]="driver.address">
+              {{driver.firstName}} {{driver.lastName}} - {{driver.phone}}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('deliveryDriver')?.invalid && (editForm.get('deliveryDriver')?.touched || editForm.get('deliveryDriver')?.dirty)" class="error-message">
+            <small *ngIf="editForm.get('deliveryDriver')?.errors?.['required']">Livreur requis</small>
+          </div>
         </div>
       </div>
-
+    
       <div class="action-buttons" style="margin-top: 2rem;">
         <button type="submit" class="btn btn-save" [disabled]="editForm.invalid || isSaving">
           <mat-icon>save</mat-icon> 
@@ -100,10 +161,9 @@
         <button type="button" class="btn btn-cancel" (click)="cancelEdit()">
           <mat-icon>close</mat-icon> Annuler
         </button>
-        
       </div>
     </form>
   </div>
-  <app-settings-panel></app-settings-panel>
+  <!--app-settings-panel></app-settings-panel-->
 
 </div>

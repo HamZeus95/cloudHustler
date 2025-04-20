@@ -59,9 +59,11 @@ export class DetailsFactureComponent {
 
   private initForm(): void {
     if (!this.facture) return;
+    const dateCreation = new Date(this.facture?.livraison?.dateCreation ?? new Date());
+    this.creationDate = dateCreation.toISOString().split('T')[0];
     
     this.editForm = this.fb.group({
-      dateEmission: [this.facture.dateEmission, Validators.required],
+      dateEmission: [this.facture?.livraison?.dateCreation, [Validators.required]],
       montantTotal: [this.facture.montantTotal, [
         Validators.required,
         Validators.min(0)
@@ -70,6 +72,8 @@ export class DetailsFactureComponent {
     });
   }
 
+  creationDate!: string; // format 'yyyy-MM-dd'
+today: string = new Date().toISOString().split('T')[0];
   editFacture(): void {
     if (!this.facture) return;
     

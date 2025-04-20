@@ -13,10 +13,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgChartsModule } from 'ng2-charts';
 import { DialogModule } from 'primeng/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ErrorDialogComponent } from './shared/components/error-dialog/error-dialog.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ErrorDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatSnackBarModule,
     MatIconModule,
     NgChartsModule,
-    DialogModule
+    DialogModule,
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
