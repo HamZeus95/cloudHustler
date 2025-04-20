@@ -15,6 +15,8 @@ import { FarmManagmentComponent } from './pages/farm-managment/farm-managment.co
 import { FarmTableComponent } from './components/farm-table/farm-table.component';
 import { BlogManagmentComponent } from './pages/blog-managment/blog-managment.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CropDiseaseDetectorComponent } from './components/crop-disease-detector/crop-disease-detector.component';
+import { WeatherComponent } from './components/weather/weather.component';
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     //declarations of pages
     FarmManagmentComponent,
     EventComponent,
-    BlogManagmentComponent
+    BlogManagmentComponent,
+    CropDiseaseDetectorComponent,
+    WeatherComponent
   ],
   imports: [
     CommonModule,

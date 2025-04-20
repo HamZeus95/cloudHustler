@@ -7,7 +7,7 @@ import { Ressource } from '../models/famrs/resource';
 
 @Injectable()
 export class RessourceService {
-  private apiUrl = environment.apiUrl+'ressource'; 
+  private apiUrl = environment.apiUrl+'resource'; 
 
   constructor(private http: HttpClient) {}
 
