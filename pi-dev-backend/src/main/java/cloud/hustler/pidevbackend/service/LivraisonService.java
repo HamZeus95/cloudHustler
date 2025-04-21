@@ -55,8 +55,14 @@ public class LivraisonService implements ILivraisonService {
         return livraisonRepository.findByOrderConsumerUuid(uuid_user);
     }
 
+    @Override
+    public List<Livraison> findLivraisonsByDeliveryDriver_Uuid_user(UUID uuid) {
+        return livraisonRepository.findLivraisonsByDeliveryDriver_Uuid_user(uuid);
+    }
+
     public Livraison getLastLivraison() {
         return livraisonRepository.findTopByOrderByIdDesc();  // Récupère la dernière Livraison par ID
     }
+
 
 }

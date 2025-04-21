@@ -61,11 +61,7 @@
         <p>{{(factureDetails?.montantTotal || 0) * 1}} DT</p>
       </div>
     </div>
-    <div class="text-end my-3">
-      <button class="btn btn-dark" (click)="generatePDF()">
-        <i class="bi bi-file-earmark-pdf-fill"></i> Télécharger le PDF
-      </button>
-    </div>
+    
 
     <!-- Footer -->
     <div class="invoice-footer">
@@ -76,5 +72,12 @@
       </div>
     </div>
   </div>
+</div>
+
+
+<div class="text-end my-3">
+  <button class="btn btn-dark" (click)="generatePDF()">
+    <i class="bi bi-file-earmark-pdf-fill"></i> Télécharger le PDF
+  </button>
 </div>
 <app-footer></app-footer>

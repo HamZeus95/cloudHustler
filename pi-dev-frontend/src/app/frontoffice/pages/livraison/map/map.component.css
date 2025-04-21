@@ -3,6 +3,7 @@
   height: 100%;
   border-radius: 8px;
   position: relative;
+  margin-left: 150px;
 }
 
 .map-container {
@@ -37,6 +38,8 @@
   max-width: 500px;
   display: flex;
   gap: 10px;
+  margin-left: 150px;
+  margin-bottom: 1000px;
 }
 
 .search-input {

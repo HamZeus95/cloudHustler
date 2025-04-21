@@ -117,8 +117,4 @@ export class FactureService {
     getAllOrdres(): Observable<Order[]> {
       return this.http.get<Order[]>(`${this.baseUrl}/ordres`);
     }
-<<<<<<< Updated upstream
-=======
-    
->>>>>>> Stashed changes
 }

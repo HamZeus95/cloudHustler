@@ -50,6 +50,11 @@ public class LivraisonController {
         List<Livraison> livraisons = livraisonService.findByOrdreConsumerUuid(uuid);
         return ResponseEntity.ok(livraisons);
     }
+    @GetMapping("/bydriver/{uuid}")
+    public ResponseEntity<List<Livraison>> getLivraisonsByDriver(@PathVariable("uuid") UUID uuid) {
+        List<Livraison> livraisons = livraisonService.findLivraisonsByDeliveryDriver_Uuid_user(uuid);
+        return ResponseEntity.ok(livraisons);
+    }
 
 
 }

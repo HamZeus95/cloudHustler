@@ -13,5 +13,7 @@ public interface ILivraisonService {
     public Livraison updateLivraison(Long id, Livraison livraison);
     public void deleteLivraison(Long id);
     public List<Livraison> findByOrdreConsumerUuid(UUID uuid_user);
+    List<Livraison> findLivraisonsByDeliveryDriver_Uuid_user(UUID uuid);
+
 
 }

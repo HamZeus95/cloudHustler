@@ -1,16 +1,17 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Livraison } from 'src/app/core/models/livraison/livraison';
 import { LivraisonService } from 'src/app/core/services/livraison/livraison.service';
 
 @Component({
-  selector: 'app-livraison-client',
-  templateUrl: './livraison-client.component.html',
-  styleUrls: ['./livraison-client.component.css']
+  selector: 'app-livraisondriver',
+  templateUrl: './livraisondriver.component.html',
+  styleUrls: ['./livraisondriver.component.css']
 })
-export class LivraisonClientComponent implements OnInit {
-  displayModal: boolean = false;
-  readonly userUuid = '01230000-0000-0000-0000-000000000000'; // Replace with actual UUID retrieval
+export class LivraisondriverComponent {
+
+displayModal: boolean = false;
+  readonly userUuid = '04000000-0000-0000-0000-000000000000'; // Replace with actual UUID retrieval
 
   
     closeDialog(): void {
@@ -50,16 +51,16 @@ export class LivraisonClientComponent implements OnInit {
     }
   
   
-    onCardClick(livraison: Livraison) {
-      this.selectedLivraison = livraison;
-      this.livraisonSelected.emit(livraison);
-      // Navigate to details page with the livraison id
-      this.router.navigate(['/frontoffice/livraison-client-details', livraison.id]);
-    }
+    // onCardClick(livraison: Livraison) {
+    //   this.selectedLivraison = livraison;
+    //   this.livraisonSelected.emit(livraison);
+    //   // Navigate to details page with the livraison id
+    //   this.router.navigate(['/frontoffice/livraison-client-details', livraison.id]);
+    // }
   
     loadLivraisons() {
       // Assuming you store the UUID somewhere
-      this.livraisonService.getLivraisonsByUser(this.userUuid).subscribe((data: Livraison[]) => {
+      this.livraisonService.getLivraisonsBydriver(this.userUuid).subscribe((data: Livraison[]) => {
         this.livraisons = data;
       });
     }

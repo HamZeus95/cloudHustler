@@ -12,10 +12,8 @@ import { FactureClientComponent } from './pages/livraison/facture-client/facture
 import { LivraisonClientComponent } from './pages/livraison/livraison-client/livraison-client.component';
 import { LivraisonClientdetailsComponent } from './pages/livraison/livraison-clientdetails/livraison-clientdetails.component';
 import { FactureClientdetailsComponent } from './pages/livraison/facture-clientdetails/facture-clientdetails.component';
-<<<<<<< Updated upstream
-=======
 import { MapComponent } from './pages/livraison/map/map.component';
->>>>>>> Stashed changes
+import { LivraisondriverComponent } from './pages/livraison/livraisondriver/livraisondriver.component';
 
 const routes: Routes = [
 
@@ -33,11 +31,10 @@ const routes: Routes = [
     { path:'livraisons',  component: LivraisonClientComponent},
     { path:'livraison-client-details/:id',  component: LivraisonClientdetailsComponent},
     { path:'facture-client-details/:id',  component: FactureClientdetailsComponent},
-<<<<<<< Updated upstream
-=======
     { path:'suivrelivraison/:id',  component: MapComponent},
+    { path:'livraisonsDriver',  component: LivraisondriverComponent},
 
->>>>>>> Stashed changes
+
 
 ];
 

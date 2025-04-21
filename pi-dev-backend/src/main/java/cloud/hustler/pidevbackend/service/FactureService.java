@@ -14,28 +14,23 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-<<<<<<< Updated upstream
-=======
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
->>>>>>> Stashed changes
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-<<<<<<< Updated upstream
 
-=======
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.*;
->>>>>>> Stashed changes
 @Service
 public class FactureService implements IFactureService{
 
@@ -139,9 +134,7 @@ public class FactureService implements IFactureService{
         return factureRepository.findAllByLivraison_Order_Consumer_Uuid_user(uuid_user);
     }*/
 
-<<<<<<< Updated upstream
 
-=======
     private final String API_KEY = "5b3ce3597851110001cf6248ec4e8d3388d446e689cae8efed77351e"; // Remplace par ta clé API gratuite
 
     public int getEstimatedTime(String start, String end) throws IOException {
@@ -172,5 +165,4 @@ public class FactureService implements IFactureService{
 
         return durationInSeconds / 60; // Convertir en minutes
     }
->>>>>>> Stashed changes
 }

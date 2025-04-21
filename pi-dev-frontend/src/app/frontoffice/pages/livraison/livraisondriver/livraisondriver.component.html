@@ -22,7 +22,7 @@
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div *ngFor="let l of livraisons" class="livraison-card" (click)="onCardClick(l)">
+    <div *ngFor="let l of livraisons" class="livraison-card" >
       <!-- Image d'arrière-plan dynamique -->
       <div class="card-bg-image" [ngStyle]="{'background-image': 'url(assets/images/livraison.jpg)'}"></div>
 
@@ -39,11 +39,11 @@
           <p><i class="fas fa-map-marker-alt"></i> <strong>Adresse:</strong> {{ l.adresseLivraison }}</p>
           <p><i class="fas fa-truck"></i> <strong>Date de livraison:</strong> {{ l.dateLivraison | date:'dd/MM/yyyy' }}</p>
           
-          <!-- <div class="text-end my-3">
+          <div class="text-end my-3">
             <button class="btn btn-dark" (click)="navigateToSuivre(l.id)">
-              <i class="bi bi-geo-alt-fill"></i> Suivre Livraison
+              <i class="bi bi-geo-alt-fill"></i> Map
             </button>
-          </div> -->
+          </div>
         </div>
       </div>
     </div>

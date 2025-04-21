@@ -35,11 +35,7 @@
     "leaflet": "^1.9.4",
     "leaflet-geometryutil": "^0.10.3",
     "magnific-popup": "^1.2.0",
-<<<<<<< Updated upstream
-    "mapbox-gl": "^3.11.0",
-=======
     "mapbox-gl": "^2.15.0",
->>>>>>> Stashed changes
     "ng2-charts": "^3.1.0",
     "owl.carousel2": "^2.2.2",
     "pi-dev-frontend": "file:",

@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-<<<<<<< Updated upstream
-=======
 import { FormsModule } from '@angular/forms';
->>>>>>> Stashed changes
 
 import { FrontofficeRoutingModule } from './frontoffice-routing.module';
 import { FooterComponent } from './components/footer/footer.component';
@@ -27,10 +24,10 @@ import { NgChartsModule } from 'ng2-charts';
 import { DialogModule } from 'primeng/dialog';
 import { LivraisonClientdetailsComponent } from './pages/livraison/livraison-clientdetails/livraison-clientdetails.component';
 import { FactureClientdetailsComponent } from './pages/livraison/facture-clientdetails/facture-clientdetails.component';
-<<<<<<< Updated upstream
-=======
+
 import { MapComponent } from './pages/livraison/map/map.component';
->>>>>>> Stashed changes
+import { LivraisondriverComponent } from './pages/livraison/livraisondriver/livraisondriver.component';
+
 
 @NgModule({
   declarations: [
@@ -49,18 +46,14 @@ import { MapComponent } from './pages/livraison/map/map.component';
     LivraisonClientdetailsComponent,
     FactureClientdetailsComponent,
     LivraisonClientdetailsComponent,
-<<<<<<< Updated upstream
-=======
+
     MapComponent,
->>>>>>> Stashed changes
+      LivraisondriverComponent,
 
   ],
   imports: [
     CommonModule,
-<<<<<<< Updated upstream
-=======
     FormsModule,
->>>>>>> Stashed changes
     FrontofficeRoutingModule,
     RouterModule,
     DialogModule,
