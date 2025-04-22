@@ -1,1 +1,44 @@
 /.idea
+client_secrets*
+# OAuth credentials
+client_secret_*.json
+*client_secret*.json
+
+# Application properties with secrets (for safety)
+**/application-local.properties
+**/application-dev.properties
+**/application-prod.properties
+
+# Compiled class files
+*.class
+
+# Logs
+logs/
+*.log
+
+# Gradle files
+.gradle/
+build/
+
+# Maven files
+target/
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+*.sublime-workspace
+
+# OS-specific files
+.DS_Store
+Thumbs.db

@@ -161,35 +161,50 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
    
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
+        // Try to authenticate with the provided credentials
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authenticationRequest.getEmail(),
                         authenticationRequest.getPassword()
                 )
         );
+        
+        // Find the user
         var user = userRepository.findByEmail(authenticationRequest.getEmail())
-                .orElseThrow();
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + authenticationRequest.getEmail()));
+        
+        // Check if user account is active
+        if (!user.isActif()) {
+            throw new RuntimeException("Account not verified. Please verify your email address before logging in.");
+        }
+        
+        // Generate tokens
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
+        
+        // Revoke any existing tokens
         revokeAllUserToken(user);
-       var foundUser =  UserResponse.builder()
-                                    .address(user.getAddress())
-                                    .userUUID(user.getUuid_user())
-                                    .image(user.getImage())
-                                    .birthDate(user.getBirthDate())
-                                    .firstName(user.getFirstName())
-                                    .lastName(user.getLastName())
-                                    .phone(user.getPhone())
-                                    .email(user.getEmail())
-                                    .Role(user.getRole())
-                                    .isActif(user.isActif())
-                                    .build();
+        
+        // Create user response object
+        var foundUser = UserResponse.builder()
+                .address(user.getAddress())
+                .userUUID(user.getUuid_user())
+                .image(user.getImage())
+                .birthDate(user.getBirthDate())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .phone(user.getPhone())
+                .email(user.getEmail())
+                .Role(user.getRole())
+                .isActif(user.isActif())
+                .build();
+        
+        // Build and return response
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .userResponse(foundUser)
                 .build();
-
     }
 
     @Override

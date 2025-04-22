@@ -4,6 +4,7 @@ import { AuthService } from '../../../auth/service/authentication.service';
 import { TokenStorageService } from '../../../auth/service/token-storage.service';
 import { InitialsPipe } from '../../../core/pipes/initials.pipe';
 import { SidebarService } from '../../../core/services/sidebar.service';
+//import { UserService } from "../../../auth/service/user.service"
 
 @Component({
   selector: 'app-navbar',
@@ -23,7 +24,7 @@ export class NavbarComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private router: Router,
     private initialsPipe: InitialsPipe,
-    private sidebarService: SidebarService
+    private sidebarService: SidebarService,
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +34,7 @@ export class NavbarComponent implements OnInit {
       if (isAuth) {
         this.currentUser = this.tokenStorageService.getCurrentUser();
       }
+      console.log(this.currentUser)
     });
 
     // Subscribe to user changes
@@ -100,7 +102,7 @@ export class NavbarComponent implements OnInit {
   }
 
   hasProfileImage(): boolean {
-    return this.currentUser?.profileImage != null && this.currentUser?.profileImage !== '';
+    return this.currentUser?.image != null && this.currentUser?.image !== '';
   }
 
   signOut(): void {
@@ -131,4 +133,7 @@ export class NavbarComponent implements OnInit {
   openSettings(): void {
     this.openSettingsEvent.emit();
   }
+
+ 
+
 }

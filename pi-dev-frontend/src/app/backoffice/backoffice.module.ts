@@ -17,6 +17,9 @@ import { BlogManagmentComponent } from './pages/blog-managment/blog-managment.co
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CoreDirectivesModule } from '../core/directives/directives';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { EditProfileComponent } from './pages/profile/edit-profile/edit-profile.component';
+import { ManageProfileComponent } from './pages/profile/manage-profile/manage-profile.component';
+import { BannerComponent } from './components/banner/banner.component'; 
 
  
 
@@ -38,6 +41,9 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
     EventComponent,
     BlogManagmentComponent,
     DashboardComponent,
+    EditProfileComponent,
+    ManageProfileComponent,
+    BannerComponent,
   ],
   imports: [
     CommonModule,

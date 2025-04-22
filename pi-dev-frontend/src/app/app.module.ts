@@ -13,13 +13,15 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { JwtInterceptor } from './auth/interceptors/jwt';
 import { TokenStorageService } from './auth/service/token-storage.service';
 import { AuthService } from './auth/service/authentication.service';
+import { OAuth2RedirectComponent } from './auth/oauth2/oauth2-redirect.component';
 
 
  
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    OAuth2RedirectComponent
   ],
   imports: [
     CommonModule,

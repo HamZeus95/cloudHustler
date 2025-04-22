@@ -16,6 +16,25 @@ export class AuthService {
      
   ) {}
   
+  // Social login methods
+  loginWithGoogle(): void {
+    this.initiateOAuth2Login('google');
+  }
+
+  loginWithGithub(): void {
+    this.initiateOAuth2Login('github');
+  }
+
+  private initiateOAuth2Login(provider: string): void {
+    // Redirect to the backend OAuth2 authorization endpoint
+    const oauth2BaseUrl = '/api/v1/oauth2/authorize';
+    const redirectUri = encodeURIComponent(`${window.location.origin}/oauth2/redirect`);
+    const oauth2Url = `${oauth2BaseUrl}/${provider}?redirect_uri=${redirectUri}`;
+    
+    // Redirect the browser to the OAuth2 provider
+    window.location.href = oauth2Url;
+  }
+  
   login(credentials: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/authenticate`, credentials, { withCredentials: true })
       .pipe(
