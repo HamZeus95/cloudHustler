@@ -23,7 +23,8 @@ import { DashboardRoutingModule } from './dashboard/dashboard-routing.module';
 import { JobFormComponent } from './job-requests/job-form/job-form.component';
 import { JobsRequestsDashboardComponent } from './dashboard/jobs-requests-dashboard/jobs-requests-dashboard.component';
 import { DipslayComponent } from './dipslay/dipslay.component';
- 
+import { EmailJobsComponent } from './email-jobs/email-jobs.component';
+   
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { DipslayComponent } from './dipslay/dipslay.component';
     JobFormComponent,
     JobsRequestsDashboardComponent,
     DipslayComponent,
-    
+    EmailJobsComponent,
+      
      ],
   imports: [
     BrowserModule,

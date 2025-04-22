@@ -12,7 +12,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
  import { JobRequestsComponent } from './job-requests/job-requests.component';
 import { JobsRequestsDashboardComponent } from './dashboard/jobs-requests-dashboard/jobs-requests-dashboard.component';
 import { DipslayComponent } from './dipslay/dipslay.component';
-
+import { EmailJobsComponent } from './email-jobs/email-jobs.component';
+ 
 const routes: Routes = [
   
   {path:"about",component:AboutComponent},
@@ -25,7 +26,9 @@ const routes: Routes = [
   {path: 'not-found', component: NotFoundComponent},
    { path: 'job-request/:jobId', component: JobRequestsComponent },
    {path:'jobsRequests', component:JobsRequestsDashboardComponent},
-   { path: 'cv/:cvUrl', component: DipslayComponent },
+   { path: 'display-cv/:cvurl', component: DipslayComponent },
+   { path: 'Email', component: EmailJobsComponent },
+
 
 
    

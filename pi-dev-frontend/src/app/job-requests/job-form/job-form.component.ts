@@ -18,7 +18,7 @@ export class JobFormComponent {
   };
   @Output() formSubmitedd = new EventEmitter<any>();  // On peut spécifier un type si nécessaire
   @Input() jobId!:string;
-  constructor(private fileUploadService:FileUploadService,private serviceRqService:ServiceRequestsService ){
+  constructor(private fileUploadService:FileUploadService,private serviceRqService:ServiceRequestsService, ){
 
   }
   onSubmit(){
@@ -29,7 +29,7 @@ export class JobFormComponent {
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
-      this.fileUploadService.uploadFile(file,"cv").subscribe({
+      this.fileUploadService.uploadFile(file,"cvs").subscribe({
         next: (data) => {
           console.log(data);
           console.log(data.filename)

@@ -1,6 +1,7 @@
 export enum TypeStatus {
     PENDING = 'PENDING',
-    APPROVED = 'APPROVED',
+    ACCEPTED = 'ACCEPTED',
     REJECTED = 'REJECTED'
+
   }
   

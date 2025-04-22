@@ -11,8 +11,11 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { TablesComponent } from './tables/tables.component';
 import { JobsDashboardComponent } from './jobs-dashboard/jobs-dashboard.component';
 import { FormComponent } from './jobs-dashboard/form/form.component';
-import { FormsModule } from '@angular/forms';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { QuizComponent } from './jobs-dashboard/quiz/quiz.component';
+import { CreateQuizComponent } from './jobs-dashboard/quiz/create-quiz/create-quiz.component';
+import { UpdateQuestionsComponent } from './jobs-dashboard/quiz/update-questions/update-questions.component';
+ 
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { FormsModule } from '@angular/forms';
     TablesComponent,
     JobsDashboardComponent,
     FormComponent,
-    
+    QuizComponent,
+    CreateQuizComponent,
+    UpdateQuestionsComponent,
+     
 
   ],
   imports: [
@@ -32,6 +38,7 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     RouterModule,
     FormsModule,  // <-- Add FormsModule here
+    ReactiveFormsModule // ✅ À ajouter ici
 
 
     

@@ -41,6 +41,12 @@ export class ServiceRequestsService {
     createServiceRequestForService(uuid_service: string, serviceRequest: ServiceRequest): Observable<ServiceRequest> {
       return this.http.post<ServiceRequest>(`${this.apiUrl}/${uuid_service}/createServiceRequest`, serviceRequest);
     }
+   getStatusCounts(): Observable<{ accepted: number, rejected: number, pending: number }> {
+  return this.http.get<{ accepted: number, rejected: number, pending: number }>(`${this.apiUrl}/statistics/status-counts`);
+}
+
+    
+    
     submitServiceRequest(serviceRequest: any): Observable<any> {
       return this.http.post(`${this.apiUrl}/submit`, serviceRequest, {
       

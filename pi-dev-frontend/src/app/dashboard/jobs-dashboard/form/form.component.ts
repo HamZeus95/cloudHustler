@@ -108,6 +108,9 @@ export class FormComponent implements OnInit{
     alert('L\'UUID du service est requis pour la mise à jour.');
   }
 }
-
-
+onFileSelectedd(event: Event): void {
+  const file = (event.target as HTMLInputElement).files?.[0];
+  if (file) {
+    this.newService.imageUrl = URL.createObjectURL(file);
+  }}
 }

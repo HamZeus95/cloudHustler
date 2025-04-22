@@ -19,4 +19,8 @@ export class FileUploadService {
   getFile(fileName: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/download/${fileName}`, { responseType: 'blob' as 'json' });
   }
+
+  resumefile(fileName: string): Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}/resume-extract/${fileName}`)
+  }
 }

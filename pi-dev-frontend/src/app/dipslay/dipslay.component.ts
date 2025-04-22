@@ -17,7 +17,7 @@ export class DipslayComponent {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const fileName = params['cvUrl'];  // Récupère le nom du fichier depuis l'URL
+      const fileName = params['cvurl'];  // Récupère le nom du fichier depuis l'URL
       console.log('Nom du fichier:', fileName);  // Affiche le nom du fichier dans la console
       this.getFile(fileName);  // Appelle la méthode pour récupérer le fichier
     });
@@ -25,7 +25,7 @@ export class DipslayComponent {
 
   // Fonction pour récupérer le fichier depuis le serveur
   getFile(fileName: string): void {
-    this.fileService.getFile(fileName).subscribe(
+    this.fileService.getFile("cvs/"+fileName).subscribe(
       (data: any) => {
         // Convertir le blob en URL
         this.cvUrl = URL.createObjectURL(data);

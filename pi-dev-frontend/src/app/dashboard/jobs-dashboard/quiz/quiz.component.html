@@ -326,37 +326,16 @@
           <div class="col-lg-7 mb-lg-0 mb-4">
             <div class="card z-index-2 h-100">
               <div class="card-header pb-0 pt-3 bg-transparent">
-                    <h6>Jobs Informations </h6>
-                    <button class="btn btn-warning me-2" (click)="switchOpenForm()">Ajouter </button>
-                    <button (click)="goToJobsRequest()" class="btn btn-primary">
-                      Voir les demandes
-                    </button>
-                       
+                         
               </div>
-              <div class="card-body p-3">
-                <ul class="list-group" *ngIf="!serviceFormIsOpen">
-                    <!-- Boucle à travers les services pour les afficher -->
-                    <li *ngFor="let service of services" class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                      <div class="d-flex flex-column">
-                        <h6 class="mb-3 text-sm">{{ service.title }}</h6>
-                        <span class="mb-2 text-xs">Category: <span class="text-dark font-weight-bold ms-sm-2">{{ service.category }}</span></span>
-                        <span class="mb-2 text-xs">Salary: <span class="text-dark ms-sm-2 font-weight-bold">{{ service.salary | currency }}</span></span>
-                        <span class="text-xs">Number of Workers: <span class="text-dark ms-sm-2 font-weight-bold">{{ service.nbWorkers }}</span></span>
-                      </div>
-                      <div class="ms-auto text-end">
-                        <!-- Lien pour supprimer un service -->
-                       
-                        <!-- Lien pour éditer un service -->
-                       <button class="btn btn-warning me-2" (click)="changeServiceToUpdate(service)" >Modifier</button>
-                       <button (click)="deleteService(service.uuid_service!)" class="btn btn-danger">Delete </button>
-                       <button (click)="addQuizToService(service.uuid_service)" class="btn btn-danger">Ajouter Quiz </button>
+              <div class="card-body p-3"*ngIf="!thereIsAquiz">
+                <app-create-quiz [serviceId]="serviceId"></app-create-quiz>
+                </div>
+                <div class="card-body p-3"*ngIf="thereIsAquiz">
+                  <app-update-questions [quiz]="quiz"></app-update-questions>
+                  </div>
+                  
 
-                      </div>
-                    
-                    </li>
-                  </ul>
-                  <app-form *ngIf="serviceFormIsOpen" (formSubmitedd)="getFormSubmNotif()" [serviceToEdit]="serviceToUpdate"></app-form>
-              </div>
             </div>
           </div>
           <div class="col-lg-5">
@@ -390,7 +369,7 @@
                         <i class="ni ni-trophy text-dark opacity-10"></i>
                       </div>
                       <h5 class="text-white mb-1">Share with us your design tips!</h5>
-                      <p>Don’t be afraid to be wrong because you can’t learn anything from a compliment.</p>
+                      <p>Don’t be afraid to be wrong because you can’quizForm.get('questions').controlst learn anything from a compliment.</p>
                     </div>
                   </div>
                 </div>
