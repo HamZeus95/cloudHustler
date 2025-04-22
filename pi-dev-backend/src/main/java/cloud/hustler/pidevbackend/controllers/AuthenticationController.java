@@ -128,20 +128,46 @@ public class AuthenticationController {
     }
     
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(
+    public ResponseEntity<?> authenticate(
             @RequestBody AuthenticationRequest request,
             HttpServletResponse response
     ) {
-        AuthenticationResponse authResponse = authenticationService.authenticate(request);
-        
-        // Set the refresh token in an HttpOnly cookie
-        addRefreshTokenCookie(response, authResponse.getRefreshToken());
-        
-        // Return the auth response without the refresh token in the JSON body
-        return ResponseEntity.ok(AuthenticationResponse.builder()
-                .accessToken(authResponse.getAccessToken())
-                .userResponse(authResponse.getUserResponse())
-                .build());
+        try {
+            AuthenticationResponse authResponse = authenticationService.authenticate(request);
+            
+            // Set the refresh token in an HttpOnly cookie
+            addRefreshTokenCookie(response, authResponse.getRefreshToken());
+            
+            // Return the auth response without the refresh token in the JSON body
+            return ResponseEntity.ok(AuthenticationResponse.builder()
+                    .accessToken(authResponse.getAccessToken())
+                    .userResponse(authResponse.getUserResponse())
+                    .build());
+                    
+        } catch (UsernameNotFoundException e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Invalid email or password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+        } catch (RuntimeException e) {
+            // This will catch the account not verified exception
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", e.getMessage());
+            
+            // If this is an account verification error, also include the email
+            if (e.getMessage().contains("Account not verified")) {
+                errorResponse.put("requiresVerification", true);
+                errorResponse.put("email", request.getEmail());
+            }
+            
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+        } catch (Exception e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Authentication failed");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
     }
 
     @PostMapping("/refresh-token")

@@ -20,7 +20,21 @@
 
                                 <!-- Alert for login errors -->
                                 <div *ngIf="loginError" class="alert alert-danger mb-2" role="alert">
-                                    <div class="alert-body">{{ loginError }}</div>
+                                    <div class="alert-body">
+                                        {{ loginError }}
+                                        <!-- Add link to verification page for unverified accounts -->
+                                        <span *ngIf="loginError.includes('Account not verified')">
+                                            <br>
+                                            <a routerLink="/frontoffice/verify-email" class="alert-link">
+                                                Click here to verify your account
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Success message if applicable -->
+                                <div *ngIf="loginSuccess" class="alert alert-success mb-2" role="alert">
+                                    <div class="alert-body">{{ loginSuccess }}</div>
                                 </div>
 
                                 <form class="auth-login-form mt-2" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -98,18 +112,12 @@
                                 </div>
 
                                 <div class="auth-footer-btn d-flex justify-content-center">
-                                    <a href="#" class="btn btn-facebook">
-                                        <i app-icon="facebook"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-twitter white">
-                                        <i app-icon="twitter"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-google">
-                                        <i app-icon="mail"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-github">
-                                        <i app-icon="github"></i>
-                                    </a>
+                                    <button class="btn btn-google me-2" (click)="loginWithGoogle()">
+                                        <i app-icon="fa-google" library="fontawesome" variant="brands" ></i> Google
+                                    </button>
+                                    <button class="btn btn-github" (click)="loginWithGithub()">
+                                        <i app-icon="github"></i> GitHub
+                                    </button>
                                 </div>
                             </div>
                         </div>

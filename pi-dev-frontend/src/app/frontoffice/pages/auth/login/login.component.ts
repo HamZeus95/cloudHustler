@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   isSubmitting = false;
   loginError = '';
+  loginSuccess = '';
   showPassword = false;
 
   constructor(
@@ -37,6 +38,14 @@ export class LoginComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
+  loginWithGoogle(): void {
+    this.authService.loginWithGoogle();
+  }
+
+  loginWithGithub(): void {
+    this.authService.loginWithGithub();
+  }
+
   onSubmit(): void {
     // Stop here if form is invalid
     if (this.loginForm.invalid) {
@@ -57,12 +66,37 @@ export class LoginComponent implements OnInit {
         localStorage.removeItem('logged_out');
         
         this.isSubmitting = false;
-        // Navigate to dashboard or home page after successful login
-        this.router.navigate(['/backoffice']);
+        
+        if(response.user){
+          this.router.navigate(["/backoffice"])
+        }else{
+          this.router.navigate(["/frontoffice"])
+        }
+
+        //! fix later
+        // Get user role to direct to proper dashboard
+        // const userRole = response.user?.Role;
+        
+        
+        // // Navigate based on user role
+        // if (userRole === 'ADMIN') {
+        //   this.router.navigate(['/backoffice']);
+        // } else {
+        //   this.router.navigate(['/frontoffice']);
+        // }
       },
       error: (error) => {
         this.isSubmitting = false;
-        if (error.status === 401) {
+        
+        // Check for specific error responses
+        if (error.error && error.error.message) {
+          this.loginError = error.error.message;
+          
+          // If account is not verified, offer to resend verification code
+          if (error.error.requiresVerification) {
+            this.handleUnverifiedAccount(error.error.email);
+          }
+        } else if (error.status === 401) {
           this.loginError = 'Invalid email or password';
         } else {
           this.loginError = 'An unexpected error occurred. Please try again later.';
@@ -70,5 +104,16 @@ export class LoginComponent implements OnInit {
         console.error('Login error:', error);
       }
     });
+  }
+  
+  // Helper method to handle unverified accounts
+  handleUnverifiedAccount(email: string): void {
+    // Store email temporarily for OTP verification
+    sessionStorage.setItem('pendingVerificationEmail', email);
+    
+    // After a short delay, redirect to verification page
+    setTimeout(() => {
+      this.router.navigate(['/frontoffice/verify-email']);
+    }, 3000);
   }
 }

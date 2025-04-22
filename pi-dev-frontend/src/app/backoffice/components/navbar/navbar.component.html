@@ -20,7 +20,7 @@
               <div class="d-flex align-items-center">
                 <!-- Display profile image if available, otherwise show initials -->
                 <div *ngIf="hasProfileImage()" class="avatar avatar-sm position-relative rounded-circle me-2">
-                  <img [src]="currentUser?.profileImage" alt="Profile Image" class="w-100 h-100 rounded-circle">
+                  <img [src]="currentUser?.image" alt="Profile Image" class="w-100 h-100 rounded-circle">
                 </div>
                 <div *ngIf="!hasProfileImage()" class="avatar avatar-sm position-relative bg-gradient-primary rounded-circle me-2 d-flex justify-content-center align-items-center">
                   <span>{{ getUserInitials() }}</span>
@@ -31,7 +31,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" id="userDropdownMenuList" aria-labelledby="userDropdownMenu">
                 <li class="mb-2">
-                <a class="dropdown-item border-radius-md hover-overlay" > 
+                <a class="dropdown-item border-radius-md hover-overlay" [routerLink]="['/backoffice/profile/edit-profile/',currentUser.userUUID]" > 
                   <div class="d-flex py-1">
                   <div class="avatar avatar-sm bg-gradient-secondary rounded-circle me-3 d-flex align-items-center justify-content-center">
                     <i app-icon="user" library="fontawesome" variant="solid" class="text-white"></i>
@@ -46,7 +46,7 @@
                 </a>
                 </li>
                 <li class="mb-2">
-                  <a class="dropdown-item border-radius-md hover-overlay" > 
+                  <a class="dropdown-item border-radius-md hover-overlay" [routerLink]="['/backoffice/profile/manage-profile/',currentUser.userUUID]" > 
                     <div class="d-flex py-1">
                     <div class="avatar avatar-sm bg-gradient-info rounded-circle me-3 d-flex align-items-center justify-content-center">
                       <i app-icon="Gear" library="fontawesome" variant="solid" class="text-white"></i>
@@ -55,7 +55,7 @@
                       <h6 class="text-sm font-weight-bold mb-0">
                       settings
                       </h6>
-                      <p class="text-xs text-muted mb-0">>Manage your preferences</p>
+                      <p class="text-xs text-muted mb-0">Manage your preferences</p>
                     </div>
                     </div>
                   </a>

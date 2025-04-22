@@ -34,6 +34,7 @@ public abstract class User implements UserDetails {
     Date birthDate;
     @Column(unique = true, nullable = false)
     String email;
+    @Column(nullable = true) // nullable for OAuth2 users
     String password;
     String image;
     String phone;
@@ -41,6 +42,10 @@ public abstract class User implements UserDetails {
     // default value is true in database
     @Column(columnDefinition = "boolean default False")
     boolean isActif;
+    
+    // OAuth2 related fields
+    String provider; // "google", "github", etc.
+    String providerId; // ID from the OAuth2 provider
 
 
     @ManyToMany
