@@ -50,7 +50,9 @@
               "src/styles.css",
               "node_modules/leaflet/dist/leaflet.css",
               "node_modules/mapbox-gl/dist/mapbox-gl.css",
-              "node_modules/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css"
+              "node_modules/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+
               "node_modules/leaflet/dist/leaflet.css"
 
             ],

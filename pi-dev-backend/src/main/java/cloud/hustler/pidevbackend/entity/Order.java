@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -9,16 +10,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+
 @Entity
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "orders") // Renamed table to avoid reserved keyword
-
 public class Order {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)

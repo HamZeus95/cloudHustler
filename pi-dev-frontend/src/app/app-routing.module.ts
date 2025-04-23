@@ -23,6 +23,9 @@ const routes: Routes = [
 
   {path: '',redirectTo: 'frontoffice',pathMatch: 'full'}, 
   {path: '**', redirectTo: 'not-found'},
+
+  
+
 ];
 
 @NgModule({

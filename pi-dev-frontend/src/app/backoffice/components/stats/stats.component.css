@@ -1,0 +1,31 @@
+.stats-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+  }
+  
+  .chart-row {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .chart-container {
+    width: 100%;
+    max-width: 800px;
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .chart-wrapper {
+    position: relative;
+    height: 400px;
+  }
+  
+  h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #333;
+  }

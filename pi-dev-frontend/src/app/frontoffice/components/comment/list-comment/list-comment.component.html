@@ -1,0 +1,50 @@
+<!-- Section des Commentaires -->
+<div class="comments-section">
+    <div class="section-header" (click)="toggleComments()">
+      <h3>
+        <i class="fas fa-comments"></i> 
+        Commentaires ({{ comments.length }})
+        <i class="fas toggle-icon" 
+           [class.fa-chevron-down]="!showComments" 
+           [class.fa-chevron-up]="showComments"></i>
+      </h3>
+    </div>
+    
+    <!-- Conteneur des commentaires repliable -->
+    <div *ngIf="showComments">
+      <div *ngIf="comments.length > 0" class="comments-list">
+        <div *ngFor="let comment of comments" class="comment-card">
+          <div class="comment-content">
+            <p class="comment-text">{{ comment.content }}</p>
+            <div class="comment-meta">
+              <span class="meta-item">
+                <i class="fas fa-clock"></i> {{ comment.createdAt | date: 'medium' }}
+              </span>
+              <span *ngIf="comment.updatedAt" class="meta-item">
+                <i class="fas fa-edit"></i> {{ comment.updatedAt | date: 'medium' }}
+              </span>
+            </div>
+          </div>
+          
+          <div class="comment-actions">
+            <button (click)="editComment(comment.commentId)" 
+                    class="action-btn edit-btn"
+                    *ngIf="comment.commentId">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button (click)="deleteComment(comment.commentId)" 
+                    class="action-btn delete-btn"
+                    *ngIf="comment.commentId">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <div *ngIf="comments.length === 0" class="no-comments">
+        <p><i class="fas fa-comment-slash"></i> Aucun commentaire disponible pour ce post.</p>
+      </div>
+    </div>
+  
+    
+  </div>
