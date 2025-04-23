@@ -1,0 +1,50 @@
+<!-- src/app/components/weather/weather.component.html -->
+<div class="weather-container">
+  <div class="loading-container" *ngIf="loading">
+    <div class="loading-spinner"></div>
+    <p>Loading weather data...</p>
+  </div>
+
+  <div class="error-container" *ngIf="error">
+    <div class="error-icon">⚠️</div>
+    <p>{{ error }}</p>
+  </div>
+
+  <div class="weather-content" *ngIf="weatherData && !loading">
+    <div class="weather-header">
+      <h3>{{ weatherData.name }}, {{ weatherData.sys.country }}</h3>
+      <div class="weather-icon">
+        <img [src]="'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png'" 
+             [alt]="weatherData.weather[0].description">
+      </div>
+    </div>
+
+    <div class="weather-stats">
+      <div class="stat-box">
+        <div class="stat-label">Temperature</div>
+        <div class="stat-value">{{ weatherData.main.temp | number:'1.0-0' }}°C</div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-label">Feels Like</div>
+        <div class="stat-value">{{ weatherData.main.feels_like | number:'1.0-0' }}°C</div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-label">Humidity</div>
+        <div class="stat-value">{{ weatherData.main.humidity }}%</div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-label">Wind</div>
+        <div class="stat-value">{{ weatherData.wind.speed }} m/s</div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-label">Condition</div>
+        <div class="stat-value">{{ weatherData.weather[0].main }}</div>
+        <div class="stat-description">{{ weatherData.weather[0].description }}</div>
+      </div>
+    </div>
+  </div>
+</div>

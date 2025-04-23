@@ -1,0 +1,412 @@
+<app-navbar></app-navbar>
+<div class="container my-5">
+  <!-- Alert Messages -->
+  <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ errorMessage }}
+    <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
+  </div>
+  <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ successMessage }}
+    <button type="button" class="btn-close" (click)="successMessage = ''"></button>
+  </div>
+
+  <!-- Step 1 - Personal Information (always visible) -->
+  <div class="card p-4" *ngIf="!selectedUserType">
+    <h2 class="text-center mb-4">Register</h2>
+    <form [formGroup]="registerForm">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="First Name" required />
+            <small class="text-danger" *ngIf="isFieldInvalid('firstName')">{{ getErrorMessage('firstName') }}</small>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Last Name" required />
+            <small class="text-danger" *ngIf="isFieldInvalid('lastName')">{{ getErrorMessage('lastName') }}</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" formControlName="email" placeholder="Enter email" required />
+        <small class="text-danger" *ngIf="isFieldInvalid('email')">{{ getErrorMessage('email') }}</small>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="password">Password</label>
+        <div class="input-group input-group-merge form-password-toggle">
+          <input 
+            [type]="showPassword ? 'text' : 'password'" 
+            class="form-control form-control-merge" 
+            id="password" 
+            formControlName="password" 
+            placeholder="Password" 
+            required />
+          <span class="input-group-text cursor-pointer" (click)="togglePasswordVisibility()">
+            <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+          </span>
+        </div>
+        <small class="text-danger" *ngIf="isFieldInvalid('password')">{{ getErrorMessage('password') }}</small>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="confirmPassword">Confirm Password</label>
+        <div class="input-group input-group-merge form-password-toggle">
+          <input 
+            [type]="showConfirmPassword ? 'text' : 'password'" 
+            class="form-control form-control-merge" 
+            id="confirmPassword" 
+            formControlName="confirmPassword" 
+            placeholder="Confirm Password" 
+            required />
+          <span class="input-group-text cursor-pointer" (click)="toggleConfirmPasswordVisibility()">
+            <i [class]="showConfirmPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+          </span>
+        </div>
+        <small class="text-danger" *ngIf="isFieldInvalid('confirmPassword')">{{ getErrorMessage('confirmPassword') }}</small>
+        <small class="text-danger" *ngIf="registerForm.hasError('mismatch')">Passwords do not match</small>
+      </div>
+      
+
+      <div class="form-group mb-3">
+        <label for="birthdate">Birthdate</label>
+        <input type="date" class="form-control" id="birthdate" formControlName="birthdate" required />
+        <small class="text-danger" *ngIf="isFieldInvalid('birthdate')">{{ getErrorMessage('birthdate') }}</small>
+      </div>
+
+      <div class="form-group mb-3">
+        <label>Address</label>
+        <div class="row">
+          <div class="col-md-4">
+            <input type="text" class="form-control" formControlName="country" placeholder="Country" required />
+            <small class="text-danger" *ngIf="isFieldInvalid('country')">{{ getErrorMessage('country') }}</small>
+          </div>
+          <div class="col-md-4">
+            <input type="text" class="form-control" formControlName="city" placeholder="City" required />
+            <small class="text-danger" *ngIf="isFieldInvalid('city')">{{ getErrorMessage('city') }}</small>
+          </div>
+          <div class="col-md-4">
+            <input type="text" class="form-control" formControlName="zipCode" placeholder="Zip Code" required />
+            <small class="text-danger" *ngIf="isFieldInvalid('zipCode')">{{ getErrorMessage('zipCode') }}</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="phoneNumber">Phone Number</label>
+        <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" placeholder="Phone Number" required />
+        <small class="text-danger" *ngIf="isFieldInvalid('phoneNumber')">{{ getErrorMessage('phoneNumber') }}</small>
+      </div>
+
+      <div class="form-group mb-3">
+        <label>User Type</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" formControlName="userType" id="expertRadio" value="expert" (change)="onUserTypeChange('expert')">
+          <label class="form-check-label" for="expertRadio">
+            Expert
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" formControlName="userType" id="farmerRadio" value="farmer" (change)="onUserTypeChange('farmer')">
+          <label class="form-check-label" for="farmerRadio">
+            Farmer
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" formControlName="userType" id="deliveryRadio" value="delivery" (change)="onUserTypeChange('delivery')">
+          <label class="form-check-label" for="deliveryRadio">
+            Delivery Man
+          </label>
+        </div>
+        <!-- Removed validation error message since userType is no longer required -->
+      </div>
+
+      <div class="d-flex justify-content-end mt-3">
+        <button type="button" class="btn btn-primary" 
+                (click)="proceedWithRegistration()">
+          Register <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Multi-step registration form using bs-stepper (visible only after selecting a user type) -->
+  <div *ngIf="selectedUserType" class="card mt-4 p-4">
+    <form [formGroup]="registerForm">
+      <div id="stepper1" class="bs-stepper">
+        <!-- Stepper header -->
+        <div class="bs-stepper-header">
+          <div class="step" data-target="#personal-info-part">
+            <button type="button" class="step-trigger" [class.active]="currentStep === 1">
+              <span class="bs-stepper-circle">
+                <i app-icon="user" size="18"></i>
+              </span>
+              <span class="bs-stepper-label">Personal Information</span>
+            </button>
+          </div>
+          <div class="line"></div>
+          <div class="step" data-target="#professional-part">
+            <button type="button" class="step-trigger" [class.active]="currentStep === 2">
+              <span class="bs-stepper-circle">
+                <i app-icon="briefcase" size="18"></i>
+              </span>
+              <span class="bs-stepper-label">Professional Details</span>
+            </button>
+          </div>
+          <div class="line"></div>
+          <div class="step" data-target="#confirmation-part">
+            <button type="button" class="step-trigger" [class.active]="currentStep === 3">
+              <span class="bs-stepper-circle">
+                <i app-icon="check-circle" size="18"></i>
+              </span>
+              <span class="bs-stepper-label">Confirmation</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Stepper content -->
+        <div class="bs-stepper-content">
+          <!-- Step 1: Personal Information (Same as above but in the stepper) -->
+          <div id="personal-info-part" class="content" [hidden]="!isStepVisible(1)">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="firstNameStepper">First Name</label>
+                  <input type="text" class="form-control" id="firstNameStepper" formControlName="firstName" placeholder="First Name" required />
+                  <small class="text-danger" *ngIf="isFieldInvalid('firstName')">{{ getErrorMessage('firstName') }}</small>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="lastNameStepper">Last Name</label>
+                  <input type="text" class="form-control" id="lastNameStepper" formControlName="lastName" placeholder="Last Name" required />
+                  <small class="text-danger" *ngIf="isFieldInvalid('lastName')">{{ getErrorMessage('lastName') }}</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="emailStepper">Email address</label>
+              <input type="email" class="form-control" id="emailStepper" formControlName="email" placeholder="Enter email" required />
+              <small class="text-danger" *ngIf="isFieldInvalid('email')">{{ getErrorMessage('email') }}</small>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="passwordStepper">Password</label>
+              <div class="input-group input-group-merge form-password-toggle">
+                <input 
+                  [type]="showPassword ? 'text' : 'password'" 
+                  class="form-control form-control-merge" 
+                  id="passwordStepper" 
+                  formControlName="password" 
+                  placeholder="Password" 
+                  required />
+                <span class="input-group-text cursor-pointer" (click)="togglePasswordVisibility()">
+                  <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                </span>
+              </div>
+              <small class="text-danger" *ngIf="isFieldInvalid('password')">{{ getErrorMessage('password') }}</small>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="confirmPasswordStepper">Confirm Password</label>
+              <div class="input-group input-group-merge form-password-toggle">
+                <input 
+                  [type]="showConfirmPassword ? 'text' : 'password'" 
+                  class="form-control form-control-merge" 
+                  id="confirmPasswordStepper" 
+                  formControlName="confirmPassword" 
+                  placeholder="Confirm Password" 
+                  required />
+                <span class="input-group-text cursor-pointer" (click)="toggleConfirmPasswordVisibility()">
+                  <i [class]="showConfirmPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                </span>
+              </div>
+              <small class="text-danger" *ngIf="isFieldInvalid('confirmPassword')">{{ getErrorMessage('confirmPassword') }}</small>
+              <small class="text-danger" *ngIf="registerForm.hasError('mismatch')">Passwords do not match</small>
+            </div>
+            
+
+            <div class="form-group mb-3">
+              <label for="birthdateStepper">Birthdate</label>
+              <input type="date" class="form-control" id="birthdateStepper" formControlName="birthdate" required />
+              <small class="text-danger" *ngIf="isFieldInvalid('birthdate')">{{ getErrorMessage('birthdate') }}</small>
+            </div>
+
+            <div class="form-group mb-3">
+              <label>Address</label>
+              <div class="row">
+                <div class="col-md-4">
+                  <input type="text" class="form-control" formControlName="country" placeholder="Country" required />
+                  <small class="text-danger" *ngIf="isFieldInvalid('country')">{{ getErrorMessage('country') }}</small>
+                </div>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" formControlName="city" placeholder="City" required />
+                  <small class="text-danger" *ngIf="isFieldInvalid('city')">{{ getErrorMessage('city') }}</small>
+                </div>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" formControlName="zipCode" placeholder="Zip Code" required />
+                  <small class="text-danger" *ngIf="isFieldInvalid('zipCode')">{{ getErrorMessage('zipCode') }}</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="phoneNumberStepper">Phone Number</label>
+              <input type="tel" class="form-control" id="phoneNumberStepper" formControlName="phoneNumber" placeholder="Phone Number" required />
+              <small class="text-danger" *ngIf="isFieldInvalid('phoneNumber')">{{ getErrorMessage('phoneNumber') }}</small>
+            </div>
+
+            <!-- User Type selection (now with change option) -->
+            <div class="form-group mb-3">
+              <label>Selected User Type: <strong>{{ selectedUserType | titlecase }}</strong></label>
+              <div class="alert alert-info">
+                <small>Want to choose a different user type? <a href="javascript:void(0)" (click)="changeUserType()">Click here to change</a></small>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn btn-primary" [disabled]="registerForm.get('firstName')?.invalid || 
+                                                                      registerForm.get('lastName')?.invalid || 
+                                                                      registerForm.get('email')?.invalid ||
+                                                                      registerForm.get('password')?.invalid ||
+                                                                      registerForm.get('confirmPassword')?.invalid ||
+                                                                      registerForm.get('birthdate')?.invalid ||
+                                                                      registerForm.get('country')?.invalid ||
+                                                                      registerForm.get('city')?.invalid ||
+                                                                      registerForm.get('zipCode')?.invalid ||
+                                                                      registerForm.get('phoneNumber')?.invalid"
+                     (click)="next()">
+                Next <i class="bi bi-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 2: Professional Details (Changes based on user type) -->
+          <div id="professional-part" class="content" [hidden]="!isStepVisible(2)">
+            <!-- Expert Fields -->
+            <div *ngIf="selectedUserType === 'expert'">
+              <h5 class="mb-3">Expert Details</h5>
+              <div class="form-group mb-3">
+                <label for="expertType">Expert Type</label>
+                <select class="form-control" id="expertType" formControlName="expertType">
+                  <option value="">Select Type</option>
+                  <option value="AGRICULTURE_ENGINEER">Agriculture Engineer</option>
+                  <option value="Veterinary">Veterinary</option>
+                </select>
+                <small class="text-danger" *ngIf="isFieldInvalid('expertType')">{{ getErrorMessage('expertType') }}</small>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="yearsOfExperience">Years of Experience</label>
+                <input type="number" class="form-control" id="yearsOfExperience" formControlName="yearsOfExperience" min="0" />
+                <small class="text-danger" *ngIf="isFieldInvalid('yearsOfExperience')">{{ getErrorMessage('yearsOfExperience') }}</small>
+              </div>
+            </div>
+
+            <!-- Farmer Fields -->
+            <div *ngIf="selectedUserType === 'farmer'">
+              <h5 class="mb-3">Farmer Details</h5>
+              <div class="form-group mb-3">
+                <label for="farmerExperience">Experience</label>
+                <textarea class="form-control" id="farmerExperience" formControlName="farmerExperience" rows="3"></textarea>
+                <small class="text-danger" *ngIf="isFieldInvalid('farmerExperience')">{{ getErrorMessage('farmerExperience') }}</small>
+              </div>
+            </div>
+
+            <!-- Delivery Man Fields -->
+            <div *ngIf="selectedUserType === 'delivery'">
+              <h5 class="mb-3">Delivery Man Details</h5>
+              <div class="form-group mb-3">
+                <label for="carType">Type of Car</label>
+                <input type="text" class="form-control" id="carType" formControlName="carType" />
+                <small class="text-danger" *ngIf="isFieldInvalid('carType')">{{ getErrorMessage('carType') }}</small>
+              </div>
+
+              <div class="form-group mb-3">
+                <label>Availability</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="isAvailable" formControlName="isAvailable">
+                  <label class="form-check-label" for="isAvailable">
+                    Available for delivery
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <button type="button" class="btn btn-secondary" (click)="previous()">
+                <i class="bi bi-arrow-left"></i> Previous
+              </button>
+              <button type="button" class="btn btn-primary" 
+                      [disabled]="(selectedUserType === 'expert' && (registerForm.get('expertType')?.invalid || registerForm.get('yearsOfExperience')?.invalid)) ||
+                                (selectedUserType === 'farmer' && registerForm.get('farmerExperience')?.invalid) ||
+                                (selectedUserType === 'delivery' && registerForm.get('carType')?.invalid)"
+                      (click)="next()">
+                Next <i class="bi bi-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3: Confirmation -->
+          <div id="confirmation-part" class="content" [hidden]="!isStepVisible(3)">
+            <h4 class="mb-4 text-center">Review Your Information</h4>
+            
+            <div class="review-section mb-4">
+              <h5>Personal Information</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <p><strong>Name:</strong> {{registerForm.value.firstName}} {{registerForm.value.lastName}}</p>
+                  <p><strong>Email:</strong> {{registerForm.value.email}}</p>
+                  <p><strong>Phone Number:</strong> {{registerForm.value.phoneNumber}}</p>
+                </div>
+                <div class="col-md-6">
+                  <p><strong>Birthdate:</strong> {{registerForm.value.birthdate | date}}</p>
+                  <p><strong>Address:</strong> {{registerForm.value.city}}, {{registerForm.value.country}}, {{registerForm.value.zipCode}}</p>
+                  <p><strong>User Type:</strong> {{selectedUserType | titlecase}}</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Professional Information Summary -->
+            <div class="review-section mb-4">
+              <h5>Professional Information</h5>
+              <!-- Expert Information -->
+              <div *ngIf="selectedUserType === 'expert'" class="professional-info">
+                <p><strong>Expert Type:</strong> {{registerForm.value.expertType}}</p>
+                <p><strong>Years of Experience:</strong> {{registerForm.value.yearsOfExperience}}</p>
+              </div>
+              
+              <!-- Farmer Information -->
+              <div *ngIf="selectedUserType === 'farmer'" class="professional-info">
+                <p><strong>Experience:</strong> {{registerForm.value.farmerExperience}}</p>
+              </div>
+              
+              <!-- Delivery Man Information -->
+              <div *ngIf="selectedUserType === 'delivery'" class="professional-info">
+                <p><strong>Car Type:</strong> {{registerForm.value.carType}}</p>
+                <p><strong>Available for Delivery:</strong> {{registerForm.value.isAvailable ? 'Yes' : 'No'}}</p>
+              </div>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+              <button type="button" class="btn btn-secondary" (click)="previous()">
+                <i class="bi bi-arrow-left"></i> Previous
+              </button>
+              <button type="button" class="btn btn-success" (click)="onSubmit()" [disabled]="isSubmitting">
+                <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                {{ isSubmitting ? 'Registering...' : 'Submit Registration' }} <i class="bi bi-check-circle"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<app-footer></app-footer>

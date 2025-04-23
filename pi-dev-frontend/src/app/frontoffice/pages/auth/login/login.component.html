@@ -1,0 +1,136 @@
+<app-navbar></app-navbar>
+<body class="vertical-layout vertical-menu-modern blank-page navbar-floating footer-static my-5 mx-3" data-open="click" data-menu="vertical-menu-modern" data-col="blank-page">
+    <!-- BEGIN: Content-->
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <div class="auth-wrapper auth-basic px-2">
+                    <div class="auth-inner my-2">
+                        <!-- Login basic -->
+                        <div class="card mb-0">
+                            <div class="card-body">
+                               
+
+                                <h4 class="card-title mb-1">Welcome to AgeroPulse!  👋</h4>
+                                <p class="card-text mb-2">Please sign-in to your account and start the adventure</p>
+
+                                <!-- Alert for login errors -->
+                                <div *ngIf="loginError" class="alert alert-danger mb-2" role="alert">
+                                    <div class="alert-body">
+                                        {{ loginError }}
+                                        <!-- Add link to verification page for unverified accounts -->
+                                        <span *ngIf="loginError.includes('Account not verified')">
+                                            <br>
+                                            <a routerLink="/frontoffice/verify-email" class="alert-link">
+                                                Click here to verify your account
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Success message if applicable -->
+                                <div *ngIf="loginSuccess" class="alert alert-success mb-2" role="alert">
+                                    <div class="alert-body">{{ loginSuccess }}</div>
+                                </div>
+
+                                <form class="auth-login-form mt-2" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                                    <div class="mb-1">
+                                        <label for="login-email" class="form-label">Email</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="login-email" 
+                                            formControlName="email" 
+                                            placeholder="john@example.com" 
+                                            aria-describedby="login-email" 
+                                            tabindex="1" 
+                                            autofocus
+                                            [ngClass]="{'is-invalid': f['email'].touched && f['email'].errors}"
+                                        />
+                                        <div *ngIf="f['email'].touched && f['email'].errors" class="invalid-feedback">
+                                            <div *ngIf="f['email'].errors['required']">Email is required</div>
+                                            <div *ngIf="f['email'].errors['email']">Enter a valid email address</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-1">
+                                        <div class="d-flex justify-content-between">
+                                            <label class="form-label" for="login-password">Password</label>
+                                            <a routerLink="/frontoffice/forgot-password">
+                                                <small>Forgot Password?</small>
+                                            </a>
+                                        </div>
+                                        <div class="input-group input-group-merge form-password-toggle">
+                                            <input 
+                                                [type]="showPassword ? 'text' : 'password'" 
+                                                class="form-control form-control-merge" 
+                                                id="login-password" 
+                                                formControlName="password"
+                                                tabindex="2" 
+                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" 
+                                                aria-describedby="login-password"
+                                                [ngClass]="{'is-invalid': f['password'].touched && f['password'].errors}"
+                                            />
+                                            <span class="input-group-text cursor-pointer" (click)="togglePasswordVisibility()">
+                                                <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                            </span>
+                                        </div>
+                                        <div *ngIf="f['password'].touched && f['password'].errors" class="invalid-feedback d-block">
+                                            <div *ngIf="f['password'].errors['required']">Password is required</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-1">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="remember-me" formControlName="rememberMe" tabindex="3" />
+                                            <label class="form-check-label" for="remember-me"> Remember Me </label>
+                                        </div>
+                                    </div>
+                                    <button 
+                                        type="submit" 
+                                        class="btn btn-primary w-100" 
+                                        tabindex="4" 
+                                        [disabled]="loginForm.invalid || isSubmitting">
+                                        <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                                        Sign in
+                                    </button>
+                                </form>
+
+                                <p class="text-center mt-2">
+                                    <span>New on our platform?</span>
+                                    <a routerLink="/frontoffice/register">
+                                        <span>Create an account</span>
+                                    </a>
+                                </p>
+
+                                <div class="divider my-2">
+                                    <div class="divider-text">or</div>
+                                </div>
+
+                                <div class="auth-footer-btn d-flex justify-content-center">
+                                    <button class="btn btn-google me-2" (click)="loginWithGoogle()">
+                                        <i app-icon="fa-google" library="fontawesome" variant="brands" ></i> Google
+                                    </button>
+                                    <button class="btn btn-github" (click)="loginWithGithub()">
+                                        <i app-icon="github"></i> GitHub
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Login basic -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div> 
+   
+</body>
+
+<!-- END: Content-->
+
+<app-footer></app-footer>

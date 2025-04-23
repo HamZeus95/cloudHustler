@@ -1,0 +1,225 @@
+<!-- Existing Card Container -->
+<div class="card shadow-sm border-0 animate__animated animate__fadeInUp">
+  <div class="card-body">
+    <h5 class="card-title mb-3">🌾 Farm Details</h5>
+
+    <!-- weather section -->
+    <div class="row mb-3">
+      <app-weather [latitude]="farm.latitude" [longitude]="farm.longitude"></app-weather>
+    </div>
+
+    <!-- Farm Details Section -->
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        <p class="mb-1 text-muted">📍 Coordinates</p>
+        <p><strong>{{ farm.latitude }}, {{ farm.longitude }}</strong></p>
+      </div>
+      <div class="col-sm-6">
+        <p class="mb-1 text-muted">💧 Irrigation Type</p>
+        <p><span class="badge bg-info text-white">{{ farm.irrigation_type }}</span></p>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Crops Section -->
+    <h6 class="text-secondary mb-3">🌱 Crops</h6>
+    <div *ngIf="(farm.crops.length ?? 0) > 0; else noCrops">
+      <div class="row g-3">
+        <div class="col-md-4" *ngFor="let crop of farm.crops">
+          <div class="card card-body border shadow-sm h-100 bg-white">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h6 class="mb-1">{{ crop.name }}</h6>
+              <span class="badge rounded-pill" [ngClass]="{
+                  'bg-warning': getCropStatus(crop) === 'Pending',
+                  'bg-success': getCropStatus(crop) === 'In Progress',
+                  'bg-primary': getCropStatus(crop) === 'Harvested'
+                }">{{ getCropStatus(crop) }}</span>
+            </div>
+            <small class="text-muted">Planted: {{ crop.plantingDate | date }}</small>
+            <small class="text-muted d-block">Harvest: {{ crop.harvestDate | date }}</small>
+            <p class="mt-2 text-muted">Expected Yield: {{ crop.expectedYield }} kg</p>
+            <button class="btn btn-outline-danger btn-sm mt-3" (click)="crop.uuid_crop ? onDeleteCrop(crop.uuid_crop) : null">Delete</button>
+          </div>
+        </div>
+      </div>
+      <!-- Status legend -->
+      <p class="text-muted small mt-3">
+        <span class="badge bg-warning">Pending</span> – Not started,
+        <span class="badge bg-success">In Progress</span> – Growing,
+        <span class="badge bg-primary">Harvested</span> – Done
+      </p>
+    </div>
+    <ng-template #noCrops>
+      <p class="text-muted fst-italic">No crops assigned to this farm.</p>
+    </ng-template>
+    <button class="btn btn-outline-success btn-sm mt-4" *ngIf="!isAddCropFormVisible" (click)="toggleAddCropForm()">+ Add Crop</button>
+
+    <!-- Add Crop Form Section -->
+    <div *ngIf="isAddCropFormVisible" class="animate__animated animate__fadeIn">
+      <h6 class="text-secondary mb-3 mt-4">🌱 Add Crop</h6>
+      <form [formGroup]="addCropForm" (ngSubmit)="onAddCrop()" class="mt-3">
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="cropName" class="form-label">Crop Name</label>
+            <input id="cropName" formControlName="name" type="text" class="form-control" placeholder="Enter crop name" />
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="expectedYield" class="form-label">Expected Yield (kg)</label>
+            <input id="expectedYield" formControlName="expectedYield" type="number" class="form-control" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="plantingDate" class="form-label">Planting Date</label>
+            <input id="plantingDate" formControlName="plantingDate" type="date" class="form-control" />
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="harvestDate" class="form-label">Harvest Date</label>
+            <input id="harvestDate" formControlName="harvestDate" type="date" class="form-control" />
+          </div>
+        </div>
+
+        <!-- toggle button -->
+        <div class="mb-3 form-check form-switch">
+          <input
+          type="checkbox"
+          class="form-check-input"
+          id="aiTaskToggle"
+          [(ngModel)]="useAIAgent"
+          name="useAIAgent"
+          [ngModelOptions]="{ standalone: true }"
+        />          <label class="form-check-label fw-semibold" [ngClass]="{ 'text-success': useAIAgent }" for="aiTaskToggle">
+            🤖 Automatically generate crop tasks with AI?
+          </label>
+        </div>
+        <div *ngIf="isLoadingAIAgent" class="loading-container">
+          <p>Generating tasks using AI Agent... Please wait.</p>
+          <div class="spinner"></div> <!-- You can use Angular Material or your own spinner -->
+        </div>
+        <div class="text-end">
+          <button type="submit" class="btn btn-success" [disabled]="addCropForm.invalid">Add Crop</button>
+          <button type="button" class="btn btn-secondary ms-2" (click)="toggleAddCropForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ===================== Resources Section ===================== -->
+    <hr />
+    <h6 class="text-secondary mb-3">🧰 Resources</h6>
+
+    <div *ngIf="(farm.resources?.length ?? 0) > 0; else noResources">
+      <div class="row g-3">
+        <div class="col-md-4" *ngFor="let resource of farm.resources">
+          <div class="card card-body border shadow-sm h-100 bg-white">
+            <h6 class="mb-1">{{ resource.name }}</h6>
+            <p class="mb-1 text-muted">Quantity: {{ resource.quantity }} {{ resource.unit }}</p>
+            <p class="mb-1 text-muted">Cost: {{ resource.cost | currency:'TND' }}</p>
+            <button class="btn btn-outline-danger btn-sm mt-2" (click)="resource.uuid_ressource ? onDeleteResource(resource.uuid_ressource) : null">Delete</button>
+          </div>
+        </div>
+      </div>
+      <p class="text-end text-muted fst-italic mt-2">Total Resources: {{ farm.resources.length }}</p>
+    </div>
+    <ng-template #noResources>
+      <p class="text-muted fst-italic">No resources assigned to this farm.</p>
+    </ng-template>
+
+    <button class="btn btn-outline-success btn-sm mt-4" *ngIf="!isAddResourceFormVisible" (click)="toggleAddResourceForm()">+ Add Resource</button>
+
+    <!-- Add Resource Form -->
+    <div *ngIf="isAddResourceFormVisible" class="animate__animated animate__fadeIn">
+      <h6 class="text-secondary mb-3 mt-4">🧰 Add Resource</h6>
+      <form [formGroup]="addResourceForm" (ngSubmit)="onAddResource()" class="mt-3">
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="resourceName" class="form-label">Name</label>
+            <input id="resourceName" formControlName="name" type="text" class="form-control" placeholder="Enter resource name" />
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="unit" class="form-label">Unit</label>
+            <input id="unit" formControlName="unit" type="text" class="form-control" placeholder="e.g. kg, liters" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="quantity" class="form-label">Quantity</label>
+            <input id="quantity" formControlName="quantity" type="number" class="form-control" />
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="cost" class="form-label">Cost (TND)</label>
+            <input id="cost" formControlName="cost" type="number" class="form-control" />
+          </div>
+        </div>
+        <div class="text-end">
+          <button type="submit" class="btn btn-success" [disabled]="addResourceForm.invalid">Add</button>
+          <button type="button" class="btn btn-secondary ms-2" (click)="toggleAddResourceForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ===================== Expenses Section ===================== -->
+    <hr />
+    <h6 class="text-secondary mb-3">💸 Expenses</h6>
+
+    <div *ngIf="(farm.expenses?.length ?? 0) > 0; else noExpenses">
+      <div class="row g-3">
+        <div class="col-md-4" *ngFor="let expense of farm.expenses">
+          <div class="card card-body border shadow-sm h-100 bg-white">
+            <h6 class="mb-1">{{ expense.expenseType }}</h6>
+            <p class="mb-1 text-muted">Amount: {{ expense.amount | currency:'TND' }}</p>
+            <p class="mb-1 text-muted">Date: {{ expense.date | date }}</p>
+            <p class="mb-1 text-muted" *ngIf="expense.description">Note: {{ expense.description }}</p>
+            <button class="btn btn-outline-danger btn-sm mt-2" (click)="expense.uuid_expense ? onDeleteExpense(expense.uuid_expense) : null">Delete</button>
+          </div>
+        </div>
+      </div>
+      <p class="text-end text-muted fst-italic mt-2">Total: {{ getTotalExpenses() | currency:'TND' }}</p>
+    </div>
+    <ng-template #noExpenses>
+      <p class="text-muted fst-italic">No expenses recorded for this farm.</p>
+    </ng-template>
+
+    <button class="btn btn-outline-success btn-sm mt-4" *ngIf="!isAddExpenseFormVisible" (click)="toggleAddExpenseForm()">+ Add Expense</button>
+
+    <!-- Add Expense Form -->
+    <div *ngIf="isAddExpenseFormVisible" class="animate__animated animate__fadeIn">
+      <h6 class="text-secondary mb-3 mt-4">💸 Add Expense</h6>
+      <form [formGroup]="addExpenseForm" (ngSubmit)="onAddExpense()" class="mt-3">
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="expenseType" class="form-label">Expense Type</label>
+<select id="expenseType" formControlName="expenseType" class="form-select">
+  <option value="" disabled selected>Select an expense type</option>
+  <option value="Fertilizer">Fertilizer</option>
+  <option value="Water Bill">Water Bill</option>
+  <option value="Electricity">Electricity</option>
+  <option value="Labor">Labor</option>
+  <option value="Seeds">Seeds</option>
+  <option value="Transport">Transport</option>
+  <option value="Other">Other</option>
+</select>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="amount" class="form-label">Amount (TND)</label>
+            <input id="amount" formControlName="amount" type="number" class="form-control" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="date" class="form-label">Date</label>
+            <input id="date" formControlName="date" type="date" class="form-control" />
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" formControlName="description" rows="2" class="form-control" placeholder="Optional notes..."></textarea>
+          </div>
+        </div>
+        <div class="text-end">
+          <button type="submit" class="btn btn-success" [disabled]="addExpenseForm.invalid">Add</button>
+          <button type="button" class="btn btn-secondary ms-2" (click)="toggleAddExpenseForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
