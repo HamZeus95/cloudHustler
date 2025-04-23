@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BillingComponent } from './billing/billing.component';
+import { BillingComponent } from '../backoffice/pages/event/billing/billing.component';
 import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
 import { DashboardComponent } from './dashboard.component';
 import { CommonModule } from '@angular/common';
 import { TablesComponent } from './tables/tables.component';
-import { AddEventComponent } from './add-event/add-event.component';
-import { EditEventComponent } from './edit-event/edit-event.component';
+import { AddEventComponent } from '../backoffice/components/events/add-event/add-event.component';
+import { EditEventComponent } from '../backoffice/components/events/edit-event/edit-event.component';
 
 const routes: Routes = [
   {
