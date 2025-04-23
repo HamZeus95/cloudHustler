@@ -10,14 +10,20 @@ import { RessourceService } from '../core/services/ressource.service';
 import { ExpenseService } from '../core/services/expense.service';
 import { WeatherService } from '../core/services/weather.service';
 import { WeatherComponent } from './components/weather/weather.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { EditProfileComponent } from './pages/profile/edit-profile/edit-profile.component';
+import { ManageProfileComponent } from './pages/profile/manage-profile/manage-profile.component';
 
 const routes: Routes = [
-  { path: '', component: FarmManagmentComponent },
+  { path: '', component: DashboardComponent },
+  { path: 'farm', component: FarmManagmentComponent },
   { path: 'event', component: EventComponent },
   { path: 'blog', component: EventComponent },
   { path: 'task', component: TaskManagementComponent },
   {path:"crop",component:CropDiseaseDetectorComponent},
   {path:"weather",component:WeatherComponent},
+  { path: 'profile/edit-profile/:uuid', component: EditProfileComponent},
+  { path: 'profile/manage-profile/:uuid', component: ManageProfileComponent}
 
   
 

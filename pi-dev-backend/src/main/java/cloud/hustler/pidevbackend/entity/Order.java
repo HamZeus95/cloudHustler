@@ -17,6 +17,8 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "orders") // Renamed table to avoid reserved keyword
+
 public class Order {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)

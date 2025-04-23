@@ -19,6 +19,14 @@ import { CropDiseaseDetectorComponent } from './components/crop-disease-detector
 import { WeatherComponent } from './components/weather/weather.component';
 import { MapDialogComponent } from './components/map-dialog/map-dialog.component';
 
+import { CoreDirectivesModule } from '../core/directives/directives';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { EditProfileComponent } from './pages/profile/edit-profile/edit-profile.component';
+import { ManageProfileComponent } from './pages/profile/manage-profile/manage-profile.component';
+import { BannerComponent } from './components/banner/banner.component'; 
+
+ 
+
 
 @NgModule({
   declarations: [
@@ -39,13 +47,18 @@ import { MapDialogComponent } from './components/map-dialog/map-dialog.component
     BlogManagmentComponent,
     CropDiseaseDetectorComponent,
     WeatherComponent,
+    DashboardComponent,
+    EditProfileComponent,
+    ManageProfileComponent,
+    BannerComponent,
   ],
   imports: [
     CommonModule,
     BackofficeRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    DragDropModule
+    DragDropModule, 
+    CoreDirectivesModule
     
   ]
   //styles

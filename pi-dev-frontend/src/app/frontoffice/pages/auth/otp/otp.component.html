@@ -1,0 +1,48 @@
+<app-navbar></app-navbar>
+<div class="container m-5 shadow rounded">
+    <div class="row justify-content-center">
+        
+        <form class="form" [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+            <div class="title">OTP</div>
+            <div class="title">Verification Code</div>
+            <p class="message">We have sent a verification code to your email: <strong>{{ userEmail }}</strong></p> 
+            
+            <!-- Success and error messages -->
+            <div *ngIf="successMessage" class="alert alert-success text-center">
+                {{ successMessage }}
+            </div>
+            <div *ngIf="errorMessage" class="alert alert-danger text-center">
+                {{ errorMessage }}
+            </div>
+            
+            <div class="inputs"> 
+                <!-- Using keyup without direct DOM manipulation for better type safety -->
+                <input #otpInput type="text" inputmode="numeric" maxlength="1" formControlName="digit1">
+                <input #otpInput type="text" inputmode="numeric" maxlength="1" formControlName="digit2">
+                <input #otpInput type="text" inputmode="numeric" maxlength="1" formControlName="digit3">
+                <input #otpInput type="text" inputmode="numeric" maxlength="1" formControlName="digit4">
+                <input #otpInput type="text" inputmode="numeric" maxlength="1" formControlName="digit5">
+                <input #otpInput type="text" inputmode="numeric" maxlength="1" formControlName="digit6">
+            </div>
+            
+            <!-- Loading indicator -->
+            <div *ngIf="isLoading" class="text-center my-2">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <button type="submit" class="action shadow-sm" [disabled]="otpForm.invalid || isLoading">
+                    {{ isLoading ? 'Verifying...' : 'Verify Me' }}
+                </button> 
+            </div>
+            
+        </form>
+        <div class="text-center mt-3 shadow-sm p-3 rounded">
+            <p class="message mb-0">Didn't receive the code? <a href="javascript:void(0);" (click)="resendOtp()" class="link">Resend</a></p>
+        </div>
+         
+    </div>
+</div>
+<app-footer></app-footer>

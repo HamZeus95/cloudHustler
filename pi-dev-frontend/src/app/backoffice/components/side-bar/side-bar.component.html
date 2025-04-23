@@ -1,4 +1,4 @@
-<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
+<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main" [ngClass]="{'show': isSidebarOpen}">
   <div class="sidenav-header d-flex align-items-center">
     <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav" (click)="toggleSidebar()"></i>
     <a class="navbar-brand m-0 d-flex align-items-center" href="https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html" target="_blank">
@@ -12,15 +12,21 @@
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/backoffice']" [ngClass]="{'active': isActive('/dashboard/layout')}">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="bi bi-tv text-dark text-sm opacity-10"></i>
+            <span app-icon="home" library="fontawesome" variant="solid" class="text-primary text-sm opacity-10"></span>
+          </div>
+          <span class="nav-link-text ms-1">Dashboard</span>
+        </a>
+        <a class="nav-link" [routerLink]="['/backoffice/farm']" [ngClass]="{'active': isActive('/dashboard/layout')}">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <span app-icon="leaf" library="fontawesome" variant="solid" class="text-success text-sm opacity-10"></span>
           </div>
           <span class="nav-link-text ms-1">Farm Management</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/backoffice/event']">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="bi bi-calendar-event text-dark text-sm opacity-10"></i>
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"> 
+            <span app-icon="calendar" library="fontawesome" variant="regular" [inner]="true" class="text-primary text-sm opacity-10"></span>
           </div>
           <span class="nav-link-text ms-1">Event</span>
         </a>
@@ -28,7 +34,7 @@
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/backoffice/blog']">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="bi bi-pencil text-dark text-sm opacity-10"></i>
+            <span app-icon="newspaper" library="fontawesome" variant="regular" class="text-info text-sm opacity-10"></span>
           </div>
           <span class="nav-link-text ms-1">Blog</span>
         </a>
@@ -36,22 +42,22 @@
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/backoffice/task']">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="bi bi-pencil text-dark text-sm opacity-10"></i>
+            <span app-icon="tasks" library="fontawesome" variant="solid" class="text-warning text-sm opacity-10"></span>
           </div>
-          <span class="nav-link-text ms-1">Tasks</span>
+          <span class="nav-link-text ms-1">Tasks</span> 
         </a>
       </li>
       <li class="nav-item mt-3">
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account Pages</h6>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/profile']">
+      <!-- <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/backoffice/profile']">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="bi bi-person text-dark text-sm opacity-10"></i>
+            <span app-icon="user" library="fontawesome" class="text-dark text-sm opacity-10"></span>
           </div>
           <span class="nav-link-text ms-1">Profile</span>
         </a>
-      </li>
+      </li> -->
     </ul>
   </div>
   <div class="sidenav-footer mx-3">
@@ -64,6 +70,8 @@
         </div>
       </div>
     </div>
-    <a href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard" target="_blank" class="btn btn-success btn-sm w-100 mb-3 hover-effect">Try It right now !!</a>
+    <a href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard" target="_blank" class="btn btn-success btn-sm w-100 mb-3 hover-effect">
+      <span app-icon="help-circle" library="feather" class="me-1"></span>
+      Try It right now !!</a>
   </div>
 </aside>

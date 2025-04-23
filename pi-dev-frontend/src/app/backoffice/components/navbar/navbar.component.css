@@ -1,0 +1,50 @@
+/* Dropdown styles */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 0; /* Removed margin completely */
+  font-size: 0.875rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.375rem;
+  top: 100%; /* Position right below the toggle element */
+  transform: translateY(-2px); /* Negative offset to move up closer to the icon */
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
+/* Position dropdowns in navbar */
+.navbar-nav .dropdown .dropdown-menu {
+  right: 0;
+  left: auto;
+  margin-top: 0; 
+}
+
+/* Specifically target notification dropdown for tighter positioning */
+#notificationDropdownList {
+  margin-top: 0;
+  transform: translateY(-4px); /* Increased negative offset */
+}
+
+/* Target user dropdown for tighter positioning */
+#userDropdownMenuList {
+  margin-top: 0;
+  transform: translateY(-4px); /* Increased negative offset */
+}
