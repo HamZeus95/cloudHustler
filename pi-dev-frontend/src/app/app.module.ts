@@ -16,7 +16,7 @@ import { AuthService } from './auth/service/authentication.service';
 import { OAuth2RedirectComponent } from './auth/oauth2/oauth2-redirect.component';
 
 
- 
+
 
 @NgModule({
   declarations: [

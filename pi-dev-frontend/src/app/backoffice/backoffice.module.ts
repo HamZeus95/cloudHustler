@@ -15,6 +15,10 @@ import { FarmManagmentComponent } from './pages/farm-managment/farm-managment.co
 import { FarmTableComponent } from './components/farm-table/farm-table.component';
 import { BlogManagmentComponent } from './pages/blog-managment/blog-managment.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CropDiseaseDetectorComponent } from './components/crop-disease-detector/crop-disease-detector.component';
+import { WeatherComponent } from './components/weather/weather.component';
+import { MapDialogComponent } from './components/map-dialog/map-dialog.component';
+
 import { CoreDirectivesModule } from '../core/directives/directives';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { EditProfileComponent } from './pages/profile/edit-profile/edit-profile.component';
@@ -36,10 +40,13 @@ import { BannerComponent } from './components/banner/banner.component';
     NavbarComponent,
     SettingsPanelComponent,
     FarmTableComponent,
+    MapDialogComponent,
     //declarations of pages
     FarmManagmentComponent,
     EventComponent,
     BlogManagmentComponent,
+    CropDiseaseDetectorComponent,
+    WeatherComponent,
     DashboardComponent,
     EditProfileComponent,
     ManageProfileComponent,

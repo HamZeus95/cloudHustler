@@ -31,7 +31,7 @@ public class Farm {
     private Farmer farmer;
 
     // each farm has a set of resources
-    @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Ressource> resources = new HashSet<>();
 
     // each farm has a set of crops
@@ -60,4 +60,29 @@ public class Farm {
         crops.remove(crop);
         crop.setFarm(null);
     }
+
+    //resource
+    public void addResource(Ressource ressource) {
+        resources.add(ressource);
+        ressource.setFarm(this);
+    }
+
+    public void removeResource(Ressource ressource) {
+        resources.remove(ressource);
+        ressource.setFarm(null);
+    }
+
+    //expense
+
+    public void addExpense(Expense expense) {
+        expenses.add(expense);
+        expense.setFarm(this);
+    }
+
+    public void removeExpense(Expense expense) {
+        expenses.remove(expense);
+        expense.setFarm(null);
+    }
+
+
 }
