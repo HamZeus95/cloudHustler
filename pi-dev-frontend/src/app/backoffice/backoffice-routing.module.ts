@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'profile/edit-profile/:uuid', component: EditProfileComponent},
   { path: 'profile/manage-profile/:uuid', component: ManageProfileComponent}
 
-  
+
 
 
 ];
