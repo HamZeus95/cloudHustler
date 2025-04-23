@@ -1,6 +1,8 @@
 package cloud.hustler.pidevbackend.service;
 
 import cloud.hustler.pidevbackend.entity.Ressource;
+import cloud.hustler.pidevbackend.entity.Farm;
+import cloud.hustler.pidevbackend.repository.FarmRepository;
 import cloud.hustler.pidevbackend.repository.ResourceRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,21 +16,25 @@ import java.util.UUID;
 public class ResourceService implements IResource{
     @Autowired
     private ResourceRepository resourceRepository;
+    private FarmRepository farmRepository;
+
 
     @Override
-    public Ressource addRessource(Ressource ressource) {
-        return resourceRepository.save(ressource);
+    public Ressource addRessource(Ressource resource, UUID idFarm) {
+        Farm farm = farmRepository.findById(idFarm).get();
+        farm.addResource(resource);
+        resource.setFarm(farm);
+        return resourceRepository.save(resource);
     }
 
     @Override
-    public Ressource updateRessource(Ressource ressource) {
-        return resourceRepository.save(ressource);
+    public Ressource updateRessource(Ressource resource) {
+        return resourceRepository.save(resource);
     }
 
     @Override
     public void deleteRessource(UUID idRessource) {
         resourceRepository.deleteById(idRessource);
-
     }
 
     @Override
@@ -38,6 +44,7 @@ public class ResourceService implements IResource{
 
     @Override
     public Ressource getRessource(UUID idRessource) {
-        return resourceRepository.findById(idRessource).get();
+        return resourceRepository.findById(idRessource).orElse(null);
     }
+
 }

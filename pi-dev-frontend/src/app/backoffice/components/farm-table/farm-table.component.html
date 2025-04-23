@@ -18,28 +18,38 @@
           </tr>
         </thead>
         <tbody>
-          <!-- Add Form -->
-          <tr *ngIf="showAddForm" class="bg-light">
-            <td><input type="text" [(ngModel)]="newFarm.name" class="form-control form-control-sm" placeholder="Farm Name"></td>
-            <td><input type="number" [(ngModel)]="newFarm.size" class="form-control form-control-sm" placeholder="Size (ha)"></td>
-            <td>
-              <select [(ngModel)]="newFarm.irrigation_type" class="form-select form-select-sm">
-                <option *ngFor="let type of irrigationTypes" [value]="type">{{ type }}</option>
-              </select>
-            </td>
-            <td>
-              <div class="d-flex">
-                <input type="number" [(ngModel)]="newFarm.latitude" class="form-control form-control-sm me-1" placeholder="Lat">
-                <input type="number" [(ngModel)]="newFarm.longitude" class="form-control form-control-sm" placeholder="Lng">
-              </div>
-            </td>
-            <td class="text-center">—</td>
-            <td class="text-center">—</td>
-            <td class="text-end pe-3">
-              <button class="btn btn-success btn-sm me-2" (click)="saveNewFarm()">Save</button>
-              <button class="btn btn-secondary btn-sm" (click)="cancelAdd()">Cancel</button>
-            </td>
-          </tr>
+            <!-- Add Form -->
+            <tr *ngIf="showAddForm" class="bg-light">
+              <td>
+                <input type="text" [(ngModel)]="newFarm.name" class="form-control form-control-sm" placeholder="Farm Name">
+              </td>
+              <td>
+                <input type="number" [(ngModel)]="newFarm.size" class="form-control form-control-sm" placeholder="Size (ha)">
+              </td>
+              <td>
+                <select [(ngModel)]="newFarm.irrigation_type" class="form-select form-select-sm">
+                  <option *ngFor="let type of irrigationTypes" [value]="type">{{ type }}</option>
+                </select>
+              </td>
+              <td>
+                <!-- Map Preview + Coordinates -->
+                <div class="mb-1" style="height: 200px; width: 100%;">
+                  <div id="map" style="height: 100%; width: 100%; border-radius: 6px;"></div>
+                </div>
+                <div class="d-flex">
+                  <input type="number" [(ngModel)]="newFarm.latitude" class="form-control form-control-sm me-1" placeholder="Lat" readonly>
+                  <input type="number" [(ngModel)]="newFarm.longitude" class="form-control form-control-sm" placeholder="Lng" readonly>
+                </div>
+                <small class="text-muted">Click on the map to select coordinates</small>
+              </td>
+              <td class="text-center">—</td>
+              <td class="text-center">—</td>
+              <td class="text-end pe-3">
+                <button class="btn btn-success btn-sm me-2" (click)="saveNewFarm()">Save</button>
+                <button class="btn btn-secondary btn-sm" (click)="cancelAdd()">Cancel</button>
+              </td>
+            </tr>
+            
 
           <!-- List Farms -->
           <ng-container *ngFor="let farm of farms">

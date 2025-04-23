@@ -21,7 +21,7 @@ import { OAuth2RedirectComponent } from './auth/oauth2/oauth2-redirect.component
 @NgModule({
   declarations: [
     AppComponent,
-    OAuth2RedirectComponent
+    OAuth2RedirectComponent   
   ],
   imports: [
     CommonModule,

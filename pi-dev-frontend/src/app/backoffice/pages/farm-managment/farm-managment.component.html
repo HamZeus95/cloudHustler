@@ -6,7 +6,7 @@
     <main class="main-content position-relative border-radius-lg">
       <app-navbar></app-navbar>
       <div class="container-fluid py-4">
-        <app-dashboard-cards [farms]="farms" [crops]="crops"></app-dashboard-cards>
+        <app-dashboard-cards [farms]="farms" [crops]="crops" [expenses]="totalExpenses" [resources]="ressources" ></app-dashboard-cards>
         <div style="height: 20px;"></div>
         <app-farm-table [farms]="farms"></app-farm-table>
         <div class="row mt-4">
