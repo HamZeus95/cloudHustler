@@ -17,6 +17,7 @@ import { BlogManagmentComponent } from './pages/blog-managment/blog-managment.co
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CropDiseaseDetectorComponent } from './components/crop-disease-detector/crop-disease-detector.component';
 import { WeatherComponent } from './components/weather/weather.component';
+import { MapDialogComponent } from './components/map-dialog/map-dialog.component';
 
 
 @NgModule({
@@ -31,12 +32,13 @@ import { WeatherComponent } from './components/weather/weather.component';
     NavbarComponent,
     SettingsPanelComponent,
     FarmTableComponent,
+    MapDialogComponent,
     //declarations of pages
     FarmManagmentComponent,
     EventComponent,
     BlogManagmentComponent,
     CropDiseaseDetectorComponent,
-    WeatherComponent
+    WeatherComponent,
   ],
   imports: [
     CommonModule,
