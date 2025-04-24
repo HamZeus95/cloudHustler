@@ -143,3 +143,89 @@ strong {
   background: #ffebee;
   color: #d32f2f;
 }
+
+.btn-dark {
+  background-color: #4112b9;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-dark:hover {
+  background-color: #c82333;
+}
+
+.livreur-tracking {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+  border: 1px solid #eee;
+}
+
+.livreur-tracking h3 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.livreur-tracking p {
+  margin-bottom: 8px;
+}
+
+.position-status {
+  margin: 15px 0;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.loading {
+  color: #666;
+  font-style: italic;
+}
+
+.position-info {
+  background-color: #e8f5e9;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.error-message {
+  color: #d32f2f;
+  background-color: #ffebee;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.map-section {
+  margin: 20px 0;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.map-container {
+  height: 400px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.retry-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.retry-btn:hover {
+  background: #0056b3;
+}

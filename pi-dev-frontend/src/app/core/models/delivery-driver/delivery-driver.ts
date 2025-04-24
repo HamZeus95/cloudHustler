@@ -4,4 +4,6 @@ export interface DeliveryDriver {
   lastName?: string;
   phone?: string;
   address?: string;
+  positionLivreur?: string;
+
 }

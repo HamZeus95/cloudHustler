@@ -2,6 +2,7 @@ package cloud.hustler.pidevbackend.controllers;
 
 import cloud.hustler.pidevbackend.entity.Livraison;
 import cloud.hustler.pidevbackend.entity.SuiviLivraison;
+import cloud.hustler.pidevbackend.service.AiService;
 import cloud.hustler.pidevbackend.service.LivraisonService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class LivraisonController {
 
     @Autowired
     private LivraisonService livraisonService;
+
+    @Autowired
+    private AiService aiService;
 
     @PostMapping
     public Livraison creerLivraison(@Valid @RequestBody Livraison livraison) {
@@ -54,6 +58,17 @@ public class LivraisonController {
     public ResponseEntity<List<Livraison>> getLivraisonsByDriver(@PathVariable("uuid") UUID uuid) {
         List<Livraison> livraisons = livraisonService.findLivraisonsByDeliveryDriver_Uuid_user(uuid);
         return ResponseEntity.ok(livraisons);
+    }
+    @PostMapping("/predictdelay")
+    public ResponseEntity<Boolean> predictDelay(@RequestBody Livraison livraison) {
+        // Appeler l'API Hugging Face pour prédire le retard
+        boolean isDelayed = aiService.predictDelay(livraison);
+        return ResponseEntity.ok(isDelayed);
+    }
+    @PostMapping("/predicteta")
+    public ResponseEntity<Integer> predictEta(@RequestBody Livraison livraison) {
+        int eta = aiService.calculateEta(livraison);
+        return ResponseEntity.ok(eta);
     }
 
 

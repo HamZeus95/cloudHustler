@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Livraison } from 'src/app/core/models/livraison/livraison';
+import { LivraisonPredictionService } from 'src/app/core/services/livraison/livraison-prediction-service.service';
 import { LivraisonService } from 'src/app/core/services/livraison/livraison.service';
 
 @Component({
@@ -38,10 +39,13 @@ export class LivraisonClientComponent implements OnInit {
       dateLivraison: '',
      // totalPrice: 0
     };
-  
+    etaMap: { [key: number]: number } = {}; // Stocker les ETA pour chaque livraison
+
     constructor(
       private livraisonService: LivraisonService,
-      private router: Router
+      private router: Router,
+      private predictionService: LivraisonPredictionService
+
     ) {
       this.loadLivraisons();
     }
@@ -162,6 +166,55 @@ export class LivraisonClientComponent implements OnInit {
   */
   navigateToSuivre(id: number) {
     this.router.navigate(['/frontoffice/suivrelivraison', id]);
+  }
+  predictDelay(livraison: Livraison) {
+    this.predictionService.predictDelay(livraison).subscribe(
+      (isDelayed) => {
+        livraison.statut = isDelayed ? 'En retard' : livraison.statut;
+      },
+      (error) => {
+        console.error('Erreur lors de la prédiction:', error);
+      }
+    );
+  }
+  predictEta(livraison: Livraison) {
+    this.getDriverLocation().then((location) => {
+      const driverLocation = `${location.latitude},${location.longitude}`;
+      if (livraison.deliveryDriver) {
+        livraison.deliveryDriver.positionLivreur = driverLocation; // Utiliser la position GPS comme origine
+      }
+  
+      this.predictionService.predictEta(livraison).subscribe(
+        (eta) => {
+          this.etaMap[livraison.id] = eta; // Stocker l'ETA pour cette livraison
+        },
+        (error) => {
+          console.error('Erreur lors de la prédiction de l\'ETA:', error);
+        }
+      );
+    }).catch((error) => {
+      console.error('Impossible de récupérer la position GPS:', error);
+    });
+  }
+  getDriverLocation(): Promise<{ latitude: number; longitude: number }> {
+    return new Promise((resolve, reject) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            resolve({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude
+            });
+          },
+          (error) => {
+            console.error('Erreur lors de la récupération de la position GPS:', error);
+            reject(error);
+          }
+        );
+      } else {
+        reject(new Error('La géolocalisation n\'est pas supportée par ce navigateur.'));
+      }
+    });
   }
 }
 
