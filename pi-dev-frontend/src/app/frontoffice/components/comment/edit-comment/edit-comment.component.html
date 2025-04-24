@@ -1,0 +1,49 @@
+<app-navbar></app-navbar>
+
+<!-- Modal Overlay -->
+<div *ngIf="true" class="modal-overlay" (click)="onCancel()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Edit Comment</h2>
+      <button class="close-btn" (click)="onCancel()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div *ngIf="isLoading" class="loading">
+      <i class="fas fa-spinner fa-spin"></i> Loading comment...
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      <i class="fas fa-exclamation-circle"></i> {{ errorMessage }}
+    </div>
+
+    <form *ngIf="!isLoading && !errorMessage" [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="content">Comment Content</label>
+        <textarea 
+          id="content" 
+          formControlName="content" 
+          class="form-control" 
+          rows="5"
+          placeholder="Enter your comment here..."></textarea>
+        
+        <div *ngIf="commentForm.get('content')?.invalid && commentForm.get('content')?.touched" 
+             class="validation-error">
+          Comment content is required
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">
+          <i class="fas fa-save"></i> Update Comment
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">
+          <i class="fas fa-times"></i> Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<app-footer></app-footer>

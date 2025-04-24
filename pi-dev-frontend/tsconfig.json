@@ -18,6 +18,8 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "useDefineForClassFields": false,
     "lib": [
       "ES2022",

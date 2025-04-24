@@ -1,0 +1,17 @@
+<h1>Modifier le Post</h1>
+
+<form (ngSubmit)="savePost()" enctype="multipart/form-data">
+  <div>
+    <label for="title">Titre</label>
+    <input type="text" id="title" [(ngModel)]="post.title" name="title" required />
+  </div>
+
+  <div>
+    <label for="content">Contenu</label>
+    <textarea id="content" [(ngModel)]="post.content" name="content" required></textarea>
+  </div>
+
+ 
+
+  <button type="submit">Enregistrer</button>
+</form>

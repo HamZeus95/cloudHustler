@@ -1,5 +1,5 @@
 package cloud.hustler.pidevbackend.service;
-
+import cloud.hustler.pidevbackend.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -7,19 +7,28 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
-
     @Autowired
     private JavaMailSender emailSender;
 
-    public void sendSimpleMessage(String to, String subject, String text) {
-        // Créer un message simple (texte) à envoyer
+    public void sendPostNotification(String to, Post post) {
         SimpleMailMessage message = new SimpleMailMessage();
-   // L'email de l'expéditeur
-        message.setTo("ons26bm@gmail.com"); // L'email du destinataire
-        message.setSubject(subject); // Le sujet de l'email
-        message.setText(text); // Le corps de l'email
+        message.setFrom("noreply@isimg.tn"); // Email d'expéditeur
+        message.setTo(to);
+        message.setSubject("Nouveau Post Créé: " + post.getTitle());
 
-        // Envoi du message
+        // Construire le contenu de l'email
+        String emailContent = String.format(
+                "Détails du nouveau post:\n\n" +
+                        "Titre: %s\n" +
+                        "Contenu: %s\n" +
+                        "Date de création: %s\n" +
+                        "Cordialement,\nVotre équipe",
+                post.getTitle(),
+                post.getContent(),
+                post.getCreatedAt().toString()
+        );
+
+        message.setText(emailContent);
         emailSender.send(message);
     }
 }

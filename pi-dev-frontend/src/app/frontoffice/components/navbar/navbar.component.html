@@ -28,7 +28,7 @@
           <!-- Menu -->
           <nav class="classy-navbar justify-content-between" id="famieNav">
             <!-- Nav Brand -->
-            <a href="index.html" class="nav-brand"><img src="assets/img/core-img/logo11.png" style="height: 60px;"  alt=""></a>
+            <a routerLink="/" class="nav-brand"><img src="assets/img/core-img/logo11.png" style="height: 60px;"  alt=""></a>
             <!-- Navbar Toggler -->
             <div class="classy-navbar-toggler">
               <span class="navbarToggler"><span></span><span></span><span></span></span>
@@ -42,6 +42,18 @@
               <!-- Navbar Start -->
               <div class="classynav">
                 <ul>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+                  <li><a routerLink="/frontoffice//home">Home</a></li>
+                  <li><a routerLink="/frontoffice//about">About</a></li>
+                  <li><a routerLink="/frontoffice//market">Shop</a></li>
+                  <li><a routerLink="/frontoffice//blog">Blog</a></li>
+                  <li><a routerLink="/frontoffice//event">Event</a></li>
+                  <li><a routerLink="/frontoffice//jobs">Jobs</a></li>
+                  <li><a routerLink="/frontoffice//contact">Contact</a></li>
+=======
+>>>>>>> origin/Resource
                   <li><a routerLink="/frontoffice/home">Home</a></li>
                   <li><a routerLink="/frontoffice/about">About</a></li>
                   <li><a routerLink="/frontoffice/market">Shop</a></li>
@@ -49,6 +61,10 @@
                   <li><a routerLink="/frontoffice/event">Event</a></li>
                   <li><a routerLink="/frontoffice/jobs">Jobs</a></li>
                   <li><a routerLink="/frontoffice/contact">Contact</a></li>
+<<<<<<< HEAD
+=======
+>>>>>>> origin/Resource
+>>>>>>> origin/Resource
 
 
 
@@ -80,13 +96,19 @@
                 </ul>
                 <!-- Search Icon -->
                 <div id="searchIcon">
-                  <i class="icon_search" aria-hidden="true"></i>
+                  <i app-icon="search" class="'ficon'"></i>
                 </div>
                 <!-- Cart Icon -->
                 <div id="cartIcon">
                   <a href="#">
-                    <i class="icon_cart_alt" aria-hidden="true"></i>
+                    <i app-icon='shopping-cart'></i>
                     <span class="cart-quantity">2</span>
+                  </a>
+                </div>
+                <!-- User Icon -->
+                <div id="searchIcon">
+                  <a routerLink="/frontoffice/login">
+                    <i app-icon="user" class="'ficon'"></i> 
                   </a>
                 </div>
               </div>

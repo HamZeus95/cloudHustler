@@ -1,0 +1,118 @@
+/* app-side-bar {
+  width: 250px;
+  min-height: 100vh;
+} */
+
+ /* Font import */
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+ /* Sidebar Styling */
+ .sidenav {
+   background-color: #ffffff;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   transition: all 0.3s ease;
+ }
+
+ /* Navbar Links Styling */
+ .navbar-nav .nav-link {
+   font-family: 'Poppins', sans-serif;
+   font-size: 1rem;
+   font-weight: 500;
+   color: #444;
+   transition: all 0.3s ease;
+ }
+
+ .navbar-nav .nav-link:hover {
+   background-color: #f1f1f1;
+   border-radius: 5px;
+   color: #28a745;
+   transform: translateX(5px); /* Slight movement on hover */
+ }
+
+ .navbar-nav .nav-link.active {
+   color: #28a745;
+   font-weight: bold;
+ }
+
+ .navbar-brand .hover-effect:hover {
+   color: #28a745;
+   text-decoration: underline;
+ }
+
+ /* Sidebar Footer Button */
+ .sidenav-footer .btn:hover {
+   background-color: #28a745;
+   border-color: #28a745;
+   transform: scale(1.05); /* Slight scale effect */
+ }
+
+ /* Text adjustments */
+ .sidenav-footer .docs-info h6 {
+   font-family: 'Poppins', sans-serif;
+   font-weight: 600;
+ }
+
+ /* Spacing adjustments */
+ .sidenav-footer {
+   padding-top: 20px;
+ }
+
+ /* Hover effects */
+ .hover-effect:hover {
+   text-decoration: underline;
+   color: #28a745;
+ }
+
+ /* Sidebar transitions */
+ .navbar-nav .nav-link,
+ .navbar-brand .hover-effect {
+   transition: color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+ }
+
+/* Mobile sidebar styles */
+@media (max-width: 1199.98px) {
+  .sidenav {
+    transform: translateX(-100%);
+    margin-left: 0 !important;
+  }
+  
+  .sidenav.show {
+    transform: translateX(0);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  body.g-sidenav-pinned .main-content {
+    margin-left: 17.125rem;
+  }
+  
+  body.g-sidenav-hidden .main-content {
+    margin-left: 0;
+  }
+}
+
+/* Overlay for mobile when sidebar is open */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1030;
+  transition: all 0.3s ease;
+}
+
+body.g-sidenav-pinned .sidebar-overlay {
+  display: block;
+}
+
+/* Close button styles */
+#iconSidenav {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+#iconSidenav:hover {
+  opacity: 1 !important;
+}

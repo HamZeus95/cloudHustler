@@ -37,7 +37,11 @@ public abstract class User {
     boolean isActif;
 
 
+    @ManyToMany
+    Set<ServiceRequests> serviceRequests= new HashSet<>();
 
+    @OneToMany(mappedBy = "user")
+    Set<Post> posts = new HashSet<>();
 
 
 
