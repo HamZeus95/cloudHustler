@@ -13,79 +13,45 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": [
-              "feather-icons"
-            ],
             "outputPath": "dist/pi-dev-frontend",
             "index": "src/index.html",
-            "allowedCommonJsDependencies": [
-        "mapbox-gl"
-      ],
             "main": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              {
-                "glob": "**/*",
-                "input": "src/assets/fonts",
-                "output": "/assets/fonts"
-              }
-            ],
+       "assets": [
+  "src/favicon.ico",
+  "src/assets",
+  {
+    "glob": "**/*",
+    "input": "src/assets/fonts",
+    "output": "/assets/fonts"
+  },
+  {
+    "glob": "**/*",
+    "input": "node_modules/leaflet/dist/images",
+    "output": "/assets/leaflet/"
+  }
+],
             "styles": [
-              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
-              "src/assets/css/nucleo-icons.css",
-              "src/assets/css/argon-dashboard.css",
-              "src/assets/css/nucleo-svg.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/assets/css/font-awesome.min.css",
-              "src/assets/css/animate.css",
-              "src/assets/css/classy-nav.css",
-              "src/assets/css/owl.carousel.min.css",
-              "src/assets/css/magnific-popup.css",
-              "src/assets/css/style.css",
               "src/styles.css",
-              "node_modules/leaflet/dist/leaflet.css",
-              "node_modules/mapbox-gl/dist/mapbox-gl.css",
-              "node_modules/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css"
               "node_modules/leaflet/dist/leaflet.css"
-
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "src/assets/js/jquery.min.js",
-              "src/assets/js/popper.min.js",
-              "src/assets/js/bootstrap.min.js",
-              "src/assets/js/owl.carousel.min.js",
-              "src/assets/js/jquery.magnific-popup.min.js",
-              "src/assets/js/wow.min.js",
-              "src/assets/js/jquery.scrollup.min.js",
-              "src/assets/js/jarallax.min.js",
-              "src/assets/js/jarallax-video.min.js",
-              "src/assets/js/classynav.js",
-              "src/assets/js/jquery.sticky.js",
-              "src/assets/js/active.js",
-              "src/assets/js/core/popper.min.js",
-              "src/assets/js/core/bootstrap.min.js",
-              "src/assets/js/plugins/perfect-scrollbar.min.js",
-              "src/assets/js/plugins/smooth-scrollbar.min.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
                 }
               ],
               "outputHashing": "all"
@@ -107,14 +73,13 @@
             "production": {
               "browserTarget": "pi-dev-frontend:build:production"
             },
+            
             "development": {
               "browserTarget": "pi-dev-frontend:build:development"
+        
             }
           },
-          "defaultConfiguration": "development",
-          "options": {
-            "proxyConfig": "src/proxy.conf.json"
-          }
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
