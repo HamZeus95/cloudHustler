@@ -24,6 +24,7 @@ import { EventComponent } from "./pages/event/event.component";
 import { FarmManagmentComponent } from "./pages/farm-managment/farm-managment.component";
 import { EditProfileComponent } from "./pages/profile/edit-profile/edit-profile.component";
 import { ManageProfileComponent } from "./pages/profile/manage-profile/manage-profile.component";
+import { DragDropModule } from "@angular/cdk/drag-drop";
 
 
  

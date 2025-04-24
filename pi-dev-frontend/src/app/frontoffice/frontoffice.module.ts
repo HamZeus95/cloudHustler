@@ -16,8 +16,6 @@ import { ResetPasswordComponent } from "./pages/auth/reset-password/reset-passwo
 import { BlogComponent } from "./pages/blog/blog.component";
 import { ContactComponent } from "./pages/contact/contact.component";
 import { HomeComponent } from "./pages/home/home.component";
-import { JobsComponent } from "./pages/jobs/jobs.component";
-import { MarketComponent } from "./pages/market/market.component";
 import { NotFoundComponent } from "./pages/not-found/not-found.component";
 
 
@@ -37,8 +35,6 @@ import { NotFoundComponent } from "./pages/not-found/not-found.component";
     ContactComponent,
     EventComponent,
     HomeComponent,
-    JobsComponent,
-    MarketComponent,
     NotFoundComponent,
     LoginComponent,
     RegisterComponent,

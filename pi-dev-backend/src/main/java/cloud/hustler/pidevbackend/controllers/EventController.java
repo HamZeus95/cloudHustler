@@ -66,11 +66,7 @@ CloudinaryService cloudinaryService;
         eventService.deleteEvent(id);
     }
 
-    @PostMapping("/sendTestEmail")
-    public String sendTestEmail() {
-        emailService.sendSimpleMessage("ons26bm@gmail.com", "Test Email", "Ceci est un test de Spring Boot.");
-        return "Email envoyé avec succès!";
-    }
+
 
     @PostMapping("/send")
     public String sendSms(@RequestParam String to, @RequestParam String message) {
