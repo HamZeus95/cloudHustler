@@ -2,6 +2,7 @@ package cloud.hustler.pidevbackend;
 
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -23,6 +24,14 @@ public class WebConfig implements WebMvcConfigurer {
         System.out.println("Chemin d'upload configuré : " + uploadDir);
 
 
+    }
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**") // Applique CORS à toutes les routes
+                .allowedOrigins("http://localhost:4200") // Autoriser les requêtes venant de ce frontend
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH") // Autoriser ces méthodes
+                .allowedHeaders("Content-Type", "Authorization");
+        // Autoriser tous les header
     }
 }
 

@@ -22,6 +22,7 @@ public class Event {
     @GeneratedValue(strategy= GenerationType.UUID)
     UUID uuid_event;
     String name;
+    @Column(columnDefinition = "TEXT")
     String description;
     String location;
     String banner;
@@ -30,6 +31,7 @@ public class Event {
     int maxParticipants;
     private boolean isOnline; 
     private String onlineLink;
+    String ImageUrl;
     @ElementCollection
     List<String> imgsUrls;
     @ElementCollection

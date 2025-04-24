@@ -24,7 +24,10 @@ public class EventService implements IEvent {
     @Autowired
     private SmsService smsService;
 
+
+
     public Event createEvent(Event event) {
+        
         event.getParticipants().add("ons");
         if (event.getStartDate().equals(LocalDate.now().plusDays(1))) {
             // Envoyer le SMS à chaque participant
@@ -34,6 +37,7 @@ public class EventService implements IEvent {
                 smsService.sendSms(participant, message);
             }
         }
+
         return eventRepository.save(event);
     }
 
@@ -81,6 +85,7 @@ public class EventService implements IEvent {
         // Retourner juste le nom de l'image
         return file.getOriginalFilename();
     }
+
 
 
 
