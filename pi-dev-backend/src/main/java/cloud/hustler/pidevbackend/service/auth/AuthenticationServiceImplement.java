@@ -101,7 +101,6 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
     }
     private User createUser(RegisterRequest request) {
 
-        System.out.printf("Creating user with email: %s\n", request);
         // Common user properties builder
         String encodedPassword = passwordEncoder.encode(request.getPassword());
 
@@ -124,6 +123,7 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
             return Farmer.builder()
                     .email(request.getEmail())
                     .lastName(request.getLastName())
+                    .firstName(request.getFirstName())
                     .birthDate(request.getBirthDate())
                     .address(request.getAddress())
                     .image(request.getImage())
@@ -142,7 +142,7 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
                     .image(request.getImage())
                     .phone(request.getPhone())
                     .password(encodedPassword)
-                    .isAvailable(request.isAvailable()) // Using isAvailable() getter that matches our renamed field
+                    .isAvailable(request.isAvailable()) 
                     .build();
         }
 

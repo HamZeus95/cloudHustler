@@ -1,0 +1,23 @@
+.input-group-text {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0.438rem 1rem;
+}
+
+.form-password-toggle .input-group-text {
+  cursor: pointer;
+}
+
+.form-password-toggle .input-group-text i {
+  font-size: 1.2rem;
+  line-height: 1.75;
+}
+
+.form-control-merge {
+  border-right: 0;
+}
+
+.input-group-merge .input-group-text {
+  border-left: 0;
+}

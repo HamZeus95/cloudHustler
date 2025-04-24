@@ -20,7 +20,7 @@
               <div class="d-flex align-items-center">
                 <!-- Display profile image if available, otherwise show initials -->
                 <div *ngIf="hasProfileImage()" class="avatar avatar-sm position-relative rounded-circle me-2">
-                  <img [src]="currentUser?.image" alt="Profile Image" class="w-100 h-100 rounded-circle">
+                  <img [src]="getProfileImageUrl()" alt="Profile Image" class="w-100 h-100 rounded-circle">
                 </div>
                 <div *ngIf="!hasProfileImage()" class="avatar avatar-sm position-relative bg-gradient-primary rounded-circle me-2 d-flex justify-content-center align-items-center">
                   <span>{{ getUserInitials() }}</span>
