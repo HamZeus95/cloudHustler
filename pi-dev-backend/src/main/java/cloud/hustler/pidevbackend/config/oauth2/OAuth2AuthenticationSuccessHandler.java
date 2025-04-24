@@ -73,7 +73,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
             // Create user response object
             UserResponse userResponse = UserResponse.builder()
-                    .userUUID(user.getU())
+                    .userUUID(user.getUserId())
                     .firstName(user.getFirstName())
                     .lastName(user.getLastName())
                     .email(user.getEmail())
