@@ -65,7 +65,7 @@ public abstract class User implements UserDetails {
     @Transient
     public String getRole(){
         DiscriminatorValue discriminator = this.getClass().getAnnotation(DiscriminatorValue.class);
-        return (discriminator != null) ? discriminator.value() : "USER";
+        return (discriminator != null) ? discriminator.value() : "Consumer";
     }
 
 }

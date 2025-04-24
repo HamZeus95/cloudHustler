@@ -105,6 +105,26 @@ export class NavbarComponent implements OnInit {
     return this.currentUser?.image != null && this.currentUser?.image !== '';
   }
 
+  getProfileImageUrl(): string {
+    if (!this.hasProfileImage()) {
+      return '';
+    }
+    
+    const imageName = this.currentUser.image;
+    
+    // Handle different image path formats
+    if (imageName.startsWith('http://') || imageName.startsWith('https://')) {
+      // External URLs (like OAuth provider images)
+      return imageName;
+    } else {
+      // For images stored in backend, construct the proper URL
+      // Spring Boot serves static resources with the context path
+      const imagesPath = '/api/v1/images/';
+      
+      return `${imagesPath}${imageName}`;
+    }
+  }
+
   signOut(): void {
     // Call the logout API first
     this.authService.logout().subscribe({

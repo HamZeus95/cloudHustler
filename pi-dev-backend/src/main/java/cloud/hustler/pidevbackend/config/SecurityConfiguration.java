@@ -27,9 +27,11 @@ public class SecurityConfiguration {
     // Note: The application has a context path of /api/v1, so these paths are relative to that
     private static final String[] WHITE_LIST_URL = {
             "/auth/**",
-            "/oauth2/**", // Add OAuth2 endpoints to whitelist
+            "/oauth2/**",
+            "/farm/**",  // Add OAuth2 endpoints to whitelist
             "/v2/api-docs",
             "/v3/api-docs",
+            "/users/**", // temporary
             "/v3/api-docs/**",
             "/swagger-resources",
             "/swagger-resources/**",
@@ -38,7 +40,10 @@ public class SecurityConfiguration {
             "/swagger-ui/**",
             "/webjars/**",
             "/swagger-ui.html",
-            "/error"  // Added error path to allow access to error pages
+            "/error",  // Added error path to allow access to error pages
+            "/uploads/**", // Allow access to uploaded files
+            "/static/**", // Allow access to static resources
+            "/images/**" // Allow access to image resources
     };
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
@@ -52,7 +57,7 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> {}) // Enable CORS
-                .authorizeHttpRequests(req ->
+                .authorizeHttpRequests(req -> 
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
                                 .anyRequest()
@@ -62,7 +67,7 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .logout(logout ->
+                .logout(logout -> 
                         logout.logoutUrl("/auth/logout")  // context path is already /api/v1
                                 .addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
