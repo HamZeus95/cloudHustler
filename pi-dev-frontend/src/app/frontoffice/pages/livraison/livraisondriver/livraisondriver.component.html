@@ -1,0 +1,48 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<app-navbar></app-navbar>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-9">
+      <!-- Your Delivery content here -->
+    </div>
+  </div>
+</div>
+<div class="dashboard-container p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">My Deliveries</h1>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let l of livraisons" class="livraison-card">
+      <!-- Background image -->
+      <div class="card-bg-image" [ngStyle]="{'background-image': 'url(assets/images/livraison.jpg)'}"></div>
+
+      <div class="card-content">
+        <div class="card-header">
+          <h3>Delivery </h3>
+          <span class="status-badge" [ngClass]="getStatutClass(l.statut)">
+              {{ l.statut }}
+          </span>
+        </div>
+
+        <div class="card-details">
+          <p><i class="fas fa-calendar"></i> <strong>Creation Date:</strong> {{ l.dateCreation | date:'dd/MM/yyyy' }}</p>
+          <p><i class="fas fa-map-marker-alt"></i> <strong>Address:</strong> {{ l.adresseLivraison }}</p>
+          <p><i class="fas fa-truck"></i> <strong>Delivery Date:</strong> {{ l.dateLivraison | date:'dd/MM/yyyy' }}</p>
+          
+          <div class="text-end my-3">
+            <button class="btn btn-dark" (click)="navigateToSuivre(l.id)">
+              <i class="bi bi-geo-alt-fill"></i> Map
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
+

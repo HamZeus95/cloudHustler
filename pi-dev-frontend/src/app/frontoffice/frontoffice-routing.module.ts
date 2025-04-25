@@ -8,12 +8,19 @@ import { EventComponent } from './pages/event/event.component';
 import { JobsComponent } from './pages/jobs/jobs.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { FactureClientComponent } from './pages/livraison/facture-client/facture-client.component';
+import { LivraisonClientComponent } from './pages/livraison/livraison-client/livraison-client.component';
+import { LivraisonClientdetailsComponent } from './pages/livraison/livraison-clientdetails/livraison-clientdetails.component';
+import { FactureClientdetailsComponent } from './pages/livraison/facture-clientdetails/facture-clientdetails.component';
+import { MapComponent } from './pages/livraison/map/map.component';
+import { LivraisondriverComponent } from './pages/livraison/livraisondriver/livraisondriver.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { OtpComponent } from './pages/auth/otp/otp.component';
 import { LogoutComponent } from './pages/auth/logout/logout.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
+
 
 const routes: Routes = [
 
@@ -26,6 +33,13 @@ const routes: Routes = [
     {path:'event',component:EventComponent},
     {path:'jobs',component:JobsComponent},
     {path:'contact',component:ContactComponent},
+    {path: 'not-found', component: NotFoundComponent},
+    { path:'factures',  component: FactureClientComponent},
+    { path:'livraisons',  component: LivraisonClientComponent},
+    { path:'livraison-client-details/:id',  component: LivraisonClientdetailsComponent},
+    { path:'facture-client-details/:id',  component: FactureClientdetailsComponent},
+    { path:'suivrelivraison/:id',  component: MapComponent},
+    { path:'livraisonsDriver',  component: LivraisondriverComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: "verify-email", component: OtpComponent},

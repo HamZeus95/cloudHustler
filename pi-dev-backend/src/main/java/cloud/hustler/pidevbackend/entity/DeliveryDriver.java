@@ -9,6 +9,12 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
+import lombok.experimental.FieldDefaults;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -59,4 +65,20 @@ public class DeliveryDriver extends User {
     public boolean isEnabled() {
         return true;
     }
+
+    //si louay
+    @OneToMany(mappedBy = "deliveryDriver") // Un livreur a plusieurs livraisons
+    private List<Livraison> livraisons = new ArrayList<>();
+    @Transient // ne sera pas stocké dans la BDD
+    private String positionLivreur;
+
+
+    public String getPositionLivreur() {
+        return positionLivreur;
+    }
+
+    public void setPositionLivreur(String positionLivreur) {
+        this.positionLivreur = positionLivreur;
+    }
+
 }

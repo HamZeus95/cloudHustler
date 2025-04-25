@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EventComponent } from '../frontoffice/components/event/event.component'; 
+import { EventComponent } from '../frontoffice/components/event/event.component';
 import { FarmManagmentComponent } from './pages/farm-managment/farm-managment.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TaskManagementComponent } from './components/task-management/task-management.component';
@@ -33,9 +33,15 @@ const routes: Routes = [
     {path:"crop",component:CropDiseaseDetectorComponent},
     {path:"weather",component:WeatherComponent},
     { path: 'profile/edit-profile/:uuid', component: EditProfileComponent},
-    { path: 'profile/manage-profile/:uuid', component: ManageProfileComponent}
-  ];
- 
+    { path: 'profile/manage-profile/:uuid', component: ManageProfileComponent},
+  { path: 'facture/:id', component: DetailsFactureComponent },
+  { path: 'livraison/:id', component: DetailsLivraisonComponent },
+  { path:'factures',  component: FactureComponent},
+  { path:'livraisons',  component: LivraisonComponent},
+  { path:'suivilivraison',  component: SuiviLivraisonComponent},
+
+];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
