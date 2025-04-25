@@ -68,4 +68,5 @@ public abstract class User implements UserDetails {
         return (discriminator != null) ? discriminator.value() : "Consumer";
     }
 
+
 }
