@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ServiceeService } from '../services/servicee.service';
+import { ServiceeService } from '../../../services/servicee.service';
 import { Servicee } from 'src/core/modules/servicee';
 import { Router } from '@angular/router';
 
@@ -32,25 +32,25 @@ export class JobsComponent implements OnInit {
 
   fetchServices() {
     this.servicesService.getAllServices().subscribe({
-      next: (data) => {
+      next: (data:any) => {
         console.log('Données reçues :', data);
         this.services = data;
       },
-      error: (err) => {
+      error: (err:any) => {
         console.error('Erreur lors du chargement des services', err);
       }
     });
   }
   addService(): void {
     this.servicesService.createService(this.newService).subscribe({
-      next: (response) => {
+      next: (response:any) => {
         console.log('Service ajouté avec succès:', response);
         // Affichage d'une alerte pour informer l'utilisateur du succès
         alert('Le service a été ajouté avec succès !');
         // Réinitialiser le formulaire ou effectuer d'autres actions
         this.resetNewServiceForm(); // Exemple de réinitialisation du formulaire
       },
-      error: (err) => {
+      error: (err:any) => {
         console.error('Erreur lors de l\'ajout du service:', err);
         alert('Une erreur est survenue lors de l\'ajout du service.');
       }
@@ -64,7 +64,7 @@ export class JobsComponent implements OnInit {
         next: () => {
           this.fetchServices();
         },
-        error: (err) => {
+        error: (err:any) => {
           console.error('Erreur lors de la suppression du service', err);
         }
       });
@@ -76,14 +76,14 @@ export class JobsComponent implements OnInit {
   updateService(): void {
     if (this.serviceToUpdate && this.serviceToUpdate.uuid_service) {
       this.servicesService.updateService(this.serviceToUpdate.uuid_service, this.serviceToUpdate).subscribe({
-        next: (response) => {
+        next: (response:any) => {
           console.log('Service mis à jour avec succès:', response);
           alert('Le service a été mis à jour avec succès !');
           this.resetNewServiceForm();
           this.serviceToUpdate = null; // Réinitialiser le service à mettre à jour
           this.fetchServices(); // Recharger la liste des services
         },
-        error: (err) => {
+        error: (err:any) => {
           console.error('Erreur lors de la mise à jour du service:', err);
           alert('Une erreur est survenue lors de la mise à jour du service.');
         }
