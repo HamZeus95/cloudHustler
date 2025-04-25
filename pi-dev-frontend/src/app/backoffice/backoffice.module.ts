@@ -55,7 +55,6 @@ import { NgChartsModule } from 'ng2-charts';
     DashboardCardsComponent,
     SideBarComponent,
     NavbarComponent,
-    //declarations of components
     FarmDetailsComponent, 
     TablesComponent,
     TaskManagementComponent, 
@@ -66,7 +65,6 @@ import { NgChartsModule } from 'ng2-charts';
     DetailsLivraisonComponent,
     LivraisonComponent,
     MapDialogComponent,
-    //declarations of pages
     FarmManagmentComponent,
     EventComponent,
     BlogManagmentComponent,
@@ -79,9 +77,7 @@ import { NgChartsModule } from 'ng2-charts';
     PostBackComponent,
     CommentBackComponent,
     StatsComponent,
-    // Add the AdminLayoutComponent
     AdminLayoutComponent,
-    //marketplace componnent
     MarketplaceManagementComponent,
     ProductslistComponent,
     ProductCategorieslistComponent,
@@ -96,7 +92,6 @@ import { NgChartsModule } from 'ng2-charts';
     DragDropModule,
     RouterModule,
     DialogModule,
-    //BrowserAnimationsModule,
     NgChartsModule,
     MatSnackBarModule,
     MatButtonModule,
@@ -108,10 +103,8 @@ import { NgChartsModule } from 'ng2-charts';
   providers: [
     DatePipe
   ],
-  //styles
 
   exports: [
-    // Export components that might be used outside this module
     SideBarComponent,
     NavbarComponent,
     BannerComponent,
