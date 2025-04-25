@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { QuizService, Quiz,  } from 'src/app/services/quiz.service';
 
 @Component({
@@ -6,18 +6,10 @@ import { QuizService, Quiz,  } from 'src/app/services/quiz.service';
   templateUrl: './update-questions.component.html',
   styleUrls: ['./update-questions.component.css']
 })
-export class UpdateQuestionsComponent implements OnInit {
+export class UpdateQuestionsComponent  {
   @Input() quiz!: Quiz;
-
-  constructor(private quizService: QuizService) {}
-
-  ngOnInit(): void {
-    console.log(this.quiz);
-    if(this.quiz.questions.length===0){
-  this.addQuestion();
-      
-    }
-  }
+@Output()reloadQuiz=new EventEmitter();
+  constructor(private quizService: QuizService) {} 
 
   addQuestion() {
     const newQuestion = {
@@ -55,7 +47,9 @@ export class UpdateQuestionsComponent implements OnInit {
        this.quizService.addQuestionToQuiz(this.quiz.id!, {questionText:question.questionText,answers:question.answers.map((e)=>e.answerText),correctAnswer:question.correctAnswer.answerText}).subscribe(created => {
           //this.quiz.questions[index] = created;
           console.log("Question added")
-      });
+          this.reloadQuiz.emit();
+ 
+        });
     }
   }
 

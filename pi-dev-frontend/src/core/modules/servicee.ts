@@ -7,5 +7,6 @@ export interface Servicee {
     salary: number;
     imageUrl: string;
     nbWorkers: number;
+    quiz?:any;
     
   }

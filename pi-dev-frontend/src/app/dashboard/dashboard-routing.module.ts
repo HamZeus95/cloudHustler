@@ -9,6 +9,9 @@ import { JobsDashboardComponent } from './jobs-dashboard/jobs-dashboard.componen
 import { JobsRequestsDashboardComponent } from './jobs-requests-dashboard/jobs-requests-dashboard.component';
 import { DipslayComponent } from '../dipslay/dipslay.component';
 import { QuizComponent } from './jobs-dashboard/quiz/quiz.component';
+import { NavbarComponent } from '../navbar/navbar.component';
+
+import { FrontTakeQuizComponent } from './jobs-dashboard/quiz/front-take-quiz/front-take-quiz.component';
 
 const routes: Routes = [
   {
@@ -23,7 +26,8 @@ const routes: Routes = [
       { path: 'cv/:cvUrl', component: DipslayComponent }, // Route pour afficher le CV
 
       { path: 'quiz/:id', component: QuizComponent },
-      { path: 'quiz/:serviceId', component: QuizComponent }
+      { path: 'take-quiz/:id', component: FrontTakeQuizComponent }, // Front-office quiz
+
  // La route qui reçoit l'ID du service
 
     ]

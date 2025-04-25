@@ -13,6 +13,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { JobsRequestsDashboardComponent } from './dashboard/jobs-requests-dashboard/jobs-requests-dashboard.component';
 import { DipslayComponent } from './dipslay/dipslay.component';
 import { EmailJobsComponent } from './email-jobs/email-jobs.component';
+import { FrontTakeQuizComponent } from './dashboard/jobs-dashboard/quiz/front-take-quiz/front-take-quiz.component';
  
 const routes: Routes = [
   
@@ -29,6 +30,7 @@ const routes: Routes = [
    { path: 'display-cv/:cvurl', component: DipslayComponent },
    { path: 'Email', component: EmailJobsComponent },
 
+      { path: 'take-quiz/:id', component: FrontTakeQuizComponent }, // Front-office quiz
 
 
    

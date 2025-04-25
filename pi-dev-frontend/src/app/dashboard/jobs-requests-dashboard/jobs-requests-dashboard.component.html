@@ -342,6 +342,8 @@
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Score</th>
+
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Statut</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Lettre de Motivation</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">CV</th>
@@ -350,6 +352,9 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let request of servicesRequests">
+                      <td>
+                        {{request?.score?request.score:"Non score "}}
+                      </td>
                       <td>
                         <div class="d-flex px-2 py-1">
                          

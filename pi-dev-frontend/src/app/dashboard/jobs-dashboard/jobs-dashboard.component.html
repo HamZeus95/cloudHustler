@@ -348,8 +348,8 @@
                        
                         <!-- Lien pour éditer un service -->
                        <button class="btn btn-warning me-2" (click)="changeServiceToUpdate(service)" >Modifier</button>
-                       <button (click)="deleteService(service.uuid_service!)" class="btn btn-danger">Delete </button>
-                       <button (click)="addQuizToService(service.uuid_service)" class="btn btn-danger">Ajouter Quiz </button>
+                       <button (click)="deleteService(service.uuid_service!)" class="btn btn-danger me-2 ">Delete </button>
+                       <button (click)="addQuizToService(service.uuid_service)" class="btn btn-primary">{{service?.quiz?"Modifier Quiz":"Ajouter Quiz"}} </button>
 
                       </div>
                     

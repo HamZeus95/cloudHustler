@@ -5,5 +5,5 @@ export interface ServiceRequest {
   status: TypeStatus;
   lettreMotivation: string; // Ajout du champ lettreMotivation
   uploadCv: string;
-
+  score?:number
 }

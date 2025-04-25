@@ -23,7 +23,7 @@ export class CreateQuizComponent {
       this.quizService.createQuizForService(this.serviceId, this.quizForm.value).subscribe(
         (response) => {
           console.log('Quiz créé avec succès:', response);
-          // Redirection ou message de succès ici
+           // Redirection ou message de succès ici
         },
         (error) => {
           console.error('Erreur lors de la création du quiz:', error);

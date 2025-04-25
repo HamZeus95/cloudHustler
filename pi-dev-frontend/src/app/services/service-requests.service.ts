@@ -33,6 +33,9 @@ export class ServiceRequestsService {
     updateServiceRequest(id: string, serviceRequest: ServiceRequest): Observable<ServiceRequest> {
       return this.http.put<ServiceRequest>(`${this.apiUrl}/update/${id}`, serviceRequest);
     }
+    updateScoreServiceReqesut(id:string,score:number):Observable<ServiceRequest>{
+      return this.http.put<ServiceRequest>(`${this.apiUrl}/updateScore/${id}/${score}`,{})
+    }
   
     // Supprimer une demande de service
     deleteServiceRequest(id: string): Observable<void> {

@@ -332,8 +332,9 @@
                 <app-create-quiz [serviceId]="serviceId"></app-create-quiz>
                 </div>
                 <div class="card-body p-3"*ngIf="thereIsAquiz">
-                  <app-update-questions [quiz]="quiz"></app-update-questions>
-                  </div>
+                  <app-update-questions   #quizComponentRef
+                  [quiz]="quiz" (reloadQuiz)="realodQuiz()" ></app-update-questions>
+                </div>
                   
 
             </div>

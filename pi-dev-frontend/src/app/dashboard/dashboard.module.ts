@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QuizComponent } from './jobs-dashboard/quiz/quiz.component';
 import { CreateQuizComponent } from './jobs-dashboard/quiz/create-quiz/create-quiz.component';
 import { UpdateQuestionsComponent } from './jobs-dashboard/quiz/update-questions/update-questions.component';
+import { FrontTakeQuizComponent } from './jobs-dashboard/quiz/front-take-quiz/front-take-quiz.component';
  
 
 @NgModule({
@@ -29,6 +30,7 @@ import { UpdateQuestionsComponent } from './jobs-dashboard/quiz/update-questions
     QuizComponent,
     CreateQuizComponent,
     UpdateQuestionsComponent,
+    FrontTakeQuizComponent,
      
 
   ],
