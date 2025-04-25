@@ -7,7 +7,7 @@ import { ProductCategory } from '../models/market/product';
   providedIn: 'root'
 })
 export class ProductCategoryService {
-  private apiUrl = 'http://localhost:8090/pi/productcategory'; // Changed to match backend base path
+  private apiUrl = '/api/v1/productcategory'; // Changed to match backend base path
 
   constructor(private http: HttpClient) { }
 
