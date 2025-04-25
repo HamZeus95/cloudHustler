@@ -1,16 +1,30 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ContactComponent } from './contact.component';
+<<<<<<<< HEAD:pi-dev-frontend/src/app/frontoffice/components/navbar/navbar.component.spec.ts
+import { NavbarComponent } from './navbar.component';
 
-describe('ContactComponent', () => {
-  let component: ContactComponent;
-  let fixture: ComponentFixture<ContactComponent>;
+describe('NavbarComponent', () => {
+  let component: NavbarComponent;
+  let fixture: ComponentFixture<NavbarComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ContactComponent]
+      declarations: [NavbarComponent]
     });
-    fixture = TestBed.createComponent(ContactComponent);
+    fixture = TestBed.createComponent(NavbarComponent);
+========
+import { SideBarComponent } from './side-bar.component';
+
+describe('SideBarComponent', () => {
+  let component: SideBarComponent;
+  let fixture: ComponentFixture<SideBarComponent>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [SideBarComponent]
+    });
+    fixture = TestBed.createComponent(SideBarComponent);
+>>>>>>>> origin/Resource:pi-dev-frontend/src/app/frontoffice/pages/contact/contact.component.spec.ts
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

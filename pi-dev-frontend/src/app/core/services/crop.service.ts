@@ -8,6 +8,8 @@ import { environment } from 'src/environments/environment';
 @Injectable()
 export class CropService {
   private apiUrl = environment.apiUrl+'crop'; 
+  private aiWebhookUrl = 'https://mohamed-dhia-alaya.app.n8n.cloud/webhook/new-crop';
+
 
   constructor(private http: HttpClient) {}
 
@@ -30,6 +32,12 @@ export class CropService {
   deleteCrop(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
   }
+  // ngrok config add-authtoken 2ChUqG7xv4a9vwCXBuMaGK8ttNY_4yn6bEmzdFTTSYE5vLJP7
+  // ngrok http http://localhost:8090
+  triggerTaskGeneration(crop: Crop): Observable<any> {
+    return this.http.post(this.aiWebhookUrl, crop);
+  }
+
 
 
 }

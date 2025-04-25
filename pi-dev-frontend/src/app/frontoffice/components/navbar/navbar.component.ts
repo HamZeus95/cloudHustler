@@ -1,28 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Cart } from 'src/app/core/models/market/cart.model';
-import { CartService } from 'src/app/core/services/cart.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent {
   dropdownOpen = false;
-cart: Cart = {
-    uuid_cart: '',
-    cartItems: [],
-    totalPrice: 0
-  };
-  
-  customerUuid = '7421256b-be17-455a-8c89-8b382ba0a28a'; // Replace with logic to retrieve actual user
+
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
-constructor(private cartService:CartService) { }
-ngOnInit(): void {
-  
-}
-
 
 }

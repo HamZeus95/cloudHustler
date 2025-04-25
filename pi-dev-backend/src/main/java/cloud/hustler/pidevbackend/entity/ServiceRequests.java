@@ -5,7 +5,6 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,14 +22,19 @@ public class ServiceRequests {
     UUID uuid_serviceRequest;
 
     @Enumerated(EnumType.STRING)
-    TypeStatus status;
+    TypeJobStatus status;
 
+    String lettreMotivation;
+    String uploadCv;
 
     @ManyToOne
-    Service service;
+    Servicee servicee;
 
     @ManyToMany(mappedBy = "serviceRequests")
     Set<User> users_applying= new HashSet<>();
+
+    Float score=0f;
+
 
 
 

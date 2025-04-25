@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LogiPro Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+
+
+
+<body>
+  <div class="g-sidenav-show bg-gray-100">
+    <div style="position: absolute; min-height: 300px; width: 100%; overflow: hidden;">
+        <img src="../../../../assets/img/bg-img/1.jpg" alt="Background Image" style="position: absolute; top: 0; left: 0; width: 100%; height: 80%; object-fit: cover; filter: blur(5px) brightness(80%);">
+    </div>
+    <app-side-bar></app-side-bar>
+    <main class="main-content position-relative border-radius-lg">
+      <app-navbar></app-navbar>
+      <div class="container-fluid py-4">
+        <!-- here put your contents y jmee3a -->
+      </div>
+    </main>
+  </div>
+  <div class="main">
+    <div class="header">
+      <h1>Deliveries & Invoices</h1>
+      <div class="search-box">
+        <i class="fas fa-search search-icon"></i>
+        <input 
+          type="text" 
+          placeholder="Search for an invoice..." 
+          [(ngModel)]="searchTerm"
+          (input)="filterFactures(searchTerm)" 
+          class="search-input"
+        />
+      </div>
+      <button class="ajouter-button" (click)="openModal()">
+        <i class="fas fa-plus"></i> Add Invoice
+      </button>
+    
+      <div *ngIf="isModalOpen" class="modal-overlay" (click)="closeModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+          <p class="titre-facture"><strong>Add Invoice</strong></p>
+          <form [formGroup]="factureForm" (ngSubmit)="onSubmit()">
+            <!-- Issue Date -->
+            <div class="form-group">
+              <label for="dateEmission">Issue Date*</label>
+              <input
+                type="date"
+                id="dateEmission"
+                formControlName="dateEmission"
+                class="priority"
+                [ngClass]="{ 'is-invalid': factureForm.get('dateEmission')?.invalid && 
+                               (factureForm.get('dateEmission')?.touched || factureForm.get('dateEmission')?.dirty) }"
+              />
+              <div *ngIf="factureForm.get('dateEmission')?.invalid && 
+                         (factureForm.get('dateEmission')?.touched || factureForm.get('dateEmission')?.dirty)" 
+                   class="error-message">
+                <small *ngIf="factureForm.get('dateEmission')?.errors?.['required']">Date required</small>
+                <small *ngIf="factureForm.get('dateEmission')?.errors?.['dateMismatch']">
+                  Issue date must match delivery creation date
+                </small>
+              </div>
+            </div>
+      
+            <!-- Associated Delivery -->
+            <div class="form-group">
+              <label for="livraison">Associated Delivery*</label>
+              <select
+                id="livraison"
+                formControlName="livraison"
+                class="priority"
+                [ngClass]="{ 'is-invalid': factureForm.get('livraison')?.invalid && 
+                               (factureForm.get('livraison')?.touched || factureForm.get('livraison')?.dirty) }"
+              >
+                <option *ngFor="let livraison of livraisons" [ngValue]="livraison">
+                  Delivery #{{livraison.id}} - {{livraison.order?.totalPrice}} DT ({{livraison.dateCreation | date:'dd/MM/yyyy'}}) {{livraison.adresseLivraison}}
+                </option>
+              </select>
+              <div *ngIf="factureForm.get('livraison')?.invalid && 
+                         (factureForm.get('livraison')?.touched || factureForm.get('livraison')?.dirty)" 
+                   class="error-message">
+                <small *ngIf="factureForm.get('livraison')?.errors?.['required']">Delivery required</small>
+              </div>
+            </div>
+      
+            <!-- Total Amount -->
+            <div class="form-group">
+              <label for="montantTotal">Total Amount*</label>
+              <input
+                id="montantTotal"
+                formControlName="montantTotal"
+                class="priority"
+                [ngClass]="{ 'is-invalid': factureForm.get('montantTotal')?.invalid && 
+                               (factureForm.get('montantTotal')?.touched || factureForm.get('montantTotal')?.dirty) }"
+              >
+              <div *ngIf="factureForm.get('montantTotal')?.invalid && 
+                         (factureForm.get('montantTotal')?.touched || factureForm.get('montantTotal')?.dirty)" 
+                   class="error-message">
+                <small *ngIf="factureForm.get('montantTotal')?.errors?.['required']">Amount required</small>
+                <small *ngIf="factureForm.get('montantTotal')?.errors?.['min']">Amount must be positive</small>
+                <small *ngIf="factureForm.get('montantTotal')?.errors?.['totalPriceMismatch']">
+                  Amount must match delivery total ({{ factureForm.get('livraison')?.value?.ordre?.totalPrice }} DT)
+                </small>
+              </div>
+            </div>
+      
+            <!-- Status -->
+            <div class="form-group">
+              <label for="statut">Status*</label>
+              <select
+                id="statut"
+                formControlName="statut"
+                class="priority"
+                [ngClass]="{ 'is-invalid': factureForm.get('statut')?.invalid && 
+                               (factureForm.get('statut')?.touched || factureForm.get('statut')?.dirty) }"
+              >
+                <option value="EN ATTENTE">Pending</option>
+                <option value="PAYÉE">Paid</option>
+                <option value="ANNULÉE">Cancelled</option>
+              </select>
+              <div *ngIf="factureForm.get('statut')?.invalid && 
+                         (factureForm.get('statut')?.touched || factureForm.get('statut')?.dirty)" 
+                   class="error-message">
+                <small *ngIf="factureForm.get('statut')?.errors?.['required']">Status required</small>
+                <small *ngIf="factureForm.get('statut')?.errors?.['invalidStatus']">Invalid status</small>
+              </div>
+            </div>
+
+            <div *ngIf="factureForm.invalid && factureForm.touched" class="error-message">
+              <p>Please fill in all required fields correctly</p>
+            </div>
+            
+            <div class="form-group">
+              <button type="submit" class="action-button" [disabled]="factureForm.invalid">
+                Save
+              </button>
+              <button type="button" class="action-button" (click)="closeModal()">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="status-cards-container">
+      <div class="status-card">
+        <h6>Paid</h6>
+        <div class="status-content">
+          <div class="status-info">
+            <div class="status-count">{{ counts.payee }}</div>
+            <div class="status-percent text-success">{{ percentages.payee }}%</div>
+          </div>
+          <canvas baseChart
+                  [data]="getMiniChartData(counts.payee)"
+                  [type]="miniChartType"
+                  [options]="miniChartOptions">
+          </canvas>
+        </div>
+      </div>
+    
+      <div class="status-card">
+        <h6>Pending</h6>
+        <div class="status-content">
+          <div class="status-info">
+            <div class="status-count">{{ counts.enAttente }}</div>
+            <div class="status-percent text-warning">{{ percentages.enAttente }}%</div>
+          </div>
+          <canvas baseChart
+                  [data]="getMiniChartData(counts.enAttente)"
+                  [type]="miniChartType"
+                  [options]="miniChartOptions">
+          </canvas>
+        </div>
+      </div>
+    
+      <div class="status-card">
+        <h6>Cancelled</h6>
+        <div class="status-content">
+          <div class="status-info">
+            <div class="status-count">{{ counts.annulee }}</div>
+            <div class="status-percent text-danger">{{ percentages.annulee }}%</div>
+          </div>
+          <canvas baseChart
+                  [data]="getMiniChartData(counts.annulee)"
+                  [type]="miniChartType"
+                  [options]="miniChartOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Invoice ID</th>
+            <th>Delivery ID</th>
+            <th>Status</th>
+            <th>Total Amount</th>
+            <th>Issue Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let facture of paginatedFactures">
+            <td>INV {{ facture.id }}</td>
+            <td>DEL {{ facture.livraison?.id }}</td>
+            <td>
+              <span class="badge"
+                [ngClass]="{
+                  'EN_ATTENTE': (facture.statut?.toUpperCase() ?? '') === 'EN ATTENTE',
+                  'PAYÉ': (facture.statut?.toUpperCase() ?? '') === 'PAYÉE',
+                  'ANNULÉ': (facture.statut?.toUpperCase() ?? '') === 'ANNULÉE'
+                }">
+                {{ facture.statut }}
+              </span>
+            </td>
+            <td>{{ facture.montantTotal }} DT</td>
+            <td>{{ facture.dateEmission | date:'dd/MM/yyyy' }}</td>
+            <td>
+              <button class="action-button" mat-raised-button [routerLink]="['/backoffice/facture', facture.id]">View Details</button>    
+              <button class="delete-button" style="margin-left: 8px;" (click)="$event.stopPropagation(); facture.id && supprimerFacture(facture.id)">
+                <mat-icon>delete</mat-icon>  
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="paginatedFactures.length === 0">
+            <td colspan="6" class="text-center">No invoices available</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <nav *ngIf="filteredFactures.length > itemsPerPage">
+    <ul class="pagination justify-content-center mt-3">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <button class="page-link" (click)="currentPage = currentPage - 1">&lt;</button>
+      </li>
+      
+      <li class="page-item"
+          *ngFor="let page of totalPages"
+          [class.active]="currentPage === page">
+        <button class="page-link" (click)="currentPage = page">{{ page }}</button>
+      </li>
+      
+      <li class="page-item" [class.disabled]="currentPage === totalPages.length">
+        <button class="page-link" (click)="currentPage = currentPage + 1">&gt;</button>
+      </li>
+    </ul>
+  </nav>
+  
+  <!--app-settings-panel></app-settings-panel-->
+ 
+</body>
+</html>

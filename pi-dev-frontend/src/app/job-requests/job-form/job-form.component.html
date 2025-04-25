@@ -1,0 +1,52 @@
+<!-- Formulaire de Candidature -->
+<div class="application-wrapper py-5 d-flex justify-content-center align-items-center">
+  <form 
+    (ngSubmit)="onSubmit()" 
+    class="form-box shadow-lg p-5 rounded-4 bg-white border border-2 border-light"
+    style="width: 100%; max-width: 750px;"
+  >
+    <h2 class="text-center mb-4 text-primary-emphasis fw-bold">
+      📄 Déposer votre candidature
+    </h2>
+
+    <!-- Ligne décorative -->
+    <div class="underline mx-auto mb-4"></div>
+
+    <!-- Lettre de motivation -->
+    <div class="mb-4">
+      <label for="lettre" class="form-label fw-semibold text-secondary">Lettre de motivation :</label>
+      <textarea
+        id="lettre"
+        name="lettreMotivation"
+        class="form-control shadow-sm border-1 border-secondary-subtle"
+        [(ngModel)]="request.lettreMotivation"
+        rows="6"
+        placeholder="Exprimez ici votre motivation..."
+      ></textarea>
+    </div>
+
+    <!-- Upload du CV -->
+    <div class="mb-4">
+      <label for="cv" class="form-label fw-semibold text-secondary">Ajouter votre CV :</label>
+      <input
+        type="file"
+        id="cv"
+        name="uploadCv"
+        class="form-control shadow-sm"
+        (change)="onFileSelected($event)"
+        required
+      />
+      <small class="text-muted">Formats acceptés : PDF, JPG, PNG. Taille max : 5 Mo</small>
+    </div>
+
+    <!-- Bouton d'envoi -->
+    <div class="text-center mt-4">
+      <button 
+        type="submit" 
+        class="btn btn-primary btn-lg rounded-pill px-5 shadow-sm fw-semibold"
+      >
+        🚀 Envoyer ma candidature
+      </button>
+    </div>
+  </form>
+</div>

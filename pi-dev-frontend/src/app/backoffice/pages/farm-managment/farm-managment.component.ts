@@ -1,9 +1,13 @@
+import { Ressource } from './../../../core/models/famrs/resource';
+import { Expense } from 'src/app/core/models/famrs/expense';
 import { Component, OnInit } from '@angular/core';
 import { Chart, LineController, LineElement, PointElement, LinearScale, Title, CategoryScale } from 'chart.js';
 import { Crop } from 'src/app/core/models/famrs/crop';
 import { Farm } from 'src/app/core/models/famrs/farm';
 import { CropService } from 'src/app/core/services/crop.service';
 import { FarmService } from 'src/app/core/services/farm.service';
+import { RessourceService } from 'src/app/core/services/ressource.service';
+import { ExpenseService } from 'src/app/core/services/expense.service';
 
 @Component({
   selector: 'app-farm-managment',
@@ -13,6 +17,8 @@ import { FarmService } from 'src/app/core/services/farm.service';
 export class FarmManagmentComponent implements OnInit {
   farms: Farm[] = [];
   crops: Crop[] = [];
+  expenses: Expense[] = [];
+  ressources: Ressource[] = [];
   
     showAddForm = false;
     saving = false;
@@ -33,12 +39,16 @@ export class FarmManagmentComponent implements OnInit {
   
     constructor(
       private farmService: FarmService,
-      private cropService: CropService
+      private cropService: CropService,
+      private resourceService: RessourceService,
+      private expenseService: ExpenseService
     ) {}
   
     ngOnInit(): void {
       this.loadFarms();
       this.loadCrops();
+      this.loadResources();
+      this.loadExpenses();
     }
   
     // ngAfterViewInit(): void {
@@ -203,6 +213,30 @@ export class FarmManagmentComponent implements OnInit {
           console.error('Error loading crops:', err);
         }
       });
+    }
+
+    loadResources(): void {
+      this.resourceService.getRessources().subscribe({
+        next: (ressources) => {
+          this.ressources = ressources;
+        },
+        error: (err) => {
+          console.error('Error loading resources:', err);
+        }
+      });
+    }
+    loadExpenses(): void {
+      this.expenseService.getExpenses().subscribe({
+        next: (expenses) => {
+          this.expenses = expenses;
+        },
+        error: (err) => {
+          console.error('Error loading expenses:', err);
+        }
+      });
+    }
+    get totalExpenses(): number {
+      return this.expenses.reduce((sum, expense) => sum + (expense.amount ?? 0), 0);
     }
   
     // ----------- Delete Farm -----------

@@ -1,0 +1,80 @@
+.post-form-container {
+  margin-bottom: 30px;
+}
+
+.toggle-form-btn {
+  background-color: #77b122;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.toggle-form-btn:hover {
+  background-color: #2980b9;
+}
+
+.contact-form-area {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.contact-form-area.expanded {
+  max-height: 1000px; /* Valeur suffisamment grande */
+  opacity: 1;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.contact-form-area.expanded form {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Styles existants conservés */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.file-input-label {
+  display: block;
+  padding: 10px;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.file-input-label:hover {
+  border-color: #3498db;
+}
+
+.media-preview {
+  margin: 15px 0;
+}
+
+.preview-container {
+  border: 1px solid #eee;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.pdf-preview {
+  text-align: center;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}

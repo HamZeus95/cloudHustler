@@ -1,0 +1,24 @@
+<form [formGroup]="commentForm" (ngSubmit)="submitComment()" class="comment-form">
+  <div class="form-group">
+    <label for="content" class="form-label">
+      <i class="fas fa-comment-dots"></i> Votre commentaire
+    </label>
+    <textarea
+      id="content"
+      class="form-input"
+      formControlName="content"
+      rows="4"
+      placeholder="Écrivez votre commentaire ici..."
+      [class.error]="commentForm.get('content')?.invalid && commentForm.get('content')?.touched">
+    </textarea>
+    <div *ngIf="commentForm.get('content')?.invalid && commentForm.get('content')?.touched" class="error-message">
+      <i class="fas fa-exclamation-circle"></i> Ce champ est requis
+    </div>
+  </div>
+  <button 
+    type="submit" 
+    class="submit-btn"
+    [disabled]="commentForm.invalid">
+    <i class="fas fa-paper-plane"></i> Publier le commentaire
+  </button>
+</form>

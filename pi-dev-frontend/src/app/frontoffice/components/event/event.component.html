@@ -1,0 +1,205 @@
+<!-- ##### Breadcrumb Area Start ##### -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<app-navbar></app-navbar>
+<div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url('assets/img/bg-img/18.jpg');">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center">
+      <div class="col-12 text-center">
+        <div class="breadcrumb-text">
+          <h2>Events</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="famie-breadcrumb">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Events</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+<!-- ##### Breadcrumb Area End ##### -->
+
+<div class="ms-md-auto pe-md-3 d-flex align-items-center mb-4">
+  <div class="input-group">
+
+    <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Rechercher un événement..." (input)="filterEvents()">
+  </div>
+</div>
+
+<!-- ***** Blog Area Start ***** -->
+<!-- ***** Blog Area Start ***** -->
+<section class="blog-area section-padding-100">
+  <div class="container">
+    <div class="row">
+      <!-- Section Heading -->
+      <div class="col-12 text-center mb-5">
+        <div class="section-heading">
+          <h2>Liste des événements</h2>
+          <p>Découvrez tous nos événements à venir</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Loop through filtered events -->
+      <div class="col-12 col-md-6 col-lg-4" *ngFor="let event of filteredEvents">
+        <div class="card mb-4 wow fadeInUp" data-wow-delay="100ms" style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+          
+          <!-- Banner image -->
+          <img [src]="event.banner || 'assets/img/bg-img/26.jpg'" alt="Banner" class="card-img-top" style="height: 200px; object-fit: cover;">
+
+          <!-- Card body -->
+          <div class="card-body">
+            <h5 class="card-title text-center fw-bold text-success">{{ event.name }}</h5>
+
+            <!-- Countdown -->
+            <div *ngIf="event.startDate && countdown[event.uuid_event]" class="event-countdown-container"
+              [ngStyle]="{
+                'background-color': hasEventStarted(event) ? '#f8d7da' : '#eafaf1',
+                'border': hasEventStarted(event) ? '1px solid #f5c6cb' : '1px solid #c4f0d9'
+              }"
+              style="display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 12px; padding: 8px 12px; margin-top: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+              <div class="countdown-ring" 
+                [ngStyle]="{
+                  'background-color': hasEventStarted(event) ? '#dc3545' : '#34d399',
+                  'animation': hasEventStarted(event) ? 'none' : 'pulse 1.5s infinite'
+                }"
+                style="width: 16px; height: 16px; border-radius: 50%;"></div>
+              <div class="event-countdown-text" 
+                [ngStyle]="{
+                  'color': hasEventStarted(event) ? '#dc3545' : '#065f46',
+                  'font-size': '14px',
+                  'font-weight': '500'
+                }">
+                ⏳ {{ countdown[event.uuid_event] }}
+              </div>
+            </div>
+
+            <!-- Event description -->
+            <div class="p-3 mt-2" style="border: 1px solid #ccc; border-radius: 6px; background-color: #f9f9f9;">
+              <p class="card-text mb-2">
+                {{ event.description | slice:0:100 }} <!-- Affiche les 100 premiers caractères -->
+
+                <span *ngIf="event.description.length > 100">
+                  <a (click)="showFullDescription(event.description)" style="cursor:pointer; color: #007bff; font-weight: 500;">
+                    Voir plus
+                  </a>
+                </span>
+              </p>
+
+              <p class="mb-1"><i class="fas fa-map-marker-alt text-danger"></i> {{ event.location }}</p>
+              <p class="mb-1"><strong>Début :</strong> {{ event.startDate | date:'dd MMM yyyy' }}</p>
+              <p class="mb-0"><strong>Fin :</strong> {{ event.endDate | date:'dd MMM yyyy' }}</p>
+
+              <!-- Afficher la carte -->
+              <button class="btn btn-info mt-3" (click)="toggleMap(event.uuid_event)">Afficher la carte</button>
+
+              <!-- Modal pour la carte -->
+              <div class="modal fade full-screen-modal" 
+              [ngClass]="{'show d-block': mapVisibility[event.uuid_event]}" 
+              tabindex="-1" *ngIf="mapVisibility[event.uuid_event]"
+              style="background-color: rgba(0, 0, 0, 0.8); z-index: 1050;">
+              <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content" style="height: 100vh;">
+                  <div class="modal-header">
+                    <h5 class="modal-title text-black">Emplacement de l'événement</h5>
+                    <button type="button" class="btn-close btn-close-black" aria-label="Close" (click)="toggleMap(event.uuid_event)"></button>
+                  </div>
+                  <div class="modal-body p-0" style="height: calc(100vh - 56px);">
+                    <div id="map{{ event.uuid_event }}" style="height: 100%; width: 100%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+
+            <!-- Nombre de participants -->
+            <p class="mt-3">Participants : {{ (event.participants?.length ?? 0) }} / {{ event.maxParticipants || '∞' }}</p>
+
+            <!-- Participer -->
+            <button class="btn btn-success w-100" (click)="participate(event.uuid_event)"
+                    [disabled]="event.maxParticipants && (event.participants?.length ?? 0) >= event.maxParticipants">
+              Participer
+            </button>
+
+       
+
+            <div *ngIf="event.participants?.includes(participantName)" class="mt-3 text-center">
+              <a class="btn btn-success" [href]="event.onlineLink" target="_blank">
+                Rejoindre l'événement en ligne
+              </a>
+            </div>
+<!-- Champ d'upload d'image si l'événement a commencé -->
+<div *ngIf="hasEventStarted(event)" class="mt-3">
+  <label for="imageUpload{{ event.uuid_event }}" class="form-label fw-bold">Télécharger une image :</label>
+  <input type="file" class="form-control" id="imageUpload{{ event.uuid_event }}"
+         (change)="onImageSelected($event, event.uuid_event)">
+  <button class="btn btn-primary mt-2" (click)="uploadImage(event.uuid_event)">
+    Envoyer l'image
+  </button>
+</div>
+<button *ngIf="imageUrls[event.uuid_event]" class="btn btn-success mt-2 ms-2"
+        (click)="openImage(imageUrls[event.uuid_event])">
+  Voir l'image
+</button>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal pour la description complète -->
+    <div class="modal fade" tabindex="-1" [ngClass]="{'show d-block': isModalVisible}" style="background-color: rgba(0, 0, 0, 0.8); z-index: 1050;">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-black">Description complète</h5>
+            <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+          </div>
+          <div class="modal-body">
+            <p>{{ fullDescription }}</p> <!-- Affiche la description complète -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="row justify-content-center">
+      <ul class="pagination">
+        <li class="page-item" [ngClass]="{'active': currentPage === 1}">
+          <a class="page-link" href="#" (click)="changePage(1); $event.preventDefault()">1</a>
+        </li>
+        <li class="page-item" [ngClass]="{'active': currentPage === 2}">
+          <a class="page-link" href="#" (click)="changePage(2); $event.preventDefault()">2</a>
+        </li>
+        <li class="page-item" [ngClass]="{'disabled': currentPage === totalPages}">
+          <a class="page-link" href="#" (click)="changePage(currentPage + 1); $event.preventDefault()">
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+
+
+<!-- ***** Blog Area End ***** -->
+
+<app-footer></app-footer>

@@ -1,0 +1,5 @@
+client_secret*
+application-dev*
+**/application-dev.properties
+pi-dev-backend/src/main/resources/application-dev.properties
+**/target/classes/application-dev.properties
