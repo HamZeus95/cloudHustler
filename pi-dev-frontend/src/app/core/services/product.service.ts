@@ -12,7 +12,7 @@ export interface ProductSalesDTO {
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:8090/pi/product'; // Changed to match backend base path
+  private apiUrl = '/api/v1/product'; // Changed to match backend base path
 
   constructor(private http: HttpClient) { }
 

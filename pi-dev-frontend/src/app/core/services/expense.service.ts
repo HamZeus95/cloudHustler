@@ -7,7 +7,7 @@ import { Expense } from '../models/famrs/expense';
 
 @Injectable()
 export class ExpenseService {
-  private apiUrl = environment.apiUrl+'expense'; 
+  private apiUrl ='/api/v1/expense'; 
 
   constructor(private http: HttpClient) {}
 

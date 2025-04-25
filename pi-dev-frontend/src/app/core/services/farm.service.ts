@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class FarmService {
-  private apiUrl = environment.apiUrl+'farm'; 
+  private apiUrl = '/api/v1/farm'; 
 
   constructor(private http: HttpClient) {}
 

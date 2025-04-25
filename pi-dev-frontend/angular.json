@@ -49,7 +49,7 @@
               "src/styles.css",
               "node_modules/leaflet/dist/leaflet.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "node_modules/mapbox-gl/dist/mapbox-gl.css"
+              "node_modules/mapbox-gl/dist/mapbox-gl.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
               "src/assets/css/nucleo-icons.css",
               "src/assets/css/argon-dashboard.css",
@@ -69,7 +69,7 @@
               "src/styles.css",
               "node_modules/leaflet/dist/leaflet.css"
 
-            ],
+            
 
 
 

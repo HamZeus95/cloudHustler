@@ -9,7 +9,7 @@ import { RouterModule } from "@angular/router";
 import { DialogModule } from "primeng/dialog";
 import { CoreDirectivesModule } from "../core/directives/directives";
 import { BannerComponent } from "./components/banner/banner.component";
-import { BillingComponent } from "./components/billing/billing.component";
+import { BillingComponent } from "./components/events/billing/billing.component";
 import { CommentBackComponent } from "./components/comment-back/comment-back.component";
 import { CropDiseaseDetectorComponent } from "./components/crop-disease-detector/crop-disease-detector.component";
 import { DashboardCardsComponent } from "./components/dashboard-cards/dashboard-cards.component";
@@ -55,22 +55,16 @@ import { NgChartsModule } from 'ng2-charts';
     DashboardCardsComponent,
     SideBarComponent,
     NavbarComponent,
-    //declarations of components
-    FarmDetailsComponent,
-    SideBarComponent,
-    BillingComponent,
+    FarmDetailsComponent, 
     TablesComponent,
-    TaskManagementComponent,
-    DashboardCardsComponent,
-    NavbarComponent,
+    TaskManagementComponent, 
     SettingsPanelComponent,
     FarmTableComponent,
-  DetailsFactureComponent,
-  FactureComponent,
-  DetailsLivraisonComponent,
-  LivraisonComponent,
+    DetailsFactureComponent,
+    FactureComponent,
+    DetailsLivraisonComponent,
+    LivraisonComponent,
     MapDialogComponent,
-    //declarations of pages
     FarmManagmentComponent,
     EventComponent,
     BlogManagmentComponent,
@@ -83,9 +77,7 @@ import { NgChartsModule } from 'ng2-charts';
     PostBackComponent,
     CommentBackComponent,
     StatsComponent,
-    // Add the AdminLayoutComponent
     AdminLayoutComponent,
-    //marketplace componnent
     MarketplaceManagementComponent,
     ProductslistComponent,
     ProductCategorieslistComponent,
@@ -100,26 +92,19 @@ import { NgChartsModule } from 'ng2-charts';
     DragDropModule,
     RouterModule,
     DialogModule,
-    //BrowserAnimationsModule,
     NgChartsModule,
     MatSnackBarModule,
     MatButtonModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    FormsModule,
-    DragDropModule,
+    MatIconModule,  
     CoreDirectivesModule,
-    HttpClientModule,
-    NgChartsModule
+    HttpClientModule, 
 
   ],
   providers: [
     DatePipe
   ],
-  //styles
 
   exports: [
-    // Export components that might be used outside this module
     SideBarComponent,
     NavbarComponent,
     BannerComponent,

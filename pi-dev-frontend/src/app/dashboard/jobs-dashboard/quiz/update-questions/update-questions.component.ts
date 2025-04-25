@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { QuizService, Quiz,  } from 'src/app/services/quiz.service';
+import { QuizService, Quiz,  } from 'src/app/core/services/job/quiz.service';
 
 @Component({
   selector: 'app-update-questions',

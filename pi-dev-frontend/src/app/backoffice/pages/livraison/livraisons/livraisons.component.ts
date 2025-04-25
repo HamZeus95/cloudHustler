@@ -8,7 +8,7 @@ import { LivraisonService } from 'src/app/core/services/livraison/livraison.serv
 import { FactureService } from 'src/app/core/services/livraison/facture.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
+import { ErrorDialogComponent } from 'src/app/core/error-dialog/error-dialog.component';
 import { CustomValidators } from 'src/app/core/validators/custom.validators';
 
 @Component({

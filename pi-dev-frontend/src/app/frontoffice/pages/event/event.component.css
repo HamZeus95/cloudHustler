@@ -1,0 +1,25 @@
+.full-screen-modal {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+.full-screen-modal .modal-dialog {
+  margin: 0;
+  max-width: 100%;
+  height: 100%;
+}
+.full-screen-modal .modal-content {
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  background-color: #ede1e1;
+}
+.full-screen-modal .modal-body {
+  padding: 0;
+  height: 100%;
+}
