@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Servicee } from 'src/core/modules/servicee';
+import { Servicee } from 'src/app/core/models/servicee';
 
 
 @Injectable({

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { TypeStatus } from 'src/core/modules/typeStatus';
-import { ServiceRequest } from 'src/core/modules/serviceRequests';
+import { TypeStatus } from 'src/app/core/models/typeStatus';
+import { ServiceRequest } from 'src/app/core/models/serviceRequests';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceeService } from 'src/app/services/servicee.service';
-import { Servicee } from 'src/core/modules/servicee';
+import { Servicee } from 'src/app/core/models/servicee';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-jobs-dashboard',

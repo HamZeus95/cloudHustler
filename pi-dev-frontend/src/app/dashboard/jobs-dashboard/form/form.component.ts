@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { ServiceeService } from 'src/app/services/servicee.service';
-import { Servicee } from 'src/core/modules/servicee';
+import { Servicee } from 'src/app/core/models/servicee';
 
 @Component({
   selector: 'app-form',
