@@ -30,7 +30,7 @@ public class Farmer extends User {
 
 
     @OneToMany(mappedBy = "farmer")
-    Set<Service> services= new HashSet<>();
+    Set<Servicee> servicees = new HashSet<>();
 
     @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL)
      Set<Farm> farms= new HashSet<>();
