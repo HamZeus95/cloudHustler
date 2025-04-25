@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { FrontofficeRoutingModule } from './frontoffice-routing.module';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -23,7 +22,6 @@ import { NgChartsModule } from 'ng2-charts';
 import { DialogModule } from 'primeng/dialog';
 import { LivraisonClientdetailsComponent } from './pages/livraison/livraison-clientdetails/livraison-clientdetails.component';
 import { FactureClientdetailsComponent } from './pages/livraison/facture-clientdetails/facture-clientdetails.component';
-
 import { MapComponent } from './pages/livraison/map/map.component';
 import { LivraisondriverComponent } from './pages/livraison/livraisondriver/livraisondriver.component';
 import { ReactiveFormsModule } from "@angular/forms";
@@ -72,7 +70,7 @@ import { ChatAiComponent } from "./components/chat-ai/chat-ai.component";
     AddReactionComponent,
     AddCommentComponent,
     ListCommentComponent,
-    ChatAiComponent
+    ChatAiComponent,
     NotFoundComponent
 
   ],
@@ -91,8 +89,6 @@ import { ChatAiComponent } from "./components/chat-ai/chat-ai.component";
 
   ],
   providers: []
-
-    FrontofficeRoutingModule
-  ]
+  
 })
 export class FrontofficeModule { }

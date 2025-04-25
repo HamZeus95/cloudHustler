@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceRequestsService } from 'src/app/services/service-requests.service';
-import { ServiceRequest } from 'src/core/modules/serviceRequests';
-import { TypeStatus } from 'src/core/modules/typeStatus';
+import { ServiceRequest } from 'src/app/core/models/serviceRequests';
+import { TypeStatus } from 'src/app/core/models/typeStatus';
 import { Router } from '@angular/router';
 import {
   Chart,

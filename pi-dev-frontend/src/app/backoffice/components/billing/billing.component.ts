@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Servicee } from 'src/core/modules/servicee';
+import { Servicee } from 'src/app/core/models/servicee';
 import { ServiceeService } from 'src/app/services/servicee.service';
 import { Router } from '@angular/router';
 

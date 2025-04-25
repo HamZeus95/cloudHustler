@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceRequestsService } from '../services/service-requests.service';
 import { ServiceeService } from '../services/servicee.service';
-import { ServiceRequest } from 'src/core/modules/serviceRequests';
-import { Servicee } from 'src/core/modules/servicee';
+import { ServiceRequest } from 'src/app/core/models/serviceRequests';
+import { Servicee } from 'src/app/core/models/servicee';
 import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-job-requests',
