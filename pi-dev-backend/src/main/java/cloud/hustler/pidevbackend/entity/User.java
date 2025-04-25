@@ -28,7 +28,7 @@ import java.util.*;
 public abstract class User implements UserDetails {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
-    UUID userId;
+    UUID uuid_user;
     String firstName;
     String lastName;
     Date birthDate;

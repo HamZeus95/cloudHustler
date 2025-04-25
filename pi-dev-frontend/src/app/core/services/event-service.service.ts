@@ -3,11 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Event } from '../models/event';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class EventServiceService {
  
 
-  private apiUrl = 'http://localhost:8089/pi/Event'; 
+  private apiUrl = 'http://localhost:8089/api/v1/Event'; 
   constructor(private http: HttpClient) { }
   addEvent(event: Event): Observable<Event> {
     return this.http.post<Event>(`${this.apiUrl}/addEvent`, event);

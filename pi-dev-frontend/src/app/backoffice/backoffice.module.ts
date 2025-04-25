@@ -25,10 +25,11 @@ import { FarmManagmentComponent } from "./pages/farm-managment/farm-managment.co
 import { EditProfileComponent } from "./pages/profile/edit-profile/edit-profile.component";
 import { ManageProfileComponent } from "./pages/profile/manage-profile/manage-profile.component";
 import { DragDropModule } from "@angular/cdk/drag-drop";
-
-
- 
-
+import { PostBackComponent } from "./components/post-back/post-back.component";
+import { CommentBackComponent } from "./components/comment-back/comment-back.component";
+import { StatsComponent } from "./components/stats/stats.component";
+// Import the AdminLayoutComponent
+import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
 
 @NgModule({
   declarations: [
@@ -59,20 +60,26 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
     EditProfileComponent,
     ManageProfileComponent,
     BannerComponent,
+    PostBackComponent,
+    CommentBackComponent,
+    StatsComponent,
+    // Add the AdminLayoutComponent
+    AdminLayoutComponent
   ],
   imports: [
     CommonModule,
     BackofficeRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    ReactiveFormsModule,
     DragDropModule,
     CoreDirectivesModule
-    
+  ],
+  exports: [
+    // Export components that might be used outside this module
+    SideBarComponent,
+    NavbarComponent,
+    BannerComponent,
+    AdminLayoutComponent
   ]
-  //styles
-
-
-
 })
 export class BackofficeModule { }

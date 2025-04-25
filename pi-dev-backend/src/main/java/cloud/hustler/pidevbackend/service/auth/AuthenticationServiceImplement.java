@@ -86,7 +86,7 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
                 .refreshToken(refreshToken) 
                 .userResponse(UserResponse.builder()
                         .address(savedUser.getAddress())
-                        .userUUID(savedUser.getUserId())
+                        .userUUID(savedUser.getUuid_user())
                         .image(savedUser.getImage())
                         .birthDate(savedUser.getBirthDate())
                         .firstName(savedUser.getFirstName())
@@ -188,7 +188,7 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
         // Create user response object
         var foundUser = UserResponse.builder()
                 .address(user.getAddress())
-                .userUUID(user.getUserId())
+                .userUUID(user.getUuid_user())
                 .image(user.getImage())
                 .birthDate(user.getBirthDate())
                 .firstName(user.getFirstName())
@@ -223,7 +223,7 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
         // Create user response object
         UserResponse foundUser = UserResponse.builder()
                 .address(user.getAddress())
-                .userUUID(user.getUserId())
+                .userUUID(user.getUuid_user())
                 .image(user.getImage())
                 .birthDate(user.getBirthDate())
                 .firstName(user.getFirstName())
@@ -337,7 +337,7 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
         // Create user response
         UserResponse userResponse = UserResponse.builder()
                 .address(user.getAddress())
-                .userUUID(user.getUserId())
+                .userUUID(user.getUuid_user())
                 .image(user.getImage())
                 .birthDate(user.getBirthDate())
                 .firstName(user.getFirstName())

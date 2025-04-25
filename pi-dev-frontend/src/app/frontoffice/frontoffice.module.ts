@@ -17,6 +17,14 @@ import { BlogComponent } from "./pages/blog/blog.component";
 import { ContactComponent } from "./pages/contact/contact.component";
 import { HomeComponent } from "./pages/home/home.component";
 import { NotFoundComponent } from "./pages/not-found/not-found.component";
+import { MarketComponent } from "./pages/market/market.component";
+import { JobsComponent } from "./pages/jobs/jobs.component";
+import { PostComponent } from "./components/posts/post-list/post.component";
+import { AddPostComponent } from "./components/posts/add-post/add-post.component";
+import { AddReactionComponent } from "./components/reaction/add-reaction/add-reaction.component";
+import { AddCommentComponent } from "./components/comment/add-comment/add-comment.component";
+import { ListCommentComponent } from "./components/comment/list-comment/list-comment.component";
+import { ChatAiComponent } from "./components/chat-ai/chat-ai.component";
 
 
 
@@ -25,33 +33,32 @@ import { NotFoundComponent } from "./pages/not-found/not-found.component";
     AboutComponent,
     HomeComponent,
     NotFoundComponent,
-    FooterComponent,
-    NavbarComponent,
-    EventComponent,
-    FooterComponent,
-    NavbarComponent,
-    AboutComponent,
-    BlogComponent,
-    ContactComponent,
-    EventComponent,
-    HomeComponent,
-    NotFoundComponent,
+    FooterComponent,  
+    ContactComponent, 
     LoginComponent,
     RegisterComponent,
     OtpComponent,
     LogoutComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    NavbarComponent, 
+    MarketComponent,
+    JobsComponent,
+    EventComponent,
+    BlogComponent,
+    PostComponent,
+    AddPostComponent,
+    AddReactionComponent,
+    AddCommentComponent,
+    ListCommentComponent,
+    ChatAiComponent
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule, 
+    CoreDirectivesModule, 
     FrontofficeRoutingModule,
-    CoreDirectivesModule,
-    CommonModule,
-    FrontofficeRoutingModule,
-    FormsModule,        // Required for Template-Driven Forms (ngModel)
-    ReactiveFormsModule
+    FormsModule,  
   ]
 })
 export class FrontofficeModule { }
