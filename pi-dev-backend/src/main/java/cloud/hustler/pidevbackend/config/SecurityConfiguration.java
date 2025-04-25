@@ -33,9 +33,11 @@ public class SecurityConfiguration {
             "/v3/api-docs",
             "/users/**", // temporary
             "/v3/api-docs/**",
+            "/posts/**", // temporary
             "/swagger-resources",
             "/swagger-resources/**",
             "/configuration/ui",
+            "/farms/**",
             "/configuration/security",
             "/swagger-ui/**",
             "/webjars/**",

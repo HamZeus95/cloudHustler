@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EventComponent } from '../frontoffice/components/event/event.component';
+//import { EventComponent } from '../frontoffice/components/event/event.component';
 import { FarmService } from '../core/services/farm.service';
 import { CropService } from '../core/services/crop.service';
 import { FarmManagmentComponent } from './pages/farm-managment/farm-managment.component';
@@ -13,11 +13,9 @@ import { AddEventComponent } from './components/events/add-event/add-event.compo
 import { BillingComponent } from './components/events/billing/billing.component';
 import { EditEventComponent } from './components/events/edit-event/edit-event.component';
 import { EditProfileComponent } from './pages/profile/edit-profile/edit-profile.component';
-import { ManageProfileComponent } from './pages/profile/manage-profile/manage-profile.component';
-import { FarmService } from '../core/services/farm.service';
+import { ManageProfileComponent } from './pages/profile/manage-profile/manage-profile.component'; 
 import { RessourceService } from '../core/services/ressource.service';
-import { ExpenseService } from '../core/services/expense.service';
-import { CropService } from '../core/services/crop.service';
+import { ExpenseService } from '../core/services/expense.service'; 
 import { WeatherService } from '../core/services/weather.service';
 import { BlogManagmentComponent } from './pages/blog-managment/blog-managment.component';
 import { DetailsFactureComponent } from './pages/livraison/details-facture/details-facture.component';

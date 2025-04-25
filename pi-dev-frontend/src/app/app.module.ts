@@ -16,7 +16,7 @@ import { JwtInterceptor } from "./auth/interceptors/jwt";
 import { OAuth2RedirectComponent } from "./auth/oauth2/oauth2-redirect.component";
 import { TokenStorageService, AuthService } from "./auth/service";
 import { FrontofficeModule } from "./frontoffice/frontoffice.module";
-import { ErrorDialogComponent } from "./shared/components/error-dialog/error-dialog.component";
+import { ErrorDialogComponent } from "./core/error-dialog/error-dialog.component";
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BackofficeModule } from './backoffice/backoffice.module';

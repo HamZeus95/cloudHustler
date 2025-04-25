@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ServiceeService } from '../../../services/servicee.service';
+import { ServiceeService } from '../../../core/services/job/servicee.service';
 import { Servicee } from 'src/app/core/models/servicee';
 import { Router } from '@angular/router';
 

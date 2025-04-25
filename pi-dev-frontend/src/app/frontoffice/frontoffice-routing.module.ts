@@ -4,7 +4,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { BlogComponent } from './pages/blog/blog.component';
 import { AboutComponent } from './pages/about/about.component';
 import { MarketComponent } from './pages/market/market.component';
-import { EventComponent } from './pages/event/event.component';
 import { JobsComponent } from './pages/jobs/jobs.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
@@ -20,6 +19,7 @@ import { OtpComponent } from './pages/auth/otp/otp.component';
 import { LogoutComponent } from './pages/auth/logout/logout.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
+import { EventComponent } from './components/event/event.component';
 
 
 const routes: Routes = [

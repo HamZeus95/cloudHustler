@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+
 @RestController
 @RequestMapping("/posts")
 public class PostController {
