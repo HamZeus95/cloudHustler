@@ -117,6 +117,7 @@ export class ProductslistComponent {
       quantity: formValue.quantity,
       isAvailable: formValue.isAvailable,
       imageUrl: formValue.imageUrl,
+      createdAt: new Date(),
       productCategory: this.categories.find(c => c.uuid_category === formValue.productCategory),
       farmer: undefined
     };

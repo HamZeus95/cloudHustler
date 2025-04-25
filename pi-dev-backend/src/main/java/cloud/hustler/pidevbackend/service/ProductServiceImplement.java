@@ -2,9 +2,12 @@ package cloud.hustler.pidevbackend.service;
 
 import cloud.hustler.pidevbackend.entity.Product;
 import cloud.hustler.pidevbackend.entity.ProductCategory;
+import cloud.hustler.pidevbackend.entity.ProductSalesDTO;
+import cloud.hustler.pidevbackend.repository.OrderItemRepository;
 import cloud.hustler.pidevbackend.repository.ProductCategoryRepository;
 import cloud.hustler.pidevbackend.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +20,14 @@ public class ProductServiceImplement implements IProductService {
     private ProductRepository productRepository;
 
     @Autowired
+    private OrderItemRepository orderItemRepository;
+
+    @Autowired
     private ProductCategoryRepository productCategoryRepository;
 
-    public ProductServiceImplement(ProductRepository productRepository) {
+    public ProductServiceImplement(ProductRepository productRepository,OrderItemRepository orderItemRepository) {
         this.productRepository = productRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     @Override
@@ -75,4 +82,45 @@ public class ProductServiceImplement implements IProductService {
         product.removeDiscount();
         return productRepository.save(product);
     }
+
+    @Override
+    public List<Product> getProductsByCategory(UUID categoryId) {
+        return productRepository.findByCategoryId(categoryId);
+    }
+
+    @Override
+    public List<Product> getAllByOrderByCreatedAtDesc() {
+        return productRepository.findAllByOrderByCreatedAtDesc();
+    }
+
+    @Override
+    public List<Product> getAllByOrderByNameAsc() {
+        return productRepository.findAllByOrderByNameAsc();
+    }
+
+    @Override
+    public List<Product> getAllByOrderByNameDesc() {
+        return productRepository.findAllByOrderByNameDesc();
+    }
+
+    @Override
+    public List<Product> getAllByOrderByPriceAsc() {
+        return productRepository.findAllByOrderByPriceAsc();
+    }
+
+    @Override
+    public List<Product> getAllByOrderByPriceDesc() {
+        return productRepository.findAllByOrderByPriceDesc();
+    }
+
+    @Override
+    public List<Product> getByPriceBetween(Double minPrice, Double maxPrice) {
+        return productRepository.findByPriceBetween(minPrice, maxPrice);
+    }
+    @Override
+    public List<ProductSalesDTO> getTopSellingProducts() {
+        return orderItemRepository.findTop5BestSellingProducts();
+    }
+
+
 }

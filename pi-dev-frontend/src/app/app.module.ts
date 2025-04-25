@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FrontofficeModule } from './frontoffice/frontoffice.module';
 import { BackofficeModule } from './backoffice/backoffice.module';
 import { CommonModule } from '@angular/common';
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { CommonModule } from '@angular/common';
     RouterModule,
     FrontofficeModule,
     BackofficeModule,
+    NgChartsModule
     
   ],
   providers: [],

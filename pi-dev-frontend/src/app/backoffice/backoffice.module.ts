@@ -20,6 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProductslistComponent } from './components/productslist/productslist.component';
 import { ProductCategorieslistComponent } from './components/product-categorieslist/product-categorieslist.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
+import { TopSellingProductsComponent } from './components/top-selling-products/top-selling-products.component';
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -41,7 +43,8 @@ import { OrderListComponent } from './components/order-list/order-list.component
     MarketplaceManagementComponent,
     ProductslistComponent,
     ProductCategorieslistComponent,
-    OrderListComponent
+    OrderListComponent,
+    TopSellingProductsComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +52,8 @@ import { OrderListComponent } from './components/order-list/order-list.component
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,
-    HttpClientModule
+    HttpClientModule,
+    NgChartsModule
     
   ]
   //styles

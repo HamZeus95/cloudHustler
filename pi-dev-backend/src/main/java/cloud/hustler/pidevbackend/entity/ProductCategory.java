@@ -22,6 +22,7 @@ public class ProductCategory {
 
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
+    @Column(name = "uuid_category")
     UUID uuid_category;
     String name;
     String description;

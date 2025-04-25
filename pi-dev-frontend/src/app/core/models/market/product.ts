@@ -9,6 +9,7 @@ export interface Product {
     productCategory?: ProductCategory;
     farmer?: Farmer;
     discount?: number | null;
+    createdAt: Date;
   }
   
   export interface ProductCategory {

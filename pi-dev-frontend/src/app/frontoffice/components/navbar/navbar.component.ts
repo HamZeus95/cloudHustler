@@ -21,17 +21,8 @@ cart: Cart = {
   }
 constructor(private cartService:CartService) { }
 ngOnInit(): void {
-  this.loadCart();
+  
 }
-loadCart() {
-  this.cartService.getCart(this.customerUuid).subscribe({
-    
-    next: (data) => {
-      console.log('Cart data from backend:', data);
-      this.cart = data;
-    },
-    error: (err) => console.error('Failed to load cart', err)
-  });
-}
+
 
 }
