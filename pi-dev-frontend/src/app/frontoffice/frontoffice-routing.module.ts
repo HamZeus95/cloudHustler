@@ -14,11 +14,18 @@ import { LivraisonClientdetailsComponent } from './pages/livraison/livraison-cli
 import { FactureClientdetailsComponent } from './pages/livraison/facture-clientdetails/facture-clientdetails.component';
 import { MapComponent } from './pages/livraison/map/map.component';
 import { LivraisondriverComponent } from './pages/livraison/livraisondriver/livraisondriver.component';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { RegisterComponent } from './pages/auth/register/register.component';
+import { OtpComponent } from './pages/auth/otp/otp.component';
+import { LogoutComponent } from './pages/auth/logout/logout.component';
+import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
+
 
 const routes: Routes = [
 
-  { path: '', component:HomeComponent },
-  { path: 'blog', component: BlogComponent },
+    {path: '', component:HomeComponent },
+    { path: 'blog', component: BlogComponent },
     {path:"about",component:AboutComponent},
     {path:"home",component:HomeComponent},
     {path:'market', component: MarketComponent},
@@ -33,7 +40,13 @@ const routes: Routes = [
     { path:'facture-client-details/:id',  component: FactureClientdetailsComponent},
     { path:'suivrelivraison/:id',  component: MapComponent},
     { path:'livraisonsDriver',  component: LivraisondriverComponent},
-
+    {path: 'login', component: LoginComponent},
+    {path: 'register', component: RegisterComponent},
+    {path: "verify-email", component: OtpComponent},
+    {path: 'logout', component: LogoutComponent},
+    {path: 'forgot-password', component: ForgotPasswordComponent},
+    {path: 'reset-password', component: ResetPasswordComponent},
+    {path: 'not-found', component: NotFoundComponent},
 
 
 ];

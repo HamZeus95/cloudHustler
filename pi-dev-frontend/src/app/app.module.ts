@@ -15,16 +15,33 @@ import { DialogModule } from 'primeng/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ErrorDialogComponent } from './shared/components/error-dialog/error-dialog.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FrontofficeModule } from './frontoffice/frontoffice.module';
+import { BackofficeModule } from './backoffice/backoffice.module';
+import { CommonModule } from '@angular/common';
+import { JwtModule } from '@auth0/angular-jwt';
+
+import { JwtInterceptor } from './auth/interceptors/jwt';
+import { TokenStorageService } from './auth/service/token-storage.service';
+import { AuthService } from './auth/service/authentication.service';
+import { OAuth2RedirectComponent } from './auth/oauth2/oauth2-redirect.component';
+
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
+    OAuth2RedirectComponent,
     ErrorDialogComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
-    BrowserAnimationsModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
@@ -37,9 +54,26 @@ import { ErrorDialogComponent } from './shared/components/error-dialog/error-dia
     NgChartsModule,
     DialogModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => { return null; },
+        allowedDomains: ["localhost:4200"],
+        disallowedRoutes: [
+          "/api/v1/auth/authenticate",
+          "/api/v1/auth/register",
+          "/api/v1/auth/refresh-token",
+          "/api/v1/auth/logout",
+          "/api/v1/auth/validate-session"
+        ]
+      }
+    })
   ],
-  providers: [],
+  providers: [
+    TokenStorageService,
+    AuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

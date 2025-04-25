@@ -1,0 +1,11 @@
+<div class="reactions">
+    <button 
+      *ngFor="let reactionType of reactionTypes"
+      (click)="$event.stopPropagation(); addReaction(reactionType)"
+      [disabled]="isLoading"
+      [class.active]="isActive(reactionType)"
+      [attr.aria-label]="reactionType">
+      {{ getReactionEmoji(reactionType) }} {{ reactionType }} 
+      <span>{{ getReactionCount(reactionType) }}</span>
+    </button>
+  </div>

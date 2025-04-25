@@ -1,10 +1,13 @@
 package cloud.hustler.pidevbackend.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
@@ -16,12 +19,13 @@ import java.util.*;
 @ToString
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "role")
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "email")  // 👈 Ensures unique email at DB level
 })
-
-public abstract class User {
+@SuperBuilder
+public abstract class User implements UserDetails {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
     UUID uuid_user;
@@ -30,11 +34,18 @@ public abstract class User {
     Date birthDate;
     @Column(unique = true, nullable = false)
     String email;
+    @Column(nullable = true) // nullable for OAuth2 users
     String password;
     String image;
     String phone;
     String address;
+    // default value is true in database
+    @Column(columnDefinition = "boolean default False")
     boolean isActif;
+
+    // OAuth2 related fields
+    String provider; // "google", "github", etc.
+    String providerId; // ID from the OAuth2 provider
 
 
     @ManyToMany
@@ -42,84 +53,20 @@ public abstract class User {
 
     @OneToMany(mappedBy = "user")
     Set<Post> posts = new HashSet<>();
+    /*
+      @OneToMany(mappedBy = "user")
+      @JsonIgnore
+      Set<Token> tokens = new HashSet<>();
+  */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    Set<Otp> otps = new HashSet<>();
 
-    public UUID getUuid_user() {
-        return uuid_user;
+    @Transient
+    public String getRole(){
+        DiscriminatorValue discriminator = this.getClass().getAnnotation(DiscriminatorValue.class);
+        return (discriminator != null) ? discriminator.value() : "Consumer";
     }
 
-    public void setUuid_user(UUID uuid_user) {
-        this.uuid_user = uuid_user;
-    }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public boolean isActif() {
-        return isActif;
-    }
-
-    public void setActif(boolean actif) {
-        isActif = actif;
-    }
 }

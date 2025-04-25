@@ -1,38 +1,55 @@
 package cloud.hustler.pidevbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+
 import java.util.*;
 
 @Entity
+
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @ToString
 @EqualsAndHashCode
+
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Post {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
-    UUID uuid_post;
+    UUID idPost;
     String title;
     String content;
-    String image;
-    String video;
-    Date createdAt;
-    Date updatedAt;
-    int likes;
+    String mediaUrl;
 
+    Date createdAt;
+
+    Date updatedAt;
+
+
+
+
+
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+            @JsonIgnore
+    Set<Comment> comments= new HashSet<>();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
+    Set<Reaction> reactions= new HashSet<>();
 
 
     @ManyToOne
-    User user;
+    @JsonIgnore
 
-    @OneToMany(mappedBy = "post")
-    Set<Comment> comments= new HashSet<>();
+    @JoinColumn(name = "farmer_id")
+    private User user;  // Relation avec le Farmer qui a écrit ce post
+
 
 
 

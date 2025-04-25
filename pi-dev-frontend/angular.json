@@ -13,6 +13,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "feather-icons",
+              "mapbox-gl"
+            ],
             "outputPath": "dist/pi-dev-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -24,7 +28,6 @@
               "src/favicon.ico",
               "src/assets",
               {
-
                 "glob": "**/*",
                 "input": "src/assets/fonts",
                 "output": "/assets/fonts"
@@ -46,6 +49,23 @@
               "node_modules/leaflet/dist/leaflet.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/mapbox-gl/dist/mapbox-gl.css"
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "src/assets/css/nucleo-icons.css",
+              "src/assets/css/argon-dashboard.css",
+              "src/assets/css/nucleo-svg.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/assets/css/font-awesome.min.css",
+              "src/assets/css/animate.css",
+              "src/assets/css/classy-nav.css",
+              "src/assets/css/owl.carousel.min.css",
+              "src/assets/css/magnific-popup.css",
+              "src/assets/css/style.css",
+              "src/styles.css",
+              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/mapbox-gl/dist/mapbox-gl.css",
+              "node_modules/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css",
+              "node_modules/leaflet/dist/leaflet.css"
+
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
@@ -72,13 +92,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ],
               "outputHashing": "all"
@@ -104,7 +124,10 @@
               "browserTarget": "pi-dev-frontend:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "proxyConfig": "src/proxy.conf.json"
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
