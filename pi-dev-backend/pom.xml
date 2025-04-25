@@ -81,7 +81,7 @@
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
         </dependency>
-         
+
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -171,7 +171,7 @@
             <version>20210307</version>
         </dependency>
 
- 
+
 
         <!-- Others -->
         <dependency>
@@ -188,7 +188,7 @@
             <groupId>com.theokanning.openai-gpt3-java</groupId>
             <artifactId>service</artifactId>
             <version>0.12.0</version>
-        </dependency> 
+        </dependency>
         <dependency>
             <groupId>com.cloudinary</groupId>
             <artifactId>cloudinary-http44</artifactId>

@@ -1,0 +1,111 @@
+<div class="product-management-container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>Product Categories Management</h2>
+      <div>
+        <button class="btn btn-outline-secondary me-2" (click)="toggleViewMode()">
+          <i class="bi bi-{{viewMode === 'grid' ? 'list' : 'grid'}}"></i> 
+          Switch to {{viewMode === 'grid' ? 'List' : 'Grid'}} View
+        </button>
+        <button class="btn btn-primary" (click)="startAdd()" *ngIf="!isAdding && !isEditing">
+          <i class="bi bi-plus"></i> Add New Category
+        </button>
+      </div>
+    </div>
+  
+    <!-- Add/Edit Form -->
+    <div class="card mb-4" *ngIf="isAdding || isEditing">
+      <div class="card-header">
+        {{isEditing ? 'Edit Category' : 'Add New Category'}}
+      </div>
+      <div class="card-body" [formGroup]="categoryForm">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label">Name*</label>
+              <input type="text" class="form-control" formControlName="name">
+              <div *ngIf="categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched" class="text-danger">
+                Name is required
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label">Description</label>
+              <textarea class="form-control" formControlName="description" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-secondary me-2" (click)="cancel()">Cancel</button>
+          <button class="btn btn-primary" (click)="saveCategory()" [disabled]="categoryForm.invalid">
+            {{isEditing ? 'Update' : 'Save'}} Category
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Grid View -->
+    <div class="row" *ngIf="viewMode === 'grid' && !isLoading">
+      <div class="col-md-4 mb-4" *ngFor="let category of categories">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{category.name}}</h5>
+            <p class="card-text text-muted">{{category.description || 'No description'}}</p>
+          </div>
+          <div class="card-footer bg-transparent">
+            <button class="btn btn-sm btn-outline-primary me-2" (click)="startEdit(category)">
+              <i class="bi bi-pencil"></i> Edit
+            </button>
+            <button class="btn btn-sm btn-outline-danger" (click)="deleteCategory(category.uuid_category)">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- List View -->
+    <div class="table-responsive" *ngIf="viewMode === 'list' && !isLoading">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of categories">
+            <td>{{category.name}}</td>
+            <td class="text-muted">{{category.description || '-'}}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="startEdit(category)">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteCategory(category.uuid_category)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2">Loading categories...</p>
+    </div>
+  
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && categories.length === 0" class="text-center py-5">
+      <i class="bi bi-tags display-5 text-muted"></i>
+      <h4 class="mt-3">No categories found</h4>
+      <p class="text-muted">Add your first category by clicking the "Add New Category" button</p>
+      <button class="btn btn-primary" (click)="startAdd()">
+        <i class="bi bi-plus"></i> Add Category
+      </button>
+    </div>
+  </div>

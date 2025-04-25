@@ -17,7 +17,7 @@ import { FactureClientComponent } from './pages/livraison/facture-client/facture
 import { LivraisonClientComponent } from './pages/livraison/livraison-client/livraison-client.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBarModule } from '@angular/material/snack-bar'; 
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { NgChartsModule } from 'ng2-charts';
 import { DialogModule } from 'primeng/dialog';
@@ -25,15 +25,15 @@ import { LivraisonClientdetailsComponent } from './pages/livraison/livraison-cli
 import { FactureClientdetailsComponent } from './pages/livraison/facture-clientdetails/facture-clientdetails.component';
 
 import { MapComponent } from './pages/livraison/map/map.component';
-import { LivraisondriverComponent } from './pages/livraison/livraisondriver/livraisondriver.component'; 
+import { LivraisondriverComponent } from './pages/livraison/livraisondriver/livraisondriver.component';
 import { ReactiveFormsModule } from "@angular/forms";
-import { CoreDirectivesModule } from "../core/directives/directives";   
+import { CoreDirectivesModule } from "../core/directives/directives";
 import { ForgotPasswordComponent } from "./pages/auth/forgot-password/forgot-password.component";
 import { LoginComponent } from "./pages/auth/login/login.component";
 import { LogoutComponent } from "./pages/auth/logout/logout.component";
 import { OtpComponent } from "./pages/auth/otp/otp.component";
 import { RegisterComponent } from "./pages/auth/register/register.component";
-import { ResetPasswordComponent } from "./pages/auth/reset-password/reset-password.component";   
+import { ResetPasswordComponent } from "./pages/auth/reset-password/reset-password.component";
 import { PostComponent } from "./components/posts/post-list/post.component";
 import { AddPostComponent } from "./components/posts/add-post/add-post.component";
 import { AddReactionComponent } from "./components/reaction/add-reaction/add-reaction.component";
@@ -58,21 +58,22 @@ import { ChatAiComponent } from "./components/chat-ai/chat-ai.component";
     FactureClientComponent,
     LivraisonClientComponent,
     LivraisonClientdetailsComponent,
-    FactureClientdetailsComponent, 
+    FactureClientdetailsComponent,
     MapComponent,
-    LivraisondriverComponent,   
+    LivraisondriverComponent,
     LoginComponent,
     RegisterComponent,
     OtpComponent,
     LogoutComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent,  
+    ResetPasswordComponent,
     PostComponent,
     AddPostComponent,
     AddReactionComponent,
     AddCommentComponent,
     ListCommentComponent,
     ChatAiComponent
+    NotFoundComponent
 
   ],
   imports: [
@@ -84,12 +85,14 @@ import { ChatAiComponent } from "./components/chat-ai/chat-ai.component";
     NgChartsModule,
     MatSnackBarModule,
     MatButtonModule,
-    MatIconModule, 
+    MatIconModule,
     ReactiveFormsModule,
-    CoreDirectivesModule, 
+    CoreDirectivesModule,
 
   ],
-  providers: [] 
- 
+  providers: []
+
+    FrontofficeRoutingModule
+  ]
 })
 export class FrontofficeModule { }

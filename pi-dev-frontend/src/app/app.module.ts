@@ -24,6 +24,18 @@ import { ErrorDialogComponent } from "./shared/components/error-dialog/error-dia
 
 
 
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FrontofficeModule } from './frontoffice/frontoffice.module';
+import { BackofficeModule } from './backoffice/backoffice.module';
+import { CommonModule } from '@angular/common';
+import { NgChartsModule } from 'ng2-charts';
+
 
 @NgModule({
   declarations: [
@@ -49,6 +61,12 @@ import { ErrorDialogComponent } from "./shared/components/error-dialog/error-dia
     DialogModule,
     MatDialogModule,
     MatSnackBarModule,
+    //from marketplace
+    FormsModule,
+    RouterModule,
+    FrontofficeModule,
+    BackofficeModule,
+    NgChartsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => { return null; },

@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EventComponent } from '../frontoffice/components/event/event.component';
+import { FarmService } from '../core/services/farm.service';
+import { CropService } from '../core/services/crop.service';
 import { FarmManagmentComponent } from './pages/farm-managment/farm-managment.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { EventComponent } from './pages/event/event.component';
 import { TaskManagementComponent } from './components/task-management/task-management.component';
 import { WeatherComponent } from './components/weather/weather.component';
 import { CropDiseaseDetectorComponent } from "./components/crop-disease-detector/crop-disease-detector.component"
@@ -22,6 +25,7 @@ import { DetailsLivraisonComponent } from './pages/livraison/details-livraison/d
 import { FactureComponent } from './pages/livraison/factures/factures.component';
 import { LivraisonComponent } from './pages/livraison/livraisons/livraisons.component';
 import { SuiviLivraisonComponent } from './pages/livraison/suivilivraisons/suivilivraisons.component';
+import { MarketplaceManagementComponent } from './pages/marketplace-management/marketplace-management.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -41,6 +45,8 @@ const routes: Routes = [
   { path:'factures',  component: FactureComponent},
   { path:'livraisons',  component: LivraisonComponent},
   { path:'suivilivraison',  component: SuiviLivraisonComponent},
+  { path: 'market', component: MarketplaceManagementComponent }
+
 
 ];
 
