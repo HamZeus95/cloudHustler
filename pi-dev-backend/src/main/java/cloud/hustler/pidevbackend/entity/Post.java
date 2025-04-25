@@ -48,7 +48,7 @@ public class Post {
     @JsonIgnore
 
     @JoinColumn(name = "farmer_id")
-    private Farmer farmer;  // Relation avec le Farmer qui a écrit ce post
+    private User user;  // Relation avec le Farmer qui a écrit ce post
 
 
 

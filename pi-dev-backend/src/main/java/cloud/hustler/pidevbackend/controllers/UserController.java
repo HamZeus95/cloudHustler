@@ -1,4 +1,4 @@
-package cloud.hustler.pidevbackend.controller;
+package cloud.hustler.pidevbackend.controllers;
 
 import cloud.hustler.pidevbackend.dto.ChangePasswordRequest;
 import cloud.hustler.pidevbackend.dto.UserResponse;

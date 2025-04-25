@@ -1,32 +1,41 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EventComponent } from '../frontoffice/components/event/event.component';
-import { EventServiceService } from '../core/services/event-service.service';
+import { EventComponent } from '../frontoffice/components/event/event.component'; 
+import { FarmManagmentComponent } from './pages/farm-managment/farm-managment.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { TaskManagementComponent } from './components/task-management/task-management.component';
+import { WeatherComponent } from './components/weather/weather.component';
+import { CropDiseaseDetectorComponent } from "./components/crop-disease-detector/crop-disease-detector.component"
+
+
 import { AddEventComponent } from './components/events/add-event/add-event.component';
 import { BillingComponent } from './components/events/billing/billing.component';
 import { EditEventComponent } from './components/events/edit-event/edit-event.component';
 
+import { EditProfileComponent } from './pages/profile/edit-profile/edit-profile.component';
+import { ManageProfileComponent } from './pages/profile/manage-profile/manage-profile.component';
+import { FarmService } from '../core/services/farm.service';
+import { RessourceService } from '../core/services/ressource.service';
+import { ExpenseService } from '../core/services/expense.service';
+import { CropService } from '../core/services/crop.service';
+import { WeatherService } from '../core/services/weather.service';
+import { BlogManagmentComponent } from './pages/blog-managment/blog-managment.component';
+
 const routes: Routes = [
+    { path: '', component: DashboardComponent },
     { path: 'backEvent', component: BillingComponent },
     { path: 'add-event', component: AddEventComponent },
-    { path: 'edit-event/:id', component: EditEventComponent }
-    { path: '', component: DashboardComponent },
+    { path: 'edit-event/:id', component: EditEventComponent },
     { path: 'farm', component: FarmManagmentComponent },
-    { path: 'event', component: EventComponent },
-    { path: 'blog', component: EventComponent },
+    // { path: 'event', component: EventComponent },
+    { path: 'blog', component: BlogManagmentComponent },
     { path: 'task', component: TaskManagementComponent },
     {path:"crop",component:CropDiseaseDetectorComponent},
     {path:"weather",component:WeatherComponent},
     { path: 'profile/edit-profile/:uuid', component: EditProfileComponent},
     { path: 'profile/manage-profile/:uuid', component: ManageProfileComponent}
   ];
-    @NgModule({
-        imports: [RouterModule.forChild(routes)],
-        exports: [RouterModule],
-        providers: [EventServiceService]
-      })
-      export class BackofficeRoutingModule { }
-
+ 
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

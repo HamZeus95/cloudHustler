@@ -104,8 +104,7 @@
               <button class="btn btn-info mt-3" (click)="toggleMap(event.uuid_event)">Afficher la carte</button>
 
               <!-- Modal pour la carte -->
-              <div class="modal fade full-screen-modal" 
-              [ngClass]="{'show d-block': mapVisibility[event.uuid_event]}" 
+              <div class="modal fade full-screen-modal" [ngClass]="{'show d-block': mapVisibility[event.uuid_event]}" 
               tabindex="-1" *ngIf="mapVisibility[event.uuid_event]"
               style="background-color: rgba(0, 0, 0, 0.8); z-index: 1050;">
               <div class="modal-dialog modal-fullscreen">
