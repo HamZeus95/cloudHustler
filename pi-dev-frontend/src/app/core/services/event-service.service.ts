@@ -9,7 +9,7 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 export class EventServiceService {
  
 
-  private apiUrl = 'http://localhost:8089/api/v1/Event'; 
+  private apiUrl = '/api/v1/Event'; 
   constructor(private http: HttpClient) { }
   addEvent(event: Event): Observable<Event> {
     return this.http.post<Event>(`${this.apiUrl}/addEvent`, event);

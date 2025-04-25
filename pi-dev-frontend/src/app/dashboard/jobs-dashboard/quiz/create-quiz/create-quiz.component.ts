@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { QuizService } from 'src/app/services/quiz.service';
+import { QuizService } from 'src/app/core/services/job/quiz.service';
 
 @Component({
   selector: 'app-create-quiz',

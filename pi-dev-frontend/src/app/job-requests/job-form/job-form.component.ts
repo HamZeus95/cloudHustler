@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Route, Router } from '@angular/router';
-import { FileUploadService } from 'src/app/services/file-upload.service';
-import { ServiceRequestsService } from 'src/app/services/service-requests.service';
+import { FileUploadService } from 'src/app/core/services/job/file-upload.service';
+import { ServiceRequestsService } from 'src/app/core/services/job/service-requests.service';
 interface ServiceRequest {
   uploadCv: string;
   lettreMotivation: string;

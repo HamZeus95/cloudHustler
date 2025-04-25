@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { QuizService } from 'src/app/services/quiz.service';
-import { ServiceRequestsService } from 'src/app/services/service-requests.service';
+import { QuizService } from 'src/app/core/services/job/quiz.service';
+import { ServiceRequestsService } from 'src/app/core/services/job/service-requests.service';
 
 @Component({
   selector: 'app-front-take-quiz',

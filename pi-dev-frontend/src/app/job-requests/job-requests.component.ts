@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ServiceRequestsService } from '../services/service-requests.service';
-import { ServiceeService } from '../services/servicee.service';
+import { ServiceRequestsService } from '../core/services/job/service-requests.service';
+import { ServiceeService } from '../core/services/job/servicee.service';
 import { ServiceRequest } from 'src/app/core/models/serviceRequests';
 import { Servicee } from 'src/app/core/models/servicee';
 import { ActivatedRoute } from '@angular/router';
