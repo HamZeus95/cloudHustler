@@ -4,16 +4,16 @@
     <input 
       type="text" 
       [(ngModel)]="searchAddress" 
-      placeholder="Entrer l'adresse de livraison"
+      placeholder="Enter delivery address"
       class="search-input">
     <button (click)="searchRoute()" class="search-button">
-      <i class="fas fa-search"></i> Rechercher
+      <i class="fas fa-search"></i> Search
     </button>
   </div>
-  <!-- <button class="btn btn-dark" (click)="predictDeliveryTime()">Estimer Temps de Livraison</button> -->
+  <!-- <button class="btn btn-dark" (click)="predictDeliveryTime()">Estimate Delivery Time</button> -->
 
 <div *ngIf="predictedTime">
-  🕒 Temps estimé : <strong>{{ predictedTime }} minutes</strong>
+  🕒 Estimated time: <strong>{{ predictedTime }} minutes</strong>
 </div>
   <div id="map"></div>
 </div>

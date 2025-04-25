@@ -23,10 +23,10 @@ export class FactureClientComponent implements OnInit {
       id: 0,
       dateEmission: '',
       montantTotal: 0,
-      statut: 'En attente', // Replace with a valid LivraisonStatus value
+      statut: 'Pending', // Replace with a valid LivraisonStatus value
       livraison: {
         id: 0,
-        statut: 'En attente', // Replace with a valid LivraisonStatus value
+        statut: 'Pending', // Replace with a valid LivraisonStatus value
         dateCreation: '',
         adresseLivraison: '',
         dateLivraison: '',
@@ -70,9 +70,9 @@ export class FactureClientComponent implements OnInit {
     // Supprimer une facture
    
     getStatutClass(statut: string): string {
-      if (statut === 'Payée'|| statut === 'PAYÉ' || statut === 'PAYEE'|| statut === 'PAYÉE') {
+      if (statut === 'Payée'|| statut === 'PAYÉ' || statut === 'PAYEE'|| statut === 'PAYÉE'|| statut === 'PAID'|| statut === 'PAYED') {
         return 'status-paid';
-      } else if (statut === 'En attente'|| statut === 'EN ATTENTE' || statut === 'ENATTENTE'|| statut === 'EN ATTENTE') {
+      } else if (statut === 'En attente'|| statut === 'EN ATTENTE' || statut === 'ENATTENTE'|| statut === 'EN ATTENTE'|| statut === 'PENDING'|| statut === 'Pending') {
         return 'status-pending';
       } else {
         return 'status-annulled';
@@ -95,7 +95,7 @@ export class FactureClientComponent implements OnInit {
         montantTotal: 0,
         statut: '',
         livraison: {
-          id: 0, statut: 'En attente', dateCreation: '',
+          id: 0, statut: 'pending', dateCreation: '',
           adresseLivraison: '',
           dateLivraison: '',
           //dateEmission: '',
@@ -118,11 +118,11 @@ export class FactureClientComponent implements OnInit {
     marquerCommeAnnule(id: number): void {
       this.factureService.marquerCommeAnnule(id).subscribe({
         next: (message) => {
-          alert("Facture annulée avec succès");
+          alert("Invoice cancelled successfully");
           this.loadFactures();
         },
         error: (error) => {
-          alert(error.error || "Erreur lors de l'annulation de la facture");
+          alert(error.error || "Error while cancelling invoice");
         }
       });
     }

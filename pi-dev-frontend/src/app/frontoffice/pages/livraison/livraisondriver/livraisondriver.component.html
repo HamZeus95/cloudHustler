@@ -7,37 +7,32 @@
     <div class="col-md-3">
     </div>
     <div class="col-md-9">
-      <!-- Votre contenu Livraison ici -->
+      <!-- Your Delivery content here -->
     </div>
   </div>
 </div>
 <div class="dashboard-container p-6">
   <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold text-gray-800">Mes Livraisons</h1>
-    <!--button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2" 
-            (click)="openCreateDialog()">
-      <i class="fas fa-plus"></i>
-      Nouvelle Livraison
-    </button-->
+    <h1 class="text-2xl font-bold text-gray-800">My Deliveries</h1>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div *ngFor="let l of livraisons" class="livraison-card" >
-      <!-- Image d'arrière-plan dynamique -->
+    <div *ngFor="let l of livraisons" class="livraison-card">
+      <!-- Background image -->
       <div class="card-bg-image" [ngStyle]="{'background-image': 'url(assets/images/livraison.jpg)'}"></div>
 
       <div class="card-content">
         <div class="card-header">
-          <h3>Livraison </h3>
+          <h3>Delivery </h3>
           <span class="status-badge" [ngClass]="getStatutClass(l.statut)">
               {{ l.statut }}
           </span>
         </div>
 
         <div class="card-details">
-          <p><i class="fas fa-calendar"></i> <strong>Date de Creation:</strong> {{ l.dateCreation | date:'dd/MM/yyyy' }}</p>
-          <p><i class="fas fa-map-marker-alt"></i> <strong>Adresse:</strong> {{ l.adresseLivraison }}</p>
-          <p><i class="fas fa-truck"></i> <strong>Date de livraison:</strong> {{ l.dateLivraison | date:'dd/MM/yyyy' }}</p>
+          <p><i class="fas fa-calendar"></i> <strong>Creation Date:</strong> {{ l.dateCreation | date:'dd/MM/yyyy' }}</p>
+          <p><i class="fas fa-map-marker-alt"></i> <strong>Address:</strong> {{ l.adresseLivraison }}</p>
+          <p><i class="fas fa-truck"></i> <strong>Delivery Date:</strong> {{ l.dateLivraison | date:'dd/MM/yyyy' }}</p>
           
           <div class="text-end my-3">
             <button class="btn btn-dark" (click)="navigateToSuivre(l.id)">

@@ -5,36 +5,35 @@
     <div class="col-md-9">
       <div class="livraison-details-container" *ngIf="livraisonDetails">
         <div class="details-card">
-          <h2>Détails de la Livraison</h2>
+          <h2>Delivery Details</h2>
           
           <div class="section">
-            <h3>Informations de livraison</h3>
-            <p><strong>Statut:</strong> <span class="status" [ngClass]="livraisonDetails.statut?.toLowerCase()">{{livraisonDetails.statut}}</span></p>
-            <p><strong>Adresse:</strong> {{livraisonDetails.adresseLivraison}}</p>
-            <p><strong>Date de livraison:</strong> {{livraisonDetails.dateLivraison | date:'dd/MM/yyyy'}}</p>
-            <p><strong>Date de création:</strong> {{livraisonDetails.dateCreation | date:'dd/MM/yyyy'}}</p>
+            <h3>Delivery Information</h3>
+            <p><strong>Status:</strong> <span class="status" [ngClass]="livraisonDetails.statut?.toLowerCase()">{{livraisonDetails.statut}}</span></p>
+            <p><strong>Address:</strong> {{livraisonDetails.adresseLivraison}}</p>
+            <p><strong>Delivery Date:</strong> {{livraisonDetails.dateLivraison | date:'dd/MM/yyyy'}}</p>
+            <p><strong>Creation Date:</strong> {{livraisonDetails.dateCreation | date:'dd/MM/yyyy'}}</p>
             
             <button *ngIf="livraisonDetails.statut === 'EN ATTENTE'" 
                     class="cancel-btn" 
                     (click)="annulerLivraison()">
-              Annuler la livraison
+              Cancel Delivery
             </button>
             <div class="actions">
-              <button  class="btn-dark" (click)="predictEta(livraisonDetails)">Prédire l'ETA</button>
-              <p *ngIf="etaMap[livraisonDetails.id]"><i class="fas fa-clock"></i> <strong>La Livraison devrait arriver en:</strong> {{ formatEta(etaMap[livraisonDetails.id]) }} minutes</p>
+              <button class="btn-dark" (click)="predictEta(livraisonDetails)">Predict ETA</button>
+              <p *ngIf="etaMap[livraisonDetails.id]"><i class="fas fa-clock"></i> <strong>Delivery should arrive in:</strong> {{ formatEta(etaMap[livraisonDetails.id]) }} minutes</p>
             </div>    
   
           </div>
            
 
           <div class="section">
-            <h3>Détails de la commande</h3>
+            <h3>Order Details</h3>
             <div class="order-details">
-              <!--p><strong>Statut de commande:</strong> <span class="order-status">{{livraisonDetails.order.status}}</span></p-->
               <p><strong>Prix total:</strong> <span class="price">{{livraisonDetails.order.totalPrice}} €</span></p>
               
               <div class="products-section">
-                <h4>Produits commandés</h4>
+                <h4>Ordered Products</h4>
                 <div class="products-grid">
                   <div class="product-card" *ngFor="let item of livraisonDetails.order.orderItems">
                     <h5>{{item.product.name}}</h5>
@@ -47,19 +46,19 @@
           </div>
 
           <div class="section">
-            <h3>Informations du livreur</h3>
+            <h3>Driver Information</h3>
             <div class="driver-card">
               <div class="driver-info" *ngIf="livraisonDetails.deliveryDriver; else noDriver">
-                <p><strong>Nom:</strong> {{livraisonDetails.deliveryDriver.lastName || 'Non spécifié'}}</p>
-                <p><strong>Prénom:</strong> {{livraisonDetails.deliveryDriver.firstName || 'Non spécifié'}}</p>
-                <p><strong>Téléphone:</strong> {{livraisonDetails.deliveryDriver.phone || 'Non spécifié'}}</p>
+                <p><strong>Last Name:</strong> {{livraisonDetails.deliveryDriver.lastName || 'Not specified'}}</p>
+                <p><strong>First Name:</strong> {{livraisonDetails.deliveryDriver.firstName || 'Not specified'}}</p>
+                <p><strong>Phone:</strong> {{livraisonDetails.deliveryDriver.phone || 'Not specified'}}</p>
               </div>
               <ng-template #noDriver>
-                <p>Aucun livreur n'est encore assigné à cette livraison.</p>
+                <p>No driver has been assigned to this delivery yet.</p>
               </ng-template>
             </div>
             <div *ngIf="livraisonDetails?.deliveryDriver" class="livreur-tracking">
-              <h3><i class="fas fa-truck"></i> Suivi du livreur</h3>
+              <h3><i class="fas fa-truck"></i> Driver Tracking</h3>
               
               <div *ngIf="livreurPositionError" class="alert alert-danger">
                 {{ livreurPositionError }}
@@ -68,53 +67,40 @@
               <div *ngIf="livreurPosition">
                 <p>
                   <i class="fas fa-map-marker-alt"></i> 
-                  <strong>Position actuelle :</strong> 
+                  <strong>Current Position:</strong> 
                   {{ livreurPosition.latitude | number:'1.4-4' }}, 
                   {{ livreurPosition.longitude | number:'1.4-4' }}
                 </p>
             
-                <!-- <div *ngIf="etaMap[livraisonDetails.id]">
-                  <p>
-                    <i class="fas fa-clock"></i> 
-                    <strong>Temps restant :</strong> 
-                    {{ formatEta(etaMap[livraisonDetails.id]) }}
-                  </p>
-                </div> -->
-            
                 <button (click)="showOnMap()" class="btn btn-primary">
-                  <i class="fas fa-map"></i> Voir sur la carte
+                  <i class="fas fa-map"></i> View on Map
                 </button>
               </div>
             
               <div *ngIf="!livreurPosition && !livreurPositionError">
-                <p>Chargement de la position...</p>
+                <p>Loading driver position...</p>
               </div>
             </div>
             <div class="map-section">
               <div id="map-container" class="map-container"></div>
               <div class="position-status">
                 <div *ngIf="!livreurPosition && !livreurPositionError" class="loading">
-                  <span>Chargement de la position du livreur...</span>
+                  <span>Loading driver position...</span>
                 </div>
                 <div *ngIf="livreurPositionError" class="error-message">
                   {{livreurPositionError}}
-                  <button (click)="retryGeolocation()" class="retry-btn">Réessayer</button>
+                  <button (click)="retryGeolocation()" class="retry-btn">Retry</button>
                 </div>
               </div>
             </div>
             <div class="position-status">
               <div *ngIf="!livreurPosition && !livreurPositionError" class="loading">
-                <span>Chargement de la position du livreur...</span>
+                <p>Loading driver position...</p>
               </div>
               
-              <!-- <div *ngIf="livreurPosition" class="position-info">
-                <p>Position actuelle du livreur :</p>
-                <p>Latitude : {{livreurPosition.latitude}}</p>
-                <p>Longitude : {{livreurPosition.longitude}}</p>
-              </div> -->
-            
               <div *ngIf="livreurPositionError" class="error-message">
                 {{livreurPositionError}}
+                <button (click)="retryGeolocation()" class="retry-btn">Retry</button>
               </div>
             </div>
           </div>

@@ -97,7 +97,7 @@ export class LivraisonService {
       return status.includes('En Transit') || 
              status.includes('en transit') || 
              status.includes('EN TRANSIT') || 
-             status.includes('ENTRANSIT') ;
+             status.includes('In Transit') ;
     }
     getPrediction(origin: string, destination: string): Observable<number> {
       return this.http.get<number>('http://localhost:8090/tpfoyer/livraison/predict-time', {

@@ -63,7 +63,7 @@ export class MapComponent implements OnInit {
           // Ajouter les marqueurs
           new mapboxgl.Marker({ color: '#FF0000' })
             .setLngLat(this.driverCoords!)
-            .setPopup(new mapboxgl.Popup().setHTML('<h3>Position du livreur</h3>'))
+            .setPopup(new mapboxgl.Popup().setHTML('<h3>Driver\'s position</h3>'))
             .addTo(this.map);
 
           new mapboxgl.Marker({ color: '#00FF00' })
@@ -110,19 +110,21 @@ export class MapComponent implements OnInit {
             longitude: position.coords.longitude
           });
         },
-        (error) => {
-          let errorMessage = 'Erreur de géolocalisation';
-          switch(error.code) {
-            case error.TIMEOUT:
-              errorMessage = 'Délai de géolocalisation dépassé';
-              break;
-            case error.POSITION_UNAVAILABLE:
-              errorMessage = 'Position non disponible';
-              break;
-            case error.PERMISSION_DENIED:
-              errorMessage = 'Permission de géolocalisation refusée';
-              break;
-          }
+        // ...existing code...
+(error) => {
+  let errorMessage = 'Geolocation error';
+  switch(error.code) {
+      case error.TIMEOUT:
+          errorMessage = 'Geolocation timeout';
+          break;
+      case error.POSITION_UNAVAILABLE:
+          errorMessage = 'Position unavailable';
+          break;
+      case error.PERMISSION_DENIED:
+          errorMessage = 'Geolocation permission denied';
+          break;
+  }
+// ...existing code...
           reject(new Error(errorMessage));
         },
         options
@@ -141,7 +143,7 @@ export class MapComponent implements OnInit {
       const data = await response.json();
       
       if (!data.features || data.features.length === 0) {
-        throw new Error('Adresse non trouvée');
+        throw new Error('Address not found');
       }
       
       return data.features[0].center as [number, number];
@@ -205,7 +207,7 @@ export class MapComponent implements OnInit {
     // Add markers
     new mapboxgl.Marker({ color: '#FF0000' })
       .setLngLat(this.driverCoords)
-      .setPopup(new mapboxgl.Popup().setHTML('<h3>Position actuelle du livreur</h3>'))
+      .setPopup(new mapboxgl.Popup().setHTML('<h3>Current driver position</h3>'))
       .addTo(this.map);
 
     new mapboxgl.Marker({ color: '#00FF00' })
@@ -231,7 +233,7 @@ export class MapComponent implements OnInit {
       this.drawRouteAndMarkers(coords, this.searchAddress);
     } catch (error) {
       console.error('Erreur lors de la recherche:', error);
-      alert('Adresse non trouvée. Veuillez réessayer.');
+      alert('Address not found. Please try again.');
     }
   }
   private clearMarkers() {

@@ -21,29 +21,28 @@
       <div class="container-fluid py-4">
 <div class="details-facture-container" *ngIf="facture">
   <div class="details-header">
-    
-    <h2 class="details-title">Détails de la Facture #{{facture.id}}</h2>
+    <h2 class="details-title">Invoice Details #{{facture.id}}</h2>
     <div class="action-buttons">
       <button class="btn btn-edit" (click)="editFacture()" *ngIf="!isEditing">
         <mat-icon>edit</mat-icon>
-        Modifier
+        Edit
       </button>
     </div>
   </div>
 
   <div class="details-section" *ngIf="!isEditing">
-    <h3 class="section-title">Informations Générales</h3>
+    <h3 class="section-title">General Information</h3>
     <div class="detail-grid">
       <div class="detail-item">
-        <span class="detail-label">Date d'émission</span>
+        <span class="detail-label">Issue Date</span>
         <span class="detail-value">{{facture.dateEmission | date:'dd/MM/yyyy'}}</span>
       </div>
       <div class="detail-item">
-        <span class="detail-label">Montant total</span>
+        <span class="detail-label">Total Amount</span>
         <span class="detail-value">{{facture.montantTotal | number:'1.2-2'}} DT</span>
       </div>
       <div class="detail-item">
-        <span class="detail-label">Statut</span>
+        <span class="detail-label">Status</span>
         <span class="status-badge" [ngClass]="'status-' + facture.statut?.toLowerCase()">
           {{facture.statut}}
         </span>
@@ -52,44 +51,44 @@
   </div>
 
   <div class="details-section" *ngIf="facture.livraison">
-    <h3 class="section-title">Détails de la Livraison</h3>
+    <h3 class="section-title">Delivery Details</h3>
     <div class="detail-grid">
       <div class="detail-item">
-        <span class="detail-label">ID de Livraison</span>
+        <span class="detail-label">Delivery ID</span>
         <span class="detail-value">{{ facture.livraison.id }}</span>
       </div>
       <div class="detail-item">
-        <span class="detail-label">Adresse de Livraison</span>
+        <span class="detail-label">Delivery Address</span>
         <span class="detail-value">{{ facture.livraison.adresseLivraison }}</span>
       </div>
       <div class="detail-item">
-        <span class="detail-label">Date de Création</span>
+        <span class="detail-label">Creation Date</span>
         <span class="detail-value">{{ facture.livraison.dateCreation | date:'dd/MM/yyyy' }}</span>
       </div>
       <div class="detail-item">
-        <span class="detail-label">Statut de la Livraison</span>
+        <span class="detail-label">Delivery Status</span>
         <span class="detail-value">{{ facture.livraison.statut }}</span>
       </div>
     </div>
   </div>
 
   <form [formGroup]="editForm" *ngIf="isEditing" class="details-section" (ngSubmit)="saveChanges()">
-    <h3 class="section-title">Modifier la Facture</h3>
+    <h3 class="section-title">Edit Invoice</h3>
     <div class="detail-grid">
       <div class="detail-item">
-        <label class="detail-label" for="dateEmission">Date d'émission</label>
+        <label class="detail-label" for="dateEmission">Issue Date</label>
         <input 
-  class="edit-input"
-  type="date" 
-  id="dateEmission" 
-  formControlName="dateEmission"
-  [min]="creationDate" 
-  [max]="today"
-  [class.is-invalid]="editForm.get('dateEmission')?.invalid && editForm.get('dateEmission')?.touched"
-/>
+          class="edit-input"
+          type="date" 
+          id="dateEmission" 
+          formControlName="dateEmission"
+          [min]="creationDate" 
+          [max]="today"
+          [class.is-invalid]="editForm.get('dateEmission')?.invalid && editForm.get('dateEmission')?.touched"
+        />
       </div>
       <div class="detail-item">
-        <label class="detail-label" for="montantTotal">Montant total</label>
+        <label class="detail-label" for="montantTotal">Total Amount</label>
         <input 
           class="edit-input"
           type="number" 
@@ -99,16 +98,16 @@
         >
       </div>
       <div class="detail-item">
-        <label class="detail-label" for="statut">Statut</label>
+        <label class="detail-label" for="statut">Status</label>
         <select 
           class="edit-select"
           id="statut" 
           formControlName="statut"
           [class.is-invalid]="editForm.get('statut')?.invalid && editForm.get('statut')?.touched"
         >
-          <option value="PAYÉE">Payée</option>
-          <option value="EN ATTENTE">En attente</option>
-          <option value="ANNULÉE">Annulée</option>
+          <option value="PAYÉE">Paid</option>
+          <option value="EN ATTENTE">Pending</option>
+          <option value="ANNULÉE">Cancelled</option>
         </select>
       </div>
     </div>
@@ -116,10 +115,10 @@
     <div class="action-buttons" style="margin-top: 2rem;">
       <button type="submit" class="btn btn-save" [disabled]="editForm.invalid || isSaving">
         <mat-icon>save</mat-icon> 
-        {{isSaving ? 'Enregistrement...' : 'Enregistrer'}}
+        {{isSaving ? 'Saving...' : 'Save'}}
       </button>
       <button type="button" class="btn btn-cancel" (click)="cancelEdit()">
-        <mat-icon>close</mat-icon> Annuler
+        <mat-icon>close</mat-icon> Cancel
       </button>
       
     </div>

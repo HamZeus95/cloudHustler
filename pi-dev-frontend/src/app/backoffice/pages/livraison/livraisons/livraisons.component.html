@@ -30,7 +30,7 @@
         <i class="fas fa-search search-icon"></i>
         <input 
           type="text" 
-          placeholder="                   Rechercher une Livraison..." 
+          placeholder="Search for a delivery..." 
           [(ngModel)]="searchTerm"
           (input)="filteredLivraisonsFn(searchTerm)" 
           class="search-input"
@@ -38,76 +38,76 @@
       </div>
       <!-- Bouton pour ouvrir la fenêtre modale -->
 <button class="ajouter-button" (click)="openModal()">
-  <i class="fas fa-plus"></i> Ajouter une Livraison
+  <i class="fas fa-plus"></i> Add Delivery
 </button>
 
 <!-- Fenêtre modale -->
 <div class="modal-overlay" *ngIf="isModalOpen" (click)="closeModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
-    <h2 class="titre-facture">Ajouter une Livraison</h2>
+    <h2 class="titre-facture">Add Delivery</h2>
     <form [formGroup]="livraisonForm" (ngSubmit)="onSubmit()">
       <!-- Date livraison -->
      
       <div class="form-group">
-        <label for="dateLivraison">Date de Livraison</label>
+        <label for="dateLivraison">Delivery Date</label>
         <input type="date" id="dateLivraison" formControlName="dateLivraison" class="priority"
           [ngClass]="{ 'is-invalid': livraisonForm.get('dateLivraison')?.invalid && (livraisonForm.get('dateLivraison')?.touched || livraisonForm.get('dateLivraison')?.dirty) }">
         
         <div *ngIf="livraisonForm.get('dateLivraison')?.invalid && (livraisonForm.get('dateLivraison')?.touched || livraisonForm.get('dateLivraison')?.dirty)" class="error-message">
-          <small *ngIf="livraisonForm.get('dateLivraison')?.errors?.['required']">Date de livraison requise</small>
-          <small *ngIf="livraisonForm.get('dateLivraison')?.errors?.['pastDate']">La date ne peut pas être dans le passé</small>
-          <small *ngIf="livraisonForm.get('dateLivraison')?.errors?.['maxFutureDays']">La date ne peut pas dépasser 5 jours </small>
+          <small *ngIf="livraisonForm.get('dateLivraison')?.errors?.['required']">Delivery date required</small>
+          <small *ngIf="livraisonForm.get('dateLivraison')?.errors?.['pastDate']">Date cannot be in the past</small>
+          <small *ngIf="livraisonForm.get('dateLivraison')?.errors?.['maxFutureDays']">Date cannot exceed 5 days</small>
         </div>
       </div>
       
       <div class="form-group">
-        <label for="statut">Statut</label>
+        <label for="statut">Status</label>
         <select id="statut" formControlName="statut" class="priority"
           [ngClass]="{ 'is-invalid': livraisonForm.get('statut')?.invalid && (livraisonForm.get('statut')?.touched || livraisonForm.get('statut')?.dirty) }">
-          <option value="EN ATTENTE">En attente</option>
+          <option value="EN ATTENTE">Pending</option>
           <!--option value="EN TRANSIT">En transit</option>
           <option value="LIVRÉE">Livrée</option-->
         </select>
         <div *ngIf="livraisonForm.get('statut')?.invalid && (livraisonForm.get('statut')?.touched || livraisonForm.get('statut')?.dirty)" class="error-message">
-          <small *ngIf="livraisonForm.get('statut')?.errors?.['required']">Statut requis</small>
+          <small *ngIf="livraisonForm.get('statut')?.errors?.['required']">Status required</small>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="adresseLivraison">Adresse de Livraison</label>
+        <label for="adresseLivraison">Delivery Address</label>
         <input type="text" id="adresseLivraison" formControlName="adresseLivraison" class="priority"
-          placeholder="Adresse Livraison" [ngClass]="{ 'is-invalid': livraisonForm.get('adresseLivraison')?.invalid && livraisonForm.get('adresseLivraison')?.touched }">
+          placeholder="Delivery Address" [ngClass]="{ 'is-invalid': livraisonForm.get('adresseLivraison')?.invalid && livraisonForm.get('adresseLivraison')?.touched }">
         <div *ngIf="livraisonForm.get('adresseLivraison')?.invalid && livraisonForm.get('adresseLivraison')?.touched" class="error-message">
-          <small *ngIf="livraisonForm.get('adresseLivraison')?.errors?.['required']">Adresse requise</small>
-          <small *ngIf="livraisonForm.get('adresseLivraison')?.errors?.['minlength']">L'adresse doit contenir au moins 5 caractères</small>
-          <small *ngIf="livraisonForm.get('adresseLivraison')?.errors?.['pattern']">Format d'adresse invalide</small>
+          <small *ngIf="livraisonForm.get('adresseLivraison')?.errors?.['required']">Address required</small>
+          <small *ngIf="livraisonForm.get('adresseLivraison')?.errors?.['minlength']">Address must contain at least 5 characters</small>
+          <small *ngIf="livraisonForm.get('adresseLivraison')?.errors?.['pattern']">Invalid address format</small>
         </div>
       </div>
 
       
 
       <div class="form-group">
-        <label for="deliveryDriver">Livreur</label>
+        <label for="deliveryDriver">Driver</label>
         <select id="deliveryDriver" formControlName="deliveryDriver" class="priority"
           [ngClass]="{ 'is-invalid': livraisonForm.get('deliveryDriver')?.invalid && livraisonForm.get('deliveryDriver')?.touched }">
-          <option value="">Sélectionner un livreur</option>
+          <option value="">Select a driver</option>
           <option *ngFor="let driver of deliveryDrivers" [ngValue]="driver">
             {{driver.firstName}} {{driver.lastName}} - {{driver.phone}}
           </option>
         </select>
         <div *ngIf="livraisonForm.get('deliveryDriver')?.invalid && livraisonForm.get('deliveryDriver')?.touched" class="error-message">
-          <small *ngIf="livraisonForm.get('deliveryDriver')?.errors?.['required']">Livreur requis</small>
+          <small *ngIf="livraisonForm.get('deliveryDriver')?.errors?.['required']">Driver required</small>
 
         </div>
       </div>
 
       <div class="form-group">
-        <label for="order">Ordre</label>
+        <label for="order">Order</label>
         <select id="order" formControlName="order" class="priority"
           [ngClass]="{ 'is-invalid': livraisonForm.get('order')?.invalid && livraisonForm.get('order')?.touched }">
-          <option value="">Sélectionner un Ordre</option>
+          <option value="">Select an order</option>
           <option *ngFor="let order of orders" [ngValue]="order">
-            Ordre #{{order.uuid_order}} - {{order.totalPrice}}€
+            Order #{{order.uuid_order}} - {{order.totalPrice}}€
           </option>
         </select>
       </div>
@@ -117,8 +117,8 @@
     </div>
       
       <div class="form-group">
-        <button type="submit" class="action-button">Enregistrer</button>
-        <button type="button" class="action-button" (click)="closeModal()">Annuler</button>
+        <button type="submit" class="action-button">Save</button>
+        <button type="button" class="action-button" (click)="closeModal()">Cancel</button>
       </div>
     </form>
   </div>
@@ -127,7 +127,7 @@
     </div>
     <div class="status-cards-container">
       <div class="status-card">
-        <h6>Livrées</h6>
+        <h6>Delivered</h6>
         <div class="status-content">
           <div class="status-info">
             <div class="status-count">{{ counts.livree }}</div>
@@ -143,7 +143,7 @@
       </div>
     
       <div class="status-card">
-        <h6>En attente</h6>
+        <h6>Pending</h6>
         <div class="status-content">
           <div class="status-info">
             <div class="status-count">{{ counts.enAttente }}</div>
@@ -178,19 +178,19 @@
       <table>
         <thead>
           <tr>
-            <th>Livraison ID</th>
+            <th>Delivery ID</th>
             <th>Status</th>
             <!--th>Delivery Rating</th-->
             <!--th>Customer</th-->
-            <th>Adresse Livraison</th>
-            <th>Date de Creation</th>
-            <th>Date de Livraison</th>
+            <th>Delivery Address</th>
+            <th>Creation Date</th>
+            <th>Delivery Date</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let livraison of paginatedlivraisons">
-            <td>LIV {{ livraison?.id }}</td>
+            <td>DEL {{ livraison?.id }}</td>
             <td>
               <span
                 class="badge"
@@ -223,7 +223,7 @@
             </td>
           </tr>
           <tr *ngIf="paginatedlivraisons.length === 0">
-            <td colspan="6" class="text-center">Aucune livraison disponible</td>
+            <td colspan="6" class="text-center">No deliveries available</td>
           </tr>
         </tbody>
         

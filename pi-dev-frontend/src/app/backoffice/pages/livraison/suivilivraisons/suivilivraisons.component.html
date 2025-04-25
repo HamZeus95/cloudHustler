@@ -1,4 +1,4 @@
-<h2>Historique de Suivi de Livraison</h2>
+<h2>Delivery Tracking History</h2>
 
 <!--form (ngSubmit)="ajouterSuivi()">
   <input type="text" [(ngModel)]="newSuivi.statut" name="statut" placeholder="Statut" required>
@@ -13,16 +13,16 @@
   </li>
 </ul-->
 <div *ngIf="suivis.length > 0">
-  <h3>Historique des Suivis</h3>
+  <h3>Tracking History</h3>
   <ul>
     <li *ngFor="let suivi of suivis">
       <strong>Date:</strong> {{ suivi.dateMaj }}<br>
-      <strong>Statut:</strong> {{ suivi.statut }}<br>
+      <strong>Status:</strong> {{ suivi.statut }}<br>
       <strong>Description:</strong> {{ suivi.commentaire }}<br>
     </li>
   </ul>
 </div>
 <div *ngIf="suivis.length === 0">
-  <p>Aucun suivi disponible pour cette livraison.</p>
+  <p>No tracking information available for this delivery.</p>
 </div>
 

@@ -44,9 +44,24 @@ h4 {
   display: inline-block;
 }
 
-.status.en.attente {
+.status.pending, .status.en.attente {
   background: #fff3e0;
   color: #f57c00;
+}
+
+.status.in_transit, .status.en.transit {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.status.delivered, .status.livree {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status.cancelled, .status.annulee {
+  background: #ffebee;
+  color: #d32f2f;
 }
 
 .order-status {

@@ -33,7 +33,7 @@ export class LivraisonClientComponent implements OnInit {
       id: 0,
       //dateEmission: '',
       //montantTotal: 0,
-      statut: 'En attente',
+      statut: 'Pending',
       dateCreation: '',
       adresseLivraison: '',
       dateLivraison: '',
@@ -78,7 +78,7 @@ export class LivraisonClientComponent implements OnInit {
             id: 0,
             //dateEmission: '',
             //montantTotal: 0,
-            statut: 'En attente',
+            statut: 'Pending',
             dateCreation: '',
             adresseLivraison: '',
             dateLivraison: '',
@@ -106,7 +106,7 @@ export class LivraisonClientComponent implements OnInit {
     
   
     supprimerLivraison(id: number) {
-      if (confirm("Êtes-vous sûr de vouloir supprimer cette livraison ?")) {
+      if (confirm("Are you sure you want to delete this delivery?")) {
         this.livraisonService.delete(id).subscribe(() => {
           this.loadLivraisons(); // Recharge la liste après suppression
         });
@@ -212,7 +212,7 @@ export class LivraisonClientComponent implements OnInit {
           }
         );
       } else {
-        reject(new Error('La géolocalisation n\'est pas supportée par ce navigateur.'));
+        reject(new Error('Geolocation is not supported by this browser.'));
       }
     });
   }

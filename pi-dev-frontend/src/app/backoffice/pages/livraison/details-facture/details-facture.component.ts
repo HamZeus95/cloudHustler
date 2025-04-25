@@ -48,8 +48,8 @@ export class DetailsFactureComponent {
           this.initForm(); // Initialize form after getting data
         },
         error: (error) => {
-          console.error('Erreur lors du chargement:', error);
-          this.snackBar.open('Erreur lors du chargement de la facture', 'Fermer', { duration: 3000 });
+          console.error('Error while loading:', error);
+          this.snackBar.open('Error loading invoice', 'Close', { duration: 3000 });
         }
       });
     } else {
@@ -93,7 +93,7 @@ today: string = new Date().toISOString().split('T')[0];
 
   saveChanges(): void {
     if (!this.facture || !this.editForm || this.editForm.invalid) {
-      this.snackBar.open('Formulaire invalide', 'Fermer', { duration: 3000 });
+      this.snackBar.open('Invalid form', 'Close', { duration: 3000 });
       return;
     }
 
@@ -102,7 +102,7 @@ today: string = new Date().toISOString().split('T')[0];
       ...this.facture,
       dateEmission: this.editForm.get('dateEmission')?.value,
       montantTotal: this.editForm.get('montantTotal')?.value,
-      statut: this.editForm.get('statut')?.value
+      statut: this.editForm.get('statut')?.value // Will be one of: 'PENDING', 'PAID', 'CANCELLED'
     };
 
     this.factureService.update(updatedFacture?.id!, updatedFacture).subscribe({
@@ -111,12 +111,12 @@ today: string = new Date().toISOString().split('T')[0];
         this.isEditing = false;
         this.isSaving = false;
         this.factureUpdated.emit(this.facture);
-        this.snackBar.open('Facture mise à jour avec succès', 'OK', { duration: 3000 });
+        this.snackBar.open('Invoice updated successfully', 'OK', { duration: 3000 });
       },
       error: (error) => {
-        console.error('Erreur lors de la mise à jour:', error);
+        console.error('Error while updating:', error);
         this.isSaving = false;
-        this.snackBar.open('Erreur lors de la mise à jour', 'Fermer', { duration: 3000 });
+        this.snackBar.open('Error while updating invoice', 'Close', { duration: 3000 });
       }
     });
   }

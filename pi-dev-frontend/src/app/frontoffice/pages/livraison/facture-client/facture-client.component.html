@@ -6,34 +6,31 @@
 <app-navbar></app-navbar>
 <div class="facture-container">
   <div *ngFor="let f of factures" class="facture-card" (click)="onCardClick(f)">
-    <!-- Image d'arrière-plan dynamique -->
+    <!-- Background image -->
     <div class="card-bg-image" [ngStyle]="{'background-image': 'url(assets/images/facture.jpg)'}"></div>
 
     <div class="card-content">
       <div class="card-header">
-        <h3>Facture :</h3>
+        <h3>Invoice:</h3>
         <span class="status-badge" [ngClass]="getStatutClass(f.statut ?? '')">
             {{ f.statut }}
         </span>
       </div>
 
       <div class="card-details">
-        <p><i class="fas fa-calendar"></i> <strong>Date d'Émission:</strong> {{ f.dateEmission | date:'dd/MM/yyyy' }}</p>
-        <p><i class="fas fa-money-bill-alt"></i> <strong>Montant Total:</strong> {{ f.montantTotal | currency }}</p>
-
+        <p><i class="fas fa-calendar"></i> <strong>Issue Date:</strong> {{ f.dateEmission | date:'dd/MM/yyyy' }}</p>
+        <p><i class="fas fa-money-bill-alt"></i> <strong>Total Amount:</strong> {{ f.montantTotal | currency }}</p>
       </div>
 
       <div class="card-actions">
         <!--button class="btn-delete" (click)="$event.stopPropagation(); f.id && supprimerFacture(f.id)">
-          <i class="fas fa-trash"></i> Supprimer
+          <i class="fas fa-trash"></i> Delete
         </button-->
         <!--button class="btn-delete" (click)="$event.stopPropagation(); f.id && marquerCommeAnnule(f.id)">
-          <i class="fas fa-trash"></i> Annuler
+          <i class="fas fa-trash"></i> Cancel
         </button-->
       </div>
     </div>
   </div>
-
-  
 </div>
 <app-footer></app-footer>

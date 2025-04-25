@@ -8,21 +8,20 @@
         <h1 class="company-name">Farmie</h1>
       </div>
       <div class="document-title">
-        <h1>FACTURE</h1>
+        <h1>INVOICE</h1>
       </div>
     </div>
 
     <!-- Billing Info -->
     <div class="billing-section">
       <div class="bill-to">
-        <h4>FACTURER À:</h4>
+        <h4>BILL TO:</h4>
         <p>Client: {{factureDetails.livraison?.order?.consumer?.firstName}} {{factureDetails.livraison?.order?.consumer?.lastName}}</p>
-        <p>Adresse: {{factureDetails.livraison.adresseLivraison}}</p>
+        <p>Address: {{factureDetails.livraison.adresseLivraison}}</p>
       </div>
       <div class="invoice-info">
-        <!--p><strong>Facture #:</strong> {{factureDetails.id}}</p-->
         <p><strong>Date:</strong> {{factureDetails.dateEmission | date:'dd/MM/yyyy'}}</p>
-        <p><strong>Statut:</strong> {{factureDetails.statut}}</p>
+        <p><strong>Status:</strong> {{factureDetails.statut}}</p>
       </div>
     </div>
 
@@ -31,9 +30,9 @@
       <thead>
         <tr>
           <th>DESCRIPTION</th>
-          <th>PRIX UNITAIRE</th>
-          <th>QTÉ</th>
-          <th>MONTANT</th>
+          <th>UNIT PRICE</th>
+          <th>QTY</th>
+          <th>AMOUNT</th>
         </tr>
       </thead>
       <tbody>
@@ -49,11 +48,11 @@
     <!-- Totals -->
     <div class="totals-section" *ngIf="factureDetails?.montantTotal">
       <div class="total-item">
-        <p><strong>Sous-total:</strong></p>
+        <p><strong>Subtotal:</strong></p>
         <p>{{factureDetails?.montantTotal || 0}} DT</p>
       </div>
       <div class="total-item">
-        <p><strong>TVA (19%):</strong></p>
+        <p><strong>VAT (19%):</strong></p>
         <p>{{(factureDetails?.montantTotal || 0) * 0.19}} DT</p>
       </div>
       <div class="total-item grand-total">
@@ -65,10 +64,10 @@
 
     <!-- Footer -->
     <div class="invoice-footer">
-      <p>Merci pour votre confiance!</p>
+      <p>Thank you for your trust!</p>
       <div class="footer-contact">
-        <p>Farmie - Votre partenaire logistique</p>
-        <p>Email: farmie&#64;esprit.tn | Tel: +216 20 000 000</p>
+        <p>Farmie - Your Logistics Partner</p>
+        <p>Email: farmie&#64;esprit.tn | Phone: +216 20 000 000</p>
       </div>
     </div>
   </div>
@@ -77,7 +76,7 @@
 
 <div class="text-end my-3">
   <button class="btn btn-dark" (click)="generatePDF()">
-    <i class="bi bi-file-earmark-pdf-fill"></i> Télécharger le PDF
+    <i class="bi bi-file-earmark-pdf-fill"></i> Download PDF
   </button>
 </div>
 <app-footer></app-footer>

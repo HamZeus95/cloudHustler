@@ -3,14 +3,14 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 export class CustomValidators {
   static validStatutLivraison(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const valid = /^(En attente|En transit)$/.test(control.value);
+      const valid = /^(PENDING|IN_TRANSIT|DELIVERED)$/.test(control.value);
       return valid ? null : { invalidStatut: true };
     };
   }
 
   static validStatutFacture(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const valid = /^(PAYÉ|EN ATTENTE)$/.test(control.value);
+      const valid = /^(PAID|PENDING|CANCELLED)$/.test(control.value);
       return valid ? null : { invalidStatut: true };
     };
   }

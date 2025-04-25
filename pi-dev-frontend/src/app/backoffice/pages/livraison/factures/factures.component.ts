@@ -39,10 +39,10 @@ export class FactureComponent implements OnInit {
     id: 0,
     dateEmission: '',
     montantTotal: 0,
-    statut: 'En attente',
+    statut: 'Pending',
     livraison: {
       id: 0,
-      statut: 'En attente',
+      statut: 'Pending',
       dateCreation: '',
       adresseLivraison: '',
       dateLivraison: '',
@@ -85,7 +85,7 @@ export class FactureComponent implements OnInit {
   };
 
   public pieChartData: ChartConfiguration['data'] = {
-    labels: ['Payées', 'En attente', 'Annulées'],
+    labels: ['Paid', 'Pending', 'Cancelled'],
     datasets: [{
       data: [0, 0, 0],
       backgroundColor: [
@@ -138,7 +138,7 @@ export class FactureComponent implements OnInit {
         this.dateEmissionMatchesCreationValidator()
       ]],
       montantTotal: ['', Validators.required],
-      statut: ['EN ATTENTE', [
+      statut: ['Pending', [
         Validators.required,
         CustomValidators.validStatutFacture1()
       ]],
@@ -186,7 +186,7 @@ export class FactureComponent implements OnInit {
         this.filteredFactures = data; // Initialiser filteredFactures
       },
       error => {
-        console.error('Erreur lors de la récupération des factures', error);
+        console.error('Error while retrieving invoices', error);
       }
     );
   }
@@ -210,8 +210,8 @@ export class FactureComponent implements OnInit {
   }
 
   supprimerFacture(id: number): void {
-      if (confirm('Êtes-vous sûr de vouloir supprimer cette facture ?')) {
-        this.factureService.delete(id).subscribe({
+    if (confirm('Are you sure you want to delete this invoice?')) {
+      this.factureService.delete(id).subscribe({
           next: () => {
             this.loadFactures(); // ✅ Recharger les factures
         this.loadStats();    // ✅ Recharger les statistiques
@@ -229,7 +229,7 @@ export class FactureComponent implements OnInit {
       montantTotal: 0,
       statut: '',
       livraison: {
-        id: 0, statut: 'En attente', dateCreation: '',
+        id: 0, statut: 'Pending', dateCreation: '',
         adresseLivraison: '',
         dateLivraison: '',
         //dateEmission: '',
@@ -346,29 +346,31 @@ factureForm!: FormGroup;
     });
   }
 
-  onSubmit(): void {
-    if (this.factureForm.invalid) {
-      let errorMessage = 'Erreurs de validation:\n';
-      
-      const controls = this.factureForm.controls;
-      for (const key in controls) {
-        if (controls[key].invalid) {
-          switch (key) {
-            case 'dateEmission':
-              if (controls[key].errors?.['required']) errorMessage += '- Date d\'émission manquante\n';
-              if (controls[key].errors?.['futureDate']) errorMessage += '- Date d\'émission dans le futur\n';
-              break;
-            case 'montantTotal':
-              if (controls[key].errors?.['required']) errorMessage += '- Montant total manquant\n';
-              if (controls[key].errors?.['min']) errorMessage += '- Montant total doit être positif\n';
-              break;
-            case 'livraison':
-              if (controls[key].errors?.['required']) errorMessage += '- Livraison non sélectionnée\n';
-              if (controls[key].errors?.['invalidDate']) errorMessage += '- Date de livraison invalide\n';
-              break;
-          }
+  // ...existing code...
+onSubmit(): void {
+  if (this.factureForm.invalid) {
+    let errorMessage = 'Validation errors:\n';
+    
+    const controls = this.factureForm.controls;
+    for (const key in controls) {
+      if (controls[key].invalid) {
+        switch (key) {
+          case 'dateEmission':
+            if (controls[key].errors?.['required']) errorMessage += '- Issue date is required\n';
+            if (controls[key].errors?.['futureDate']) errorMessage += '- Issue date cannot be in the future\n';
+            break;
+          case 'montantTotal':
+            if (controls[key].errors?.['required']) errorMessage += '- Total amount is required\n';
+            if (controls[key].errors?.['min']) errorMessage += '- Total amount must be positive\n';
+            break;
+          case 'livraison':
+            if (controls[key].errors?.['required']) errorMessage += '- Delivery not selected\n';
+            if (controls[key].errors?.['invalidDate']) errorMessage += '- Invalid delivery date\n';
+            break;
         }
       }
+    }
+// ...existing code...
 
       this.dialog.open(ErrorDialogComponent, {
         width: '400px',
@@ -380,7 +382,7 @@ factureForm!: FormGroup;
     // Création de la facture
     this.factureService.add(this.factureForm.value).subscribe({
       next: (response) => {
-        this.snackBar.open('Facture créée avec succès', 'Fermer', {
+        this.snackBar.open('Invoice created successfully', 'Close', {
           duration: 3000,
           panelClass: ['success-snackbar']
         });
@@ -388,11 +390,11 @@ factureForm!: FormGroup;
         this.loadFactures();
       },
       error: (error) => {
-        let errorMsg = 'Erreur lors de la création: ';
+        let errorMsg = 'Error during creation: ';
         if (error.error?.message) {
           errorMsg += error.error.message;
         } else {
-          errorMsg += 'Une erreur inattendue s\'est produite';
+          errorMsg += 'An unexpected error occurred';
         }
         
         this.dialog.open(ErrorDialogComponent, {

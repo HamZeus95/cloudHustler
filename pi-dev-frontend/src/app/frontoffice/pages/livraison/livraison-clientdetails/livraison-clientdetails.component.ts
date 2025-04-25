@@ -38,26 +38,22 @@ export class LivraisonClientdetailsComponent implements OnInit {
     });
   }
 
+  updateLivraisonStatus(status: string) {
+    if (!this.livraisonDetails) return;
+    
+    const updatedLivraison = {
+      ...this.livraisonDetails,
+      statut: status // Using English status values: 'PENDING', 'IN_TRANSIT', 'DELIVERED'
+    };
+    // ...existing code...
+  }
+
   annulerLivraison() {
-    if (this.livraisonDetails && this.livraisonDetails.statut.toUpperCase() === 'EN ATTENTE') {
-      // Créer une copie de l'objet avec le nouveau statut
-      const updatedLivraison = { ...this.livraisonDetails, statut: 'ANNULÉE' };
-      
-      // Utiliser la méthode update existante
-      this.livraisonService.update(this.livraisonDetails.id, updatedLivraison).subscribe({
-        next: (response) => {
-          this.livraisonDetails = response;
-          alert('La livraison a été annulée avec succès');
-        },
-        error: (error) => {
-          console.error('Erreur lors de l\'annulation:', error);
-          alert('Erreur lors de l\'annulation de la livraison');
-        }
-      });
-    } else {
-      alert('Impossible d\'annuler cette livraison. Elle n\'est pas en attente.');
+    if (this.livraisonDetails && this.livraisonDetails.id) {
+      this.updateLivraisonStatus('CANCELLED');
     }
   }
+
   predictDelay(livraison: Livraison) {
       this.predictionService.predictDelay(livraison).subscribe(
         (isDelayed) => {
@@ -109,19 +105,21 @@ export class LivraisonClientdetailsComponent implements OnInit {
               longitude: position.coords.longitude
             });
           },
-          (error) => {
-            let errorMessage = 'Erreur de géolocalisation';
-            switch(error.code) {
-              case error.TIMEOUT:
-                errorMessage = 'Délai de géolocalisation dépassé';
-                break;
-              case error.POSITION_UNAVAILABLE:
-                errorMessage = 'Position non disponible';
-                break;
-              case error.PERMISSION_DENIED:
-                errorMessage = 'Permission de géolocalisation refusée';
-                break;
-            }
+          // ...existing code...
+(error) => {
+  let errorMessage = 'Geolocation error';
+  switch(error.code) {
+      case error.TIMEOUT:
+          errorMessage = 'Geolocation timeout';
+          break;
+      case error.POSITION_UNAVAILABLE:
+          errorMessage = 'Position unavailable';
+          break;
+      case error.PERMISSION_DENIED:
+          errorMessage = 'Geolocation permission denied';
+          break;
+  }
+// ...existing code...
             reject(new Error(errorMessage));
           },
           options
@@ -135,25 +133,27 @@ export class LivraisonClientdetailsComponent implements OnInit {
     etaMap: { [key: number]: number } = {}; // Stocker les ETA pour chaque livraison
 // Ajoutez cette méthode à votre composant
 formatEta(minutes: number): string {
-  if (!minutes) return 'Calcul en cours...';
+  if (!minutes) return 'Calculating...';
   
   const now = new Date();
   const arrivalTime = new Date(now.getTime() + minutes * 60000);
   
   // Formatage : "Aujourd'hui à 14:30" ou "Demain à 09:15"
-  if (arrivalTime.getDate() === now.getDate()) {
-    return `Aujourd'hui à ${arrivalTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
-  } else if (arrivalTime.getDate() === now.getDate() + 1) {
-    return `Demain à ${arrivalTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
-  } else {
-    return arrivalTime.toLocaleString([], {
+  // ...existing code...
+if (arrivalTime.getDate() === now.getDate()) {
+  return `Today at ${arrivalTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+} else if (arrivalTime.getDate() === now.getDate() + 1) {
+  return `Tomorrow at ${arrivalTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+} else {
+  return arrivalTime.toLocaleString([], {
       weekday: 'short',
       day: 'numeric',
       month: 'short',
       hour: '2-digit',
       minute: '2-digit'
-    });
-  }
+  });
+}
+// ...existing code...
 }
 // Déclarez ces variables en haut de votre composant
 livreurPosition: { latitude: number, longitude: number } | null = null;
@@ -164,7 +164,7 @@ positionUpdateInterval: any;
 startTrackingLivraison() {
   // Vérifiez si une livraison est sélectionnée
   if (!this.livraisonDetails?.deliveryDriver) {
-    this.livreurPositionError = "Aucun livreur assigné";
+    this.livreurPositionError = "No driver assigned";
     return;
   }
 
@@ -223,18 +223,20 @@ private deg2rad(deg: number): number {
 }
 
 // Gestion des erreurs
+// ...existing code...
 getPositionErrorMessage(error: any): string {
   switch(error.code) {
     case error.PERMISSION_DENIED:
-      return "Vous avez refusé l'accès à la géolocalisation";
+      return "You denied access to geolocation";
     case error.POSITION_UNAVAILABLE:
-      return "Position indisponible";
+      return "Position unavailable";
     case error.TIMEOUT:
-      return "Délai de requête dépassé";
+      return "Request timeout";
     default:
-      return "Erreur inconnue lors de la géolocalisation";
+      return "Unknown geolocation error";
   }
 }
+// ...existing code...
 
 // N'oubliez pas de nettoyer l'intervalle
 ngOnDestroy() {
@@ -281,7 +283,7 @@ showOnMap() {
           this.livreurPosition?.longitude ?? 0, 
           this.livreurPosition?.latitude ?? 0
         ])
-        .setPopup(new mapboxgl.Popup().setHTML("<b>Position du livreur</b>"))
+        .setPopup(new mapboxgl.Popup().setHTML("<b>Driver's position</b>"))
         .addTo(map);
 
       // Add destination marker if available

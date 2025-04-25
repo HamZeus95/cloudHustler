@@ -33,25 +33,23 @@
         <i class="fas fa-search search-icon"></i>
         <input 
           type="text" 
-          placeholder="                   Rechercher une facture..." 
+          placeholder="Search for an invoice..." 
           [(ngModel)]="searchTerm"
           (input)="filterFactures(searchTerm)" 
           class="search-input"
         />
       </div>
       <button class="ajouter-button" (click)="openModal()">
-        <i class="fas fa-plus"></i> Ajouter une facture
+        <i class="fas fa-plus"></i> Add Invoice
       </button>
     
-      <!-- Bouton pour ouvrir la fenêtre modale -->
-       
       <div *ngIf="isModalOpen" class="modal-overlay" (click)="closeModal()">
         <div class="modal-content" (click)="$event.stopPropagation()">
-          <p class="titre-facture"><strong>Ajouter une facture</strong></p>
+          <p class="titre-facture"><strong>Add Invoice</strong></p>
           <form [formGroup]="factureForm" (ngSubmit)="onSubmit()">
-            <!-- Date d'émission -->
+            <!-- Issue Date -->
             <div class="form-group">
-              <label for="dateEmission">Date d'émission*</label>
+              <label for="dateEmission">Issue Date*</label>
               <input
                 type="date"
                 id="dateEmission"
@@ -63,18 +61,16 @@
               <div *ngIf="factureForm.get('dateEmission')?.invalid && 
                          (factureForm.get('dateEmission')?.touched || factureForm.get('dateEmission')?.dirty)" 
                    class="error-message">
-                <small *ngIf="factureForm.get('dateEmission')?.errors?.['required']">Date requise</small>
-                <!--small *ngIf="factureForm.get('dateEmission')?.errors?.['futureDate']">La date ne peut pas être dans le futur</small>
-                <small *ngIf="factureForm.get('dateEmission')?.errors?.['futureDate']">La date ne peut pas être dans le futur</small-->
+                <small *ngIf="factureForm.get('dateEmission')?.errors?.['required']">Date required</small>
                 <small *ngIf="factureForm.get('dateEmission')?.errors?.['dateMismatch']">
-                  La date d'émission doit être égale à la date de création de la livraison
+                  Issue date must match delivery creation date
                 </small>
               </div>
             </div>
       
-            <!-- Livraison associée -->
+            <!-- Associated Delivery -->
             <div class="form-group">
-              <label for="livraison">Livraison associée*</label>
+              <label for="livraison">Associated Delivery*</label>
               <select
                 id="livraison"
                 formControlName="livraison"
@@ -82,20 +78,20 @@
                 [ngClass]="{ 'is-invalid': factureForm.get('livraison')?.invalid && 
                                (factureForm.get('livraison')?.touched || factureForm.get('livraison')?.dirty) }"
               >
-                
                 <option *ngFor="let livraison of livraisons" [ngValue]="livraison">
-                  Livraison #{{livraison.id}} -  {{livraison.order?.totalPrice}} DT  ({{livraison.dateCreation | date:'dd/MM/yyyy'}})  {{livraison.adresseLivraison}}
+                  Delivery #{{livraison.id}} - {{livraison.order?.totalPrice}} DT ({{livraison.dateCreation | date:'dd/MM/yyyy'}}) {{livraison.adresseLivraison}}
+                </option>
               </select>
               <div *ngIf="factureForm.get('livraison')?.invalid && 
                          (factureForm.get('livraison')?.touched || factureForm.get('livraison')?.dirty)" 
                    class="error-message">
-                <small *ngIf="factureForm.get('livraison')?.errors?.['required']">Livraison requise</small>
+                <small *ngIf="factureForm.get('livraison')?.errors?.['required']">Delivery required</small>
               </div>
             </div>
       
-            <!-- Montant total -->
+            <!-- Total Amount -->
             <div class="form-group">
-              <label for="montantTotal">Montant total*</label>
+              <label for="montantTotal">Total Amount*</label>
               <input
                 id="montantTotal"
                 formControlName="montantTotal"
@@ -103,21 +99,20 @@
                 [ngClass]="{ 'is-invalid': factureForm.get('montantTotal')?.invalid && 
                                (factureForm.get('montantTotal')?.touched || factureForm.get('montantTotal')?.dirty) }"
               >
-             
               <div *ngIf="factureForm.get('montantTotal')?.invalid && 
                          (factureForm.get('montantTotal')?.touched || factureForm.get('montantTotal')?.dirty)" 
                    class="error-message">
-                <small *ngIf="factureForm.get('montantTotal')?.errors?.['required']">Montant requis</small>
-                <small *ngIf="factureForm.get('montantTotal')?.errors?.['min']">Le montant doit être positif</small>
+                <small *ngIf="factureForm.get('montantTotal')?.errors?.['required']">Amount required</small>
+                <small *ngIf="factureForm.get('montantTotal')?.errors?.['min']">Amount must be positive</small>
                 <small *ngIf="factureForm.get('montantTotal')?.errors?.['totalPriceMismatch']">
-                  Le montant doit correspondre au total de la livraison ({{ factureForm.get('livraison')?.value?.ordre?.totalPrice }} DT)
+                  Amount must match delivery total ({{ factureForm.get('livraison')?.value?.ordre?.totalPrice }} DT)
                 </small>
               </div>
             </div>
       
-            <!-- Statut -->
+            <!-- Status -->
             <div class="form-group">
-              <label for="statut">Statut*</label>
+              <label for="statut">Status*</label>
               <select
                 id="statut"
                 formControlName="statut"
@@ -125,28 +120,28 @@
                 [ngClass]="{ 'is-invalid': factureForm.get('statut')?.invalid && 
                                (factureForm.get('statut')?.touched || factureForm.get('statut')?.dirty) }"
               >
-                <option value="EN ATTENTE">En attente</option>
-                <!--option value="PAYÉE">Payée</option>
-                <option value="ANNULÉE">Annulée</option-->
+                <option value="EN ATTENTE">Pending</option>
+                <option value="PAYÉE">Paid</option>
+                <option value="ANNULÉE">Cancelled</option>
               </select>
               <div *ngIf="factureForm.get('statut')?.invalid && 
                          (factureForm.get('statut')?.touched || factureForm.get('statut')?.dirty)" 
                    class="error-message">
-                <small *ngIf="factureForm.get('statut')?.errors?.['required']">Statut requis</small>
-                <small *ngIf="factureForm.get('statut')?.errors?.['invalidStatus']">Statut invalide</small>
+                <small *ngIf="factureForm.get('statut')?.errors?.['required']">Status required</small>
+                <small *ngIf="factureForm.get('statut')?.errors?.['invalidStatus']">Invalid status</small>
               </div>
             </div>
-      
+
             <div *ngIf="factureForm.invalid && factureForm.touched" class="error-message">
-              <p>Veuillez corriger les erreurs avant de soumettre</p>
+              <p>Please fill in all required fields correctly</p>
             </div>
             
             <div class="form-group">
               <button type="submit" class="action-button" [disabled]="factureForm.invalid">
-                Enregistrer
+                Save
               </button>
               <button type="button" class="action-button" (click)="closeModal()">
-                Annuler
+                Cancel
               </button>
             </div>
           </form>
@@ -155,7 +150,7 @@
     </div>
     <div class="status-cards-container">
       <div class="status-card">
-        <h6>Payées</h6>
+        <h6>Paid</h6>
         <div class="status-content">
           <div class="status-info">
             <div class="status-count">{{ counts.payee }}</div>
@@ -164,14 +159,13 @@
           <canvas baseChart
                   [data]="getMiniChartData(counts.payee)"
                   [type]="miniChartType"
-                  [options]="miniChartOptions"
-                  >
+                  [options]="miniChartOptions">
           </canvas>
         </div>
       </div>
     
       <div class="status-card">
-        <h6>En attente</h6>
+        <h6>Pending</h6>
         <div class="status-content">
           <div class="status-info">
             <div class="status-count">{{ counts.enAttente }}</div>
@@ -180,14 +174,13 @@
           <canvas baseChart
                   [data]="getMiniChartData(counts.enAttente)"
                   [type]="miniChartType"
-                  [options]="miniChartOptions"
-                  >
+                  [options]="miniChartOptions">
           </canvas>
         </div>
       </div>
     
       <div class="status-card">
-        <h6>Annulées</h6>
+        <h6>Cancelled</h6>
         <div class="status-content">
           <div class="status-info">
             <div class="status-count">{{ counts.annulee }}</div>
@@ -196,8 +189,7 @@
           <canvas baseChart
                   [data]="getMiniChartData(counts.annulee)"
                   [type]="miniChartType"
-                  [options]="miniChartOptions"
-                  >
+                  [options]="miniChartOptions">
           </canvas>
         </div>
       </div>
@@ -206,79 +198,60 @@
       <table>
         <thead>
           <tr>
-            <th>Facture ID</th>
-            <th>Livraison ID</th>
+            <th>Invoice ID</th>
+            <th>Delivery ID</th>
             <th>Status</th>
-            <!--th>Delivery Rating</th-->
-            <!--th>Customer</th-->
-            <th>Montant Total</th>
-            <th>Date Emission</th>
+            <th>Total Amount</th>
+            <th>Issue Date</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let facture of paginatedFactures">
-            <td>FAC {{ facture.id }}</td>
-            <td>LIV {{ facture.livraison?.id }}</td>
+            <td>INV {{ facture.id }}</td>
+            <td>DEL {{ facture.livraison?.id }}</td>
             <td>
-              <span
-                class="badge"
+              <span class="badge"
                 [ngClass]="{
-                  'EN_ATTENTE': (facture.statut?.toUpperCase() ?? '')  === 'EN ATTENTE',
+                  'EN_ATTENTE': (facture.statut?.toUpperCase() ?? '') === 'EN ATTENTE',
                   'PAYÉ': (facture.statut?.toUpperCase() ?? '') === 'PAYÉE',
                   'ANNULÉ': (facture.statut?.toUpperCase() ?? '') === 'ANNULÉE'
-                }"
-              >
+                }">
                 {{ facture.statut }}
               </span>
             </td>
-            <!--td>
-              <img [src]="facture.customerAvatar" width="30" height="30" style="border-radius: 50%" />
-            </td-->
+            <td>{{ facture.montantTotal }} DT</td>
+            <td>{{ facture.dateEmission | date:'dd/MM/yyyy' }}</td>
             <td>
-              {{ facture.montantTotal }} DT
-            </td>
-            <td>
-              {{ facture.dateEmission }} 
-            </td>
-            <td>
-              <button class="action-button"  mat-raised-button [routerLink]="['/backoffice/facture', facture.id]" >View Details</button>    
-              
-              <button class="delete-button" style="margin-left: 8px;" (click)="$event.stopPropagation(); facture.id && supprimerFacture(facture.id)">  <mat-icon>delete</mat-icon>  
+              <button class="action-button" mat-raised-button [routerLink]="['/backoffice/facture', facture.id]">View Details</button>    
+              <button class="delete-button" style="margin-left: 8px;" (click)="$event.stopPropagation(); facture.id && supprimerFacture(facture.id)">
+                <mat-icon>delete</mat-icon>  
               </button>
             </td>
           </tr>
           <tr *ngIf="paginatedFactures.length === 0">
-            <td colspan="6" class="text-center">Aucune facture disponible</td>
+            <td colspan="6" class="text-center">No invoices available</td>
           </tr>
         </tbody>
-        
       </table>
     </div>
   </div>
 
   <nav *ngIf="filteredFactures.length > itemsPerPage">
     <ul class="pagination justify-content-center mt-3">
-  
-      <!-- Précédent -->
       <li class="page-item" [class.disabled]="currentPage === 1">
         <button class="page-link" (click)="currentPage = currentPage - 1">&lt;</button>
       </li>
-  
-      <!-- Boutons des pages -->
-      <li 
-        class="page-item"
-        *ngFor="let page of totalPages"
-        [class.active]="currentPage === page"
-      >
+      
+      <li class="page-item"
+          *ngFor="let page of totalPages"
+          [class.active]="currentPage === page">
         <button class="page-link" (click)="currentPage = page">{{ page }}</button>
       </li>
-  
-      <!-- Suivant -->
+      
       <li class="page-item" [class.disabled]="currentPage === totalPages.length">
         <button class="page-link" (click)="currentPage = currentPage + 1">&gt;</button>
       </li>
-  
     </ul>
   </nav>
   

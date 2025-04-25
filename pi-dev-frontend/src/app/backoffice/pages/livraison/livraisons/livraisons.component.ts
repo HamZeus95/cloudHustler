@@ -32,7 +32,7 @@ export class LivraisonComponent implements OnInit {
 
   newlivraison: Livraison = {
     id: 0,
-    statut: 'En attente', // Valeur par défaut valide
+    statut: 'Pending', // Valeur par défaut valide
     dateCreation: '',
     adresseLivraison: '',
     dateLivraison: '',
@@ -75,7 +75,7 @@ export class LivraisonComponent implements OnInit {
   };
 
   public pieChartData: ChartConfiguration['data'] = {
-    labels: ['livree', 'En attente', 'En transit'],
+    labels: ['Delivered', 'Pending', 'In Transit'],
     datasets: [{
       data: [0, 0, 0],
       backgroundColor: ['#28a745', '#ffc107', '#dc3545'],
@@ -112,7 +112,7 @@ export class LivraisonComponent implements OnInit {
         Validators.required,
         Validators.minLength(5)
       ]],
-      statut: ['EN ATTENTE'], // Ne pas désactiver si requis
+      statut: ['Pending'], // Ne pas désactiver si requis
       deliveryDriver: [null, Validators.required],
       order: [null, Validators.required]
     });
@@ -172,7 +172,7 @@ export class LivraisonComponent implements OnInit {
   }
 
   supprimerlivraison(id: number): void {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette livraison ?')) {
+    if (confirm('Are you sure you want to delete this delivery?')) {
       this.livraisonService.delete(id).subscribe({
         next: () => {
           this.loadlivraisons();
@@ -186,7 +186,7 @@ export class LivraisonComponent implements OnInit {
   resetNewlivraison() {
     this.newlivraison = {
       id: 0,
-      statut: 'En attente', // Valeur par défaut valide
+      statut: 'Pending', // Valeur par défaut valide
       dateCreation: '',
       adresseLivraison: '',
       dateLivraison: '',
@@ -320,7 +320,7 @@ export class LivraisonComponent implements OnInit {
     
     const livraison: Livraison = {
       ...formValue,
-      statut: 'EN ATTENTE',
+      statut: 'Pending',
       dateCreation: new Date().toISOString() // This will be overwritten by backend
     };
 
@@ -334,7 +334,7 @@ export class LivraisonComponent implements OnInit {
     } else {
       this.livraisonService.create(this.livraisonForm.value).subscribe({
         next: (response) => {
-          this.snackBar.open('Livraison créée avec succès', 'Fermer', {
+          this.snackBar.open('Delivery created successfully', 'Close', {
             duration: 3000,
             panelClass: ['success-snackbar']
           });
@@ -342,11 +342,11 @@ export class LivraisonComponent implements OnInit {
           this.loadlivraisons();
         },
         error: (error) => {
-          let errorMsg = 'Erreur lors de la création: ';
+          let errorMsg = 'Error during creation: ';
           if (error.error?.message) {
             errorMsg += error.error.message;
           } else {
-            errorMsg += 'Une erreur inattendue s\'est produite';
+            errorMsg += 'An unexpected error occurred';
           }
           
           this.dialog.open(ErrorDialogComponent, {

@@ -45,7 +45,7 @@ export class DetailsLivraisonComponent {
         dateCreation: new Date().toISOString(),
         dateLivraison: new Date().toISOString(),
         adresseLivraison: '',
-        statut: 'En attente', // Replace 'Pending' with a valid LivraisonStatus value
+        statut: 'Pending', // Replace 'Pending' with a valid LivraisonStatus value
        // dateEmission: new Date().toISOString(),
        // montantTotal: 0,
        // totalPrice: 0
@@ -60,8 +60,8 @@ export class DetailsLivraisonComponent {
           this.initForm(); // Initialize form after getting data
         },
         error: (error) => {
-          console.error('Erreur lors du chargement:', error);
-          this.snackBar.open('Erreur lors du chargement de la livraison', 'Fermer', { duration: 3000 });
+          console.error('Error while loading:', error);
+          this.snackBar.open('Error loading delivery', 'Close', { duration: 3000 });
         }
       });
     } else {
@@ -156,7 +156,7 @@ export class DetailsLivraisonComponent {
 
   saveChanges(): void {
     if (!this.livraison || !this.editForm || this.editForm.invalid) {
-      this.snackBar.open('Veuillez corriger les erreurs dans le formulaire', 'Fermer', { duration: 3000 });
+      this.snackBar.open('Please correct the form errors', 'Close', { duration: 3000 });
       return;
     }
   
@@ -169,7 +169,7 @@ export class DetailsLivraisonComponent {
       ...this.livraison,
       dateLivraison: formValue.dateLivraison,
       adresseLivraison: formValue.adresseLivraison,
-      statut: formValue.statut,
+      statut: formValue.statut, // Will be one of: 'PENDING', 'IN_TRANSIT', 'DELIVERED'
       deliveryDriver: selectedDriver
     };
   
@@ -178,12 +178,12 @@ export class DetailsLivraisonComponent {
         this.livraison = result;
         this.isEditing = false;
         this.isSaving = false;
-        this.snackBar.open('Livraison mise à jour avec succès', 'OK', { duration: 3000 });
+        this.snackBar.open('Delivery updated successfully', 'OK', { duration: 3000 });
       },
       error: (error) => {
-        console.error('Erreur lors de la mise à jour:', error);
+        console.error('Error while updating:', error);
         this.isSaving = false;
-        this.snackBar.open('Erreur lors de la mise à jour', 'Fermer', { duration: 3000 });
+        this.snackBar.open('Error while updating', 'Close', { duration: 3000 });
       }
     });
   }
