@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -23,14 +24,8 @@ public class Ressource {
     private String unit;
     private double cost;
 
-
-
-    //@ManyToOne
-    //ResourceCat resourceCat;
-
+    @JsonIgnore
     @ManyToOne
-    Farm farm;
-
-
-
+    @JoinColumn(name = "farm_id")
+    private Farm farm;
 }

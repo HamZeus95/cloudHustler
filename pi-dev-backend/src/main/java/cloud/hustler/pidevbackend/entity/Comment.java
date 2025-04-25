@@ -1,8 +1,11 @@
 package cloud.hustler.pidevbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.UUID;
@@ -22,14 +25,24 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
-    UUID uuid_comment;
+    UUID commentId;
     String content;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     Date createdAt;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     Date updatedAt;
 
 
     @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "post_uuid", nullable = false)
     Post post;
+
+
 
 
 

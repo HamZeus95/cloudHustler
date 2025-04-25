@@ -1,60 +1,73 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { NavbarComponent } from './navbar/navbar.component';
-import { FooterComponent } from './footer/footer.component';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { MarketComponent } from './market/market.component';
-import { BlogComponent } from './blog/blog.component';
-import { EventComponent } from './event/event.component';
-import { JobsComponent } from './jobs/jobs.component';
-import { ContactComponent } from './contact/contact.component';
+import { CommonModule } from "@angular/common";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { NgModule } from "@angular/core";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatIconModule } from "@angular/material/icon";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterModule } from "@angular/router";
+import { NgChartsModule } from "ng2-charts";
+import { DialogModule } from "primeng/dialog";
+import { AppRoutingModule } from "./app-routing.module";
+import { JwtModule } from "@auth0/angular-jwt";
+import { AppComponent } from "./app.component";
+import { JwtInterceptor } from "./auth/interceptors/jwt";
+import { OAuth2RedirectComponent } from "./auth/oauth2/oauth2-redirect.component";
+import { TokenStorageService, AuthService } from "./auth/service";
+import { BackofficeModule } from "./backoffice/backoffice.module";
+import { FrontofficeModule } from "./frontoffice/frontoffice.module";
+import { ErrorDialogComponent } from "./shared/components/error-dialog/error-dialog.component";
 
 
-import { ServiceRequestsService } from './services/service-requests.service';
-import { ServiceeService } from './services/servicee.service';
-import { JobRequestsComponent } from './job-requests/job-requests.component';
-import { DashboardRoutingModule } from './dashboard/dashboard-routing.module';
-import { JobFormComponent } from './job-requests/job-form/job-form.component';
-import { JobsRequestsDashboardComponent } from './dashboard/jobs-requests-dashboard/jobs-requests-dashboard.component';
-import { DipslayComponent } from './dipslay/dipslay.component';
-import { EmailJobsComponent } from './email-jobs/email-jobs.component';
-   
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    FooterComponent,
-    HomeComponent,
-    AboutComponent,
-    NotFoundComponent,
-    MarketComponent,
-    BlogComponent,
-    EventComponent,
-    JobsComponent,
-    ContactComponent,
-    JobRequestsComponent,
-    JobFormComponent,
-    JobsRequestsDashboardComponent,
-    DipslayComponent,
-    EmailJobsComponent,
-      
-     ],
+    OAuth2RedirectComponent,
+    ErrorDialogComponent
+  ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DashboardRoutingModule
+    FormsModule,
+    RouterModule,
+    FrontofficeModule,
+    BackofficeModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    MatIconModule,
+    NgChartsModule,
+    DialogModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => { return null; },
+        allowedDomains: ["localhost:4200"],
+        disallowedRoutes: [
+          "/api/v1/auth/authenticate",
+          "/api/v1/auth/register",
+          "/api/v1/auth/refresh-token",
+          "/api/v1/auth/logout",
+          "/api/v1/auth/validate-session"
+        ]
+      }
+    })
   ],
-  providers: [ServiceeService,ServiceRequestsService],
+  providers: [
+    TokenStorageService,
+    AuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

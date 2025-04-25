@@ -1,0 +1,83 @@
+<!-- No Posts Message -->
+<p *ngIf="posts.length === 0" class="no-posts-message">Aucun post à afficher.</p>
+
+<!-- List View Container -->
+<div class="list-view-container bg-gray-100">
+  <h2 class="section-title">
+    <span class="title-text">Liste des posts</span>
+    <span class="title-count">{{ totalPosts }} post{{ totalPosts !== 1 ? 's' : '' }}</span>
+  </h2>
+
+  <!-- Post List Item -->
+  <div class="post-list-item" *ngFor="let post of paginatedPosts">
+    <div class="post-content-wrapper">
+      <!-- Post Image (Left Side) -->
+      <div class="post-image-container" *ngIf="post.mediaUrl && isImage(post.mediaUrl)">
+        <img [src]="post.mediaUrl" 
+             alt="Post image"
+             class="post-image-list"
+             (error)="handleImageError($event)">
+      </div>
+      
+      <!-- Post Content (Middle) -->
+      <div class="post-content-main">
+        <div class="post-header">
+          <h3 class="post-title">{{ post.title || 'Sans titre' }}</h3>
+          <span class="post-date">{{ post.createdAt | date:'medium' }}</span>
+        </div>
+        <p class="post-excerpt">{{ (post.content || '').slice(0, 200) }}{{ ((post.content || '').length > 200) ? '...' : '' }}</p>
+      </div>
+      
+      <!-- Post Actions (Right Side) -->
+      <div class="post-actions-list" (click)="$event.stopPropagation()">
+        <div class="action-buttons">
+          <button (click)="deletePost(post.idPost)" 
+                  class="delete-btn"
+                  *ngIf="post.idPost"
+                  matTooltip="Supprimer le post"
+                  aria-label="Supprimer le post">
+            <i class="fas fa-trash"></i>
+            <span class="delete-text">Supprimer</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <app-comment-back [postId]="post.idPost || ''"></app-comment-back>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="pagination-controls" *ngIf="posts.length > 0">
+    <button (click)="previousPage()" 
+            [disabled]="currentPage === 1" 
+            class="pagination-button">
+      <i class="fas fa-chevron-left"></i> Précédent
+    </button>
+    
+    <span class="page-numbers">
+      <button *ngFor="let page of getPageNumbers()" 
+              (click)="goToPage(page)"
+              [class.active]="page === currentPage"
+              class="page-number">
+        {{ page }}
+      </button>
+    </span>
+    
+    <button (click)="nextPage()" 
+            [disabled]="currentPage === totalPages" 
+            class="pagination-button">
+      Suivant <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+  
+
+</div>
+<div *ngIf="posts.length > 0" class="stats-section">
+  <h3 class="section-title">Statistiques des publications</h3>
+  
+  <!-- Composant de statistiques -->
+  <app-stats 
+    *ngIf="posts && comments"
+    [posts]="filteredPostsWithDates()" 
+    [comments]="validComments()">
+  </app-stats>
+</div>

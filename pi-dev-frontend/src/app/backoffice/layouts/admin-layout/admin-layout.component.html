@@ -1,0 +1,19 @@
+<div class="g-sidenav-show bg-gray-100">
+  <!-- Background image with blur effect -->
+ <app-banner></app-banner>
+  
+  <!-- Sidebar -->
+  <app-side-bar></app-side-bar>
+  
+  <!-- Main content -->
+  <main class="main-content position-relative border-radius-lg">
+    <!-- Navbar -->
+    <app-navbar></app-navbar>
+    
+    <!-- Content container -->
+    <div class="container-fluid py-4">
+      <!-- This is where page content will be projected -->
+      <ng-content></ng-content>
+    </div>
+  </main>
+</div>

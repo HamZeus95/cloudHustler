@@ -1,0 +1,46 @@
+.fixed-plugin .fixed-plugin-button {
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    cursor: pointer;
+  }
+  
+  .fixed-plugin .card {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 300px;
+    z-index: 1000;
+  }
+  
+  .fixed-plugin .card.show {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+    display: block !important;
+  }
+  
+  .fixed-plugin .card {
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .fixed-plugin .badge-colors .badge {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  
+  .fixed-plugin .badge-colors .badge.active {
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  .fixed-plugin .horizontal.dark {
+    background: #344767;
+  }

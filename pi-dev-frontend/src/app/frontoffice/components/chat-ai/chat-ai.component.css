@@ -1,0 +1,121 @@
+/* Version compacte du chatbot */
+:root {
+    --primary-color: #4285f4;
+    --secondary-color: #269744;
+    --background-color: #f5f5f5;
+    --user-message-color: #e3f2fd;
+    --ai-message-color: #f1f1f1;
+    --text-color: #333;
+    --light-text: #666;
+    --border-radius: 8px;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chat-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 400px;
+    height: auto;
+    max-height: 500px;
+    background-color: white;
+    box-shadow: var(--shadow);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+/* En-tête compact */
+.chat-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+}
+
+.chat-header h2 {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.ai-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: white;
+    margin-left: 8px;
+}
+
+/* Historique de chat compact */
+.chat-history {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 300px;
+    background-color: var(--background-color);
+}
+
+/* Messages compacts */
+.user-message, .ai-message {
+    max-width: 80%;
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+}
+
+.message-time {
+    font-size: 0.65rem;
+}
+
+/* Zone de saisie compacte */
+.input-area {
+    display: flex;
+    padding: 10px;
+    background-color: white;
+    border-top: 1px solid #e0e0e0;
+}
+
+.input-area textarea {
+    flex: 1;
+    padding: 8px;
+    font-size: 0.9rem;
+    min-height: 40px;
+    max-height: 100px;
+}
+
+.input-area button {
+    padding: 0 15px;
+    min-width: 40px;
+}
+
+/* État minimisé */
+.chat-minimized {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+}
+
+.chat-minimized svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+}
+
+/* Animation de chargement */
+.spinner {
+    width: 16px;
+    height: 16px;
+    border-width: 2px;
+}

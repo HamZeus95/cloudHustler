@@ -1,42 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-import { AboutComponent } from './about/about.component';
-import { HomeComponent } from './home/home.component';
-import { MarketComponent } from './market/market.component';
-import { BlogComponent } from './blog/blog.component';
-import { EventComponent } from './event/event.component';
-import { JobsComponent } from './jobs/jobs.component';
-import { ContactComponent } from './contact/contact.component';
-import { NotFoundComponent } from './not-found/not-found.component';
- import { JobRequestsComponent } from './job-requests/job-requests.component';
-import { JobsRequestsDashboardComponent } from './dashboard/jobs-requests-dashboard/jobs-requests-dashboard.component';
-import { DipslayComponent } from './dipslay/dipslay.component';
-import { EmailJobsComponent } from './email-jobs/email-jobs.component';
-import { FrontTakeQuizComponent } from './dashboard/jobs-dashboard/quiz/front-take-quiz/front-take-quiz.component';
- 
+// Import AuthGuard correctly with the default import
+import AuthGuard from './auth/guards/auth.guard'; 
+import { OAuth2RedirectComponent } from './auth/oauth2/oauth2-redirect.component';
+
 const routes: Routes = [
+  {
+    path: 'oauth2/redirect',
+    component: OAuth2RedirectComponent
+  },
   
-  {path:"about",component:AboutComponent},
-  {path:"home",component:HomeComponent},
-  {path:'market', component: MarketComponent},
-  {path: 'blog', component: BlogComponent},
-  {path:'event',component:EventComponent},
-  {path:'jobs',component:JobsComponent},
-  {path:'contact',component:ContactComponent},
-  {path: 'not-found', component: NotFoundComponent},
-   { path: 'job-request/:jobId', component: JobRequestsComponent },
-   {path:'jobsRequests', component:JobsRequestsDashboardComponent},
-   { path: 'display-cv/:cvurl', component: DipslayComponent },
-   { path: 'Email', component: EmailJobsComponent },
+  {
+    path: 'backoffice',
+    loadChildren: () => import('./backoffice/backoffice.module').then(m => m.BackofficeModule),
+    canActivate: [AuthGuard],
+  },
 
-      { path: 'take-quiz/:id', component: FrontTakeQuizComponent }, // Front-office quiz
+  {
+    path: 'frontoffice',
+    loadChildren: () => import('./frontoffice/frontoffice.module').then(m => m.FrontofficeModule)
+  },
 
-
-   
- {path: 'farms', loadChildren: () => import('./farms/farms.module').then(m => m.FarmsModule)},  
-  {path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
-  {path: '',redirectTo: 'home',pathMatch: 'full'},
+  {path: '',redirectTo: 'frontoffice',pathMatch: 'full'}, 
   {path: '**', redirectTo: 'not-found'},
 ];
 
@@ -44,6 +29,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {
-  
- }
+export class AppRoutingModule { }

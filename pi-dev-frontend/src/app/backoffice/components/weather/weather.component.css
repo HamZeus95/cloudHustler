@@ -1,0 +1,124 @@
+/* src/app/components/weather/weather.component.css */
+.weather-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #81aced, #5ba9f8);
+    color: white;
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    margin: 10px 0;
+  }
+  
+  .weather-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .weather-header h3 {
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: 500;
+  }
+  
+  .weather-stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .stat-box {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    padding: 12px;
+    flex: 1;
+    min-width: 110px;
+    text-align: center;
+    transition: transform 0.2s ease;
+  }
+  
+  .stat-box:hover {
+    transform: translateY(-3px);
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+  
+  .stat-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+    margin-bottom: 5px;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  
+  .stat-description {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    margin-top: 5px;
+    text-transform: capitalize;
+  }
+  
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .loading-spinner {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 3px solid white;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+    background-color: rgba(255, 99, 71, 0.3);
+    border-radius: 6px;
+  }
+  
+  .error-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .weather-icon img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  /* Make sure the component is responsive */
+  @media (max-width: 768px) {
+    .weather-stats {
+      flex-direction: column;
+    }
+    
+    .stat-box {
+      width: 100%;
+    }
+  }

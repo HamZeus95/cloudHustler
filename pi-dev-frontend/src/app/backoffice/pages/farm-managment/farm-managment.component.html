@@ -1,0 +1,13 @@
+<app-admin-layout>
+  <app-dashboard-cards [farms]="farms" [crops]="crops" [expenses]="totalExpenses" [resources]="ressources"></app-dashboard-cards>
+  <div style="height: 20px;"></div>
+  <app-farm-table [farms]="farms"></app-farm-table>
+  <div class="row mt-4">
+    <div class="col-lg-7 mb-lg-0 mb-4">
+      <!-- <app-chart [farms]="farms"></app-chart> -->
+    </div>
+    <div class="col-lg-5">
+      <!-- <app-carousel></app-carousel> -->
+    </div>
+  </div>
+</app-admin-layout>

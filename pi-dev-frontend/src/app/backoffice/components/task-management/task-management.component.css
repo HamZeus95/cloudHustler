@@ -1,0 +1,61 @@
+@media (min-width: 1024px) {
+  .main-content {
+    margin-left: 280px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .main-content {
+    margin-left: 0;
+  }
+}
+
+.task-column {
+  min-height: 200px;
+  background: #f8f9fa;
+  border-radius: 0 0 0.25rem 0.25rem;
+  padding: 1rem;
+}
+
+.task-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: move;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-card.cdk-drag-preview {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  opacity: 0.9;
+}
+
+.task-column.cdk-drop-list-dragging .task-card:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.placeholder {
+  padding: 1rem;
+}
+
+.card-header {
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.modal-backdrop {
+  opacity: 0.5;
+}
+
+.modal.show {
+  background: rgba(0, 0, 0, 0.5);
+}

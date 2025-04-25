@@ -1,0 +1,16 @@
+ @import '~bs-stepper/dist/css/bs-stepper.min.css';
+ .input-group-text {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0.438rem 1rem;
+  }
+  
+  .form-password-toggle .input-group-text {
+    cursor: pointer;
+  }
+  
+  .form-password-toggle .input-group-text i {
+    font-size: 1.2rem;
+    line-height: 1.75;
+  }
