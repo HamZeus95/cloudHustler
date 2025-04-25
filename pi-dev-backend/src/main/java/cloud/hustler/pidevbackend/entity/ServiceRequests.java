@@ -33,6 +33,9 @@ public class ServiceRequests {
     @ManyToMany(mappedBy = "serviceRequests")
     Set<User> users_applying= new HashSet<>();
 
+    Float score=0f;
+
+
 
 
 

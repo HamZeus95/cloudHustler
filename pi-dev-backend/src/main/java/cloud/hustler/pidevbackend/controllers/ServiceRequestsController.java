@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.controllers;
 
+import cloud.hustler.pidevbackend.DTO.ServiceRequestRequestBody;
 import cloud.hustler.pidevbackend.entity.ServiceRequests;
 import cloud.hustler.pidevbackend.entity.TypeStatus;
 import cloud.hustler.pidevbackend.service.IServiceRequestsService;
@@ -30,12 +31,16 @@ public class ServiceRequestsController {
     }
 
     @PostMapping("/submit")
-    public ResponseEntity<ServiceRequests> createServiceRequest(@RequestBody ServiceRequests serviceRequest) {
-        
-        return new ResponseEntity<>(serviceRequestsService.createServiceRequest(serviceRequest), HttpStatus.CREATED);
-    }
+    public ResponseEntity<ServiceRequests> createServiceRequest(@RequestBody ServiceRequestRequestBody body) {
 
-    @PutMapping("/{id}")
+        
+        return new ResponseEntity<>(serviceRequestsService.createServiceRequest(body), HttpStatus.CREATED);
+    }
+    @PutMapping("updateScore/{id}/{score}")
+    public ResponseEntity<ServiceRequests> updateServiceRequestScore(@PathVariable UUID id,@PathVariable Float score ) {
+        return new ResponseEntity<>(serviceRequestsService.updateScore(id,score),HttpStatus.OK);
+    }
+    @PutMapping("update/{id}")
     public ResponseEntity<ServiceRequests> updateServiceRequest(@PathVariable UUID id, @RequestBody ServiceRequests serviceRequest) {
         return new ResponseEntity<>(serviceRequestsService.updateServiceRequest(id, serviceRequest), HttpStatus.OK);
     }

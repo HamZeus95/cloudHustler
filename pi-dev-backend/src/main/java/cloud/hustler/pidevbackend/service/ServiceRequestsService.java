@@ -1,7 +1,10 @@
 package cloud.hustler.pidevbackend.service;
 
+import cloud.hustler.pidevbackend.DTO.ServiceRequestRequestBody;
 import cloud.hustler.pidevbackend.entity.ServiceRequests;
+import cloud.hustler.pidevbackend.entity.Servicee;
 import cloud.hustler.pidevbackend.entity.TypeStatus;
+import cloud.hustler.pidevbackend.repository.ServiceRepository;
 import cloud.hustler.pidevbackend.repository.ServiceRequestsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import java.util.UUID;
 public class ServiceRequestsService implements IServiceRequestsService {
 
     private final ServiceRequestsRepository serviceRequestsRepository;
+    private final ServiceRepository serviceRepository;
 
     @Override
     public List<ServiceRequests> getAllServiceRequests() {
@@ -27,7 +31,14 @@ public class ServiceRequestsService implements IServiceRequestsService {
     }
 
     @Override
-    public ServiceRequests createServiceRequest(ServiceRequests serviceRequest) {
+    public ServiceRequests createServiceRequest(ServiceRequestRequestBody serviceRequestRequestBody) {
+        Servicee service = serviceRepository.findById(serviceRequestRequestBody.getServiceId()).orElseThrow();
+        ServiceRequests serviceRequest = new ServiceRequests();
+        serviceRequest.setServicee(service);
+        serviceRequest.setUploadCv(serviceRequestRequestBody.getUploadCv());
+        serviceRequest.setLettreMotivation(serviceRequestRequestBody.getLettreMotivation());
+        serviceRequest.setStatus(TypeStatus.PENDING);
+
         return serviceRequestsRepository.save(serviceRequest);
     }
 
@@ -52,6 +63,15 @@ public class ServiceRequestsService implements IServiceRequestsService {
     public void deleteServiceRequest(UUID id) {
         ServiceRequests serviceRequest = getServiceRequestById(id);
         serviceRequestsRepository.delete(serviceRequest);
+    }
+
+    @Override
+    public ServiceRequests updateScore(UUID id, Float score) {
+        System.out.println(score);
+        ServiceRequests serviceRequest = getServiceRequestById(id);
+
+        serviceRequest.setScore(score);
+        return serviceRequestsRepository.save(serviceRequest);
     }
 
     //@Override

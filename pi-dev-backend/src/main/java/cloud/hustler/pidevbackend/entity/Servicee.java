@@ -36,11 +36,13 @@ public class Servicee {
             @JsonIgnore
     Farmer farmer;
 
-    @OneToMany(mappedBy = "servicee")
+    @OneToMany(mappedBy = "servicee", cascade = CascadeType.ALL, orphanRemoval = true)
             @JsonIgnore
     Set<ServiceRequests> serviceRequests= new HashSet<>();
 
 
+    @OneToOne(mappedBy = "service", cascade = CascadeType.ALL)
+    private Quiz quiz;
 
 
 

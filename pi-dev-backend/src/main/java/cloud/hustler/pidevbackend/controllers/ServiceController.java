@@ -1,7 +1,11 @@
 package cloud.hustler.pidevbackend.controllers;
 
 
+import cloud.hustler.pidevbackend.entity.ServiceRequests;
 import cloud.hustler.pidevbackend.entity.Servicee;
+import cloud.hustler.pidevbackend.repository.QuizRepository;
+import cloud.hustler.pidevbackend.repository.ServiceRepository;
+import cloud.hustler.pidevbackend.repository.ServiceRequestsRepository;
 import cloud.hustler.pidevbackend.service.IServiceService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,9 @@ import java.util.UUID;
 public class ServiceController {
 
     private final IServiceService serviceService;
+    private final ServiceRepository serviceRepository;
+    private final ServiceRequestsRepository serviceRequestsRepository;
+    private final QuizRepository quizRepository;
 
     @GetMapping("/getService")
     public ResponseEntity<List<Servicee>> getAllServices() {
@@ -42,8 +49,23 @@ public class ServiceController {
 
     @DeleteMapping("DeleteService/{id}")
     public ResponseEntity<Void> deleteService(@PathVariable UUID id) {
-        serviceService.deleteService(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        Servicee servicee = serviceRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException ("Service not found"));
+        List<ServiceRequests>list=serviceRequestsRepository.findByServicee(servicee);
+        // Supprimer les ServiceRequests associés (ils seront supprimés si orphanRemoval est activé)
+        for (ServiceRequests serviceRequest : list) {
+            serviceRequestsRepository.delete(serviceRequest);
+        }
+
+        // Supprimer le Quiz associé
+        if (servicee.getQuiz() != null) {
+            quizRepository.delete(servicee.getQuiz());
+        }
+
+        // Supprimer enfin le Servicee
+        serviceRepository.delete(servicee);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204 - Pas de contenu à renvoyer
+
     }
 
    /*@GetMapping("/hiring/{status}")
