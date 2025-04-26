@@ -9,7 +9,7 @@
           <div class="shop-filters mb-30 d-flex align-items-center justify-content-between">
             <!-- Product Show -->
             <div class="product-show">
-              <h6>Showing 1–9 of 72 results</h6>
+              <h6>Showing 1–6 of {{products.length}} results</h6>
             </div>
 
             <!-- Product View Mode -->
@@ -25,111 +25,122 @@
         <!-- Shop Sidebar Area -->
         <div class="col-12 col-md-4 col-lg-3">
 
-          <!-- Shopping Cart -->
-          <div class="shopping-cart mb-50">
-            <h5 class="mb-30">Shopping Cart</h5>
-            <!-- Cart Table -->
-            <div class="cart-table clearfix">
-              <table class="table table-responsive">
-                <!-- tbody -->
-                <tbody>
-                  <!-- Single Table Row -->
-                  <tr>
-                    <td class="cart_product_img">
-                      <a href="#"><img src="assets/img/bg-img/34.jpg" alt="Product"></a>
-                    </td>
-                    <td class="cart_product_desc">
-                      <p>Bayonne Ham</p>
-                      <h6>1 x $39.99</h6>
-                    </td>
-                    <td class="pro-close">
-                      <a href="#"><i class="icon_close"></i></a>
-                    </td>
-                  </tr>
-                  <!-- Single Table Row -->
-                  <tr>
-                    <td class="cart_product_img">
-                      <a href="#"><img src="assets/img/bg-img/35.jpg" alt="Product"></a>
-                    </td>
-                    <td class="cart_product_desc">
-                      <p>Bayonne Ham</p>
-                      <h6>1 x $39.99</h6>
-                    </td>
-                    <td class="pro-close">
-                      <a href="#"><i class="icon_close"></i></a>
-                    </td>
-                  </tr>
-                  <!-- Single Table Row -->
-                  <tr>
-                    <td class="cart_product_img">
-                      <a href="#"><img src="assets/img/bg-img/36.jpg" alt="Product"></a>
-                    </td>
-                    <td class="cart_product_desc">
-                      <p>Bayonne Ham</p>
-                      <h6>1 x $39.99</h6>
-                    </td>
-                    <td class="pro-close">
-                      <a href="#"><i class="icon_close"></i></a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <!-- SubTotal -->
-            <div class="cart-summary d-flex align-items-center justify-content-between">
-              <div class="sub-total">
-                <h6>SUBTOTAL</h6>
+          
+
+<!-- Single Widget Area -->
+<div class="single-widget-area">
+  <!-- Title -->
+  <h5 class="widget-title">Categories</h5>
+  <!-- Cata List -->
+  <ul class="cata-list shop-page">
+    <li>
+      <a href="#" (click)="filterByCategory(null); $event.preventDefault()">
+        All products ({{ products.length }})
+      </a>
+    </li>
+    <li *ngFor="let category of categories">
+      <a href="#" 
+         (click)="filterByCategory(category.uuid_category); $event.preventDefault()"
+         [class.active]="selectedCategory === category.uuid_category">
+        {{ category.name }} ({{ getProductCountByCategory(category.uuid_category) }})
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+
+ <!-- Single Widget Area -->
+ <div class="single-widget-area">
+  <!-- Title -->
+  <h5 class="widget-title">Sort by</h5>
+  <!-- Cata List -->
+  <ul class="cata-list shop-page">
+    <li><a href="#" (click)="sortOption='new-arrivals'; sortProducts(); $event.preventDefault()">New arrivals</a></li>
+<li><a href="#" (click)="sortOption='az'; sortProducts(); $event.preventDefault()">Alphabetically, A-Z</a></li>
+<li><a href="#" (click)="sortOption='za'; sortProducts(); $event.preventDefault()">Alphabetically, Z-A</a></li>
+<li><a href="#" (click)="sortOption='price-low-high'; sortProducts(); $event.preventDefault()">Price: low to high</a></li>
+<li><a href="#" (click)="sortOption='price-high-low'; sortProducts(); $event.preventDefault()">Price: high to low</a></li>
+  </ul>
+</div>
+
+<!-- Single Widget Area -->
+<div class="single-widget-area">
+  <!-- Title -->
+  <h5 class="widget-title">Price</h5>
+  <!-- Cata List -->
+  <ul class="cata-list shop-page">
+    <li><a href="#" (click)="filterByPrice(0, 10); $event.preventDefault()">$0.00 - $10.00</a></li>
+    <li><a href="#" (click)="filterByPrice(10, 50); $event.preventDefault()">$10.00 - $50.00</a></li>
+    <li><a href="#" (click)="filterByPrice(50, 100); $event.preventDefault()">$50.00 - $100.00</a></li>
+    <li><a href="#" (click)="filterByPrice(100, 800); $event.preventDefault()">$100.00+</a></li>
+  </ul>
+</div>
+
+
+          <section *ngIf="orders.length > 0" class="orders-area mb-50">
+            <div class="container">
+              <div class="row">
+                <div class="col-12">
+                  <div class="section-heading">
+                    <h3>My Orders</h3>
+                  </div>
+                </div>
               </div>
-              <div class="total-price">
-                <h6>$52.99</h6>
+          
+              <div class="row">
+                <div class="col-12">
+                  <div class="orders-table">
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>Order ID</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let order of orders">
+                            <td class="order-id">
+                              <strong>#{{ order.uuid_order | slice:0:8 }}</strong>
+                            </td>
+                            <td class="order-items">
+                              <ul class="list-unstyled mb-0">
+                                <li *ngFor="let item of order.orderItems" class="d-flex justify-content-between py-2 border-bottom">
+                                  <span>
+                                    {{ item.product.name }} 
+                                    <small class="text-muted">x{{ item.quantity }}</small>
+                                  </span>
+                                  <span>{{ item.product.price * item.quantity | currency }}</span>
+                                </li>
+                              </ul>
+                            </td>
+                            <td class="order-total">
+                              {{ order.totalPrice | currency }}
+                            </td>
+                            <td class="order-status">
+                              <span class="status-badge" [class]="'status-' + order.status">
+                                {{ order.status | titlecase }}
+                              </span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <!-- Checkout -->
-            <a href="#" class="btn famie-btn checkout-btn mt-30 w-100">Checkout</a>
-          </div>
+          </section>
+          
 
-          <!-- Single Widget Area -->
-          <div class="single-widget-area">
-            <!-- Title -->
-            <h5 class="widget-title">Catagories</h5>
-            <!-- Cata List -->
-            <ul class="cata-list shop-page">
-              <li><a href="#">All products (72)</a></li>
-              <li><a href="#">Freshy Fruits (20)</a></li>
-              <li><a href="#">Rice &amp; Corn (15)</a></li>
-              <li><a href="#">Meat &amp; Eggs (20)</a></li>
-              <li><a href="#">Milk &amp; Cheese (15)</a></li>
-              <li><a href="#">Others (2)</a></li>
-            </ul>
-          </div>
+          
 
-          <!-- Single Widget Area -->
-          <div class="single-widget-area">
-            <!-- Title -->
-            <h5 class="widget-title">Sort by</h5>
-            <!-- Cata List -->
-            <ul class="cata-list shop-page">
-              <li><a href="#">Top rated</a></li>
-              <li><a href="#">New arrivals</a></li>
-              <li><a href="#">Alphabetically, A-Z</a></li>
-              <li><a href="#">Alphabetically, Z-A</a></li>
-              <li><a href="#">Price: low to high</a></li>
-              <li><a href="#">Price: high to low</a></li>
-            </ul>
-          </div>
+         
 
-          <!-- Single Widget Area -->
-          <div class="single-widget-area">
-            <!-- Title -->
-            <h5 class="widget-title">Price</h5>
-            <!-- Cata List -->
-            <ul class="cata-list shop-page">
-              <li><a href="#">$0.00 - $10.00</a></li>
-              <li><a href="#">$10.00 - $50.00</a></li>
-              <li><a href="#">$50.00 - $100.00</a></li>
-              <li><a href="#">$100.00+</a></li>
-            </ul>
-          </div>
+          
 
           <!-- Single Widget Area -->
           <div class="single-widget-area">
@@ -147,279 +158,142 @@
           </div>
 
         </div>
+        
 
         <!-- Shop Products Area -->
         <div class="col-12 col-md-8 col-lg-9">
+
+<!-- Floating Cart Icon -->
+<div class="floating-cart" (click)="toggleCartPanel()">
+  <i class="icon_cart_alt"></i>
+  <span class="cart-badge" *ngIf="cartItemsCount > 0">{{ cartItemsCount }}</span>
+</div>
+
+<!-- Cart Side Panel -->
+<div class="cart-panel" [class.open]="isCartOpen">
+  <div class="cart-header">
+    <h4>Your Cart</h4>
+    <button class="close-btn" (click)="toggleCartPanel()">&times;</button>
+  </div>
+  
+  <div class="cart-content">
+    <div *ngIf="cart.cartItems.length === 0" class="empty-cart">
+      <p>Your cart is empty</p>
+    </div>
+    
+    <div class="cart-items" *ngIf="cart.cartItems.length > 0">
+      <div class="cart-item" *ngFor="let item of cart.cartItems">
+        <img [src]="item.product.imageUrl" alt="{{item.product.name}}">
+        <div class="item-details">
+          <h5>{{ item.product.name }}</h5>
+          <p>{{ item.quantity }} × {{ item.product.price | currency }}</p>
+        </div>
+        <button class="remove-btn" (click)="removeFromCart(item.product.uuid_product); $event.stopPropagation()">
+          <i class="icon_close"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="cart-footer" *ngIf="cart.cartItems.length > 0">
+    <div class="cart-summary">
+      <div class="subtotal">
+        <span>Subtotal:</span>
+        <span>{{ cart.totalPrice | currency }}</span>
+      </div>
+    </div>
+    <button class="btn famie-btn checkout-btn mt-30 w-100" (click)="checkout()">Checkout</button>
+  </div>
+</div>
+
+<!-- Overlay -->
+<div class="cart-overlay" [class.active]="isCartOpen" (click)="toggleCartPanel()"></div>
+
+
+
           <div class="row">
+<!-- Loading State -->
+<div *ngIf="isLoading" class="text-center">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
 
+ <!-- No Products Found -->
+ <div *ngIf="!isLoading && products.length === 0" class="alert alert-info">
+  No products found.
+</div>
+
+ <!-- Products Grid -->
+ <div class="row" *ngIf="!isLoading && products.length > 0">
             <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div class="col-12 col-sm-6 col-lg-4" *ngFor="let product of paginatedProducts">
               <div class="single-product-area mb-50">
                 <!-- Product Thumbnail -->
                 <div class="product-thumbnail">
-                  <img src="assets/img/bg-img/p1.jpg" alt="">
+                  <img [src]="product.imageUrl" alt="">
                   <!-- Product Tags -->
-                  <span class="product-tags">Hot</span>
+                  <span class="product-tags">{{product.description}}</span>
+
+                  <span *ngIf="product.discount" class="discount-ribbon">
+                    -{{ product.discount }}%
+                  </span>
+                  
                   <!-- Product Meta Data -->
                   <div class="product-meta-data">
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
+                    <a 
+                    data-toggle="tooltip" 
+                    data-placement="top" 
+                    title="Add To Cart" 
+                    (click)="product.quantity > 0 && addToCart(product.uuid_product)">
+                    <i class="icon_cart_alt"></i>
+                  </a>
+                                      <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
+                    
+                    <br><br><span class="badge" [ngClass]="{
+                      'bg-success':  product.quantity > 0,
+                      'bg-warning':  product.quantity <= 0,
+                      'bg-danger':  product.quantity <= 0
+                    }">
+                      {{  product.quantity > 0 ? 'In Stock' : 'Out of Stock' }}
+                    </span>
                   </div>
+                  
                 </div>
                 <!-- Product Description -->
                 <div class="product-desc text-center pt-4">
-                  <a href="#" class="product-title">Strawberry</a>
-                  <h6 class="price">$17.99</h6>
+                  <a href="#" class="product-title">{{product.name}}</a>
+                  <h6 class="price">${{product.price | number:'1.2-2'}}</h6>
                 </div>
               </div>
             </div>
 
-            <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="single-product-area mb-50">
-                <!-- Product Thumbnail -->
-                <div class="product-thumbnail">
-                  <img src="assets/img/bg-img/p2.jpg" alt="">
-                  <!-- Product Meta Data -->
-                  <div class="product-meta-data">
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
-                  </div>
-                </div>
-                <!-- Product Description -->
-                <div class="product-desc text-center pt-4">
-                  <a href="#" class="product-title">Strawberry</a>
-                  <h6 class="price">$17.99</h6>
-                </div>
-              </div>
-            </div>
-
-            <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="single-product-area mb-50">
-                <!-- Product Thumbnail -->
-                <div class="product-thumbnail">
-                  <img src="assets/img/bg-img/p3.jpg" alt="">
-                  <!-- Product Meta Data -->
-                  <div class="product-meta-data">
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
-                  </div>
-                </div>
-                <!-- Product Description -->
-                <div class="product-desc text-center pt-4">
-                  <a href="#" class="product-title">Strawberry</a>
-                  <h6 class="price">$17.99</h6>
-                </div>
-              </div>
-            </div>
-
-            <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="single-product-area mb-50">
-                <!-- Product Thumbnail -->
-                <div class="product-thumbnail">
-                  <img src="assets/img/bg-img/p4.jpg" alt="">
-                  <!-- Product Tags -->
-                  <span class="product-tags bg-danger">Sale</span>
-                  <!-- Product Meta Data -->
-                  <div class="product-meta-data">
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
-                  </div>
-                </div>
-                <!-- Product Description -->
-                <div class="product-desc text-center pt-4">
-                  <a href="#" class="product-title">Strawberry</a>
-                  <h6 class="price">$17.99</h6>
-                </div>
-              </div>
-            </div>
-
-            <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="single-product-area mb-50">
-                <!-- Product Thumbnail -->
-                <div class="product-thumbnail">
-                  <img src="assets/img/bg-img/p5.jpg" alt="">
-                  <!-- Product Meta Data -->
-                  <div class="product-meta-data">
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
-                  </div>
-                </div>
-                <!-- Product Description -->
-                <div class="product-desc text-center pt-4">
-                  <a href="#" class="product-title">Strawberry</a>
-                  <h6 class="price">$17.99</h6>
-                </div>
-              </div>
-            </div>
-
-            <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="single-product-area mb-50">
-                <!-- Product Thumbnail -->
-                <div class="product-thumbnail">
-                  <img src="assets/img/bg-img/p6.jpg" alt="">
-                  <!-- Product Meta Data -->
-                  <div class="product-meta-data">
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
-                  </div>
-                </div>
-                <!-- Product Description -->
-                <div class="product-desc text-center pt-4">
-                  <a href="#" class="product-title">Strawberry</a>
-                  <h6 class="price">$17.99</h6>
-                </div>
-              </div>
-            </div>
-
-            <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="single-product-area mb-50">
-                <!-- Product Thumbnail -->
-                <div class="product-thumbnail">
-                  <img src="assets/img/bg-img/p7.jpg" alt="">
-                  <!-- Product Meta Data -->
-                  <div class="product-meta-data">
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
-                  </div>
-                </div>
-                <!-- Product Description -->
-                <div class="product-desc text-center pt-4">
-                  <a href="#" class="product-title">Strawberry</a>
-                  <h6 class="price">$17.99</h6>
-                </div>
-              </div>
-            </div>
-
-            <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="single-product-area mb-50">
-                <!-- Product Thumbnail -->
-                <div class="product-thumbnail">
-                  <img src="assets/img/bg-img/p8.jpg" alt="">
-                  <!-- Product Tags -->
-                  <span class="product-tags">Hot</span>
-                  <!-- Product Meta Data -->
-                  <div class="product-meta-data">
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
-                  </div>
-                </div>
-                <!-- Product Description -->
-                <div class="product-desc text-center pt-4">
-                  <a href="#" class="product-title">Strawberry</a>
-                  <h6 class="price">$17.99</h6>
-                </div>
-              </div>
-            </div>
-
-            <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="single-product-area mb-50">
-                <!-- Product Thumbnail -->
-                <div class="product-thumbnail">
-                  <img src="assets/img/bg-img/p9.jpg" alt="">
-                  <!-- Product Meta Data -->
-                  <div class="product-meta-data">
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
-                  </div>
-                </div>
-                <!-- Product Description -->
-                <div class="product-desc text-center pt-4">
-                  <a href="#" class="product-title">Strawberry</a>
-                  <h6 class="price">$17.99</h6>
-                </div>
-              </div>
-            </div>
-
-            <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="single-product-area mb-50">
-                <!-- Product Thumbnail -->
-                <div class="product-thumbnail">
-                  <img src="assets/img/bg-img/p10.jpg" alt="">
-                  <!-- Product Meta Data -->
-                  <div class="product-meta-data">
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
-                  </div>
-                </div>
-                <!-- Product Description -->
-                <div class="product-desc text-center pt-4">
-                  <a href="#" class="product-title">Strawberry</a>
-                  <h6 class="price">$17.99</h6>
-                </div>
-              </div>
-            </div>
-
-            <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="single-product-area mb-50">
-                <!-- Product Thumbnail -->
-                <div class="product-thumbnail">
-                  <img src="assets/img/bg-img/p11.jpg" alt="">
-                  <!-- Product Meta Data -->
-                  <div class="product-meta-data">
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
-                  </div>
-                </div>
-                <!-- Product Description -->
-                <div class="product-desc text-center pt-4">
-                  <a href="#" class="product-title">Strawberry</a>
-                  <h6 class="price">$17.99</h6>
-                </div>
-              </div>
-            </div>
-
-            <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="single-product-area mb-50">
-                <!-- Product Thumbnail -->
-                <div class="product-thumbnail">
-                  <img src="assets/img/bg-img/p12.jpg" alt="">
-                  <!-- Product Tags -->
-                  <span class="product-tags bg-danger">Sale</span>
-                  <!-- Product Meta Data -->
-                  <div class="product-meta-data">
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i class="icon_heart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>
-                  </div>
-                </div>
-                <!-- Product Description -->
-                <div class="product-desc text-center pt-4">
-                  <a href="#" class="product-title">Strawberry</a>
-                  <h6 class="price">$17.99</h6>
-                </div>
-              </div>
-            </div>
+            
 
           </div>
 
+        </div>
+
+
           <!-- Pagination -->
-          <nav>
+          <nav *ngIf="totalPages > 1">
             <ul class="pagination mb-0 mt-50">
-              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
+              <li class="page-item" [class.disabled]="currentPage === 1">
+                <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              
+              <li class="page-item" *ngFor="let page of pages" [class.active]="page === currentPage">
+                <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+              </li>
+              
+              <li class="page-item" [class.disabled]="currentPage === totalPages">
+                <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
             </ul>
           </nav>
         </div>
@@ -427,5 +301,6 @@
 
     </div>
   </section>
+  
   <!-- ##### Shop Area End ##### -->
 <app-footer></app-footer>

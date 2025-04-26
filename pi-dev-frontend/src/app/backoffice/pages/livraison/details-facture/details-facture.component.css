@@ -1,0 +1,252 @@
+/* styles.css ou styles.scss */
+:root {
+  --primary-color: #4e73df;
+  --secondary-color: #f8f9fc;
+  --success-color: #1cc88a;
+  --danger-color: #e74a3b;
+  --warning-color: #f6c23e;
+  --info-color: #36b9cc;
+  --light-color: #f8f9fc;
+  --dark-color: #5a5c69;
+  --border-radius: 0.35rem;
+  --box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+  --transition: all 0.3s ease-in-out;
+}
+
+/* Structure principale */
+.hover-trigger-area {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 15px;
+  height: 100vh;
+  z-index: 1050;
+  background: transparent;
+  transition: var(--transition);
+}
+
+.main-content {
+  margin-left: 0;
+  padding: 1.5rem;
+  transition: var(--transition);
+  min-height: calc(100vh - 70px);
+}
+
+.main-content.sidebar-visible {
+  margin-left: 250px;
+}
+
+/* Conteneur de la facture */
+.details-facture-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  transition: var(--transition);
+  margin-right: 0px;
+}
+
+/* En-tête */
+.details-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e3e6f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--secondary-color);
+}
+
+.details-title {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--dark-color);
+  font-weight: 600;
+}
+
+/* Sections */
+.details-section {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e3e6f0;
+}
+
+.section-title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  color: var(--dark-color);
+}
+
+/* Grille des détails */
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-label {
+  font-size: 0.875rem;
+  color: #858796;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.detail-value {
+  font-size: 1rem;
+  color: var(--dark-color);
+}
+
+/* Badge de statut */
+.status-badge {
+  display: inline-block;
+  padding: 0.35em 0.65em;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
+
+.status-payée { background-color: var(--success-color); color: white; }
+.status-en attente { background-color: var(--warning-color); color: white; }
+.status-annulée { background-color: var(--danger-color); color: white; }
+
+/* Formulaire */
+.edit-input, .edit-select {
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #6e707e;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #d1d3e2;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.edit-input:focus, .edit-select:focus {
+  border-color: var(--primary-color);
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+.is-invalid {
+  border-color: var(--danger-color);
+}
+
+/* Boutons */
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.5;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.btn-edit {
+  background-color: var(--primary-color);
+  color: rgb(63, 19, 207);
+}
+
+.btn-edit:hover {
+  background-color: #2e59d9;
+}
+
+.btn-pdf {
+  background-color: var(--danger-color);
+  color: rgb(25, 216, 63);
+}
+
+.btn-pdf:hover {
+  background-color: #2e601a;
+}
+.btn-save {
+  background-color: var(--dark-color);
+  color: rgb(238, 96, 9);
+}
+
+.btn-save:hover {
+  background-color: #09dd13;
+}
+.btn-cancel {
+  background-color: var(--secondary-color);
+  color: var(--dark-color);
+  border-color: #d1d3e2;
+}
+
+.btn-cancel:hover {
+  background-color: #dc0909;
+}
+
+/* Optimisations pour le PDF */
+@media print {
+  .hover-trigger-area, 
+  .action-buttons, 
+  app-side-bar, 
+  app-navbar {
+    display: none !important;
+  }
+  
+  .main-content {
+    margin-left: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .details-facture-container {
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+
+/* Animation pour le sidebar */
+app-side-bar {
+  transform: translateX(-100%);
+  transition: var(--transition);
+}
+
+app-side-bar.visible {
+  transform: translateX(0);
+}
+
+/* Amélioration des performances */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Optimisation des transitions */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

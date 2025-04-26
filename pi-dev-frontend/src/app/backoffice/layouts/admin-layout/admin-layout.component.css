@@ -1,0 +1,31 @@
+/* Admin layout styling */
+.g-sidenav-show {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Main content area styling */
+.main-content {
+  min-height: 100vh;
+  transition: all 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (min-width: 1024px) {
+  .main-content {
+    margin-left: 280px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .main-content {
+    margin-left: 0;
+  }
+}
+
+/* Content container styling */
+.container-fluid {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { TokenStorageService } from './token-storage.service';
@@ -8,7 +8,8 @@ import { TokenStorageService } from './token-storage.service';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = '/api/v1/auth'; // Updated to match backend context path
+  private apiUrl = '/api/v1/auth'; // Base auth API URL
+  private userApiUrl = '/api/v1/users'; // Base user API URL
 
   constructor(
     private http: HttpClient,
@@ -25,6 +26,52 @@ export class UserService {
         catchError(error => {
           console.error('Error fetching user profile:', error);
           return of(null);
+        })
+      );
+  }
+  
+  // Update user profile
+  updateUserProfile(formData: FormData): Observable<any> {
+    return this.http.put<any>(`${this.userApiUrl}/profile/update`, formData, { withCredentials: true })
+      .pipe(
+        tap(response => {
+          if (response && response.userResponse) {
+            this.tokenStorage.saveUser(response.userResponse);
+          }
+        }),
+        catchError(error => {
+          console.error('Error updating user profile:', error);
+          let errorMessage = 'Failed to update profile';
+          if (error.error && error.error.message) {
+            errorMessage = error.error.message;
+          }
+          throw new Error(errorMessage);
+        })
+      );
+  }
+
+  // Change user password
+  changePassword(passwordData: any): Observable<any> {
+    return this.http.post<any>(`${this.userApiUrl}/change-password`, passwordData, { withCredentials: true })
+      .pipe(
+        catchError(error => {
+          console.error('Error changing password:', error);
+          let errorMessage = 'Failed to change password';
+          if (error.error && error.error.message) {
+            errorMessage = error.error.message;
+          }
+          throw new Error(errorMessage);
+        })
+      );
+  }
+
+  // Get user by UUID
+  getUserById(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.userApiUrl}/${userId}`, { withCredentials: true })
+      .pipe(
+        catchError(error => {
+          console.error(`Error fetching user ${userId}:`, error);
+          throw new Error('Failed to load user information');
         })
       );
   }

@@ -1,0 +1,28 @@
+<h2>Delivery Tracking History</h2>
+
+<!--form (ngSubmit)="ajouterSuivi()">
+  <input type="text" [(ngModel)]="newSuivi.statut" name="statut" placeholder="Statut" required>
+  <input type="text" [(ngModel)]="newSuivi.commentaire" name="commentaire" placeholder="Commentaire">
+  <button type="submit">Ajouter</button>
+</form-->
+
+<!--ul>
+  <li *ngFor="let s of suivis">
+    {{ s.statut }} - {{ s.commentaire }}
+    <button *ngIf="s.id !== undefined" (click)="supprimerSuivi(s.id)">Supprimer</button>
+  </li>
+</ul-->
+<div *ngIf="suivis.length > 0">
+  <h3>Tracking History</h3>
+  <ul>
+    <li *ngFor="let suivi of suivis">
+      <strong>Date:</strong> {{ suivi.dateMaj }}<br>
+      <strong>Status:</strong> {{ suivi.statut }}<br>
+      <strong>Description:</strong> {{ suivi.commentaire }}<br>
+    </li>
+  </ul>
+</div>
+<div *ngIf="suivis.length === 0">
+  <p>No tracking information available for this delivery.</p>
+</div>
+

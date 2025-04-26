@@ -1,38 +1,57 @@
+import { CommonModule } from "@angular/common";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { MatButtonModule } from "@angular/material/button";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatIconModule } from "@angular/material/icon";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterModule } from "@angular/router";
+import { NgChartsModule } from "ng2-charts";
+import { DialogModule } from "primeng/dialog";
+import { AppRoutingModule } from "./app-routing.module";
+import { JwtModule } from "@auth0/angular-jwt";
+import { AppComponent } from "./app.component";
+import { JwtInterceptor } from "./auth/interceptors/jwt";
+import { OAuth2RedirectComponent } from "./auth/oauth2/oauth2-redirect.component";
+import { TokenStorageService, AuthService } from "./auth/service";
+import { FrontofficeModule } from "./frontoffice/frontoffice.module";
+import { ErrorDialogComponent } from "./core/error-dialog/error-dialog.component";
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FrontofficeModule } from './frontoffice/frontoffice.module';
 import { BackofficeModule } from './backoffice/backoffice.module';
-import { CommonModule } from '@angular/common';
-import { JwtModule } from '@auth0/angular-jwt';
-
-import { JwtInterceptor } from './auth/interceptors/jwt';
-import { TokenStorageService } from './auth/service/token-storage.service';
-import { AuthService } from './auth/service/authentication.service';
-import { OAuth2RedirectComponent } from './auth/oauth2/oauth2-redirect.component';
-
-
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    OAuth2RedirectComponent
+    OAuth2RedirectComponent,
+    ErrorDialogComponent
   ],
   imports: [
     CommonModule,
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
     RouterModule,
     FrontofficeModule,
     BackofficeModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    MatIconModule,
+    NgChartsModule,
+    DialogModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    //from marketplace
+    FormsModule,
+    RouterModule,
+    FrontofficeModule,
+    BackofficeModule,
+    NgChartsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => { return null; },

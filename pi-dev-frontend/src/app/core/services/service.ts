@@ -10,13 +10,13 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class PostService {
-  private baseUrl = `${environment.apiBaseUrl}`;
+  private baseUrl = `/api/v1`;
 
   constructor(private http: HttpClient) {}
 
   addCommentToPost(postId: string, comment: Comment): Observable<Comment> {
     return this.http.post<Comment>(
-      `${this.baseUrl}/ajouterCommentEtAffecterPost/${postId}`,
+      `${this.baseUrl}/comments/ajouterCommentEtAffecterPost/${postId}`,
       comment
     );}
 
@@ -45,7 +45,7 @@ export class PostService {
     return this.http.get<commentaires[]>(`${this.baseUrl}/getAllComments`);
   }
   getCommentByPostId(postId: string): Observable<commentaires[]> {
-    return this.http.get<commentaires[]>(`${this.baseUrl}/getCommentsByPostId/${postId}`);
+    return this.http.get<commentaires[]>(`${this.baseUrl}/comments/getCommentsByPostId/${postId}`);
   }
 
   getPostById(id: string): Observable<Post> {

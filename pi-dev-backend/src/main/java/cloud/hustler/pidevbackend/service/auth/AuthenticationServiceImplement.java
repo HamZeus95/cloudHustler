@@ -72,12 +72,16 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
 
         System.out.printf("User registered with email: %s\n", user);
         
-        // Generate and send OTP
+        // Generate and send OTP - with better error handling
         try {
             Otp otp = generateOtp(savedUser);
+            System.out.println("OTP generated for user: " + savedUser.getEmail() + " with value: " + otp.getOtpValue());
             sendOtpEmail(savedUser, otp.getOtpValue());
+            System.out.println("OTP email sent successfully to: " + savedUser.getEmail());
         } catch (MessagingException e) {
-            System.err.println("Failed to send OTP email: " + e.getMessage());
+            System.err.println("Failed to send OTP email to: " + savedUser.getEmail());
+            System.err.println("Error details: " + e.getMessage());
+            e.printStackTrace();
             // Continue with registration process even if email fails
         }
 
@@ -101,7 +105,6 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
     }
     private User createUser(RegisterRequest request) {
 
-        System.out.printf("Creating user with email: %s\n", request);
         // Common user properties builder
         String encodedPassword = passwordEncoder.encode(request.getPassword());
 
@@ -124,6 +127,7 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
             return Farmer.builder()
                     .email(request.getEmail())
                     .lastName(request.getLastName())
+                    .firstName(request.getFirstName())
                     .birthDate(request.getBirthDate())
                     .address(request.getAddress())
                     .image(request.getImage())
@@ -142,7 +146,7 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
                     .image(request.getImage())
                     .phone(request.getPhone())
                     .password(encodedPassword)
-                    .isAvailable(request.isAvailable()) // Using isAvailable() getter that matches our renamed field
+                    .isAvailable(request.isAvailable()) 
                     .build();
         }
 
@@ -368,6 +372,7 @@ public class AuthenticationServiceImplement implements IAuthenticationService {
             helper.setTo(emailTo);
             helper.setSubject(subject);
             helper.setText(htmlContent, true); // Set HTML content
+            System.out.printf("email sender: %s\n", mailSender.getUsername());
             helper.setFrom(mailSender.getUsername()); // Explicitly set sender
 
             mailSender.send(message);

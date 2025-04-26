@@ -28,7 +28,7 @@ import java.util.*;
 public abstract class User implements UserDetails {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
-    UUID userId;
+    UUID uuid_user;
     String firstName;
     String lastName;
     Date birthDate;
@@ -42,7 +42,7 @@ public abstract class User implements UserDetails {
     // default value is true in database
     @Column(columnDefinition = "boolean default False")
     boolean isActif;
-    
+
     // OAuth2 related fields
     String provider; // "google", "github", etc.
     String providerId; // ID from the OAuth2 provider
@@ -53,19 +53,20 @@ public abstract class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     Set<Post> posts = new HashSet<>();
-  /*
-    @OneToMany(mappedBy = "user")
+    /*
+      @OneToMany(mappedBy = "user")
+      @JsonIgnore
+      Set<Token> tokens = new HashSet<>();
+  */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    Set<Token> tokens = new HashSet<>();
-*/
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-  @JsonIgnore
-  Set<Otp> otps = new HashSet<>();
+    Set<Otp> otps = new HashSet<>();
 
     @Transient
     public String getRole(){
         DiscriminatorValue discriminator = this.getClass().getAnnotation(DiscriminatorValue.class);
-        return (discriminator != null) ? discriminator.value() : "USER";
+        return (discriminator != null) ? discriminator.value() : "Consumer";
     }
+
 
 }
