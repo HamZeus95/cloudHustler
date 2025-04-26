@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c799faf-77be-47d4-a413-81b6d78d4ec2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/backoffice.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/backoffice.module.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +88,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.PiDevBackendApplication.executor": "Run",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Rebasing events",
+    "git-widget-placeholder": "Hiring",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "D:/cloudHustler2/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers",
@@ -101,7 +103,7 @@
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
     "spring.configuration.checksum": "c69308e65b72560394dc7547cfb9fef2",
-    "ts.external.directory.path": "C:\\Users\\MSI\\Documents\\GitHub\\cloudHustler\\pi-dev-frontend\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2024.3.2.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -189,6 +191,11 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="6a15f98b-7ed9-4faa-bf90-1b2c4cc4646f" value="TOOL_WINDOW" />
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="6a15f98b-7ed9-4faa-bf90-1b2c4cc4646f">
@@ -213,11 +220,6 @@
             </State>
           </value>
         </entry>
-      </map>
-    </option>
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="6a15f98b-7ed9-4faa-bf90-1b2c4cc4646f" value="TOOL_WINDOW" />
       </map>
     </option>
   </component>
