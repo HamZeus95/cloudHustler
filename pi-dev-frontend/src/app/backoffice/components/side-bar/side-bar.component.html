@@ -16,6 +16,9 @@
           </div>
           <span class="nav-link-text ms-1">Dashboard</span>
         </a>
+      </li>
+      <!-- farm management -->
+      <li class="nav-item">
         <a class="nav-link" [routerLink]="['/backoffice/farm']" [ngClass]="{'active': isActive('/backoffice/farm')}">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <span app-icon="leaf" library="fontawesome" variant="solid" class="text-success text-sm opacity-10"></span>
@@ -23,6 +26,16 @@
           <span class="nav-link-text ms-1">Farm Management</span>
         </a>
       </li>
+      <!-- market management -->
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/backoffice/market']" [ngClass]="{'active': isActive('/backoffice/market')}">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <span app-icon="store" library="fontawesome" variant="solid" class="text-warning text-sm opacity-10"></span>
+          </div>
+          <span class="nav-link-text ms-1">Market Management</span>
+        </a>
+      </li>
+      <!-- event -->
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/backoffice/backEvent']" [ngClass]="{'active': isActive('/backoffice/backEvent')}">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"> 
@@ -31,6 +44,7 @@
           <span class="nav-link-text ms-1">Event</span>
         </a>
       </li>
+      <!-- blog -->
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/backoffice/blog']" [ngClass]="{'active': isActive('/backoffice/blog')}"> 
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -39,12 +53,22 @@
           <span class="nav-link-text ms-1">Blog</span>
         </a>
       </li>
+      <!-- tasks -->
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/backoffice/task']" [ngClass]="{'active': isActive('/backoffice/task')}"> 
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <span app-icon="tasks" library="fontawesome" variant="solid" class="text-warning text-sm opacity-10"></span>
           </div>
           <span class="nav-link-text ms-1">Tasks</span> 
+        </a>
+      </li>
+      <!-- hiring -->
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/backoffice/billing']" [ngClass]="{'active': isActive('/backoffice/billing')}"> 
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <span app-icon="fas fa-user-plus" library="fontawesome" variant="regular" class="text-info text-sm opacity-10"></span>
+          </div>
+          <span class="nav-link-text ms-1">Hiring</span>
         </a>
       </li>
       <li class="nav-item mt-3">

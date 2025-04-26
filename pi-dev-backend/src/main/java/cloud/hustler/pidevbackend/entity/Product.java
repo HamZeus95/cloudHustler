@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Entity
@@ -29,7 +31,7 @@ public class Product {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "`order_uuid_order`")
+    @JoinColumn(name = "order_uuid_order")
     Order order;
 
     @ManyToOne
@@ -37,10 +39,14 @@ public class Product {
     Farmer farmer;
 
     @ManyToOne
+    @JoinColumn(name = "product_category_uuid_category")
     ProductCategory productCategory;
 
     @Column(nullable = true)
     private Integer discount;
+
+    @CreationTimestamp
+    private Instant createdAt;
 
     private Double originalPrice;
     public void applyDiscount(int discount) {
@@ -147,5 +153,21 @@ public class Product {
 
     public void setDiscount(Integer discount) {
         this.discount = discount;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Double getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(Double originalPrice) {
+        this.originalPrice = originalPrice;
     }
 }

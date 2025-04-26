@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FileUploadService } from '../services/file-upload.service';
+import { FileUploadService } from '../core/services/job/file-upload.service';
 
 @Component({
   selector: 'app-dipslay',

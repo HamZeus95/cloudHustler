@@ -3,7 +3,7 @@ package cloud.hustler.pidevbackend.service;
 import cloud.hustler.pidevbackend.DTO.ServiceRequestRequestBody;
 import cloud.hustler.pidevbackend.entity.ServiceRequests;
 import cloud.hustler.pidevbackend.entity.Servicee;
-import cloud.hustler.pidevbackend.entity.TypeStatus;
+import cloud.hustler.pidevbackend.entity.TypeJobStatus;
 import cloud.hustler.pidevbackend.repository.ServiceRepository;
 import cloud.hustler.pidevbackend.repository.ServiceRequestsRepository;
 import lombok.AllArgsConstructor;
@@ -37,7 +37,7 @@ public class ServiceRequestsService implements IServiceRequestsService {
         serviceRequest.setServicee(service);
         serviceRequest.setUploadCv(serviceRequestRequestBody.getUploadCv());
         serviceRequest.setLettreMotivation(serviceRequestRequestBody.getLettreMotivation());
-        serviceRequest.setStatus(TypeStatus.PENDING);
+        serviceRequest.setStatus(TypeJobStatus.PENDING);
 
         return serviceRequestsRepository.save(serviceRequest);
     }

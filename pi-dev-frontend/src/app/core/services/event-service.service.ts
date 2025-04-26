@@ -9,7 +9,7 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 export class EventServiceService {
  
 
-  private apiUrl = 'http://localhost:8089/api/v1/Event'; 
+  private apiUrl = '/api/v1/Event'; 
   constructor(private http: HttpClient) { }
   addEvent(event: Event): Observable<Event> {
     return this.http.post<Event>(`${this.apiUrl}/addEvent`, event);
@@ -50,7 +50,7 @@ export class EventServiceService {
 
 
   generateDescription(name: string, location: string, date: string) {
-    return this.http.post('http://localhost:8089/pi/Event/generate-description', {
+    return this.http.post('/api/v1/Event/generate-description', {
       name,
       location,
       date
@@ -58,7 +58,7 @@ export class EventServiceService {
   }
   
   uploadImage(eventId: string, formData: FormData) {
-    return this.http.post<any>(`http://localhost:8089/pi/Event/${eventId}/upload-image`, formData);
+    return this.http.post<any>(`/api/v1/Event/${eventId}/upload-image`, formData);
   }
   
   

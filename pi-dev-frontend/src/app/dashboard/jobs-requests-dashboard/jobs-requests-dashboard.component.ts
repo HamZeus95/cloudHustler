@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ServiceRequestsService } from 'src/app/services/service-requests.service';
-import { ServiceRequest } from 'src/core/modules/serviceRequests';
-import { TypeStatus } from 'src/core/modules/typeStatus';
+import { ServiceRequestsService } from 'src/app/core/services/job/service-requests.service';
+import { ServiceRequest } from 'src/app/core/models/serviceRequests';
+import { TypeStatus } from 'src/app/core/models/typeStatus';
 import { Router } from '@angular/router';
 import {
   Chart,
@@ -14,7 +14,7 @@ import {
   CategoryScale,
   LinearScale
 } from 'chart.js';  
-import { FileUploadService } from 'src/app/services/file-upload.service';
+import { FileUploadService } from 'src/app/core/services/job/file-upload.service';
 @Component({
   selector: 'app-jobs-requests-dashboard',
   templateUrl: './jobs-requests-dashboard.component.html',

@@ -67,23 +67,17 @@ export class LoginComponent implements OnInit {
         
         this.isSubmitting = false;
         
-        if(response.user){
-          this.router.navigate(["/backoffice"])
-        }else{
-          this.router.navigate(["/frontoffice"])
+        // Get user role from the response
+        const userRole = response.userResponse?.Role || response.user?.Role;
+        console.log('User logged in with role:', userRole);
+        
+        // Navigate based on user role
+        if (userRole === 'farmer' || userRole === 'expert' || userRole === 'delivery') {
+          this.router.navigate(['/backoffice']);
+        } else {
+          // Default to frontoffice for consumers or if role is not specified
+          this.router.navigate(['/frontoffice/home']);
         }
-
-        //! fix later
-        // Get user role to direct to proper dashboard
-        // const userRole = response.user?.Role;
-        
-        
-        // // Navigate based on user role
-        // if (userRole === 'ADMIN') {
-        //   this.router.navigate(['/backoffice']);
-        // } else {
-        //   this.router.navigate(['/frontoffice']);
-        // }
       },
       error: (error) => {
         this.isSubmitting = false;

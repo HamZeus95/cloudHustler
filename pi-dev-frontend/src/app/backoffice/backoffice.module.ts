@@ -6,12 +6,10 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { RouterModule } from "@angular/router";
-import { NgChartsModule } from "ng2-charts";
 import { DialogModule } from "primeng/dialog";
 import { CoreDirectivesModule } from "../core/directives/directives";
-import { BackofficeRoutingModule } from "./backoffice-routing.module";
 import { BannerComponent } from "./components/banner/banner.component";
-import { BillingComponent } from "./components/billing/billing.component";
+import { BillingComponent } from "./components/events/billing/billing.component";
 import { CommentBackComponent } from "./components/comment-back/comment-back.component";
 import { CropDiseaseDetectorComponent } from "./components/crop-disease-detector/crop-disease-detector.component";
 import { DashboardCardsComponent } from "./components/dashboard-cards/dashboard-cards.component";
@@ -39,7 +37,14 @@ import { FactureComponent } from "./pages/livraison/factures/factures.component"
 import { LivraisonComponent } from "./pages/livraison/livraisons/livraisons.component";
 import { EditProfileComponent } from "./pages/profile/edit-profile/edit-profile.component";
 import { ManageProfileComponent } from "./pages/profile/manage-profile/manage-profile.component";
-
+import { BackofficeRoutingModule } from './backoffice-routing.module';
+import { MarketplaceManagementComponent } from './pages/marketplace-management/marketplace-management.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ProductslistComponent } from './components/productslist/productslist.component';
+import { ProductCategorieslistComponent } from './components/product-categorieslist/product-categorieslist.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
+import { TopSellingProductsComponent } from './components/top-selling-products/top-selling-products.component';
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -50,14 +55,9 @@ import { ManageProfileComponent } from "./pages/profile/manage-profile/manage-pr
     DashboardCardsComponent,
     SideBarComponent,
     NavbarComponent,
-    //declarations of components
-    FarmDetailsComponent,
-    SideBarComponent,
-    BillingComponent,
+    FarmDetailsComponent, 
     TablesComponent,
-    TaskManagementComponent,
-    DashboardCardsComponent,
-    NavbarComponent,
+    TaskManagementComponent, 
     SettingsPanelComponent,
     FarmTableComponent,
     DetailsFactureComponent,
@@ -65,7 +65,6 @@ import { ManageProfileComponent } from "./pages/profile/manage-profile/manage-pr
     DetailsLivraisonComponent,
     LivraisonComponent,
     MapDialogComponent,
-    //declarations of pages
     FarmManagmentComponent,
     EventComponent,
     BlogManagmentComponent,
@@ -78,8 +77,12 @@ import { ManageProfileComponent } from "./pages/profile/manage-profile/manage-pr
     PostBackComponent,
     CommentBackComponent,
     StatsComponent,
-    // Add the AdminLayoutComponent
-    AdminLayoutComponent
+    AdminLayoutComponent,
+    MarketplaceManagementComponent,
+    ProductslistComponent,
+    ProductCategorieslistComponent,
+    OrderListComponent,
+    TopSellingProductsComponent
   ],
   imports: [
     CommonModule,
@@ -89,24 +92,19 @@ import { ManageProfileComponent } from "./pages/profile/manage-profile/manage-pr
     DragDropModule,
     RouterModule,
     DialogModule,
-    //BrowserAnimationsModule,
     NgChartsModule,
     MatSnackBarModule,
     MatButtonModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    FormsModule,
-    DragDropModule,
-    CoreDirectivesModule
+    MatIconModule,  
+    CoreDirectivesModule,
+    HttpClientModule, 
 
   ],
   providers: [
     DatePipe
   ],
-  //styles
 
   exports: [
-    // Export components that might be used outside this module
     SideBarComponent,
     NavbarComponent,
     BannerComponent,

@@ -1,0 +1,207 @@
+<div class="product-management-container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>Product Management</h2>
+      <div>
+        <button class="btn btn-outline-secondary me-2" (click)="toggleViewMode()">
+          <i class="bi bi-{{viewMode === 'grid' ? 'list' : 'grid'}}"></i> 
+          Switch to {{viewMode === 'grid' ? 'List' : 'Grid'}} View
+        </button>
+        <button class="btn btn-primary" (click)="startAdd()" *ngIf="!isAdding && !isEditing">
+          <i class="bi bi-plus"></i> Add New Product
+        </button>
+      </div>
+    </div>
+  
+    <!-- Add/Edit Form -->
+    <div class="card mb-4" *ngIf="isAdding || isEditing">
+      <div class="card-header">
+        {{isEditing ? 'Edit Product' : 'Add New Product'}}
+      </div>
+      <div class="card-body" [formGroup]="productForm">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label">Name*</label>
+              <input type="text" class="form-control" formControlName="name">
+              <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" class="text-danger">
+                Name is required
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Description</label>
+              <textarea class="form-control" formControlName="description" rows="2"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Image URL</label>
+              <input type="text" class="form-control" formControlName="imageUrl" placeholder="https://example.com/image.jpg">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label">Price*</label>
+              <input type="number" class="form-control" formControlName="price" min="0" step="0.01">
+              <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" class="text-danger">
+                Valid price is required
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Quantity</label>
+              <input type="number" class="form-control" formControlName="quantity" min="0">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Category*</label>
+              <select class="form-select" formControlName="productCategory">
+                <option value="">Select a category</option>
+                <option *ngFor="let category of categories" [value]="category.uuid_category">
+                  {{ category.name }}
+                </option>
+              </select>
+              <div *ngIf="productForm.get('productCategory')?.invalid && productForm.get('productCategory')?.touched" class="text-danger">
+                Category is required
+              </div>
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" formControlName="isAvailable">
+              <label class="form-check-label">Available</label>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-secondary me-2" (click)="cancel()">Cancel</button>
+          <button class="btn btn-primary" (click)="saveProduct()" [disabled]="productForm.invalid">
+            {{isEditing ? 'Update' : 'Save'}} Product
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Grid View -->
+    <div class="row" *ngIf="viewMode === 'grid' && !isLoading">
+      <div class="col-md-4 mb-4" *ngFor="let product of products">
+        <div class="card h-100">
+          <div class="card-img-top-container">
+            <img [src]="product.imageUrl || 'assets/img/placeholder-product.png'" 
+                 class="card-img-top" 
+                 alt="{{product.name}}"
+                 onerror="this.src='assets/img/placeholder-product.png'">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{product.name}}</h5>
+            <p class="card-text text-muted">{{product.description || 'No description'}}</p>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="badge bg-primary">{{product.productCategory?.name || 'Uncategorized'}}</span>
+              <span class="text-success fw-bold">{{product.price | currency}}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span>Stock: {{product.quantity}}</span>
+              <span class="badge" [ngClass]="{
+                'bg-success':  product.quantity > 0,
+                'bg-warning':  product.quantity <= 0,
+                'bg-danger':  product.quantity <= 0
+              }">
+                {{  product.quantity > 0 ? 'In Stock' : 'Out of Stock' }}
+              </span>
+            </div>
+          </div>
+          <div class="card-footer bg-transparent">
+            <button class="btn btn-sm btn-outline-primary me-2" (click)="startEdit(product)">
+              <i class="bi bi-pencil"></i> Edit
+            </button>
+            <button class="btn btn-sm btn-outline-danger" (click)="deleteProduct(product.uuid_product)">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- List View -->
+    <div class="table-responsive" *ngIf="viewMode === 'list' && !isLoading">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th style="width: 80px;">Image</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Stock</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products">
+            <td>
+              <img [src]="product.imageUrl || 'assets/img/placeholder-product.png'" 
+                   class="img-thumbnail product-thumbnail" 
+                   alt="{{product.name}}"
+                   onerror="this.src='assets/img/placeholder-product.png'">
+            </td>
+            <td>{{product.name}}</td>
+            <td class="text-muted">{{product.description || '-'}}</td>
+            <td class="fw-bold">{{product.price | currency}}</td>
+            <td><span class="badge bg-primary">{{product.productCategory?.name || 'Uncategorized'}}</span></td>
+            <td>{{product.quantity}}</td>
+            <td>
+                <span class="badge" [ngClass]="{
+                    'bg-success':  product.quantity > 0,
+                    'bg-warning':  product.quantity <= 0,
+                    'bg-danger':  product.quantity <= 0
+                  }">
+                    {{  product.quantity > 0 ? 'In Stock' : 'Out of Stock' }}
+                  </span>
+            </td>
+            <td>
+                <!-- Edit Button -->
+                <button class="btn btn-sm btn-outline-primary me-2" (click)="startEdit(product)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+              
+                <!-- Delete Button -->
+                <button class="btn btn-sm btn-outline-danger me-2" (click)="deleteProduct(product.uuid_product)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              
+                <!-- Discount Buttons Group -->
+                <div class="d-inline-flex gap-1 me-2">
+                  <button class="btn btn-sm btn-outline-success" (click)="applyDiscount(product.uuid_product!, 10)">-10%</button>
+                  <button class="btn btn-sm btn-outline-success" (click)="applyDiscount(product.uuid_product!, 30)">-30%</button>
+                  <button class="btn btn-sm btn-outline-success" (click)="applyDiscount(product.uuid_product!, 50)">-50%</button>
+                </div>
+              
+                <!-- Remove Discount Button -->
+                <button *ngIf="product.discount" class="btn btn-sm btn-outline-warning" (click)="removeDiscount(product.uuid_product!)">
+                  Remove
+                </button>
+              
+                <!-- Discount Info -->
+                <div *ngIf="product.discount" class="mt-1 text-muted small">
+                  Discount: -{{ product.discount }}%<br />
+                  Final Price: {{ product.price * (1 - product.discount / 100) | number: '1.2-2' }} TND
+                </div>
+              </td>
+              
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2">Loading products...</p>
+    </div>
+  
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && products.length === 0" class="text-center py-5">
+      <i class="bi bi-box-seam display-5 text-muted"></i>
+      <h4 class="mt-3">No products found</h4>
+      <p class="text-muted">Add your first product by clicking the "Add New Product" button</p>
+      <button class="btn btn-primary" (click)="startAdd()">
+        <i class="bi bi-plus"></i> Add Product
+      </button>
+    </div>
+  </div>

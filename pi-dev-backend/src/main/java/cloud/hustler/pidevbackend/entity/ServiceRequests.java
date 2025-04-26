@@ -22,7 +22,7 @@ public class ServiceRequests {
     UUID uuid_serviceRequest;
 
     @Enumerated(EnumType.STRING)
-    TypeStatus status;
+    TypeJobStatus status;
 
     String lettreMotivation;
     String uploadCv;

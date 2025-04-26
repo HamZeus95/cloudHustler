@@ -1,0 +1,159 @@
+<div class="order-management-container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>Order Management</h2>
+      <div>
+        <button class="btn btn-outline-secondary me-2" (click)="toggleViewMode()">
+          <i class="bi bi-{{viewMode === 'grid' ? 'list' : 'grid'}}"></i> 
+          Switch to {{viewMode === 'grid' ? 'List' : 'Grid'}} View
+        </button>
+      </div>
+    </div>
+  
+    <!-- Grid View -->
+    <div class="row" *ngIf="viewMode === 'grid' && !isLoading">
+      <div class="col-md-6 mb-4" *ngFor="let order of orders">
+        <div class="card h-100">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <span>Order #{{order.uuid_order | slice:0:8}}</span>
+            <span class="badge" [ngClass]="getStatusBadgeClass(order.status)">
+              {{order.status | titlecase}}
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between mb-2">
+              <span>Items:</span>
+              <span class="fw-bold">{{calculateTotalItems(order)}}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+              <span>Total:</span>
+              <span class="fw-bold text-success">{{order.totalPrice | currency}}</span>
+            </div>
+            <button class="btn btn-sm btn-outline-primary w-100" (click)="viewOrderDetails(order)">
+              View Details
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- List View -->
+    <div class="table-responsive" *ngIf="viewMode === 'list' && !isLoading">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Order ID</th>
+            <th>Consumer</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td>#{{order.uuid_order | slice:0:8}}</td>
+            <td>{{ order.consumer.firstName }} {{ order.consumer.lastName }}</td>
+            <td>{{calculateTotalItems(order)}}</td>
+            <td class="fw-bold">{{order.totalPrice | currency}}</td>
+            <td>
+              <span class="badge" [ngClass]="getStatusBadgeClass(order.status)">
+                {{order.status | titlecase}}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary" (click)="viewOrderDetails(order)">
+                <i class="bi bi-eye"></i> Details
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Order Details Modal -->
+    <div class="modal fade" [class.show]="selectedOrder" [style.display]="selectedOrder ? 'block' : 'none'">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Order Details #{{selectedOrder?.uuid_order | slice:0:8}}</h5>
+              <button type="button" class="btn-close" (click)="closeOrderDetails()"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <p><strong>Status:</strong> 
+                    <span class="badge" [ngClass]="getStatusBadgeClass(selectedOrder?.status)">
+                      {{selectedOrder?.status | titlecase}}
+                    </span>
+                  </p>
+                  <p><strong>Customer:</strong> {{selectedOrder?.consumer?.firstName}}</p>
+                </div>
+                <div class="col-md-6 text-end">
+                  <p><strong>Total:</strong> {{selectedOrder?.totalPrice | currency}}</p>
+                </div>
+              </div>
+    
+              <div class="table-responsive mb-4">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Price</th>
+                      <th>Quantity</th>
+                      <th>Subtotal</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of selectedOrder?.orderItems">
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img [src]="item.product.imageUrl || 'assets/img/placeholder-product.png'" 
+                               class="img-thumbnail me-2" 
+                               style="width: 50px; height: 50px; object-fit: cover;"
+                               onerror="this.src='assets/img/placeholder-product.png'">
+                          <span>{{item.product.name}}</span>
+                        </div>
+                      </td>
+                      <td>{{item.product.price | currency}}</td>
+                      <td>{{item.quantity}}</td>
+                      <td>{{item.product.price * item.quantity | currency}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="closeOrderDetails()">Close</button>
+              <button *ngIf="canManageOrder(selectedOrder?.status)" 
+                      type="button" 
+                      class="btn btn-danger me-2" 
+                      (click)="rejectOrder(selectedOrder?.uuid_order)">
+                <i class="bi bi-x-circle"></i> Reject Order
+              </button>
+              <button *ngIf="canManageOrder(selectedOrder?.status)" 
+                      type="button" 
+                      class="btn btn-success" 
+                      (click)="confirmOrder(selectedOrder?.uuid_order)">
+                <i class="bi bi-check-circle"></i> Confirm Order
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="modal-backdrop fade" [class.show]="selectedOrder" [style.display]="selectedOrder ? 'block' : 'none'"></div>
+  
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2">Loading orders...</p>
+    </div>
+  
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && orders.length === 0" class="text-center py-5">
+      <i class="bi bi-cart display-5 text-muted"></i>
+      <h4 class="mt-3">No orders found</h4>
+      <p class="text-muted">Your order history is empty</p>
+    </div>
+  </div>

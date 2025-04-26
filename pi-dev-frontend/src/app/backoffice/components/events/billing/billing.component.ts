@@ -78,7 +78,7 @@ export class BillingComponent implements OnInit {
 
   // Naviguer vers l'édition d'un événement
   editEvent(event: Event): void {
-    this.router.navigate(['/edit-event', event.uuid_event]);
+    this.router.navigate(['/backoffice/edit-event', event.uuid_event]);
   }
 
   // Supprimer un événement

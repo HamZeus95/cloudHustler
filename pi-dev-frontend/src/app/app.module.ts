@@ -1,7 +1,5 @@
 import { CommonModule } from "@angular/common";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { NgModule } from "@angular/core";
-import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
@@ -17,12 +15,11 @@ import { AppComponent } from "./app.component";
 import { JwtInterceptor } from "./auth/interceptors/jwt";
 import { OAuth2RedirectComponent } from "./auth/oauth2/oauth2-redirect.component";
 import { TokenStorageService, AuthService } from "./auth/service";
-import { BackofficeModule } from "./backoffice/backoffice.module";
 import { FrontofficeModule } from "./frontoffice/frontoffice.module";
-import { ErrorDialogComponent } from "./shared/components/error-dialog/error-dialog.component";
-
-
-
+import { ErrorDialogComponent } from "./core/error-dialog/error-dialog.component";
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BackofficeModule } from './backoffice/backoffice.module';
 
 
 @NgModule({
@@ -49,6 +46,12 @@ import { ErrorDialogComponent } from "./shared/components/error-dialog/error-dia
     DialogModule,
     MatDialogModule,
     MatSnackBarModule,
+    //from marketplace
+    FormsModule,
+    RouterModule,
+    FrontofficeModule,
+    BackofficeModule,
+    NgChartsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => { return null; },
