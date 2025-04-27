@@ -40,6 +40,7 @@ public class SecurityConfiguration {
             "/swagger-resources/**",
             "/configuration/ui",
             "/farms/**",
+            "/ia-farm/**",
             "/configuration/security",
             "/swagger-ui/**",
             "/webjars/**",

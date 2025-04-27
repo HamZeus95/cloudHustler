@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Task } from '../models/famrs/task';
+import { Task } from '../../models/famrs/task';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

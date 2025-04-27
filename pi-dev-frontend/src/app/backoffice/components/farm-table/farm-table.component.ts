@@ -1,7 +1,8 @@
 import { Component, Input, AfterViewInit } from '@angular/core';
 import { Farm } from 'src/app/core/models/famrs/farm';
-import { FarmService } from 'src/app/core/services/farm.service'; // ✅ Make sure the path is correct
+import { FarmService } from 'src/app/core/services/farm-managment/farm.service'; // ✅ Make sure the path is correct
 import * as mapboxgl from 'mapbox-gl';
+import { UserService } from 'src/app/auth/service/user.service';
 
 @Component({
   selector: 'app-farm-table',
@@ -18,13 +19,24 @@ export class FarmTableComponent implements AfterViewInit {
   irrigationTypes = ['Drip', 'Sprinkler', 'Flood', 'None'];
 
   newFarm: Farm = this.initFarm();
+  userUuid: string | null = null; //het el userid
 
-  constructor(private farmService: FarmService) {} // ✅ Inject the service
+
+  constructor(private farmService: FarmService,
+    private userService: UserService // ✅ Inject UserService
+
+
+  ) {} // ✅ Inject the service
 
   ngAfterViewInit(): void {
     this.initializeMap();
+    this.getUserUuid();
   }
-
+  private getUserUuid() {
+    const currentUser = this.userService.getCurrentUser(); 
+    this.userUuid = currentUser?.uuid || null; 
+    console.log('User UUID:', this.userUuid); 
+  }
   private initializeMap() {
     (mapboxgl as any).accessToken = 'pk.eyJ1IjoibWRhMjAwMCIsImEiOiJjbTl0bW1sb2owMGY5MmxzOTkzZjhlYXh4In0.883JgQoLDr0iIpu833xKGA';
     this.map = new mapboxgl.Map({
@@ -69,7 +81,7 @@ export class FarmTableComponent implements AfterViewInit {
         expenses: []
       }).subscribe({
         next: (savedFarm) => {
-          this.farms.push(savedFarm); // ✅ Add the farm returned from backend
+          this.farms.push(savedFarm); 
           this.showAddForm = false;
           this.newFarm = this.initFarm();
         },

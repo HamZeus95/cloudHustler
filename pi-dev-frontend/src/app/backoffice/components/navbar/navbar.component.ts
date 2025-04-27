@@ -41,7 +41,6 @@ export class NavbarComponent implements OnInit {
     this.tokenStorageService.getUser().subscribe(user => {
       this.currentUser = user;
     });
-    
     // Add click handler to close dropdowns when clicking outside
     document.addEventListener('click', (event: Event) => {
       const target = event.target as HTMLElement;

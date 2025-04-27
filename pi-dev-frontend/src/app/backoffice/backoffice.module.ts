@@ -45,6 +45,7 @@ import { ProductCategorieslistComponent } from './components/product-categoriesl
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { TopSellingProductsComponent } from './components/top-selling-products/top-selling-products.component';
 import { NgChartsModule } from 'ng2-charts';
+import { IaFarmDashComponent } from './pages/ia-farm-dash/ia-farm-dash.component';
 
 
 @NgModule({
@@ -82,7 +83,8 @@ import { NgChartsModule } from 'ng2-charts';
     ProductslistComponent,
     ProductCategorieslistComponent,
     OrderListComponent,
-    TopSellingProductsComponent
+    TopSellingProductsComponent,
+    IaFarmDashComponent
   ],
   imports: [
     CommonModule,
@@ -97,7 +99,7 @@ import { NgChartsModule } from 'ng2-charts';
     MatButtonModule,
     MatIconModule,  
     CoreDirectivesModule,
-    HttpClientModule, 
+    HttpClientModule,
 
   ],
   providers: [
