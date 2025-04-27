@@ -27,6 +27,7 @@ public class SecurityConfiguration {
     // Note: The application has a context path of /api/v1, so these paths are relative to that
     private static final String[] WHITE_LIST_URL = {
             "/auth/**",
+            "/reactions/**",
             "/**",
             "/oauth2/**",
             "/farm/**",  // Add OAuth2 endpoints to whitelist

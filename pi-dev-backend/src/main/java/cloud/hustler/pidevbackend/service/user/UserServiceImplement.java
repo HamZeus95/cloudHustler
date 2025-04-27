@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -200,6 +201,10 @@ public class UserServiceImplement implements IUserService {
         }
     }
 
+    @Override
+    public Optional<User> findByUuid(String uuid) {
+        return userRepository.findByUuid_user(UUID.fromString(uuid));
+    }
     /**
      * Checks if a user was authenticated via OAuth (Google or GitHub)
      * @param user the user to check

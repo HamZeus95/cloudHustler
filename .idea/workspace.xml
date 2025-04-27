@@ -5,386 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c799faf-77be-47d4-a413-81b6d78d4ec2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/cloudHustler.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/pi-dev.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/CloudinaryConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/DTO/QuestionDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/DTO/QuizDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/DTO/ServiceRequestRequestBody.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/WebConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/AppConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/EmailConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/EmailJobsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/WebMvcConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/CartController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ConsumerController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/EmailJobsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/EventController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/FactureController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/FileStorageController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/LivraisonController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/OrderController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/PdfController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ProductCategoryController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ProductController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/QuizController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ServiceController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ServiceRequestStatisticsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ServiceRequestsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/SuiviLivraisonController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/dto/UserUpdateRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Answer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Cart.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/CartItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Certification.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Event.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Facture.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Livraison.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/OrderItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/OrderStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/ProductCategory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/ProductSalesDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Question.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Quiz.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/ServiceRequests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Servicee.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/SuiviLivraison.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/TypeJobStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/TypeReaction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/TypeSpeciality.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/AnswerRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/CartItemRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/CartRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/ConsumerRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/DeliverDriverRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/EventRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/ExpenseRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/FactureRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/FarmRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/LivraisonRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/OrderItemRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/OrderRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/ProductCategoryRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/ProductRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/QuestionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/QuizRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/ResourceRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/ServiceRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/ServiceRequestsRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/SuiviLivraisonRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/AiService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/CartService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/CloudinaryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/ConsumerServiceImplement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/EmailJobsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/EventNotificationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/EventService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/FactureService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/HuggingFaceService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/ICartService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/IConsumerService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/IEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/IFactureService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/ILivraisonService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/IOrderService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/IProductCategoryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/IProductService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/IServiceRequestsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/IServiceService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/ISuiviLivraisonService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/LivraisonService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/MapboxService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/OrderService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/ProductCategoryServiceImplement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/ProductServiceImplement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/ServiceRequestsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/ServiceService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/SuiviLivraisonService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/resources/static/images/042ca29e-b150-494f-b837-e6fbad62b55d_30d8fb35-b6f5-4769-9050-e8481222013eavatar_test.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/resources/static/images/76f28e9d-57e5-4171-9f55-bd90889e2c8a_6f5a865b-1d32-4141-8884-414e27b20024avatar.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/resources/static/images/d4e918fe-ea71-4276-ba99-33ccaf602de5_ChatGPT_Image_Apr_13,_2025,_08_33_28_PM.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-backend/uploads/fa28d12a-f475-43ee-b629-61fc21fc7075_ChatGPT Image Apr 22, 2025, 10_18_20 AM.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/events/add-event/add-event.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/events/add-event/add-event.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/events/add-event/add-event.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/events/billing/billing.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/events/billing/billing.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/events/billing/billing.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/events/billing/billing.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/events/edit-event/edit-event.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/events/edit-event/edit-event.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/events/edit-event/edit-event.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/events/side-bar/side-bar.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/events/side-bar/side-bar.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/events/side-bar/side-bar.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/events/side-bar/side-bar.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/order-list/order-list.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/order-list/order-list.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/order-list/order-list.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/order-list/order-list.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/product-categorieslist/product-categorieslist.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/product-categorieslist/product-categorieslist.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/product-categorieslist/product-categorieslist.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/product-categorieslist/product-categorieslist.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/productslist/productslist.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/productslist/productslist.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/productslist/productslist.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/productslist/productslist.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/top-selling-products/top-selling-products.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/top-selling-products/top-selling-products.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/top-selling-products/top-selling-products.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/top-selling-products/top-selling-products.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/layouts/admin-layout/admin-layout.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/layouts/admin-layout/admin-layout.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/layouts/admin-layout/admin-layout.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/details-facture/details-facture.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/details-facture/details-facture.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/details-facture/details-facture.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/details-facture/details-facture.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/details-livraison/details-livraison.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/details-livraison/details-livraison.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/details-livraison/details-livraison.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/details-livraison/details-livraison.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/factures/factures.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/factures/factures.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/factures/factures.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/factures/factures.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/livraisons/livraisons.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/livraisons/livraisons.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/livraisons/livraisons.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/livraisons/livraisons.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/suivilivraisons/suivilivraisons.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/suivilivraisons/suivilivraisons.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/suivilivraisons/suivilivraisons.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/suivilivraisons/suivilivraisons.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/marketplace-management/marketplace-management.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/marketplace-management/marketplace-management.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/marketplace-management/marketplace-management.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/marketplace-management/marketplace-management.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/error-dialog/error-dialog.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/delivery-driver/delivery-driver.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/event.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/livraison/facture.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/livraison/livraison.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/livraison/suivilivraison.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/market/cart-item.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/market/cart.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/market/order-item.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/market/order.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/market/product.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/serviceRequests.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/servicee.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/typeStatus.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/cart.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/error-handler.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/event-service.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/email-jobs-service.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/email-jobs-service.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/file-upload.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/file-upload.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/quiz.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/quiz.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/service-requests.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/service-requests.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/servicee.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/servicee.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/delivery.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/facture.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/facture.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/livraison-prediction-service.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/livraison-prediction-service.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/livraison.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/livraison.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/suivilivraison.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/suivilivraison.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/mapbox.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/order.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/product.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/productCategory.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/validators/custom.validators.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/dashboard-layout/dashboard-layout.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/dashboard-routing.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/dashboard.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/form/form.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/form/form.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/form/form.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/form/form.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/jobs-dashboard.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/jobs-dashboard.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/jobs-dashboard.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/jobs-dashboard.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/create-quiz/create-quiz.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/create-quiz/create-quiz.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/create-quiz/create-quiz.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/create-quiz/create-quiz.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/front-take-quiz/front-take-quiz.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/front-take-quiz/front-take-quiz.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/front-take-quiz/front-take-quiz.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/front-take-quiz/front-take-quiz.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/quiz.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/quiz.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/quiz.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/quiz.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/update-questions/update-questions.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/update-questions/update-questions.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/update-questions/update-questions.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/update-questions/update-questions.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-requests-dashboard/jobs-requests-dashboard.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-requests-dashboard/jobs-requests-dashboard.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-requests-dashboard/jobs-requests-dashboard.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-requests-dashboard/jobs-requests-dashboard.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dipslay/dipslay.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dipslay/dipslay.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dipslay/dipslay.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dipslay/dipslay.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/email-jobs/email-jobs.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/email-jobs/email-jobs.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/email-jobs/email-jobs.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/email-jobs/email-jobs.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/facture-client/facture-client.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/facture-client/facture-client.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/facture-client/facture-client.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/facture-client/facture-client.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/facture-clientdetails/facture-clientdetails.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/facture-clientdetails/facture-clientdetails.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/facture-clientdetails/facture-clientdetails.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/facture-clientdetails/facture-clientdetails.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraison-client/livraison-client.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraison-client/livraison-client.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraison-client/livraison-client.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraison-client/livraison-client.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraison-clientdetails/livraison-clientdetails.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraison-clientdetails/livraison-clientdetails.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraison-clientdetails/livraison-clientdetails.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraison-clientdetails/livraison-clientdetails.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraisondriver/livraisondriver.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraisondriver/livraisondriver.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraisondriver/livraisondriver.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraisondriver/livraisondriver.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/map/map.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/map/map.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/map/map.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/map/map.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/services/livraison.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/assets/images/facture.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/assets/images/livraison.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/assets/img/bg-img/pepper.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/assets/js/bootstrap.min.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/assets/js/popper.min.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/assets/rectangle-yellow-5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/assets/slide 12.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pi-dev-frontend/src/assets/slide5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/mvnw.cmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/PiDevBackendApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/PiDevBackendApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/CorsConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/WebConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/oauth2/OAuth2AuthenticationSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/oauth2/OAuth2AuthenticationSuccessHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/WebMvcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/WebMvcConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/CommentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/CropController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/CropController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ExpenseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ExpenseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/FarmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/FarmController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ResourceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ResourceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/TaskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Admin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Consumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Consumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/DeliveryDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/DeliveryDriver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Expert.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Expert.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Farmer.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Farmer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ReactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ReactionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Comment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Post.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Reaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Reaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/TaskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/TaskRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/GeminiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/GeminiService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/SmsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/SmsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/auth/AuthenticationServiceImplement.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/auth/AuthenticationServiceImplement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/CommentServiceImplement.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/CommentServiceImplement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/ICommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/ICommentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/IReactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/IReactionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/ReactionServiceImplement.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/ReactionServiceImplement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/user/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/user/IUserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/user/UserServiceImplement.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/user/UserServiceImplement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/app.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/auth/interceptors/jwt.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/auth/interceptors/jwt.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/auth/service/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/auth/service/user.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/backoffice-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/backoffice-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/backoffice.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/backoffice.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/billing/back-post.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/events/add-event/add-event.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/billing/billing.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/billing/billing.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/billing/billing.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/billing/billing.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/billing/billing.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/billing/billing.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/comment-back/comment-back.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/comment-back/comment-back.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/farm-table/farm-table.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/farm-table/farm-table.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/farm-table/farm-table.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/farm-table/farm-table.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/navbar/navbar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/navbar/navbar.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/navbar/navbar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/navbar/navbar.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/side-bar/side-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/side-bar/side-bar.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/stats/stats.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/stats/stats.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/tables/tables.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/tables/tables.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/blog-managment/blog-managment.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/blog-managment/blog-managment.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/dashboard/dashboard.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/dashboard/dashboard.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/event/event.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/event/event.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/farm-managment/farm-managment.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/farm-managment/farm-managment.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/profile/edit-profile/edit-profile.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/profile/edit-profile/edit-profile.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/profile/edit-profile/edit-profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/profile/edit-profile/edit-profile.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/profile/edit-profile/edit-profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/profile/edit-profile/edit-profile.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/crop.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/crop.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/expense.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/expense.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/farm.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/farm.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/post-back/post-back.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/post-back/post-back.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/Reaction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/Reaction.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/gemini.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/gemini.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/weather.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/weather.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/app-routing.module.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/footer/footer.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/footer/footer.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/navbar/navbar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/navbar/navbar.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/navbar/navbar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/navbar/navbar.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/frontoffice-module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/comment/add-comment/add-comment.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/comment/add-comment/add-comment.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/comment/edit-comment/edit-comment.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/comment/edit-comment/edit-comment.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/add-post/add-post.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/add-post/add-post.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/post-list/post.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/post-list/post.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/post-list/post.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/post-list/post.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/reaction/add-reaction/add-reaction.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/reaction/add-reaction/add-reaction.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/reaction/add-reaction/add-reaction.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/reaction/add-reaction/add-reaction.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/reaction/add-reaction/add-reaction.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/reaction/add-reaction/add-reaction.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/frontoffice-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/frontoffice-routing.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/frontoffice.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/frontoffice.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/auth/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/auth/login/login.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/blog/blog.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/blog/blog.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/contact/contact.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/contact/contact.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/event/event.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/event/event.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/event/event.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/event/event.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/event/event.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/event/event.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/home/home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/home/home.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/jobs/jobs.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/jobs/jobs.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/jobs/jobs.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/jobs/jobs.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/jobs/jobs.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/jobs/jobs.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/jobs/jobs.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/jobs/jobs.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/market/market.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/market/market.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/market/market.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/market/market.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/market/market.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/market/market.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/market/market.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/market/market.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/assets/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/events/edit-event/edit-event.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/assets/js/bootstrap.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/assets/js/bootstrap.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/assets/js/core/bootstrap.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/assets/js/core/bootstrap.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/environments/environment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/proxy.conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/proxy.conf.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -452,38 +104,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.piDevBackend [clean].executor": "Run",
-    "Maven.piDevBackend [install].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.PiDevBackendApplication.executor": "Run",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Blog",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_directory_selection": "D:/cloudHustler2/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers",
-    "last_opened_file_path": "D:/cloudHustler/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
-    "spring.configuration.checksum": "c69308e65b72560394dc7547cfb9fef2",
-    "ts.external.directory.path": "C:\\Users\\MSI\\Documents\\GitHub\\cloudHustler\\pi-dev-frontend\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.piDevBackend [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.piDevBackend [install].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.PiDevBackendApplication.executor&quot;: &quot;Run&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Blog&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;D:/cloudHustler2/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/cloudHustler/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;c69308e65b72560394dc7547cfb9fef2&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\MSI\\Documents\\GitHub\\cloudHustler\\pi-dev-frontend\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="cloud.hustler.pidevbackend.service" />
@@ -522,7 +174,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ac3788a9-3f24-4944-9cc2-2ebd0c118823" name="Changes" comment="" />
+      <changelist id="1c799faf-77be-47d4-a413-81b6d78d4ec2" name="Changes" comment="" />
       <created>1741726683623</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -552,6 +204,7 @@
       <workItem from="1745440991502" duration="1949000" />
       <workItem from="1745516349816" duration="8000" />
       <workItem from="1745516425033" duration="8000" />
+      <workItem from="1745753133186" duration="19236000" />
     </task>
     <task id="LOCAL-00001" summary="before merge">
       <option name="closed" value="true" />

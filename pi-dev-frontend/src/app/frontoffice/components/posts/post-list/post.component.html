@@ -4,10 +4,9 @@
     <input type="text" 
            [(ngModel)]="searchTerm" 
            (input)="filterPosts()"
-           placeholder="Rechercher des posts...">
+           placeholder="Rechercher des posts... ">
     <i class="fas fa-search"></i>
   </div>
-
   <!-- Message si aucun post -->
   <div *ngIf="filteredPosts.length === 0" class="no-posts">
     <img src="assets/images/empty-feed.svg" alt="Aucun post" class="empty-illustration">
@@ -23,6 +22,7 @@
 
   <!-- Liste des posts -->
   <div class="post-list">
+
     <div *ngFor="let post of filteredPosts" class="post-card" [id]="'post-' + (post.idPost || '')" #postElement>
       <!-- En-tête du post -->
       <div class="post-header">

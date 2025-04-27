@@ -20,6 +20,7 @@ import { LogoutComponent } from './pages/auth/logout/logout.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
 import { EventComponent } from './pages/event/event.component';
+import { EditCommentComponent } from './components/comment/edit-comment/edit-comment.component';
 
 
 const routes: Routes = [
@@ -28,6 +29,10 @@ const routes: Routes = [
     {path:"home",component:HomeComponent},
     {path:'contact',component:ContactComponent},
     {path: 'not-found', component: NotFoundComponent},
+    { 
+      path: 'post/:postId/edit-comment/:commentId', 
+      component: EditCommentComponent 
+    },
   //auth routes
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},

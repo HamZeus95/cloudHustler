@@ -114,20 +114,7 @@ export class PostBackComponent {
     }
   }
 
-  addReaction(type: TypeReaction, postId: string | undefined): void {
-    if (!postId) return;
-    
-    const reaction = {
-      reactionId: '',
-      typeReaction: type,
-      post: { idPost: postId } as Post
-    };
-
-    this.postService.addReactionToPost(postId, reaction).subscribe({
-      next: () => this.loadPosts(),
-      error: (err) => console.error('Error adding reaction', err)
-    });
-  }
+  
 
   getReactionCount(post: Post, type: TypeReaction): number {
     return post.reactions?.filter(r => r.typeReaction === type).length || 0;

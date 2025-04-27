@@ -1,8 +1,12 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../../../../core/services/service'
 import { commentaires } from 'src/app/core/models/Comment';
+
+import { AuthService } from '../../../../auth/service/authentication.service'; // Ajoutez cette importation
+import { TokenStorageService } from '../../../../auth/service/token-storage.service'; // Ajoutez cette importation
 
 @Component({
   selector: 'app-edit-comment',
@@ -16,6 +20,8 @@ export class EditCommentComponent implements OnInit {
   postId!: string;
   isLoading = true;
   errorMessage = '';
+  currentUser: any = null;
+  isAuthenticated = false;
   @HostListener('document:keydown.escape', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
     this.onCancel();
@@ -25,7 +31,9 @@ export class EditCommentComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private postService: PostService
+    private postService: PostService,
+    private authService: AuthService,
+    private tokenStorageService: TokenStorageService
   ) {
     this.commentForm = this.fb.group({
       content: ['', [Validators.required, Validators.minLength(1)]]
@@ -33,6 +41,20 @@ export class EditCommentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.authService.isAuthenticated().subscribe(isAuth => {
+      this.isAuthenticated = isAuth;
+      if (isAuth) {
+        this.currentUser = this.tokenStorageService.getCurrentUser();
+      }
+      console.log(this.currentUser)
+    });
+
+    // Subscribe to user changes
+    this.tokenStorageService.getUser().subscribe(user => {
+      this.currentUser = user;
+    });
+    
     this.commentId = this.route.snapshot.paramMap.get('commentId') || '';
     this.postId = this.route.snapshot.paramMap.get('postId') || '';
     

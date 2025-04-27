@@ -7,6 +7,12 @@ import { environment } from '../../../../../environments/environment';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 
+
+
+import { AuthService } from '../../../../auth/service/authentication.service'; // Ajoutez cette importation
+import { TokenStorageService } from '../../../../auth/service/token-storage.service'; // Ajoutez cette importation
+
+
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
@@ -20,17 +26,36 @@ export class PostComponent implements OnInit {
   selectedPostId: any;
   searchTerm: string = '';
   isGeneratingPdf = false;
+  currentUser: any = null;
+  isAuthenticated = false;
   
   @ViewChildren('postElement') postElements!: QueryList<ElementRef>;
 
   constructor(
     private postService: PostService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService, // Ajoutez ce service
+    private tokenStorageService: TokenStorageService // Ajoutez ce servic
   ) {}
 
   ngOnInit(): void {
+    this.authService.isAuthenticated().subscribe(isAuth => {
+      this.isAuthenticated = isAuth;
+      if (isAuth) {
+        this.currentUser = this.tokenStorageService.getCurrentUser();
+      }
+      console.log(this.currentUser)
+    });
+
+    // Subscribe to user changes
+    this.tokenStorageService.getUser().subscribe(user => {
+      this.currentUser = user;
+    });
     this.loadPosts();
+    
+    
   }
+  
 
   reactions = [
     { type: TypeReaction.LIKE, emoji: '👍', label: 'Like' },
@@ -173,6 +198,7 @@ export class PostComponent implements OnInit {
   }
 
   loadPosts(): void {
+    console.log('currentUser:', this.currentUser);
     this.postService.getAllPosts().subscribe({
       next: (data) => {
         this.posts = data.map(post => ({
@@ -229,21 +255,7 @@ export class PostComponent implements OnInit {
     }
   }
 
-  addReaction(type: TypeReaction, postId: string | undefined): void {
-    if (!postId) return;
-    
-    const reaction = {
-      reactionId: '',
-      typeReaction: type,
-      post: { idPost: postId } as Post
-    };
-
-    this.postService.addReactionToPost(postId, reaction).subscribe({
-      next: () => this.loadPosts(),
-      error: (err) => console.error('Error adding reaction', err)
-    });
-  }
-
+ 
   getReactionCount(post: Post, type: TypeReaction): number {
     return post.reactions?.filter(r => r.typeReaction === type).length || 0;
   }
