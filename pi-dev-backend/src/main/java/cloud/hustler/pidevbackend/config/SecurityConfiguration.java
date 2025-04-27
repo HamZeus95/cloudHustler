@@ -47,7 +47,11 @@ public class SecurityConfiguration {
             "/error",  // Added error path to allow access to error pages
             "/uploads/**", // Allow access to uploaded files
             "/static/**", // Allow access to static resources
-            "/images/**" // Allow access to image resources
+            "/images/**" ,
+            "/services/**",
+            "/files/**",
+            "/service-requests/**",
+            "/quiz/**"// Allow access to image resources
     };
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;

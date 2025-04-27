@@ -1,0 +1,28 @@
+<app-admin-layout>
+
+            <div class="card-body p-4">
+              <form (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                  <label for="to" class="form-label fw-bold">📬 Destinataire :</label>
+                  <input type="email" class="form-control" [(ngModel)]="to" name="to" required placeholder="ex: nom@example.com">
+                </div>
+      
+                <div class="mb-3">
+                  <label for="subject" class="form-label fw-bold">📝 Sujet :</label>
+                  <input type="text" class="form-control" [(ngModel)]="subject" name="subject" required placeholder="Sujet de l'email">
+                </div>
+      
+                <div class="mb-3">
+                  <label for="text" class="form-label fw-bold">💬 Message :</label>
+                  <textarea class="form-control" rows="5" [(ngModel)]="text" name="text" required placeholder="Votre message ici..."></textarea>
+                </div>
+      
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">
+                    ✉️ Envoyer l'email
+                  </button>
+                </div>
+              </form>
+            </div>
+            </app-admin-layout>
+            

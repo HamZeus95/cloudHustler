@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 
 @RestController
-@RequestMapping("/api/emails")
+@RequestMapping("/emails")
 public class EmailJobsController {
 //    @Autowired
 //    private EmailJobsService emailService;
 
-    @PostMapping("/emails/send")
+    @PostMapping("/send")
     public ResponseEntity<?> sendEmail(@RequestParam String subject, @RequestParam String body,@RequestParam String to) {
         // Définir les destinataires statiques ici
         // Appeler la méthode d'envoi d'e-mail du service avec les destinataires statiques

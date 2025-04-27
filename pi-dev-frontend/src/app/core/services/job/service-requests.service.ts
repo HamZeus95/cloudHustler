@@ -10,7 +10,7 @@ import { ServiceRequest } from 'src/app/core/models/serviceRequests';
 })
 export class ServiceRequestsService {
 
-  private apiUrl = 'http://localhost:8090/CloudHustel/service-requests';
+  private apiUrl = 'http://localhost:8090/api/v1/service-requests';
 
     constructor(private http: HttpClient) { }
 

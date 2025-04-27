@@ -1,0 +1,154 @@
+<form (ngSubmit)="handleSubmit()" #serviceForm="ngForm" novalidate>
+
+    <!-- Title -->
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input 
+        type="text" 
+        id="title" 
+        name="title" 
+        [(ngModel)]="newService.title"
+        class="form-control"
+        [ngClass]="{'is-invalid': title.invalid && title.touched}"
+        required
+        #title="ngModel"
+      />
+      <div *ngIf="title.invalid && title.touched" class="text-red-500 text-sm mt-1">
+        <div *ngIf="title.errors?.['required']">Ce Tilte est requis.</div>
+      </div>
+    </div>
+  
+    <!-- Description -->
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea 
+        id="description" 
+        name="description" 
+        [(ngModel)]="newService.description"
+        rows="4"
+        class="form-control"
+        [ngClass]="{'is-invalid': description.invalid && description.touched}"
+        required
+        #description="ngModel"
+      ></textarea>
+      <div *ngIf="description.invalid && description.touched" class="text-red-500 text-sm mt-1">
+        <div *ngIf="description.errors?.['required']">La description est requis.</div>
+      </div>
+    </div>
+  
+    <!-- Is Hiring -->
+    <div class="mb-3">
+      <label for="isHiring" class="form-label">Is Hiring?</label>
+      <select 
+        id="isHiring" 
+        name="isHiring" 
+        [(ngModel)]="newService.isHiring"
+        class="form-select"
+        [ngClass]="{'is-invalid': isHiring.invalid && isHiring.touched}"
+        required
+        #isHiring="ngModel"
+      >
+        <option value="" disabled hidden>-- Choisir --</option>
+        <option value="true">Oui</option>
+        <option value="false">Non</option>
+      </select>
+      <div *ngIf="isHiring.invalid && isHiring.touched" class="text-red-500 text-sm mt-1">
+        <div *ngIf="isHiring.errors?.['required']">Ce champ est requis.</div>
+      </div>
+    </div>
+  
+    <!-- Category -->
+    <div class="mb-3">
+      <label for="category" class="form-label">Category</label>
+      <input 
+        type="text" 
+        id="category" 
+        name="category" 
+        [(ngModel)]="newService.category"
+        class="form-control"
+        [ngClass]="{'is-invalid': category.invalid && category.touched}"
+        required
+        #category="ngModel"
+      />
+      <div *ngIf="category.invalid && category.touched" class="text-red-500 text-sm mt-1">
+        <div *ngIf="category.errors?.['required']"> la categorie est requise.</div>
+      </div>
+    </div>
+  
+    <!-- Salary -->
+    <div class="mb-3">
+      <label for="salary" class="form-label">Salary</label>
+      <input 
+        type="number" 
+        id="salary" 
+        name="salary" 
+        [(ngModel)]="newService.salary"
+        class="form-control"
+        [ngClass]="{'is-invalid': salary.invalid && salary.touched}"
+        required
+        min="1"
+        #salary="ngModel"
+      />
+      <div *ngIf="salary.invalid && salary.touched" class="text-red-500 text-sm mt-1">
+        <div *ngIf="salary.errors?.['required']">Ce champ est requis.</div>
+        <div *ngIf="salary.errors?.['min']">Le salaire doit être supérieur à 0.</div>
+      </div>
+    </div>
+  
+    <!-- Image Upload -->
+    <div class="mb-3">
+      <label for="imageUrl" class="form-label">Image URL</label>
+      <input 
+        type="text" 
+        id="imageUrl" 
+        name="imageUrl" 
+        [(ngModel)]="newService.imageUrl"
+        class="form-control"
+        [ngClass]="{'is-invalid': imageUrl.invalid && imageUrl.touched}"
+        required
+        #imageUrl="ngModel"
+      />
+      <div *ngIf="imageUrl.invalid && imageUrl.touched" class="text-red-500 text-sm mt-1">
+        <div *ngIf="imageUrl.errors?.['required']">L’URL de l’image est requise.</div>
+      </div>
+    </div>
+    
+    <!-- Image Preview -->
+    <div *ngIf="newService.imageUrl" class="mt-2">
+      <p class="text-muted">Image URL: {{ newService.imageUrl }}</p>
+      <img [src]="newService.imageUrl" alt="Preview" class="mt-2 rounded border" width="200" />
+    </div>
+  
+    <!-- Number of Workers -->
+    <div class="mb-3">
+      <label for="nbWorkers" class="form-label">Number of Workers</label>
+      <input 
+        type="number" 
+        id="nbWorkers" 
+        name="nbWorkers" 
+        [(ngModel)]="newService.nbWorkers"
+        class="form-control"
+        [ngClass]="{'is-invalid': nbWorkers.invalid && nbWorkers.touched}"
+        required
+        min="1"
+        #nbWorkers="ngModel"
+      />
+      <div *ngIf="nbWorkers.invalid && nbWorkers.touched" class="text-red-500 text-sm mt-1">
+        <div *ngIf="nbWorkers.errors?.['required']">Ce champ est requis.</div>
+        <div *ngIf="nbWorkers.errors?.['min']">Le nombre de travailleurs doit être supérieur à 0.</div>
+      </div>
+    </div>
+  
+    <!-- Submit -->
+    <div class="d-flex justify-content-center">
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled]="!serviceForm.valid"
+      >
+        {{ serviceToEdit ? "Modifier" : "Ajouter" }}
+      </button>
+    </div>
+  
+  </form>
+  

@@ -20,6 +20,8 @@ import { LogoutComponent } from './pages/auth/logout/logout.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
 import { EventComponent } from './pages/event/event.component';
+import { JobRequestsComponent } from './pages/job-requests/job-requests.component';
+import { FrontTakeQuizComponent } from './pages/front-take-quiz/front-take-quiz.component';
 
 
 const routes: Routes = [
@@ -50,6 +52,10 @@ const routes: Routes = [
     {path:'market', component: MarketComponent},
   //hiring routes
     {path:'jobs',component:JobsComponent},
+    { path: 'job-request/:jobId', component: JobRequestsComponent },
+    { path: 'take-quiz/:id', component: FrontTakeQuizComponent }, // Front-office quiz
+
+
 ];
 
 @NgModule({

@@ -24,6 +24,11 @@ import { LivraisonComponent } from './pages/livraison/livraisons/livraisons.comp
 import { SuiviLivraisonComponent } from './pages/livraison/suivilivraisons/suivilivraisons.component';
 import { MarketplaceManagementComponent } from './pages/marketplace-management/marketplace-management.component';
 import { BillingComponent } from './components/events/billing/billing.component';
+import { JobsBackComponent } from './pages/hiring/jobs-back/jobs-back.component';
+import { JobsRequestsDashboardComponent } from './pages/hiring/jobs-requests-dashboard/jobs-requests-dashboard.component';
+import { DipslayComponent } from './pages/hiring/dipslay/dipslay.component';
+import { EmailJobsComponent } from './pages/hiring/email-jobs/email-jobs.component';
+import { QuizComponent } from './pages/hiring/quiz/quiz.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -49,7 +54,11 @@ const routes: Routes = [
     { path:'suivilivraison',  component: SuiviLivraisonComponent},
     //market routes
     { path: 'market', component: MarketplaceManagementComponent },
-
+    {path:'jobs',component:JobsBackComponent},
+    {path:'jobsRequests',component:JobsRequestsDashboardComponent},
+    { path: 'display-cv/:cvurl', component: DipslayComponent },
+    {path:'email',component:EmailJobsComponent},
+    {path:'quiz/:id',component:QuizComponent}
 
 
 
