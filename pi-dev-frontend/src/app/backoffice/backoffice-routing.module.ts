@@ -4,8 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FarmService } from '../core/services/farm.service';
 import { CropService } from '../core/services/crop.service';
 import { FarmManagmentComponent } from './pages/farm-managment/farm-managment.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { EventComponent } from './pages/event/event.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component'; 
 import { TaskManagementComponent } from './components/task-management/task-management.component';
 import { WeatherComponent } from './components/weather/weather.component';
 import { CropDiseaseDetectorComponent } from "./components/crop-disease-detector/crop-disease-detector.component"
@@ -27,7 +26,7 @@ import { MarketplaceManagementComponent } from './pages/marketplace-management/m
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
-    { path: 'backEvent', component: BillingComponent },
+    { path: 'backEvent', component: BillingComponent,  },
     { path: 'add-event', component: AddEventComponent },
     { path: 'edit-event/:id', component: EditEventComponent },
     { path: 'farm', component: FarmManagmentComponent },

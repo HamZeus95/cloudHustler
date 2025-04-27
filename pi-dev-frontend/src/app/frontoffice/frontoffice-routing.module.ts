@@ -20,6 +20,8 @@ import { LogoutComponent } from './pages/auth/logout/logout.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
 import { EventComponent } from './components/event/event.component';
+import {PublicGuard} from '../auth/guards/public.guard';
+import { AuthGuard } from "../auth/guards/auth.guard";
 
 
 const routes: Routes = [
@@ -34,18 +36,18 @@ const routes: Routes = [
     {path:'jobs',component:JobsComponent},
     {path:'contact',component:ContactComponent},
     {path: 'not-found', component: NotFoundComponent},
-    { path:'factures',  component: FactureClientComponent},
-    { path:'livraisons',  component: LivraisonClientComponent},
-    { path:'livraison-client-details/:id',  component: LivraisonClientdetailsComponent},
-    { path:'facture-client-details/:id',  component: FactureClientdetailsComponent},
-    { path:'suivrelivraison/:id',  component: MapComponent},
-    { path:'livraisonsDriver',  component: LivraisondriverComponent},
-    {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent},
+    { path:'factures', component: FactureClientComponent, canActivate: [AuthGuard]},
+    { path:'livraisons', component: LivraisonClientComponent, canActivate: [AuthGuard]},
+    { path:'livraison-client-details/:id', component: LivraisonClientdetailsComponent, canActivate: [AuthGuard]},
+    { path:'facture-client-details/:id', component: FactureClientdetailsComponent, canActivate: [AuthGuard]},
+    { path:'suivrelivraison/:id', component: MapComponent, canActivate: [AuthGuard]},
+    { path:'livraisonsDriver', component: LivraisondriverComponent, canActivate: [AuthGuard]},
+    {path: 'login', component: LoginComponent, canActivate: [PublicGuard]},
+    {path: 'register', component: RegisterComponent, canActivate: [PublicGuard]},
     {path: "verify-email", component: OtpComponent},
     {path: 'logout', component: LogoutComponent},
-    {path: 'forgot-password', component: ForgotPasswordComponent},
-    {path: 'reset-password', component: ResetPasswordComponent},
+    {path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [PublicGuard]},
+    {path: 'reset-password', component: ResetPasswordComponent, canActivate: [PublicGuard]},
     {path: 'not-found', component: NotFoundComponent},
 
 

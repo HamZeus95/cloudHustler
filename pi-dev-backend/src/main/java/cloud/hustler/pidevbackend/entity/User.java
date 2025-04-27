@@ -68,5 +68,12 @@ public abstract class User implements UserDetails {
         return (discriminator != null) ? discriminator.value() : "Consumer";
     }
 
+    // Face ID related fields
+    @Column(name = "face_id")
+    private String faceId;
+
+    @Column(name = "face_id_enabled")
+    private boolean faceIdEnabled = false;
+
 
 }

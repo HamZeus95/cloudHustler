@@ -34,7 +34,7 @@ export class NavbarComponent implements OnInit {
       if (isAuth) {
         this.currentUser = this.tokenStorageService.getCurrentUser();
       }
-      console.log(this.currentUser)
+       
     });
 
     // Subscribe to user changes

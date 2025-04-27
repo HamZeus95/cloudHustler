@@ -1,15 +1,41 @@
-.input-group-text {
+/* Face ID Login Styles */
+.webcam-container {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.camera-frame {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.face-guide-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
-  height: 100%;
-  padding: 0.438rem 1rem;
+  justify-content: center;
+  pointer-events: none;
 }
 
-.form-password-toggle .input-group-text {
-  cursor: pointer;
+.face-guide {
+  width: 200px;
+  height: 200px;
+  border: 2px dashed #007bff;
+  border-radius: 50%;
+  opacity: 0.7;
 }
 
-.form-password-toggle .input-group-text i {
-  font-size: 1.2rem;
-  line-height: 1.75;
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .face-guide {
+    width: 150px;
+    height: 150px;
+  }
 }

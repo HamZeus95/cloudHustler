@@ -271,6 +271,29 @@ export class AuthService {
     return this.tokenStorage.getToken();
   }
 
+  // Method for face ID login
+  loginWithFaceId(email: string, imageBase64: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/login-with-face`, 
+      { email, imageBase64 }, 
+      { withCredentials: true }
+    ).pipe(
+      tap(response => {
+        console.log('Face ID login response:', response);
+        // Handle both camelCase and snake_case properties
+        const accessToken = response.accessToken || response.access_token;
+        const userResponse = response.userResponse || response.user;
+        
+        if (accessToken) {
+          this.tokenStorage.setToken(accessToken);
+          if (userResponse) {
+            this.tokenStorage.saveUser(userResponse);
+          }
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
   // Method to verify OTP for email verification
   verifyOtp(email: string, otp: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/verify-otp`, { email, otpValue: otp }, { withCredentials: true })

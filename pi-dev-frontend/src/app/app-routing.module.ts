@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 // Import AuthGuard correctly with the default import
 import AuthGuard from './auth/guards/auth.guard';
+import { RoleGuard } from './auth/guards/role.guard';
 import { OAuth2RedirectComponent } from './auth/oauth2/oauth2-redirect.component';
 import { AppComponent } from './app.component';
 
@@ -14,7 +15,10 @@ const routes: Routes = [
   {
     path: 'backoffice',
     loadChildren: () => import('./backoffice/backoffice.module').then(m => m.BackofficeModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, RoleGuard],
+    data: { 
+      roles: ['Admin', 'Farmer', 'DeliveryDriver', 'Expert'] // Allowed roles for backoffice
+    }
   },
 
   {

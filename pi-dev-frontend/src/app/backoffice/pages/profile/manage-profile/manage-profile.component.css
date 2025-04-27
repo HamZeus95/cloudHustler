@@ -1,0 +1,159 @@
+/* Face ID Setup Styles */
+.face-frame {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  /* Make sure the frame doesn't overlap with the webcam */
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.face-frame.detecting {
+  background-color: rgba(13, 110, 253, 0.1);
+  box-shadow: 0 0 15px rgba(13, 110, 253, 0.5);
+}
+
+.face-frame.detected {
+  background-color: rgba(25, 135, 84, 0.1);
+  box-shadow: 0 0 15px rgba(25, 135, 84, 0.5);
+}
+
+.face-frame.completed {
+  background-color: rgba(25, 135, 84, 0.1);
+  box-shadow: 0 0 15px rgba(25, 135, 84, 0.5);
+}
+
+.corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #5e72e4;
+}
+
+.top-left {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+  border-top-left-radius: 5px;
+}
+
+.top-right {
+  top: 0;
+  right: 0;
+  border-left: none;
+  border-bottom: none;
+  border-top-right-radius: 5px;
+}
+
+.bottom-left {
+  bottom: 0;
+  left: 0;
+  border-right: none;
+  border-top: none;
+  border-bottom-left-radius: 5px;
+}
+
+.bottom-right {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+  border-bottom-right-radius: 5px;
+}
+
+.face-placeholder {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.status-message {
+  font-size: 14px;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+.webcam-container {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  /* Make webcam container visible */
+  max-width: 300px;
+  margin: 0 auto;
+  border: 2px solid #5e72e4;
+  background-color: #fff;
+  display: block;
+}
+
+.captured-image {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.captured-image img {
+  width: 100%;
+  height: auto;
+}
+
+.setup-container {
+  animation: fadeIn 0.5s;
+}
+
+.detection-icon {
+  color: #198754;
+  animation: pulseSuccess 1s infinite;
+}
+
+.spinner-container {
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulseSuccess {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* QR code styles */
+.qr-code {
+  max-width: 200px;
+  border: 1px solid #eee;
+  padding: 10px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.manual-key code {
+  font-family: 'Courier New', monospace;
+  background-color: #f8f9fa;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  user-select: all;
+}

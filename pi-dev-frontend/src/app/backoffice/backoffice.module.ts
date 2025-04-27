@@ -1,6 +1,8 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { BackofficeRoutingModule } from './backoffice-routing.module';
+import { WebcamModule } from 'ngx-webcam'; // Import the WebcamModule
 import { DragDropModule } from "@angular/cdk/drag-drop";
-import { CommonModule, DatePipe } from "@angular/common";
-import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
@@ -37,7 +39,6 @@ import { FactureComponent } from "./pages/livraison/factures/factures.component"
 import { LivraisonComponent } from "./pages/livraison/livraisons/livraisons.component";
 import { EditProfileComponent } from "./pages/profile/edit-profile/edit-profile.component";
 import { ManageProfileComponent } from "./pages/profile/manage-profile/manage-profile.component";
-import { BackofficeRoutingModule } from './backoffice-routing.module';
 import { MarketplaceManagementComponent } from './pages/marketplace-management/marketplace-management.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductslistComponent } from './components/productslist/productslist.component';
@@ -45,7 +46,7 @@ import { ProductCategorieslistComponent } from './components/product-categoriesl
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { TopSellingProductsComponent } from './components/top-selling-products/top-selling-products.component';
 import { NgChartsModule } from 'ng2-charts';
-
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { NgChartsModule } from 'ng2-charts';
   ],
   imports: [
     CommonModule,
+    WebcamModule, // Add WebcamModule here
     BackofficeRoutingModule,
     FormsModule,
     ReactiveFormsModule,

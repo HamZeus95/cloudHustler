@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../auth/service/authentication.service';
@@ -8,12 +8,22 @@ import { AuthService } from '../../../../auth/service/authentication.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
   isSubmitting = false;
+  isFaceLoginSubmitting = false;
   loginError = '';
   loginSuccess = '';
   showPassword = false;
+  
+  // Face ID login properties
+  showFaceIdLogin = false;
+  faceIdEmail = '';
+  isCameraActive = false;
+  capturedImage: string | null = null;
+  mediaStream: MediaStream | null = null;
+  
+  @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
 
   constructor(
     private fb: FormBuilder,
@@ -27,6 +37,11 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required]],
       rememberMe: [false]
     });
+  }
+
+  ngOnDestroy(): void {
+    // Make sure to stop the camera when component is destroyed
+    this.stopCamera();
   }
 
   // Convenience getter for easy access to form fields
@@ -66,17 +81,41 @@ export class LoginComponent implements OnInit {
         localStorage.removeItem('logged_out');
         
         this.isSubmitting = false;
+        this.loginSuccess = 'Login successful!';
         
-        // Get user role from the response
-        const userRole = response.userResponse?.Role || response.user?.Role;
-        console.log('User logged in with role:', userRole);
+        // Get user data from response
+        const user = response.userResponse || response.user;
         
-        // Navigate based on user role
-        if (userRole === 'farmer' || userRole === 'expert' || userRole === 'delivery') {
-          this.router.navigate(['/backoffice']);
+        if (user) {
+          // Store profile image if available
+          if (user.profileImage) {
+            localStorage.setItem('user-profile-image', user.profileImage);
+          }
+          
+          // Get user role and redirect based on role
+          const userRole = user.role || user.Role;
+          console.log('User logged in with role:', userRole);
+
+                  // Clear the logged_out flag on successful login
+        localStorage.removeItem('logged_out');
+        
+        this.isSubmitting = false;
+        
+      
+          
+          setTimeout(() => {
+            if (userRole && ['expert', 'farmer', 'delivery', 'deliverydriver'].some(
+              role => userRole.toLowerCase().includes(role.toLowerCase())
+            )) {
+              this.router.navigate(['backoffice']);
+            } else {
+              // Default to frontoffice for consumers or if role is not specified
+              this.router.navigate(['frontoffice']);
+            }
+          }, 500);
         } else {
-          // Default to frontoffice for consumers or if role is not specified
-          this.router.navigate(['/frontoffice/home']);
+          // Fallback if user object is not available
+          this.router.navigate(['frontoffice']);
         }
       },
       error: (error) => {
@@ -109,5 +148,129 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
       this.router.navigate(['/frontoffice/verify-email']);
     }, 3000);
+  }
+
+  // Face ID login methods
+  toggleFaceIdLogin(): void {
+    this.showFaceIdLogin = !this.showFaceIdLogin;
+    if (!this.showFaceIdLogin) {
+      this.stopCamera();
+      this.capturedImage = null;
+    }
+  }
+
+  startCamera(): void {
+    if (this.faceIdEmail.trim() === '') {
+      this.loginError = 'Please enter your email address before starting the camera';
+      return;
+    }
+    
+    this.loginError = '';
+    
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          this.mediaStream = stream;
+          this.isCameraActive = true;
+          
+          // Need to wait for ViewChild to be available after *ngIf condition changes
+          setTimeout(() => {
+            if (this.videoElement && this.videoElement.nativeElement) {
+              this.videoElement.nativeElement.srcObject = stream;
+            }
+          }, 100);
+        })
+        .catch(err => {
+          console.error('Error accessing the camera:', err);
+          this.loginError = 'Could not access the camera. Please check your camera permissions.';
+        });
+    } else {
+      this.loginError = 'Your browser does not support camera access. Please use another browser or login with password.';
+    }
+  }
+
+  stopCamera(): void {
+    if (this.mediaStream) {
+      this.mediaStream.getTracks().forEach(track => track.stop());
+      this.mediaStream = null;
+    }
+    this.isCameraActive = false;
+  }
+
+  captureImage(): void {
+    if (!this.videoElement || !this.isCameraActive) return;
+    
+    const video = this.videoElement.nativeElement;
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      this.capturedImage = canvas.toDataURL('image/jpeg');
+      this.stopCamera();
+    }
+  }
+
+  resetCaptureProcess(): void {
+    this.capturedImage = null;
+    this.startCamera();
+  }
+
+  loginWithFaceId(): void {
+    if (!this.capturedImage || this.faceIdEmail.trim() === '') {
+      this.loginError = 'Both email and face image are required for Face ID login';
+      return;
+    }
+    
+    this.loginError = '';
+    this.isFaceLoginSubmitting = true;
+    
+    this.authService.loginWithFaceId(this.faceIdEmail, this.capturedImage).subscribe({
+      next: (response) => {
+        this.isFaceLoginSubmitting = false;
+        this.loginSuccess = 'Face ID verification successful!';
+        
+        // Get user data from response
+        const user = response.userResponse || response.user;
+        
+        if (user) {
+          // Store profile image if available
+          if (user.profileImage) {
+            localStorage.setItem('user-profile-image', user.profileImage);
+          }
+          
+          // Get user role and redirect based on role
+          const userRole = user.role || user.Role;
+          console.log('User logged in with Face ID. Role:', userRole);
+          
+          // Navigate based on user role
+          setTimeout(() => {
+            if (userRole && ['expert', 'farmer', 'delivery', 'deliverydriver'].some(
+              role => userRole.toLowerCase().includes(role.toLowerCase())
+            )) {
+              this.router.navigate(['/backoffice']);
+            } else {
+              // Default to frontoffice for consumers or if role is not specified
+              this.router.navigate(['/frontoffice']);
+            }
+          }, 1000);
+        } else {
+          // Fallback if user object is not available
+          this.router.navigate(['/frontoffice']);
+        }
+      },
+      error: (error) => {
+        this.isFaceLoginSubmitting = false;
+        
+        if (error.error && error.error.message) {
+          this.loginError = error.error.message;
+        } else {
+          this.loginError = 'Face verification failed. Please try again or use password login.';
+        }
+        console.error('Face ID login error:', error);
+      }
+    });
   }
 }

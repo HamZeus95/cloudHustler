@@ -107,16 +107,76 @@
                                     </a>
                                 </p>
 
+ 
+
+                                <!-- Face ID Login Form -->
+                                <div *ngIf="showFaceIdLogin" class="mt-2 mb-3">
+                                    <div class="mb-2">
+                                        <label for="face-id-email" class="form-label">Email</label>
+                                        <input 
+                                            type="email" 
+                                            class="form-control" 
+                                            id="face-id-email" 
+                                            [(ngModel)]="faceIdEmail" 
+                                            [ngModelOptions]="{standalone: true}"
+                                            placeholder="Enter your email" 
+                                        />
+                                    </div>
+                                    
+                                    <div *ngIf="!isCameraActive && !capturedImage" class="text-center mb-2">
+                                        <button type="button" class="btn btn-info" (click)="startCamera()">
+                                            <i class="fa fa-camera me-1"></i> Start Camera
+                                        </button>
+                                    </div>
+                                    
+                                    <div *ngIf="isCameraActive" class="webcam-container mb-2">
+                                        <div class="camera-frame">
+                                            <video #videoElement autoplay playsinline width="100%"></video>
+                                            <div class="face-guide-overlay">
+                                                <div class="face-guide"></div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center mt-2">
+                                            <button type="button" class="btn btn-primary me-2" (click)="captureImage()">
+                                                <i class="fa fa-camera"></i> Capture
+                                            </button>
+                                            <button type="button" class="btn btn-danger" (click)="stopCamera()">
+                                                <i class="fa fa-times"></i> Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div *ngIf="capturedImage" class="mb-2">
+                                        <div class="text-center mb-2">
+                                            <img [src]="capturedImage" alt="Captured image" width="200" class="rounded" />
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-primary me-2" (click)="loginWithFaceId()" [disabled]="isFaceLoginSubmitting">
+                                                <span *ngIf="isFaceLoginSubmitting" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                                                Login
+                                            </button>
+                                            <button type="button" class="btn btn-secondary" (click)="resetCaptureProcess()">
+                                                <i class="fa fa-redo"></i> Retake
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="divider my-2">
                                     <div class="divider-text">or</div>
                                 </div>
 
                                 <div class="auth-footer-btn d-flex justify-content-center">
-                                    <button class="btn btn-google me-2" (click)="loginWithGoogle()">
+                                    <button class="btn btn-google" (click)="loginWithGoogle()">
                                         <i app-icon="fa-google" library="fontawesome" variant="brands" ></i> Google
                                     </button>
-                                    <button class="btn btn-github" (click)="loginWithGithub()">
+                                    <button class="btn btn-github mx-2" (click)="loginWithGithub()">
                                         <i app-icon="github"></i> GitHub
+                                    </button>
+                                    <button class="btn btn-facebook" (click)="toggleFaceIdLogin()">
+                                        <i app-icon="camera" library="feather"></i>
+                                        
+                                        {{ showFaceIdLogin ? 'Hide Face ID Login' : 'Login with Face ID' }}
                                     </button>
                                 </div>
                             </div>

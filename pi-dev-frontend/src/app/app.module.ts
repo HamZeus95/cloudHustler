@@ -20,13 +20,15 @@ import { ErrorDialogComponent } from "./core/error-dialog/error-dialog.component
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BackofficeModule } from './backoffice/backoffice.module';
+import { Oauth2RestrictedComponent } from './core/oauth2-restricted/oauth2-restricted.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     OAuth2RedirectComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    Oauth2RestrictedComponent
   ],
   imports: [
     CommonModule,
