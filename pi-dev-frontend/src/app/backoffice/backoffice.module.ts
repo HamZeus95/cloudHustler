@@ -56,7 +56,6 @@ import { DatePipe } from '@angular/common';
     DashboardCardsComponent,
     SideBarComponent,
     NavbarComponent,
-    //declarations of components
     FarmDetailsComponent, 
     TablesComponent,
     TaskManagementComponent, 
@@ -67,7 +66,6 @@ import { DatePipe } from '@angular/common';
     DetailsLivraisonComponent,
     LivraisonComponent,
     MapDialogComponent,
-    //declarations of pages
     FarmManagmentComponent,
     EventComponent,
     BlogManagmentComponent,
@@ -80,9 +78,7 @@ import { DatePipe } from '@angular/common';
     PostBackComponent,
     CommentBackComponent,
     StatsComponent,
-    // Add the AdminLayoutComponent
     AdminLayoutComponent,
-    //marketplace componnent
     MarketplaceManagementComponent,
     ProductslistComponent,
     ProductCategorieslistComponent,
@@ -98,7 +94,6 @@ import { DatePipe } from '@angular/common';
     DragDropModule,
     RouterModule,
     DialogModule,
-    //BrowserAnimationsModule,
     NgChartsModule,
     MatSnackBarModule,
     MatButtonModule,
@@ -110,10 +105,8 @@ import { DatePipe } from '@angular/common';
   providers: [
     DatePipe
   ],
-  //styles
 
   exports: [
-    // Export components that might be used outside this module
     SideBarComponent,
     NavbarComponent,
     BannerComponent,

@@ -19,21 +19,15 @@ import { OtpComponent } from './pages/auth/otp/otp.component';
 import { LogoutComponent } from './pages/auth/logout/logout.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
-import { EventComponent } from './components/event/event.component';
+import { EventComponent } from './pages/event/event.component';
 import {PublicGuard} from '../auth/guards/public.guard';
 import { AuthGuard } from "../auth/guards/auth.guard";
 
 
 const routes: Routes = [
-
     {path: '', component:HomeComponent },
-    { path: 'blog', component: BlogComponent },
     {path:"about",component:AboutComponent},
     {path:"home",component:HomeComponent},
-    {path:'market', component: MarketComponent},
-    {path: 'blog', component: BlogComponent},
-    {path:'event',component:EventComponent},
-    {path:'jobs',component:JobsComponent},
     {path:'contact',component:ContactComponent},
     {path: 'not-found', component: NotFoundComponent},
     { path:'factures', component: FactureClientComponent, canActivate: [AuthGuard]},
