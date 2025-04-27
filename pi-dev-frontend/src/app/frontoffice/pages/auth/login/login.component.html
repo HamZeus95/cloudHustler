@@ -111,17 +111,6 @@
 
                                 <!-- Face ID Login Form -->
                                 <div *ngIf="showFaceIdLogin" class="mt-2 mb-3">
-                                    <div class="mb-2">
-                                        <label for="face-id-email" class="form-label">Email</label>
-                                        <input 
-                                            type="email" 
-                                            class="form-control" 
-                                            id="face-id-email" 
-                                            [(ngModel)]="faceIdEmail" 
-                                            [ngModelOptions]="{standalone: true}"
-                                            placeholder="Enter your email" 
-                                        />
-                                    </div>
                                     
                                     <div *ngIf="!isCameraActive && !capturedImage" class="text-center mb-2">
                                         <button type="button" class="btn btn-info" (click)="startCamera()">

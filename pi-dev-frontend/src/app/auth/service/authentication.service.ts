@@ -271,26 +271,86 @@ export class AuthService {
     return this.tokenStorage.getToken();
   }
 
-  // Method for face ID login
+  // Login with Face ID
   loginWithFaceId(email: string, imageBase64: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login-with-face`, 
-      { email, imageBase64 }, 
-      { withCredentials: true }
-    ).pipe(
+    console.log('AuthService: Attempting Face ID login for email:', email);
+    return this.http.post<any>(`${this.apiUrl}/login-with-face`, {
+      email: email,
+      imageBase64: imageBase64
+    }, { withCredentials: true }).pipe(
       tap(response => {
         console.log('Face ID login response:', response);
+        
         // Handle both camelCase and snake_case properties
         const accessToken = response.accessToken || response.access_token;
         const userResponse = response.userResponse || response.user;
         
         if (accessToken) {
+          console.log('Face ID login: Setting token:', accessToken.substring(0, 10) + '...');
           this.tokenStorage.setToken(accessToken);
+          
+          // Clear the logged out flag if it exists
+          localStorage.removeItem('logged_out');
+          
           if (userResponse) {
+            console.log('Face ID login: Saving user data:', userResponse);
             this.tokenStorage.saveUser(userResponse);
           }
+        } else {
+          console.warn('Face ID login: No access token received in response');
         }
       }),
-      catchError(this.handleError)
+      catchError(error => {
+        console.error('Face ID login error:', error);
+        let errorMessage = 'Face ID login failed';
+        
+        if (error.error && error.error.message) {
+          errorMessage = error.error.message;
+        }
+        
+        return throwError(() => new Error(errorMessage));
+      })
+    );
+  }
+
+  // Login with Face ID only (no email required)
+  loginWithFaceIdOnly(imageBase64: string): Observable<any> {
+    console.log('AuthService: Attempting Face ID only login');
+    return this.http.post<any>(`/api/v1/face-id/login-with-face-only`, {
+      imageBase64: imageBase64
+    }, { withCredentials: true }).pipe(
+      tap(response => {
+        console.log('Face ID only login response:', response);
+        
+        // Handle both camelCase and snake_case properties
+        const accessToken = response.accessToken || response.access_token;
+        const userResponse = response.userResponse || response.user;
+        
+        if (accessToken) {
+          console.log('Face ID only login: Setting token:', accessToken.substring(0, 10) + '...');
+          this.tokenStorage.setToken(accessToken);
+          
+          // Clear the logged out flag if it exists
+          localStorage.removeItem('logged_out');
+          
+          if (userResponse) {
+            console.log('Face ID only login: Saving user data:', userResponse);
+            this.tokenStorage.saveUser(userResponse);
+          }
+        } else {
+          console.warn('Face ID only login: No access token received in response');
+        }
+      }),
+      catchError(error => {
+        console.error('Face ID only login error:', error);
+        let errorMessage = 'Face ID login failed';
+        
+        if (error.error && error.error.message) {
+          errorMessage = error.error.message;
+        }
+        
+        return throwError(() => new Error(errorMessage));
+      })
     );
   }
 

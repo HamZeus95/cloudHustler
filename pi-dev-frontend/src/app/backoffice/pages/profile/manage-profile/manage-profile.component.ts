@@ -42,8 +42,8 @@ export class ManageProfileComponent implements OnInit, OnDestroy {
   // Verification form
   verificationForm: FormGroup;
   
-  // API URLs - Using environment configuration is preferable
-  private apiUrl = '/api/v1';
+  // API URLs - Using environment configuration
+  private apiUrl = environment.apiUrl;
 
   constructor(
     private tokenStorage: TokenStorageService,
@@ -194,13 +194,29 @@ export class ManageProfileComponent implements OnInit, OnDestroy {
       imageBase64: imageAsDataUrl
     };
 
-    const headers = new HttpHeaders({
+    // Get auth token from storage - log token for debugging
+    const token = this.tokenStorage.getToken();
+    console.log('Token when uploading face image:', token ? 'Token exists' : 'Token is null');
+    
+    // Create headers object with token if it exists
+    let headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-
-    console.log('Uploading face image...');
     
-    this.http.post(`${this.apiUrl}/face-id/register`, requestData, { headers })
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    } else {
+      console.error('No authentication token available. User may need to log in again.');
+      this.captureFailed = true;
+      this.captureInProgress = false;
+      this.faceCaptureMessage = 'Authentication error. Please log in again.';
+      return;
+    }
+
+    console.log('Uploading face image to:', `${this.apiUrl}face-id/register`);
+    console.log('Headers:', headers);
+    
+    this.http.post(`${this.apiUrl}face-id/register`, requestData, { headers })
       .subscribe({
         next: (response: any) => {
           console.log('Face registration response:', response);
@@ -235,6 +251,10 @@ export class ManageProfileComponent implements OnInit, OnDestroy {
           let errorMsg = 'Failed to register face. Please try again.';
           if (error.error && error.error.message) {
             errorMsg = error.error.message;
+          } else if (error.status === 401) {
+            errorMsg = 'Authentication required. Please log in again.';
+          } else if (error.status === 403) {
+            errorMsg = 'You don\'t have permission to perform this action.';
           }
           
           this.faceCaptureMessage = errorMsg;
@@ -261,8 +281,23 @@ export class ManageProfileComponent implements OnInit, OnDestroy {
   }
 
   disableTwoFactor(): void {
+    // Get auth token from storage
+    const token = this.tokenStorage.getToken();
+    
+    // Add authorization header with JWT token if available
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    } else {
+      console.error('No authentication token available for disableTwoFactor');
+      return;
+    }
+    
     // Make API call to backend to disable 2FA
-    this.http.post(`${this.apiUrl}/two-factor/disable`, { userId: this.currentUser.userUUID })
+    this.http.post(`${this.apiUrl}two-factor/disable`, { userId: this.currentUser.userUUID }, { headers })
       .subscribe({
         next: () => {
           this.twoFactorEnabled = false;
@@ -276,8 +311,23 @@ export class ManageProfileComponent implements OnInit, OnDestroy {
   }
 
   disableFaceId(): void {
+    // Get auth token from storage
+    const token = this.tokenStorage.getToken();
+    
+    // Create headers object with token if it exists
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    } else {
+      console.error('No authentication token available for disableFaceId');
+      return;
+    }
+    
     // Make API call to backend to disable Face ID
-    this.http.post(`${this.apiUrl}/face-id/disable`, {})
+    this.http.post(`${this.apiUrl}face-id/disable`, {}, { headers })
       .subscribe({
         next: (response: any) => {
           console.log('Face ID disabled:', response);
@@ -287,6 +337,13 @@ export class ManageProfileComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           console.error('Error disabling Face ID:', error);
+          let errorMsg = 'Failed to disable Face ID. Please try again.';
+          if (error.error && error.error.message) {
+            errorMsg = error.error.message;
+          } else if (error.status === 401) {
+            errorMsg = 'Authentication required. Please log in again.';
+          }
+          // You could display this error to the user with a toast/notification
         }
       });
   }

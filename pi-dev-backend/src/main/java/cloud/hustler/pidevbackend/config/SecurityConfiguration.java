@@ -29,6 +29,7 @@ public class SecurityConfiguration {
             "/auth/**",
             "/oauth2/**",
             "/farm/**",  // Add OAuth2 endpoints to whitelist
+            "/face-id/login-with-face-only", // Add Face ID endpoints to whitelist
             "/v2/api-docs",
             "/v3/api-docs",
             "/users/**", // temporary

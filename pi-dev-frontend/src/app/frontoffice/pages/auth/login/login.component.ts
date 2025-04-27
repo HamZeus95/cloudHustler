@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../../auth/service/authentication.service';
+import { TokenStorageService } from '../../../../auth/service/token-storage.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -18,17 +21,21 @@ export class LoginComponent implements OnInit, OnDestroy {
   
   // Face ID login properties
   showFaceIdLogin = false;
-  faceIdEmail = '';
   isCameraActive = false;
   capturedImage: string | null = null;
   mediaStream: MediaStream | null = null;
   
   @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
+  
+  // API URL from environment config
+  private apiUrl = environment.apiUrl;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient,
+    private tokenStorage: TokenStorageService
   ) {}
 
   ngOnInit(): void {
@@ -96,13 +103,9 @@ export class LoginComponent implements OnInit, OnDestroy {
           const userRole = user.role || user.Role;
           console.log('User logged in with role:', userRole);
 
-                  // Clear the logged_out flag on successful login
-        localStorage.removeItem('logged_out');
+          // Clear the logged_out flag on successful login
+          localStorage.removeItem('logged_out');
         
-        this.isSubmitting = false;
-        
-      
-          
           setTimeout(() => {
             if (userRole && ['expert', 'farmer', 'delivery', 'deliverydriver'].some(
               role => userRole.toLowerCase().includes(role.toLowerCase())
@@ -160,11 +163,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   startCamera(): void {
-    if (this.faceIdEmail.trim() === '') {
-      this.loginError = 'Please enter your email address before starting the camera';
-      return;
-    }
-    
     this.loginError = '';
     
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -219,21 +217,35 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   loginWithFaceId(): void {
-    if (!this.capturedImage || this.faceIdEmail.trim() === '') {
-      this.loginError = 'Both email and face image are required for Face ID login';
+    if (!this.capturedImage) {
+      this.loginError = 'Please capture your face image first';
       return;
     }
     
     this.loginError = '';
     this.isFaceLoginSubmitting = true;
     
-    this.authService.loginWithFaceId(this.faceIdEmail, this.capturedImage).subscribe({
+    this.authService.loginWithFaceIdOnly(this.capturedImage).subscribe({
       next: (response) => {
         this.isFaceLoginSubmitting = false;
         this.loginSuccess = 'Face ID verification successful!';
         
-        // Get user data from response
+        // Clear any logged out flags
+        localStorage.removeItem('logged_out');
+        
+        console.log('Face ID login successful:', response);
+        
+        // Get user from response in the format the backend is sending
         const user = response.userResponse || response.user;
+        
+        // Handle case when no user data is returned
+        if (!user && response.accessToken) {
+          console.log('No user data in response, but token received - navigating to backoffice');
+          setTimeout(() => {
+            this.router.navigate(['/backoffice']);
+          }, 1000);
+          return;
+        }
         
         if (user) {
           // Store profile image if available
@@ -247,18 +259,18 @@ export class LoginComponent implements OnInit, OnDestroy {
           
           // Navigate based on user role
           setTimeout(() => {
-            if (userRole && ['expert', 'farmer', 'delivery', 'deliverydriver'].some(
-              role => userRole.toLowerCase().includes(role.toLowerCase())
-            )) {
-              this.router.navigate(['/backoffice']);
-            } else {
-              // Default to frontoffice for consumers or if role is not specified
-              this.router.navigate(['/frontoffice']);
-            }
+            // Force navigation to backoffice for face login users
+            this.router.navigate(['/backoffice'], { replaceUrl: true }).then(
+              success => console.log('Navigation success:', success),
+              error => console.error('Navigation error:', error)
+            );
           }, 1000);
         } else {
           // Fallback if user object is not available
-          this.router.navigate(['/frontoffice']);
+          console.log('No user data in response - using fallback navigation');
+          setTimeout(() => {
+            this.router.navigate(['/backoffice'], { replaceUrl: true });
+          }, 1000);
         }
       },
       error: (error) => {

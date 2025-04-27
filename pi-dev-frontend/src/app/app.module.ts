@@ -12,7 +12,7 @@ import { DialogModule } from "primeng/dialog";
 import { AppRoutingModule } from "./app-routing.module";
 import { JwtModule } from "@auth0/angular-jwt";
 import { AppComponent } from "./app.component";
-import { JwtInterceptor } from "./auth/interceptors/jwt";
+import { AuthInterceptor } from "./auth/interceptors/auth.interceptor";
 import { OAuth2RedirectComponent } from "./auth/oauth2/oauth2-redirect.component";
 import { TokenStorageService, AuthService } from "./auth/service";
 import { FrontofficeModule } from "./frontoffice/frontoffice.module";
@@ -56,7 +56,11 @@ import { Oauth2RestrictedComponent } from './core/oauth2-restricted/oauth2-restr
     NgChartsModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => { return null; },
+        tokenGetter: () => { 
+          // Get token from TokenStorageService instead of returning null
+          const tokenStorage = new TokenStorageService();
+          return tokenStorage.getToken();
+        },
         allowedDomains: ["localhost:4200"],
         disallowedRoutes: [
           "/api/v1/auth/authenticate",
@@ -71,7 +75,7 @@ import { Oauth2RestrictedComponent } from './core/oauth2-restricted/oauth2-restr
   providers: [
     TokenStorageService,
     AuthService,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
