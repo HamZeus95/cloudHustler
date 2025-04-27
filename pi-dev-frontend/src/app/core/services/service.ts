@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class PostService {
-  private baseUrl = `${environment.apiBaseUrl}`;
+  private baseUrl = `/api/v1`;
 
   constructor(private http: HttpClient) {}
 
