@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class AddEventComponent implements OnInit {
   eventForm!: FormGroup;
   http: any;
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -29,17 +30,15 @@ export class AddEventComponent implements OnInit {
       banner: [''],
       isOnline: [false],
       description: ['', Validators.required],
-
-
       onlineLink: ['']
     });
 
-    // 👉 Mise à jour dynamique des validateurs selon le type d’événement
+    // Mise à jour dynamique des validateurs selon le type d’événement
     this.eventForm.get('isOnline')!.valueChanges.subscribe((isOnline: boolean) => {
       this.toggleLocationValidators(isOnline);
     });
 
-    // 👇 Pour l’état initial
+    // Pour l’état initial
     this.toggleLocationValidators(this.eventForm.get('isOnline')!.value);
   }
 
@@ -95,40 +94,60 @@ export class AddEventComponent implements OnInit {
         isOnline: this.eventForm.value.isOnline,
         onlineLink: this.eventForm.value.onlineLink || ''
       };
-    
 
-          // Une fois la description générée, envoyer l'événement avec la description au backend
-          this.eventService.addEvent(newEvent).subscribe(
-            (event) => {
-              console.log('Événement ajouté:', event);
-              this.router.navigate(['/backoffice/backEvent']);
-            },
-            (error) => {
-              console.error('Erreur lors de l\'ajout de l\'événement:', error);
-            }
-          );
+      this.eventService.addEvent(newEvent).subscribe(
+        (event) => {
+          console.log('Événement ajouté:', event);
+          this.router.navigate(['/backoffice/backEvent']);
+        },
+        (error) => {
+          console.error('Erreur lors de l\'ajout de l\'événement:', error);
         }
+      );
     }
-
-    generateDescription() {
-      const { name, location, date } = this.eventForm.value;
-    
-      if (name && location && date) {
-        this.eventService.generateDescription(name, location, date).subscribe(
-          (response: any) => {
-            // Injecte la description dans le champ
-            this.eventForm.patchValue({ description: response });
-          },
-          (error) => {
-            console.error("Erreur lors de la génération de la description :", error);
-          }
-        );
-      }
-    }
-    
   }
-  
- 
-  
 
+  generateDescription() {
+    this.isLoading = true; // Affiche le spinner
 
+    const { name, location, date } = this.eventForm.value;
+
+    if (name && location && date) {
+      this.eventService.generateDescription(name, location, date).subscribe(
+        (response: any) => {
+          // Injecte la description générée dans le champ de texte
+          this.eventForm.patchValue({ description: response });
+
+          // Arrêter le chargement
+          this.isLoading = false;
+        },
+        (error) => {
+          console.error("Erreur lors de la génération de la description :", error);
+
+          // Arrêter le chargement même en cas d'erreur
+          this.isLoading = false;
+        }
+      );
+    } else {
+      // Si les champs nécessaires ne sont pas remplis, on arrête le chargement
+      this.isLoading = false;
+    }
+  }
+
+  // Nouvelle méthode pour générer un événement aléatoire
+  generateRandomEvent() {
+    const randomEvent = {
+      name: `Event ${Math.floor(Math.random() * 1000)}`,
+      date: this.todayDate(),
+      endDate: this.todayDate(),
+      location: `Location ${Math.floor(Math.random() * 100)}`,
+      max: Math.floor(Math.random() * 100) + 1,
+      description: `Random description for Event ${Math.floor(Math.random() * 1000)}`,
+      banner: 'https://example.com/banner.jpg',
+      
+    };
+
+    // Remplir le formulaire avec les valeurs aléatoires
+    this.eventForm.patchValue(randomEvent);
+  }
+}

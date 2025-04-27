@@ -1,9 +1,15 @@
 package cloud.hustler.pidevbackend.service;
 
+import cloud.hustler.pidevbackend.entity.Consumer;
 import cloud.hustler.pidevbackend.entity.Event;
+import cloud.hustler.pidevbackend.entity.User;
+import cloud.hustler.pidevbackend.repository.ConsumerRepository;
 import cloud.hustler.pidevbackend.repository.EventRepository;
+import cloud.hustler.pidevbackend.repository.UserRepository;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,20 +29,11 @@ public class EventService implements IEvent {
     private EventRepository eventRepository;
     @Autowired
     private SmsService smsService;
-
+    @Autowired
+    private ConsumerRepository consumerRepository;
 
 
     public Event createEvent(Event event) {
-        
-        event.getParticipants().add("ons");
-        if (event.getStartDate().equals(LocalDate.now().plusDays(1))) {
-            // Envoyer le SMS à chaque participant
-            String message = "Rappel : L'événement '" + event.getName() + "' commence demain à " + event.getStartDate() + ". Ne manquez pas !";
-
-            for (String participant : event.getParticipants()) {
-                smsService.sendSms(participant, message);
-            }
-        }
 
         return eventRepository.save(event);
     }
@@ -48,7 +45,7 @@ public class EventService implements IEvent {
 
     @Override
     public Event updateEvent(Event event) {
-        event.getParticipants().add("molka"); // Remplace "NomStatique" par le nom que tu veux ajouter
+        //event.getParticipants().add("molka"); // Remplace "NomStatique" par le nom que tu veux ajouter
         return eventRepository.save(event);
     }
 
@@ -85,6 +82,43 @@ public class EventService implements IEvent {
         // Retourner juste le nom de l'image
         return file.getOriginalFilename();
     }
+
+    public void participate(UUID eventId, UUID consumerId) {
+        Consumer consumer = consumerRepository.findById(consumerId)
+                .orElseThrow(() -> new RuntimeException("Utilisateur avec l'ID " + consumerId + " non trouvé"));
+
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new RuntimeException("Événement avec l'ID " + eventId + " non trouvé"));
+
+        if (event.getParticipants().contains(consumer)) {
+            throw new RuntimeException("Utilisateur déjà inscrit à l'événement");
+        }
+
+        event.getParticipants().add(consumer);
+        event.setNbrParticipants(event.getNbrParticipants()+1);
+        eventRepository.save(event);
+
+        System.out.println("Utilisateur " + consumer.getFirstName() + " ajouté à l'événement " + event.getName());
+
+        if (event.getStartDate().equals(LocalDate.now().plusDays(1))) {
+            try {
+                String message = String.format(
+                        "Bonjour %s, rappel : l'événement '%s' commence demain (%s).",
+                        consumer.getFirstName(), event.getName(), event.getStartDate());
+                smsService.sendSms(consumer.getPhone(), message);
+                System.out.println("SMS sent successfully");
+            } catch (Exception e) {
+                System.err.println("Failed to send SMS: " + e.getMessage());
+                // Continue without failing the entire participation
+                // Or throw if SMS is critical: throw new RuntimeException("SMS sending failed", e);
+            }
+        }
+
+    }
+
+
+
+
 
 
 

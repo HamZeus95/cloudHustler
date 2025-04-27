@@ -4,6 +4,8 @@ import { Event } from '../../../core/models/event';
 import * as L from 'leaflet';
 import { Subscription, interval } from 'rxjs';
 import { HttpClient } from '@angular/common/http';  // Importation de HttpClient
+import { AuthService } from '../../../auth/service/authentication.service';
+import { TokenStorageService } from '../../../auth/service/token-storage.service';
 
 @Component({
   selector: 'app-event',
@@ -13,7 +15,7 @@ import { HttpClient } from '@angular/common/http';  // Importation de HttpClient
 export class EventComponent implements OnInit, OnDestroy {
   events: Event[] = [];
   filteredEvents: Event[] = [];
-  participantName: string = 'lll';
+ // participantName: string = 'lll';
   isLoading: boolean = true;
   errorMessage: string = '';
   searchText: string = '';
@@ -28,24 +30,40 @@ export class EventComponent implements OnInit, OnDestroy {
   imageLink: string = '';
   imageUrls: { [eventId: string]: string } = {};
   private maps: { [key: string]: L.Map } = {};
+  participants: string[] = [];
 
   // Variables pour la modal
   isModalVisible: boolean = false;
   fullDescription: string = '';
+  currentUser: any = null;
+  isAuthenticated = false;
   // Injection de HttpClient dans le constructeur
   constructor(
     private eventService: EventServiceService,
     private cdRef: ChangeDetectorRef,
-    private http: HttpClient  // Injection de HttpClient
+    private http: HttpClient , // Injection de HttpClient
+    private authService: AuthService,
+    private tokenStorageService: TokenStorageService
   ) {}
 
   ngOnInit(): void {
     this.loadEvents();
     this.startCountdown();
+    this.authService.isAuthenticated().subscribe(isAuth => {
+      this.isAuthenticated = isAuth;
+      if (isAuth) {
+        this.currentUser = this.tokenStorageService.getCurrentUser();
+      }
+      console.log(this.currentUser)
+    });
+
+    // Subscribe to user changes
+    this.tokenStorageService.getUser().subscribe(user => {
+      this.currentUser = user;
+    });
   }
 
  
-
   loadEvents(): void {
     this.isLoading = true;
 
@@ -108,24 +126,36 @@ export class EventComponent implements OnInit, OnDestroy {
     }
   }
 
-  participate(eventId: string): void {
-    const event = this.events.find(e => e.uuid_event === eventId);
-    if (!event) return;
-
-    if (event.maxParticipants && event.participants.length >= event.maxParticipants) {
-      alert("Nombre maximal de participants atteint !");
-      return;
+  onParticipate(eventId: string) {
+    if (!this.currentUser?.userUUID) {
+        alert('Utilisateur non connecté');
+        return;
     }
 
-    this.eventService.addParticipant(eventId, this.participantName).subscribe({
-      next: () => {
-        this.loadEvents();
-      },
-      error: (err) => {
-        console.error("Erreur lors de l'ajout du participant :", err);
-      }
+    const event = this.events.find(e => e.uuid_event === eventId);
+    if (!event) {
+        alert('Événement introuvable');
+        return;
+    }
+
+    // Vérifie si l'utilisateur participe déjà
+    if (event.participants.includes(this.currentUser.userUUID)) {
+        alert('Vous participez déjà à cet événement');
+        return;
+    }
+
+    this.eventService.participate(eventId, this.currentUser.userUUID).subscribe({
+        next: (updatedEvent) => {
+            // Mettez à jour l'événement avec la réponse du serveur
+            Object.assign(event, updatedEvent);
+            this.events = [...this.events];
+            console.log('Participation réussie !');
+        },
+     
+      
     });
-  }
+}
+  
 
   private initializeMap(latitude: number, longitude: number, eventId: string): void {
     const mapId = `map${eventId}`;
@@ -238,30 +268,7 @@ export class EventComponent implements OnInit, OnDestroy {
     return new Date(event.startDate) <= new Date();
   }
   
-  // onFileSelected(event: any, currentEvent: any) {
-  //   const file = event.target.files[0];
   
-  //   if (file) {
-  //     const formData = new FormData();
-  //     formData.append('file', file);
-  
-  //     this.http.post<{ imageUrl: string }>('http://localhost:8089/pi/Event/upload', formData)
-  //       .subscribe({
-  //         next: (response) => {
-  //           console.log('Réponse du serveur :', response);  // Afficher la réponse pour vérifier l'URL
-  //           // Vérifier que l'URL est bien présente dans la réponse
-  //           if (response && response.imageUrl) {
-  //             this.uploadedImageUrls[currentEvent.uuid_event] = response.imageUrl;
-  //           } else {
-  //             console.error('URL de l\'image non trouvée dans la réponse');
-  //           }
-  //         },
-  //         error: (err) => {
-  //           console.error('Erreur lors de l\'upload :', err);
-  //         }
-  //       });
-  //   }
-  // }
 
   showFullDescription(description: string): void {
     this.fullDescription = description;

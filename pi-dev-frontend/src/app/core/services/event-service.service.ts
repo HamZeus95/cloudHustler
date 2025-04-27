@@ -10,6 +10,7 @@ export class EventServiceService {
  
 
   private apiUrl = '/api/v1/Event'; 
+  authService: any;
   constructor(private http: HttpClient) { }
   addEvent(event: Event): Observable<Event> {
     return this.http.post<Event>(`${this.apiUrl}/addEvent`, event);
@@ -42,13 +43,14 @@ export class EventServiceService {
       `https://nominatim.openstreetmap.org/search?q=${location}&format=json&addressdetails=1`
     );
   }
-  addParticipant(eventId: string, participantName: string) {
-    return this.http.put<Event>(`http://localhost:8089/pi/Event/${eventId}/add-participant`, participantName, {
-      headers: { 'Content-Type': 'application/json' }
-    });
+  participate(eventId: string,consumerId: string) {
+    console.log("eventId:", eventId, "consumerId:", consumerId);
+    return this.http.put(`/api/v1/Event/events/${eventId}/${consumerId}/participate`,{} 
+     
+    );
+    
   }
-
-
+  
   generateDescription(name: string, location: string, date: string) {
     return this.http.post('/api/v1/Event/generate-description', {
       name,

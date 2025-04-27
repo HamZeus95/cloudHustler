@@ -1,6 +1,7 @@
 package cloud.hustler.pidevbackend.service;
 
 import cloud.hustler.pidevbackend.entity.Event;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,4 +18,5 @@ public interface IEvent {
     void deleteEvent(UUID id);
     Event getEventById(UUID id);
     String uploadImage(String eventId, MultipartFile file) throws IOException;
+    void participate(UUID eventId, UUID userId);
 }
