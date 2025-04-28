@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EmailJobsServiceService {
-  private apiUrl = 'http://localhost:8090/CloudHustel/api/emails/emails/send';
+  private apiUrl = 'http://localhost:8090/api/v1/emails/send';
 
   constructor(private http: HttpClient) { }
 

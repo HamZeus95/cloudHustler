@@ -1,0 +1,35 @@
+.card {
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+  }
+  
+  .shadow-sm {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  h2, h4 {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .btn-success, .btn-primary {
+    transition: all 0.3s ease;
+  }
+  
+  .btn-success:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+  }
+  
+  .border {
+    border: 1px solid #e0e0e0 !important;
+  }
+  
+  .bg-white {
+    background-color: #ffffff !important;
+  }
+  
+  .animate__animated.animate__fadeIn {
+    animation-duration: 1s;
+  }
+  

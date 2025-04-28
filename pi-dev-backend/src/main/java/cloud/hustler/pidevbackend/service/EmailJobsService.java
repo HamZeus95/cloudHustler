@@ -1,32 +1,27 @@
-// package cloud.hustler.pidevbackend.service;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.mail.SimpleMailMessage;
-// import org.springframework.mail.javamail.JavaMailSender;
-// import org.springframework.stereotype.Service;
+package cloud.hustler.pidevbackend.service;
+import cloud.hustler.pidevbackend.entity.Post;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 
+@Service
+public class EmailJobsService {
+    @Autowired
+    private JavaMailSender javaMailSender;
 
-// import javax.mail.MessagingException;
-// import javax.mail.internet.InternetAddress;
-// import javax.mail.internet.MimeMessage;
-// @Service
-// public class EmailJobsService {
-//     @Autowired
-//     private JavaMailSender emailSender;  // Injection correcte
+    public void sendEmail(String to, String subject, String body) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
 
-//     public void sendSimpleMessage(String to, String subject, String body) {
-//         SimpleMailMessage message = new SimpleMailMessage();
-//         message.setFrom("benhmida.molka01@gmail.com");
-//         message.setTo(to);
-//         message.setSubject(subject);
-//         message.setText(
-//                 body + "\n\n" +
-//                         "📅 Veuillez choisir l’horaire qui vous convient pour l'entretien via le lien suivant :\n" +
-//                         "👉 https://calendly.com/benhmida-molka01/30min\n\n" +
-//                         "Merci et à très bientôt !"
-//         );
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
+        helper.setTo(to);
+        helper.setSubject(subject);
+        helper.setText(body, true); // true = support HTML body
 
-//         emailSender.send(message);  // Utilisation de JavaMailSender
-//     }
-//     }
-
+        javaMailSender.send(message);
+    }
+}

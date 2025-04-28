@@ -35,6 +35,7 @@ public class SecurityConfiguration {
             "/v3/api-docs/**",
             "/posts/**", // temporary
             "/Event/getEvents", // temporary
+            "Event/**", // fix later
             "/product/**",
             "/livraisons/**",
             "/factures/**",
@@ -43,6 +44,7 @@ public class SecurityConfiguration {
             "/swagger-resources/**",
             "/configuration/ui",
             "/farms/**",
+            "/ia-farm/**",
             "/configuration/security",
             "/swagger-ui/**",
             "/webjars/**",
@@ -50,7 +52,12 @@ public class SecurityConfiguration {
             "/error",  // Added error path to allow access to error pages
             "/uploads/**", // Allow access to uploaded files
             "/static/**", // Allow access to static resources
-            "/images/**" // Allow access to image resources
+            "/images/**" ,
+            "/services/**",
+            "/files/**",
+            "/service-requests/**",
+            "/quiz/**",// Allow access to image resources
+            "/**"
     };
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;

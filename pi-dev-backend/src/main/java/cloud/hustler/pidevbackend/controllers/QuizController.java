@@ -18,8 +18,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/quiz")
-@CrossOrigin("*")
-public class QuizController {
+ public class QuizController {
 
     @Autowired
     private QuizRepository quizRepository;

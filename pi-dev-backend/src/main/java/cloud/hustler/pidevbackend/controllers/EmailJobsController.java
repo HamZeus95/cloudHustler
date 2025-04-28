@@ -1,25 +1,40 @@
 package cloud.hustler.pidevbackend.controllers;
 //import cloud.hustler.pidevbackend.service.EmailJobsService;
+import cloud.hustler.pidevbackend.service.EmailJobsService;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*")
 
 @RestController
-@RequestMapping("/api/emails")
+@RequestMapping("/emails")
 public class EmailJobsController {
-//    @Autowired
-//    private EmailJobsService emailService;
+    @Autowired
+    private JavaMailSender javaMailSender;
 
-    @PostMapping("/emails/send")
-    public ResponseEntity<?> sendEmail(@RequestParam String subject, @RequestParam String body,@RequestParam String to) {
-        // Définir les destinataires statiques ici
-        // Appeler la méthode d'envoi d'e-mail du service avec les destinataires statiques
-        // emailService.sendSimpleMessage(to, subject, body);
+    // Injecte l'expéditeur depuis application.properties
+    private String fromEmail;
+    @RequestMapping("/send")
 
-        // Retourner une réponse indiquant que l'e-mail a été envoyé avec succès
-        return ResponseEntity.ok("Email sent successfully to static recipients");
+    public void sendEmail(String to, String subject, String body) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setFrom("benhmida.molka01@gamil.com");  // <<< ICI on précise l'expéditeur
+        helper.setTo(to);
+        helper.setSubject(subject);
+        helper.setText(  body + "\n\n" +
+                "📅 Veuillez choisir l’horaire qui vous convient pour l'entretien via le lien suivant :\n" +
+                "👉 https://calendly.com/benhmida-molka01/30min\n\n" +
+                "Merci et à très bientôt !"); // true = support HTML body
+
+        javaMailSender.send(message);
     }
-
 }
