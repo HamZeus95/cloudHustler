@@ -35,6 +35,24 @@
           <span class="nav-link-text ms-1">Market Management</span>
         </a>
       </li>
+      <!-- delivery management -->
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/backoffice/livraisons']" [ngClass]="{'active': isActive('/backoffice/livraisons')}">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <span app-icon="truck" library="fontawesome" variant="solid" class="text-danger text-sm opacity-10"></span>
+          </div>
+          <span class="nav-link-text ms-1">Delivery Management</span>
+        </a>
+      </li>
+           <!-- Invoices management -->
+           <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/backoffice/factures']" [ngClass]="{'active': isActive('/backoffice/factures')}">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <span app-icon="file-invoice" library="fontawesome" variant="solid" class="text-danger text-sm opacity-10"></span>
+              </div>
+              <span class="nav-link-text ms-1">Invoice Management</span>
+            </a>
+          </li>
       <!-- event -->
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/backoffice/backEvent']" [ngClass]="{'active': isActive('/backoffice/backEvent')}">

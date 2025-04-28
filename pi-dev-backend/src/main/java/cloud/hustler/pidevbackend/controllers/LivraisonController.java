@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -51,8 +52,11 @@ public class LivraisonController {
     }
     @GetMapping("/by-user/{uuid}")
     public ResponseEntity<List<Livraison>> getLivraisonsByUser(@PathVariable("uuid") UUID uuid) {
+        System.out.println("id user"+uuid);
         List<Livraison> livraisons = livraisonService.findByOrdreConsumerUuid(uuid);
-        return ResponseEntity.ok(livraisons);
+        // Crée une copie pour éviter ConcurrentModificationException
+        return ResponseEntity.ok(new ArrayList<>(livraisons));
+
     }
     @GetMapping("/bydriver/{uuid}")
     public ResponseEntity<List<Livraison>> getLivraisonsByDriver(@PathVariable("uuid") UUID uuid) {
@@ -70,6 +74,19 @@ public class LivraisonController {
         int eta = aiService.calculateEta(livraison);
         return ResponseEntity.ok(eta);
     }
+    @GetMapping("/livreur/{livreurId}/ordered")
+    public ResponseEntity<List<Livraison>> getLivraisonsOrderedForLivreur(
+            @PathVariable UUID livreurId) {
+        List<Livraison> livraisons = livraisonService.findLivraisonsByDeliveryDriver_Uuid_user(livreurId);
+        List<Livraison> orderedLivraisons = aiService.reorderLivraisonsWithAI(livraisons);
+        return ResponseEntity.ok(orderedLivraisons);
+    }
+    @PutMapping("/desaffecter/{id}")
+    public ResponseEntity<String> desaffecterLivraison(@PathVariable Long id) {
+        livraisonService.desaffecterLivraison(id);
+        return ResponseEntity.ok("Livreur désaffecté avec succès");
+    }
+
 
 
 }

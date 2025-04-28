@@ -36,6 +36,9 @@ public class SecurityConfiguration {
             "/posts/**", // temporary
             "/Event/getEvents", // temporary
             "/product/**",
+            "/livraisons/**",
+            "/factures/**",
+            "/orders/**",
             "/swagger-resources",
             "/swagger-resources/**",
             "/configuration/ui",

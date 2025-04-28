@@ -13,8 +13,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "uuid_orderItem")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
 public class OrderItem {
@@ -38,35 +37,4 @@ public class OrderItem {
     }
 
 
-    public UUID getUuid_orderItem() {
-        return uuid_orderItem;
-    }
-
-    public void setUuid_orderItem(UUID uuid_orderItem) {
-        this.uuid_orderItem = uuid_orderItem;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 }

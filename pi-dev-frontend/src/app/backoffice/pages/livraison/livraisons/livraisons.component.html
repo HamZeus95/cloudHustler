@@ -1,28 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 
-</head>
-<body>
-  <div class="g-sidenav-show bg-gray-100">
-    <div style="position: absolute; min-height: 300px; width: 100%; overflow: hidden;">
-        <img src="../../../../assets/img/bg-img/1.jpg" alt="Background Image" style="position: absolute; top: 0; left: 0; width: 100%; height: 80%; object-fit: cover; filter: blur(5px) brightness(80%);">
-    </div>
-    <app-side-bar></app-side-bar>
-    <main class="main-content position-relative border-radius-lg">
-      <app-navbar></app-navbar>
-      <div class="container-fluid py-4">
-        <!-- here put your contents y jmee3a -->
-      </div>
-    </main>
-  </div>
+<app-admin-layout>
   <div class="main">
     <div class="header">
       <h1>Deliveries & Invoices</h1>
@@ -64,7 +44,7 @@
         <label for="statut">Status</label>
         <select id="statut" formControlName="statut" class="priority"
           [ngClass]="{ 'is-invalid': livraisonForm.get('statut')?.invalid && (livraisonForm.get('statut')?.touched || livraisonForm.get('statut')?.dirty) }">
-          <option value="EN ATTENTE">Pending</option>
+          <option value="Pending">Pending</option>
           <!--option value="EN TRANSIT">En transit</option>
           <option value="LIVRÉE">Livrée</option-->
         </select>
@@ -192,14 +172,7 @@
           <tr *ngFor="let livraison of paginatedlivraisons">
             <td>DEL {{ livraison?.id }}</td>
             <td>
-              <span
-                class="badge"
-                [ngClass]="{
-                  'EN_ATTENTE': livraison.statut.toUpperCase() === 'EN ATTENTE',
-                  'PAYÉ': livraison.statut.toUpperCase() === 'LIVRÉE',
-                  'EN_TRANSIT': livraison.statut.toUpperCase() === 'EN TRANSIT'
-                }"
-              >
+              <span class="badge" [ngClass]="getDeliveryStatusClass(livraison.statut)">
                 {{ livraison.statut }}
               </span>
             </td>
@@ -216,10 +189,15 @@
               {{ livraison.dateLivraison | date:'dd/MM/yyyy' }} 
             </td>
             <td>
-              <button class="action-button"  mat-raised-button [routerLink]="['/backoffice/livraison', livraison.id]" >View Details</button>    
-              
+              <button class="action-button" mat-raised-button [routerLink]="['/backoffice/livraison', livraison.id]">
+                <mat-icon>visibility</mat-icon>
+            </button>
+                          <button class="action-button" (click)="desaffecterLivreur(livraison.id)">
+                <mat-icon>link_off</mat-icon>
+            </button>
               <button class="delete-button" style="margin-left: 8px;" (click)="$event.stopPropagation(); livraison.id && supprimerlivraison(livraison.id)">  <mat-icon>delete</mat-icon>  
               </button>
+              
             </td>
           </tr>
           <tr *ngIf="paginatedlivraisons.length === 0">
@@ -255,8 +233,6 @@
   
     </ul>
   </nav>
-  
+  </app-admin-layout>
   <!--app-settings-panel></app-settings-panel-->
 
-</body>
-</html>
