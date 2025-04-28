@@ -98,6 +98,7 @@ export class AddEventComponent implements OnInit {
       this.eventService.addEvent(newEvent).subscribe(
         (event) => {
           console.log('Événement ajouté:', event);
+          alert ("Event Added succefully");
           this.router.navigate(['/backoffice/backEvent']);
         },
         (error) => {

@@ -18,5 +18,5 @@ public interface IEvent {
     void deleteEvent(UUID id);
     Event getEventById(UUID id);
     String uploadImage(String eventId, MultipartFile file) throws IOException;
-    void participate(UUID eventId, UUID userId);
+    Event participate(UUID eventId, UUID userId);
 }

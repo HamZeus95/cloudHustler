@@ -62,7 +62,7 @@
                       </div>
                       <div *ngIf="event.description.length > 50">
                         <a (click)="showFullDescription(event.description)" style="cursor:pointer; color: #007bff; font-weight: 500;">
-                          Voir plus
+                          More
                         </a>
                       </div>
                     </td>
@@ -111,7 +111,7 @@
 <div *ngIf="isModalVisible" class="modal-backdrop">
   <div class="modal-box position-relative">
     <button class="close-button" (click)="closeModal()">&times;</button>
-    <h5 class="mb-3">Description complète</h5>
+    <h5 class="mb-3">Description</h5>
     <p>{{ fullDescription }}</p>
   </div>
 </div>

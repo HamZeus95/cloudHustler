@@ -83,7 +83,7 @@ public class EventService implements IEvent {
         return file.getOriginalFilename();
     }
 
-    public void participate(UUID eventId, UUID consumerId) {
+    public Event participate(UUID eventId, UUID consumerId) {
         Consumer consumer = consumerRepository.findById(consumerId)
                 .orElseThrow(() -> new RuntimeException("Utilisateur avec l'ID " + consumerId + " non trouvé"));
 
@@ -95,8 +95,8 @@ public class EventService implements IEvent {
         }
 
         event.getParticipants().add(consumer);
-        event.setNbrParticipants(event.getNbrParticipants()+1);
-        eventRepository.save(event);
+        event.setNbrParticipants(event.getNbrParticipants() + 1);
+        Event savedEvent = eventRepository.save(event);
 
         System.out.println("Utilisateur " + consumer.getFirstName() + " ajouté à l'événement " + event.getName());
 
@@ -109,12 +109,12 @@ public class EventService implements IEvent {
                 System.out.println("SMS sent successfully");
             } catch (Exception e) {
                 System.err.println("Failed to send SMS: " + e.getMessage());
-                // Continue without failing the entire participation
-                // Or throw if SMS is critical: throw new RuntimeException("SMS sending failed", e);
             }
         }
 
+        return savedEvent; // <<< ICI très important
     }
+
 
 
 

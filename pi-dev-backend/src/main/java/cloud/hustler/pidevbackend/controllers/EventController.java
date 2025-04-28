@@ -79,51 +79,43 @@ CloudinaryService cloudinaryService;
     }
 
     @PutMapping("/events/{eventId}/{consumerId}/participate")
-    public ResponseEntity<String> participate(
+    public ResponseEntity<Event> participate(
             @PathVariable UUID eventId,
             @PathVariable UUID consumerId) {
 
-        // 1. Log the raw input
         System.out.println("=== STARTING PARTICIPATION REQUEST ===");
         System.out.printf("Raw Path Variables - EventId: %s (%s), ConsumerId: %s (%s)%n",
                 eventId, eventId.getClass().getSimpleName(),
                 consumerId, consumerId.getClass().getSimpleName());
 
         try {
-            // 2. Log before service call
             System.out.println("Attempting participation for:");
             System.out.printf("- Event ID: %s%n", eventId.toString());
             System.out.printf("- Consumer ID: %s%n", consumerId.toString());
             System.out.printf("- Current Time: %s%n", LocalDateTime.now());
 
-            // 3. Service call
-            eventService.participate(eventId, consumerId);
+            // 1. Appeler la participation et récupérer l'Event mis à jour
+            Event updatedEvent = eventService.participate(eventId, consumerId);
 
-            // 4. Success log
             System.out.println("=== PARTICIPATION SUCCESSFUL ===");
-            return ResponseEntity.ok("Participation réussie !");
+            return ResponseEntity.ok(updatedEvent); // <<< CHANGEMENT IMPORTANT
 
         } catch (RuntimeException e) {
-            // 5. Business error log
             System.err.println("=== BUSINESS ERROR ===");
             System.err.printf("Error during participation: %s%n", e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Erreur: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // <<< Pas besoin de body texte
 
         } catch (Exception e) {
-            // 6. Technical error log
             System.err.println("=== TECHNICAL ERROR ===");
             System.err.printf("Unexpected error: %s%n", e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erreur serveur : " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // <<< Pareil
         } finally {
-            // 7. Final log
             System.out.println("=== REQUEST PROCESSING COMPLETE ===");
         }
-
     }
+
 
 
     @PostMapping("/generate-description")

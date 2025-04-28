@@ -6,7 +6,7 @@ import { Subscription, interval } from 'rxjs';
 import { HttpClient } from '@angular/common/http';  // Importation de HttpClient
 import { AuthService } from '../../../auth/service/authentication.service';
 import { TokenStorageService } from '../../../auth/service/token-storage.service';
-
+import confetti from 'canvas-confetti';
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
@@ -49,6 +49,7 @@ export class EventComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadEvents();
     this.startCountdown();
+   // this.onParticipate("");
     this.authService.isAuthenticated().subscribe(isAuth => {
       this.isAuthenticated = isAuth;
       if (isAuth) {
@@ -63,7 +64,6 @@ export class EventComponent implements OnInit, OnDestroy {
     });
   }
 
- 
   loadEvents(): void {
     this.isLoading = true;
 
@@ -139,22 +139,23 @@ export class EventComponent implements OnInit, OnDestroy {
     }
 
     // Vérifie si l'utilisateur participe déjà
-    if (event.participants.includes(this.currentUser.userUUID)) {
+    if (event.participants?.includes(this.currentUser.userUUID)) {
         alert('Vous participez déjà à cet événement');
         return;
     }
 
     this.eventService.participate(eventId, this.currentUser.userUUID).subscribe({
         next: (updatedEvent) => {
-            // Mettez à jour l'événement avec la réponse du serveur
             Object.assign(event, updatedEvent);
             this.events = [...this.events];
+            this.filterEvents();
+            this.cdRef.detectChanges();
             console.log('Participation réussie !');
+            alert("Participation Succefully");
         },
-     
-      
     });
 }
+
   
 
   private initializeMap(latitude: number, longitude: number, eventId: string): void {

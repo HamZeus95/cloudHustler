@@ -45,7 +45,7 @@ export class EventServiceService {
   }
   participate(eventId: string,consumerId: string) {
     console.log("eventId:", eventId, "consumerId:", consumerId);
-    return this.http.put(`/api/v1/Event/events/${eventId}/${consumerId}/participate`,{} 
+    return this.http.put<Event>(`/api/v1/Event/events/${eventId}/${consumerId}/participate`,{} 
      
     );
     
