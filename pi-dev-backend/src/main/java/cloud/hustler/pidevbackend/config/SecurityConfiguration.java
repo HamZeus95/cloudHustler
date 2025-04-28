@@ -35,11 +35,13 @@ public class SecurityConfiguration {
             "/v3/api-docs/**",
             "/posts/**", // temporary
             "/Event/getEvents", // temporary
+            "Event/**", // fix later
             "/product/**",
             "/swagger-resources",
             "/swagger-resources/**",
             "/configuration/ui",
             "/farms/**",
+            "/ia-farm/**",
             "/configuration/security",
             "/swagger-ui/**",
             "/webjars/**",

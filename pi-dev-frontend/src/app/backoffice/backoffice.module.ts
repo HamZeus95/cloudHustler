@@ -55,6 +55,11 @@ import { CreateQuizComponent } from "./pages/hiring/quiz/create-quiz/create-quiz
 import { UpdateQuestionsComponent } from "./pages/hiring/quiz/update-questions/update-questions.component";
  
 
+import { IaFarmDashComponent } from './pages/ia-farm-dash/ia-farm-dash.component';
+import { Farm3DComponent } from "./components/farm3d/farm3d.component";
+
+
+
 @NgModule({
   declarations: [
     BillingComponent,
@@ -91,6 +96,7 @@ import { UpdateQuestionsComponent } from "./pages/hiring/quiz/update-questions/u
     ProductCategorieslistComponent,
     OrderListComponent,
     TopSellingProductsComponent,
+
     JobsBackComponent,
     JobsFormComponent,
     JobsRequestsDashboardComponent,
@@ -99,6 +105,8 @@ import { UpdateQuestionsComponent } from "./pages/hiring/quiz/update-questions/u
     QuizComponent,
     CreateQuizComponent,
     UpdateQuestionsComponent
+    IaFarmDashComponent,
+    Farm3DComponent,
   ],
   imports: [
     CommonModule,
@@ -113,7 +121,8 @@ import { UpdateQuestionsComponent } from "./pages/hiring/quiz/update-questions/u
     MatButtonModule,
     MatIconModule,  
     CoreDirectivesModule,
-    HttpClientModule, 
+    HttpClientModule,
+    
 
   ],
   providers: [
