@@ -1,37 +1,230 @@
 <app-admin-layout>
-<div class="ia-farm-container">
-    <div class="left-side">
-      <h2>Crop Recommendation</h2>
-  
-      <form (submit)="onRecommendCrop()">
-        <textarea [(ngModel)]="cropInput" name="cropInput" placeholder="Enter soil data..." rows="5"></textarea>
-        <button type="submit">Recommend</button>
-      </form>
-  
-      <div *ngIf="recommendedCrop">
-        <h3>Recommendation:</h3>
-        <p>{{ recommendedCrop }}</p>
-      </div>
-  
-      <div class="farming-tips">
-        <h3>Smart Farming Tips 🌱</h3>
-        <p>{{ farmingTip }}</p>
-      </div>
-    </div>
-  
-    <div class="right-side">
-      <h2>Ask the Farming Expert</h2>
-  
-      <div class="chat-box">
-        <div *ngFor="let message of messages" class="chat-message">
-          {{ message }}
+  <div class="container-fluid py-4">
+
+    <div class="row">
+
+      <!-- Left Side -->
+      <div class="col-lg-8">
+
+        <!-- Crop Recommendation -->
+        <!-- <div class="card shadow-sm mb-4">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">🌾 Crop Recommendation</h5>
+          </div>
+          <div class="card-body">
+            <form (submit)="onRecommendCrop()">
+              <textarea 
+                class="form-control mb-3"
+                [(ngModel)]="cropInput" 
+                name="cropInput" 
+                placeholder="Describe your soil conditions..." 
+                rows="4">
+              </textarea>
+              <div class="d-grid">
+                <button class="btn btn-primary" type="submit">Get Recommendation</button>
+              </div>
+            </form>
+
+            <div *ngIf="recommendedCrop" class="alert alert-success mt-4">
+              <strong>Recommended Crop:</strong> {{ recommendedCrop }}
+            </div>
+
+            <div *ngIf="farmingTip" class="alert alert-info mt-3">
+              <strong>🌱 Smart Tip:</strong> {{ farmingTip }}
+            </div>
+          </div>
+        </div> -->
+
+        <!-- 3D Farm Visualization -->
+        
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">🚜 3D Farm Visualization</h5>
+          </div>
+          <div class="card-body p-0 position-relative">
+            <app-farm3d ></app-farm3d>
+
+            <!-- <div class="canvas-container">
+              <canvas #canvas3D class="w-100" style="height:400px;"></canvas>
+              <div *ngIf="selectedField" class="overlay p-3 bg-white shadow rounded">
+                <h5>{{ selectedField.name }}</h5>
+                <ul class="list-unstyled small">
+                  <li><strong>Crop:</strong> {{ selectedField.crop }}</li>
+                  <li><strong>Health:</strong> {{ selectedField.health }}</li>
+                  <li><strong>Yield Forecast:</strong> {{ selectedField.yieldForecast }}</li>
+                </ul>
+                <div class="progress">
+                  <div 
+                    class="progress-bar" 
+                    role="progressbar" 
+                    [ngClass]="{
+                      'bg-success': selectedField.healthStatus >= 0.7,
+                      'bg-warning': selectedField.healthStatus >= 0.4 && selectedField.healthStatus < 0.7,
+                      'bg-danger': selectedField.healthStatus < 0.4
+                    }"
+                    [style.width.%]="selectedField.healthStatus * 100">
+                    {{ (selectedField.healthStatus * 100).toFixed(0) }}%
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </div>
         </div>
+
+        <!-- AI Tools -->
+        <div class="row g-3">
+
+          <!-- Crop Health Analysis -->
+          <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+              <div class="card-header bg-light">
+                <h5 class="mb-0">🌿 Crop Health</h5>
+              </div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <label for="cropImageUpload" class="form-label">Upload Crop Image</label>
+                  <input class="form-control" type="file" id="cropImageUpload" accept="image/*" (change)="onImageUpload($event)">
+                </div>
+                <div class="d-grid">
+                  <button class="btn btn-primary" type="button">Analyze</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Yield Prediction -->
+          <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+              <div class="card-header bg-light">
+                <h5 class="mb-0">📈 Yield Prediction</h5>
+              </div>
+              <div class="card-body">
+                <div class="form-floating mb-2">
+                  <input type="text" id="cropType" class="form-control" [(ngModel)]="yieldPredictionData.cropType" placeholder="Crop Type">
+                  <label for="cropType">Crop Type</label>
+                </div>
+                <div class="form-floating mb-2">
+                  <input type="number" id="fieldSize" class="form-control" [(ngModel)]="yieldPredictionData.fieldSize" placeholder="Field Size (ha)">
+                  <label for="fieldSize">Field Size (ha)</label>
+                </div>
+                <div class="form-floating mb-2">
+                  <input type="date" id="plantingDate" class="form-control" [(ngModel)]="yieldPredictionData.plantingDate">
+                  <label for="plantingDate">Planting Date</label>
+                </div>
+                <div class="form-floating mb-2">
+                  <select id="soilType" class="form-select" [(ngModel)]="yieldPredictionData.soilType">
+                    <option value="">Choose Soil Type</option>
+                    <option value="Clay">Clay</option>
+                    <option value="Silt">Silt</option>
+                    <option value="Sandy">Sandy</option>
+                    <option value="Loam">Loam</option>
+                  </select>
+                  <label for="soilType">Soil Type</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <textarea id="recentWeather" class="form-control" rows="2" [(ngModel)]="yieldPredictionData.recentWeather" placeholder="Recent Weather"></textarea>
+                  <label for="recentWeather">Recent Weather</label>
+                </div>
+                
+                <div class="d-grid">
+                  <button class="btn btn-success" (click)="predictYield()">Predict</button>
+                </div>
+              
+                <!-- Loading Spinner -->
+<div *ngIf="loading" class="flex justify-center items-center h-40">
+  <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500 border-solid"></div>
+</div>
+
+<!-- Prediction Result -->
+<div *ngIf="!loading && predictedYieldData" class="mt-4 p-6 bg-green-100 rounded-lg shadow-md">
+  <h2 class="text-xl font-bold text-green-700 mb-2">📈 Predicted Yield</h2>
+  <p class="text-green-800"><strong>Yield:</strong> {{ predictedYieldData.predictedYield }}</p>
+  <p class="text-green-800"><strong>Explanation:</strong> {{ predictedYieldData.explanation }}</p>
+</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
       </div>
-  
-      <form (submit)="onAskQuestion()" class="chat-form">
-        <input [(ngModel)]="userQuestion" name="userQuestion" type="text" placeholder="Ask anything about farming..." required />
-        <button type="submit">Send</button>
-      </form>
+
+      <!-- Right Side: AI Assistant -->
+      <div class="col-lg-4">
+
+        <!-- AI Chat -->
+        <div class="card shadow-sm mb-4 h-100 d-flex flex-column">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">🤖 AI Farming Assistant</h5>
+          </div>
+          <div class="card-body p-0 d-flex flex-column">
+
+            <!-- Chat messages scrollable -->
+            <div class="chat-messages overflow-auto p-3 flex-grow-1" style="max-height:400px;">
+              <div class="message bot-message mb-3">
+                <div class="message-content small text-muted">
+                  Welcome! Ask me anything about your farm 🌾
+                </div>
+              </div>
+
+              <div *ngFor="let message of messages" class="mb-2" [ngClass]="{'text-end': message.sender === 'user'}">
+                <div class="small p-2 rounded" [ngClass]="{
+                  'bg-primary text-white': message.sender === 'user',
+                  'bg-light': message.sender === 'bot'
+                }">
+                  {{ message.content }}
+                </div>
+              </div>
+
+              <div *ngIf="loadingChatResponse" class="text-center mt-2">
+                <div class="spinner-border spinner-border-sm text-primary"></div>
+              </div>
+            </div>
+
+            <!-- Chat input -->
+            <div class="border-top p-2">
+              <form (submit)="sendChatMessage(); $event.preventDefault()" class="d-flex gap-2">
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  placeholder="Type your question..." 
+                  [(ngModel)]="chatbotPrompt" 
+                  name="chatbotPrompt">
+                <button 
+                  class="btn btn-primary" 
+                  type="submit"
+                  [disabled]="!chatbotPrompt.trim() || loadingChatResponse">
+                  <i class="bi bi-send"></i>
+                </button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Suggested Questions -->
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-light">
+            <h6 class="mb-0">💬 Suggested Questions</h6>
+          </div>
+          <div class="card-body">
+            <div class="list-group list-group-flush">
+              <button class="list-group-item list-group-item-action" (click)="chatbotPrompt = 'What crops are best for the North Field?'; sendChatMessage()">
+                🌾 Best crops for North Field
+              </button>
+              <button class="list-group-item list-group-item-action" (click)="chatbotPrompt = 'When should I fertilize my corn?'; sendChatMessage()">
+                🧪 When to fertilize corn
+              </button>
+              <button class="list-group-item list-group-item-action" (click)="chatbotPrompt = 'How can I improve soil health in the East Field?'; sendChatMessage()">
+                🌱 Improve soil health East Field
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
+
   </div>
 </app-admin-layout>

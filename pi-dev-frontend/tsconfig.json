@@ -23,10 +23,11 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "types": ["three"],  
     "lib": [
-      "ES2022",
-      "dom"
-    ]
+          "ES2022",
+          "dom"
+        ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
