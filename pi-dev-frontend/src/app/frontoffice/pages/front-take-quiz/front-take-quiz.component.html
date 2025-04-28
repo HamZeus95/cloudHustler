@@ -1,0 +1,74 @@
+<!-- ##### Breadcrumb Area Start ##### -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<app-navbar></app-navbar>
+<div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url('assets/img/bg-img/18.jpg');">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center">
+      <div class="col-12 text-center">
+        <div class="breadcrumb-text">
+          <h2>Quiz</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="famie-breadcrumb">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Quiz</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<section class="farming-practice-area bg-gray section-padding-100-50">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <div class="section-heading">
+          <p>Make the green world</p>
+          <h2><span>Take the Quiz</span> Good luck </h2>
+          <img src="assets/img/core-img/decor2.png" alt="">
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="quiz" >
+      <form (ngSubmit)="onSubmit()" class="quiz-form">
+        <div *ngFor="let question of quiz.questions; let i = index" class="question-block">
+          <h3>{{ question.questionText }}</h3>
+          <div class="answers-container">
+            <div *ngFor="let answer of question.answers; let j = index">
+              <label>
+                <input
+                  type="radio"
+                  [(ngModel)]="quizForm[i]" 
+                  [value]="j" 
+                  [name]="'question-' + i"
+                  required />
+                {{ answer.answerText }}
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn" >
+          Soumettre
+        </button>
+      </form>
+
+      <div *ngIf="submitted" class="result">
+        <h3>Votre score : {{ score }} / {{ quiz.questions.length }}</h3>
+      </div>
+    </div>
+
+    <div *ngIf="!quiz">
+      <p class="loading-message">Chargement du quiz...</p>
+    </div>
+  </div>
+</section>
+<app-footer></app-footer>

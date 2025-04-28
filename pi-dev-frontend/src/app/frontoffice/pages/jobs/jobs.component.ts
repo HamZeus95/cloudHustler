@@ -119,7 +119,7 @@ cancelUpdate() {
 }
 postuler(uuid: string | undefined): void {
   if (uuid) {
-    this.router.navigate(['/job-request', uuid]);
+    this.router.navigate(['/frontoffice/job-request', uuid]);
   } else {
     console.error('UUID du service non défini');
   }

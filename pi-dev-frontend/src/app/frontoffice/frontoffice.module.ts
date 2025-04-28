@@ -38,6 +38,9 @@ import { AddCommentComponent } from "./components/comment/add-comment/add-commen
 import { ListCommentComponent } from "./components/comment/list-comment/list-comment.component";
 import { ChatAiComponent } from "./components/chat-ai/chat-ai.component";
 import { EventComponent } from './pages/event/event.component';
+import { JobRequestsComponent } from './pages/job-requests/job-requests.component';
+import { JobFormComponent } from './pages/job-requests/job-form/job-form.component';
+import { FrontTakeQuizComponent } from './pages/front-take-quiz/front-take-quiz.component';
 
 
 
@@ -71,8 +74,10 @@ import { EventComponent } from './pages/event/event.component';
     AddCommentComponent,
     ListCommentComponent,
     ChatAiComponent,
-    NotFoundComponent
-
+    NotFoundComponent,
+    JobRequestsComponent,
+    JobFormComponent,
+    FrontTakeQuizComponent
   ],
   imports: [
     CommonModule,
@@ -86,6 +91,7 @@ import { EventComponent } from './pages/event/event.component';
     MatIconModule,
     ReactiveFormsModule,
     CoreDirectivesModule,
+    FormsModule, // 👈 ajouter ça
 
   ],
   providers: []

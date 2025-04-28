@@ -1,0 +1,88 @@
+/* Application Form */
+.application-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.form-box {
+  background-color: #ffffff;
+  border: 2px solid #eaeaea;
+  border-radius: 1.25rem;
+  width: 100%;
+  max-width: 750px;
+  padding: 30px 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.form-box:hover {
+  transform: translateY(-5px);
+}
+
+h2 {
+  font-family: 'Poppins', sans-serif;
+  color: #2b2d42;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.underline {
+  width: 60px;
+  height: 3px;
+  background-color: #4CAF50; /* Green accent */
+  margin: 0 auto;
+  margin-bottom: 30px;
+  border-radius: 50px;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #4a4a4a;
+}
+
+.form-control {
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 0.75rem;
+  border: 1px solid #e0e0e0;
+  background-color: #fafafa;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  border-color: #4CAF50; /* Green accent */
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+button.btn {
+  background-color: #4CAF50; /* Green */
+  border-color: #4CAF50; /* Green */
+  color: white;
+  font-weight: 600;
+  padding: 12px 50px;
+  border-radius: 30px;
+  width: 100%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.2s ease;
+}
+
+button.btn:hover {
+  background-color: #388E3C; /* Dark green on hover */
+  border-color: #388E3C; /* Dark green on hover */
+  transform: translateY(-3px);
+}
+
+small.text-muted {
+  display: block;
+  margin-top: 8px;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.text-danger {
+  font-size: 12px;
+  color: red;
+}

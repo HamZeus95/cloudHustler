@@ -45,8 +45,19 @@ import { ProductCategorieslistComponent } from './components/product-categoriesl
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { TopSellingProductsComponent } from './components/top-selling-products/top-selling-products.component';
 import { NgChartsModule } from 'ng2-charts';
+import { JobsBackComponent } from "./pages/hiring/jobs-back/jobs-back.component";
+import { JobsFormComponent } from "./pages/hiring/jobs-form/jobs-form.component";
+import { JobsRequestsDashboardComponent } from "./pages/hiring/jobs-requests-dashboard/jobs-requests-dashboard.component";
+import { DipslayComponent } from "./pages/hiring/dipslay/dipslay.component";
+import { EmailJobsComponent } from "./pages/hiring/email-jobs/email-jobs.component";
+import { QuizComponent } from "./pages/hiring/quiz/quiz.component";
+import { CreateQuizComponent } from "./pages/hiring/quiz/create-quiz/create-quiz.component";
+import { UpdateQuestionsComponent } from "./pages/hiring/quiz/update-questions/update-questions.component";
+ 
+
 import { IaFarmDashComponent } from './pages/ia-farm-dash/ia-farm-dash.component';
 import { Farm3DComponent } from "./components/farm3d/farm3d.component";
+
 
 
 @NgModule({
@@ -85,6 +96,15 @@ import { Farm3DComponent } from "./components/farm3d/farm3d.component";
     ProductCategorieslistComponent,
     OrderListComponent,
     TopSellingProductsComponent,
+
+    JobsBackComponent,
+    JobsFormComponent,
+    JobsRequestsDashboardComponent,
+    DipslayComponent,
+    EmailJobsComponent,
+    QuizComponent,
+    CreateQuizComponent,
+    UpdateQuestionsComponent
     IaFarmDashComponent,
     Farm3DComponent,
   ],
