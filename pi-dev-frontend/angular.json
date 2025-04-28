@@ -15,7 +15,9 @@
           "options": {
             "allowedCommonJsDependencies": [
               "feather-icons",
-              "mapbox-gl"
+              "mapbox-gl",
+
+
             ],
             "outputPath": "dist/pi-dev-frontend",
             "index": "src/index.html",

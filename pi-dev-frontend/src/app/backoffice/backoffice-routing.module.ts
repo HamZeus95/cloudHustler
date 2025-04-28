@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 //import { EventComponent } from '../frontoffice/components/event/event.component';
-import { FarmService } from '../core/services/farm.service';
-import { CropService } from '../core/services/crop.service';
+import { FarmService } from '../core/services/farm-managment/farm.service';
+import { CropService } from '../core/services/farm-managment/crop.service';
 import { FarmManagmentComponent } from './pages/farm-managment/farm-managment.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { EventComponent } from './pages/event/event.component';
@@ -13,9 +13,7 @@ import { AddEventComponent } from './components/events/add-event/add-event.compo
 import { EditEventComponent } from './components/events/edit-event/edit-event.component';
 import { EditProfileComponent } from './pages/profile/edit-profile/edit-profile.component';
 import { ManageProfileComponent } from './pages/profile/manage-profile/manage-profile.component'; 
-import { RessourceService } from '../core/services/ressource.service';
-import { ExpenseService } from '../core/services/expense.service'; 
-import { WeatherService } from '../core/services/weather.service';
+import { WeatherService } from '../core/services/farm-managment/weather.service';
 import { BlogManagmentComponent } from './pages/blog-managment/blog-managment.component';
 import { DetailsFactureComponent } from './pages/livraison/details-facture/details-facture.component';
 import { DetailsLivraisonComponent } from './pages/livraison/details-livraison/details-livraison.component';
@@ -24,6 +22,9 @@ import { LivraisonComponent } from './pages/livraison/livraisons/livraisons.comp
 import { SuiviLivraisonComponent } from './pages/livraison/suivilivraisons/suivilivraisons.component';
 import { MarketplaceManagementComponent } from './pages/marketplace-management/marketplace-management.component';
 import { BillingComponent } from './components/events/billing/billing.component';
+import { RessourceService } from '../core/services/farm-managment/ressource.service';
+import { ExpenseService } from '../core/services/farm-managment/expense.service';
+import { IaFarmDashComponent } from './pages/ia-farm-dash/ia-farm-dash.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -35,6 +36,7 @@ const routes: Routes = [
     { path: 'task', component: TaskManagementComponent },
     {path:"crop",component:CropDiseaseDetectorComponent},
     {path:"weather",component:WeatherComponent},
+    {path:"farm-ia",component:IaFarmDashComponent},
   //event routes
     { path: 'backEvent', component: BillingComponent },
     { path: 'add-event', component: AddEventComponent },
