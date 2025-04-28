@@ -15,8 +15,8 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
+@ToString(exclude = "orderItems")
+@EqualsAndHashCode(of = "uuid_order")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "orders")
 public class Order {
@@ -37,43 +37,5 @@ public class Order {
     @Enumerated(EnumType.STRING)
     OrderStatus status;
 
-    public UUID getUuid_order() {
-        return uuid_order;
-    }
 
-    public void setUuid_order(UUID uuid_order) {
-        this.uuid_order = uuid_order;
-    }
-
-    public Set<OrderItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public void setOrderItems(Set<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-    }
-
-    public Consumer getConsumer() {
-        return consumer;
-    }
-
-    public void setConsumer(Consumer consumer) {
-        this.consumer = consumer;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
 }

@@ -1,31 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LogiPro Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 
-
-
-
-<body>
-  <div class="g-sidenav-show bg-gray-100">
-    <div style="position: absolute; min-height: 300px; width: 100%; overflow: hidden;">
-        <img src="../../../../assets/img/bg-img/1.jpg" alt="Background Image" style="position: absolute; top: 0; left: 0; width: 100%; height: 80%; object-fit: cover; filter: blur(5px) brightness(80%);">
-    </div>
-    <app-side-bar></app-side-bar>
-    <main class="main-content position-relative border-radius-lg">
-      <app-navbar></app-navbar>
-      <div class="container-fluid py-4">
-        <!-- here put your contents y jmee3a -->
-      </div>
-    </main>
-  </div>
+<app-admin-layout>
   <div class="main">
     <div class="header">
       <h1>Deliveries & Invoices</h1>
@@ -116,13 +93,9 @@
               <select
                 id="statut"
                 formControlName="statut"
-                class="priority"
-                [ngClass]="{ 'is-invalid': factureForm.get('statut')?.invalid && 
-                               (factureForm.get('statut')?.touched || factureForm.get('statut')?.dirty) }"
-              >
-                <option value="EN ATTENTE">Pending</option>
-                <option value="PAYÉE">Paid</option>
-                <option value="ANNULÉE">Cancelled</option>
+                class="priority">
+                <option value="PENDING">Pending</option>
+              
               </select>
               <div *ngIf="factureForm.get('statut')?.invalid && 
                          (factureForm.get('statut')?.touched || factureForm.get('statut')?.dirty)" 
@@ -211,12 +184,7 @@
             <td>INV {{ facture.id }}</td>
             <td>DEL {{ facture.livraison?.id }}</td>
             <td>
-              <span class="badge"
-                [ngClass]="{
-                  'EN_ATTENTE': (facture.statut?.toUpperCase() ?? '') === 'EN ATTENTE',
-                  'PAYÉ': (facture.statut?.toUpperCase() ?? '') === 'PAYÉE',
-                  'ANNULÉ': (facture.statut?.toUpperCase() ?? '') === 'ANNULÉE'
-                }">
+              <span class="badge" [ngClass]="getStatutClass(facture.statut || '')">
                 {{ facture.statut }}
               </span>
             </td>
@@ -256,6 +224,5 @@
   </nav>
   
   <!--app-settings-panel></app-settings-panel-->
- 
-</body>
-</html>
+</app-admin-layout>
+

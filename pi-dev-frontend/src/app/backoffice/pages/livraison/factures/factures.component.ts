@@ -138,7 +138,7 @@ export class FactureComponent implements OnInit {
         this.dateEmissionMatchesCreationValidator()
       ]],
       montantTotal: ['', Validators.required],
-      statut: ['Pending', [
+      statut: ['PENDING', [
         Validators.required,
         CustomValidators.validStatutFacture1()
       ]],
@@ -511,6 +511,26 @@ onSubmit(): void {
       };
     }
     
+    getStatutClass(statut: string): string {
+      const status = statut?.toUpperCase();
+      switch (status) {
+        case 'PENDING':
+        case 'EN_ATTENTE':
+          return 'PENDING';
+        case 'PAID':
+        case 'PAYE':
+        case 'PAYÉ':
+        case 'PAYÉE':
+        case 'PAYEE':
+          return 'PAID';
+        case 'CANCELLED':
+        case 'ANNULE':
+        case 'ANNULÉ':
+          return 'CANCELLED';
+        default:
+          return '';
+      }
+    }
     
     }
 

@@ -1,6 +1,7 @@
 package cloud.hustler.pidevbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
@@ -26,8 +27,8 @@ import java.util.Set;
 @DiscriminatorValue("Consumer")
 public class Consumer extends User {
 
-    @OneToMany(mappedBy = "consumer")
     @JsonIgnore
+    @OneToMany(mappedBy = "consumer",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     Set<Order> orders= new HashSet<>();
 
     @ManyToMany

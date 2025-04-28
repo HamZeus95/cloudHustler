@@ -1,9 +1,6 @@
 package cloud.hustler.pidevbackend.controllers;
 
-import cloud.hustler.pidevbackend.entity.DeliveryDriver;
-import cloud.hustler.pidevbackend.entity.Facture;
-import cloud.hustler.pidevbackend.entity.Livraison;
-import cloud.hustler.pidevbackend.entity.Order;
+import cloud.hustler.pidevbackend.entity.*;
 import cloud.hustler.pidevbackend.repository.FactureRepository;
 import cloud.hustler.pidevbackend.service.FactureService;
 import jakarta.persistence.EntityNotFoundException;

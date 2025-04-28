@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c799faf-77be-47d4-a413-81b6d78d4ec2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/SecurityConfiguration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/EmailJobsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/EmailJobsController.java" afterDir="false" />
@@ -92,6 +93,9 @@
   <component name="MavenRunner">
     <option name="skipTests" value="true" />
   </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -119,6 +123,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;Spring Boot.PiDevBackendApplication.executor&quot;: &quot;Run&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+
     &quot;git-widget-placeholder&quot;: &quot;Hiring&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
@@ -176,7 +181,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ac3788a9-3f24-4944-9cc2-2ebd0c118823" name="Changes" comment="" />
+      <changelist id="1c799faf-77be-47d4-a413-81b6d78d4ec2" name="Changes" comment="" />
       <created>1741726683623</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -206,6 +211,15 @@
       <workItem from="1745440991502" duration="1949000" />
       <workItem from="1745516349816" duration="8000" />
       <workItem from="1745516425033" duration="8000" />
+      <workItem from="1745656195710" duration="8129000" />
+      <workItem from="1745691428542" duration="1190000" />
+      <workItem from="1745771086491" duration="7824000" />
+      <workItem from="1745779289461" duration="1906000" />
+      <workItem from="1745787832160" duration="1295000" />
+      <workItem from="1745834752661" duration="3349000" />
+      <workItem from="1745839198279" duration="965000" />
+      <workItem from="1745841762745" duration="2611000" />
+      <workItem from="1745877766611" duration="3058000" />
     </task>
     <task id="LOCAL-00001" summary="before merge">
       <option name="closed" value="true" />

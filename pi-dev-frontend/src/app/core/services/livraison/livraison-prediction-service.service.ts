@@ -7,7 +7,7 @@ import { Livraison } from '../../models/livraison/livraison';
   providedIn: 'root'
 })
 export class LivraisonPredictionService {
-  private apiUrl = 'http://localhost:8090/tpfoyer/livraisons';
+  private apiUrl = '/api/v1/livraisons';
 
   constructor(private http: HttpClient) {}
 

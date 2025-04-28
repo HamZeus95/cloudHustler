@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Facture } from 'src/app/core/models/livraison/facture';
 import { Livraison } from 'src/app/core/models/livraison/livraison';
 import { FactureService } from 'src/app/core/services/livraison/facture.service';
+import { AuthService } from '../../../../auth/service/authentication.service';
+import { TokenStorageService } from '../../../../auth/service/token-storage.service';
 
 @Component({
   selector: 'app-facture-client',
@@ -14,7 +16,9 @@ export class FactureClientComponent implements OnInit {
     displayModal: boolean = false;
     selectedFacture: Facture | null = null;
       @Output() factureSelected = new EventEmitter<Facture>();
-      readonly userUuid = '01230000-0000-0000-0000-000000000000'; // Replace with actual UUID retrieval
+// Replace with actual UUID retrieval
+isAuthenticated = false;
+currentUser: any = null;
 
     
   
@@ -36,11 +40,24 @@ export class FactureClientComponent implements OnInit {
       }
     };
   
-    constructor(private factureService: FactureService,private router: Router) {
+    constructor(private factureService: FactureService,private router: Router,      private authService: AuthService,
+          private tokenStorageService: TokenStorageService,) {
             
       
     }
     ngOnInit(): void {
+      this.authService.isAuthenticated().subscribe(isAuth => {
+        this.isAuthenticated = isAuth;
+        if (isAuth) {
+          this.currentUser = this.tokenStorageService.getCurrentUser();
+        }
+        
+      });
+       // Subscribe to user changes
+       this.tokenStorageService.getUser().subscribe(user => {
+        this.currentUser = user;
+      });
+      console.log("yooooo",this.currentUser);
       this.loadFactures();
     }
   
@@ -49,9 +66,10 @@ export class FactureClientComponent implements OnInit {
   
     // Récupérer toutes les factures depuis le service
     loadFactures() {
-      this.factureService.getFacturesByUser(this.userUuid).subscribe((data: Facture[]) => {
-              this.factures = data;
-            });
+      const userUuid = this.currentUser.userUUID;  
+      this.factureService.getFacturesByUser(userUuid).subscribe((data: Facture[]) => {
+        console.log('Données reçues:', data); // <-- Ajoutez ceci
+        this.factures = data;            });
     }
   
     // Ajouter une nouvelle facture

@@ -42,12 +42,12 @@ const routes: Routes = [
   //blog routes
     { path: 'blog', component: BlogComponent },
   //livraison routes
-    { path:'factures',  component: FactureClientComponent},
-    { path:'livraisons',  component: LivraisonClientComponent},
-    { path:'livraison-client-details/:id',  component: LivraisonClientdetailsComponent},
-    { path:'facture-client-details/:id',  component: FactureClientdetailsComponent},
-    { path:'suivrelivraison/:id',  component: MapComponent},
-    { path:'livraisonsDriver',  component: LivraisondriverComponent},
+    { path:'factures',  component: FactureClientComponent}, // ya hamza rodeha ken el user connectee
+    { path:'livraisons',  component: LivraisonClientComponent}, // ya hamza rodeha ken el user connectee
+    { path:'livraison-client-details/:id',  component: LivraisonClientdetailsComponent},// ya hamza rodeha ken el user connectee
+    { path:'facture-client-details/:id',  component: FactureClientdetailsComponent}, // ya hamza rodeha ken el user connectee
+    { path:'suivrelivraison/:id',  component: MapComponent}, // ya hamza rodeha ken el user connectee
+    { path:'livraisonsDriver',  component: LivraisondriverComponent}, // ya hamza rodeha ken el user connectee w driver
   //market routes
     {path:'market', component: MarketComponent},
   //hiring routes
