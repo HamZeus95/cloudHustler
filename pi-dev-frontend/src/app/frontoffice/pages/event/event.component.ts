@@ -6,7 +6,6 @@ import { Subscription, interval } from 'rxjs';
 import { HttpClient } from '@angular/common/http';  // Importation de HttpClient
 import { AuthService } from '../../../auth/service/authentication.service';
 import { TokenStorageService } from '../../../auth/service/token-storage.service';
-import confetti from 'canvas-confetti';
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
@@ -257,7 +256,7 @@ export class EventComponent implements OnInit, OnDestroy {
 
           this.countdown[event.uuid_event] = `${hours}h ${minutes}m ${seconds}s`;
         } else {
-          this.countdown[event.uuid_event] = 'L\'événement a commencé';
+          this.countdown[event.uuid_event] = 'Event Starts';
         }
       });
 
@@ -300,7 +299,7 @@ uploadImage(eventId: string) {
     this.eventService.uploadImage(eventId, formData).subscribe({
       next: (res) => {
         console.log('Image upload successful:', res);
-        alert('Image envoyée avec succès !');
+        alert('Image send Succefully !');
 
         this.imageUrls[eventId] = res.imageUrl; 
       },
@@ -310,7 +309,7 @@ uploadImage(eventId: string) {
       }
     });
   } else {
-    alert('Veuillez sélectionner une image avant d\'envoyer.');
+    alert('Choose Image.');
   }
 }
 openImage(url: string) {
