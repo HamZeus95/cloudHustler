@@ -1,23 +1,32 @@
-<div class="container mt-4">
-    <h2>Create a Quiz</h2>
-    <form [formGroup]="quizForm" (ngSubmit)="onSubmit()">
-      <div class="form-group mb-3">
-        <label for="title">Title</label>
-        <input id="title" formControlName="title" class="form-control" />
-        <div *ngIf="quizForm.get('title')?.invalid && quizForm.get('title')?.touched" class="text-danger">
-          Title is required.
-        </div>
+<div class="container mt-5">
+  <h2 class="text-center text-primary mb-4">Create Your Quiz</h2>
+
+  <form [formGroup]="quizForm" (ngSubmit)="onSubmit()" class="bg-white p-4 rounded-4 shadow-lg">
+    
+    <!-- Title Input -->
+    <div class="form-group mb-4">
+      <label for="title" class="form-label text-dark fs-5 fw-bold">Title</label>
+      <input id="title" formControlName="title" class="form-control p-3 rounded-3 shadow-sm border-0 bg-light" />
+      <div *ngIf="quizForm.get('title')?.invalid && quizForm.get('title')?.touched" class="text-danger mt-1">
+        Title is required.
       </div>
-  
-      <div class="form-group mb-3">
-        <label for="description">Description</label>
-        <textarea id="description" formControlName="description" class="form-control"></textarea>
-        <div *ngIf="quizForm.get('description')?.invalid && quizForm.get('description')?.touched" class="text-danger">
-          Description is required.
-        </div>
+    </div>
+
+    <!-- Description Textarea -->
+    <div class="form-group mb-4">
+      <label for="description" class="form-label text-dark fs-5 fw-bold">Description</label>
+      <textarea id="description" formControlName="description" class="form-control p-3 rounded-3 shadow-sm border-0 bg-light"></textarea>
+      <div *ngIf="quizForm.get('description')?.invalid && quizForm.get('description')?.touched" class="text-danger mt-1">
+        Description is required.
       </div>
-  
-      <button class="btn btn-primary" type="submit" [disabled]="quizForm.invalid">Create Quiz</button>
-    </form>
-  </div>
-  
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center mt-4">
+      <button class="btn btn-success btn-lg px-5 py-3 rounded-4 shadow-sm" type="submit" [disabled]="quizForm.invalid">
+        Create Quiz
+      </button>
+    </div>
+
+  </form>
+</div>

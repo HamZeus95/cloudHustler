@@ -1,33 +1,38 @@
-<!-- Formulaire de Candidature -->
+<!-- Job Application Form -->
 <div class="application-wrapper py-5 d-flex justify-content-center align-items-center">
   <form 
     (ngSubmit)="onSubmit()" 
+    #applicationForm="ngForm" 
     class="form-box shadow-lg p-5 rounded-4 bg-white border border-2 border-light"
     style="width: 100%; max-width: 750px;"
   >
     <h2 class="text-center mb-4 text-primary-emphasis fw-bold">
-      📄 Déposer votre candidature
+      📄 Submit your application
     </h2>
 
-    <!-- Ligne décorative -->
+    <!-- Decorative line -->
     <div class="underline mx-auto mb-4"></div>
 
-    <!-- Lettre de motivation -->
+    <!-- Motivation Letter -->
     <div class="mb-4">
-      <label for="lettre" class="form-label fw-semibold text-secondary">Lettre de motivation :</label>
+      <label for="lettre" class="form-label fw-semibold text-secondary">Motivation Letter:</label>
       <textarea
         id="lettre"
         name="lettreMotivation"
         class="form-control shadow-sm border-1 border-secondary-subtle"
         [(ngModel)]="request.lettreMotivation"
         rows="6"
-        placeholder="Exprimez ici votre motivation..."
+        placeholder="Express your motivation here..."
+        required
       ></textarea>
+      <div *ngIf="applicationForm.submitted && !request.lettreMotivation" class="text-danger">
+        Motivation letter is required.
+      </div>
     </div>
 
-    <!-- Upload du CV -->
+    <!-- Upload CV -->
     <div class="mb-4">
-      <label for="cv" class="form-label fw-semibold text-secondary">Ajouter votre CV :</label>
+      <label for="cv" class="form-label fw-semibold text-secondary">Upload your CV:</label>
       <input
         type="file"
         id="cv"
@@ -36,16 +41,20 @@
         (change)="onFileSelected($event)"
         required
       />
-      <small class="text-muted">Formats acceptés : PDF, JPG, PNG. Taille max : 5 Mo</small>
+      <small class="text-muted">Accepted formats: PDF, JPG, PNG. Max size: 5MB</small>
+      <div *ngIf="applicationForm.submitted && !request.uploadCv" class="text-danger">
+        CV is required.
+      </div>
     </div>
 
-    <!-- Bouton d'envoi -->
+    <!-- Submit Button -->
     <div class="text-center mt-4">
       <button 
         type="submit" 
-        class="btn btn-primary btn-lg rounded-pill px-5 shadow-sm fw-semibold"
+        class="btn btn-success btn-lg rounded-pill px-5 shadow-sm fw-semibold w-100"
+        [disabled]="!applicationForm.form.valid"
       >
-        🚀 Envoyer ma candidature
+        🚀 Submit my application
       </button>
     </div>
   </form>

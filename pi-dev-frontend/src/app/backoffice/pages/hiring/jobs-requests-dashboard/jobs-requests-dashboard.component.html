@@ -1,113 +1,112 @@
+<app-admin-layout>
+  <div class="container py-5">
 
-     <app-admin-layout>
-     <div class="container mt-5">
-          <div class="card mb-4">
-            <div class="card-header pb-0 p-3">
-              <h6 class="text-center mb-4">Liste des Demandes de Service</h6>
-            </div>
-        
-            <!-- Message de chargement -->
-            <div *ngIf="isLoading" class="alert alert-info text-center">
-              Chargement des demandes...
-            </div>
-        
-            <!-- Message d'erreur -->
-            <div *ngIf="error" class="alert alert-danger text-center">
-              {{ error }}
-            </div>
-        
-            <!-- Tableau des demandes -->
-            <div *ngIf="servicesRequests.length > 0">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Score</th>
+    <!-- Header avec Ombre et Fond Stylé -->
+    <div class="card mb-5 shadow-lg rounded-4 border-0">
+      <div class="card-header bg-gradient text-white text-center py-4">
+        <h3 class="fw-bold mb-0"> Service Request Dashboard</h3>
+        <p class="text-lg">Manage all service requests in one place</p>
+      </div>
 
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Statut</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Lettre de Motivation</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">CV</th>
-                      <th class="text-secondary opacity-7"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let request of servicesRequests">
-                      <td>
-                        {{request?.score?request.score:"Non score "}}
-                      </td>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                         
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{ request.status }}</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">{{ request.lettreMotivation }}</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <a   [routerLink]="['/backoffice/display-cv',request.uploadCv.replace('cvs/', '')]"  target="_blank" class="btn btn-sm btn-outline-primary">
-                          Voir le CV
-                        </a>
-                      </td>
-                      <td class="align-middle text-center">
-                        <!-- Bouton Voir résumé -->
-                        <button class="btn btn-primary btn-sm me-2" (click)="resume(request.uploadCv)">
-                          Voir résumé
-                        </button>
-                      
-                        <!-- Boîte modale pour afficher le résumé -->
-                        <div class="modal" *ngIf="isModalVisible" (click)="closeModal()">
-                          <div class="modal-content" (click)="$event.stopPropagation()">
-                            <div class="modal-header">
-                              <h5>Résumé du candidat</h5>
-                              <button type="button" class="btn-close" (click)="closeModal()"></button>
-                            </div>
-                            <div class="modal-body">
-                              <div *ngIf="resumeContent">
-                                <h6>Contenu du résumé :</h6>
-                                <pre>{{ resumeContent }}</pre>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" (click)="closeModal()">Fermer</button>
-                            </div>
-                          </div>
-                        </div>
-                      
-                         
-                        <button class="btn btn-success btn-sm me-2" (click)="accepterDemande(request)">
-                          ✅ Accepter
-                        </button>
-                        <button class="btn btn-danger btn-sm" (click)="rejeterDemande(request)">
-                          ❌ Rejeter
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        
-        <div *ngIf="!isLoading && servicesRequests.length === 0" class="alert alert-warning text-center">
-          Aucune demande trouvée.
-        </div>
-        
-       <!-- Statistiques des statuts -->
-       <div class="bg-white p-6 rounded-2xl shadow-md mb-6 w-full max-w-full">
-        <h4 class="mb-4 text-lg font-semibold text-gray-700 flex items-center">
-          <span class="text-2xl mr-2">📊</span> Statistiques des demandes
-        </h4>
-      
-        <!-- Graphique responsive avec animation douce -->
-        <div class="relative w-full" style="min-height: 300px;">
-          <canvas id="barChartCanvas" class="w-full h-full"></canvas>
+      <!-- Loading Message -->
+      <div *ngIf="isLoading" class="alert alert-info text-center my-3 fadeIn">
+        Loading requests, please wait...
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="error" class="alert alert-danger text-center my-3 fadeIn">
+        {{ error }}
+      </div>
+
+      <!-- Requests Table -->
+      <div *ngIf="servicesRequests.length > 0" class="px-4 pb-4">
+        <div class="table-responsive rounded-4">
+          <table class="table table-hover table-striped align-middle mb-0 bg-white rounded-4 shadow-sm">
+            <thead class="bg-light">
+              <tr>
+                <th class="text-uppercase text-muted text-xs font-weight-bold">Score</th>
+                <th class="text-uppercase text-muted text-xs font-weight-bold">Status</th>
+                <th class="text-uppercase text-muted text-xs font-weight-bold">Motivation Letter</th>
+                <th class="text-uppercase text-muted text-xs font-weight-bold text-center">CV</th>
+                <th class="text-uppercase text-muted text-xs font-weight-bold text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let request of servicesRequests" class="align-middle">
+                <td>{{ request?.score ? request.score : 'No score' }}</td>
+                <td><span class="badge bg-primary animated fadeIn">{{ request.status }}</span></td>
+                <td>{{ request.lettreMotivation }}</td>
+                <td class="text-center">
+                  <a [routerLink]="['/backoffice/display-cv', request.uploadCv.replace('cvs/', '')]"
+                     target="_blank"
+                     class="btn btn-outline-success btn-sm hover-scale">
+                    View CV
+                  </a>
+                </td>
+                <td class="text-center">
+                  <div class="d-flex justify-content-center gap-2 flex-wrap">
+
+                    <!-- View Summary Button -->
+                    <button class="btn btn-outline-info btn-sm hover-scale" (click)="resume(request.uploadCv)">
+                       View Summary
+                    </button>
+
+                    <!-- Accept Button -->
+                    <button class="btn btn-success btn-sm hover-scale" (click)="accepterDemande(request)">
+                      ✅ Accept
+                    </button>
+
+                    <!-- Reject Button -->
+                    <button class="btn btn-danger btn-sm hover-scale" (click)="rejeterDemande(request)">
+                      ❌ Reject
+                    </button>
+
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      
-    </app-admin-layout>
-        
+    </div>
+
+    <!-- No Requests Found Message -->
+    <div *ngIf="!isLoading && servicesRequests.length === 0" class="alert alert-warning text-center">
+      No requests found. It's empty here!
+    </div>
+
+    <!-- Modal for Summary -->
+    <div class="modal" *ngIf="isModalVisible" (click)="closeModal()">
+      <div class="modal-dialog modal-dialog-centered" (click)="$event.stopPropagation()">
+        <div class="modal-content shadow-lg rounded-4">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold">Candidate Summary</h5>
+            <button type="button" class="btn-close" (click)="closeModal()"></button>
+          </div>
+          <div class="modal-body">
+            <div *ngIf="resumeContent">
+              <h6>Summary Content:</h6>
+              <pre class="bg-light p-3 rounded-3">{{ resumeContent }}</pre>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistics Card -->
+    <div class="card mt-5 shadow-lg rounded-4 border-0">
+      <div class="card-header bg-gradient text-white py-4">
+        <h4 class="fw-bold text-center">📊 Service Request Statistics</h4>
+      </div>
+      <div class="card-body">
+        <div class="position-relative" style="min-height: 300px;">
+          <canvas id="barChartCanvas" class="w-100 h-100"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</app-admin-layout>

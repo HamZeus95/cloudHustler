@@ -13,9 +13,12 @@ export class EmailJobsComponent {
 
   constructor(private emailService: EmailJobsServiceService) {}
 
+
   onSubmit() {
     this.emailService.sendEmail(this.to, this.subject, this.text)
       .subscribe(response => {
+   
+
         alert('Email envoyé!');
       }, error => {
         alert('Erreur lors de l\'envoi de l\'email');
