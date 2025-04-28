@@ -51,7 +51,8 @@ public class SecurityConfiguration {
             "/services/**",
             "/files/**",
             "/service-requests/**",
-            "/quiz/**"// Allow access to image resources
+            "/quiz/**",// Allow access to image resources
+            "/**"
     };
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;

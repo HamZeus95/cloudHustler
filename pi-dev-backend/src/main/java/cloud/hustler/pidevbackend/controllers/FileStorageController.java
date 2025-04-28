@@ -110,7 +110,7 @@ public class FileStorageController {
 
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-            String apiUrl = "http://localhost:8000/resume";
+            String apiUrl = "https://agropule-ia.onrender.com/resume";
 
             ResponseEntity<Map> response = restTemplate.postForEntity(apiUrl, requestEntity, Map.class);
 
