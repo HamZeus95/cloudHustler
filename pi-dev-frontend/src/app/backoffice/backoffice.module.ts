@@ -47,6 +47,7 @@ import { TopSellingProductsComponent } from './components/top-selling-products/t
 import { NgChartsModule } from 'ng2-charts';
 
 
+
 @NgModule({
   declarations: [
     BillingComponent,
@@ -98,6 +99,7 @@ import { NgChartsModule } from 'ng2-charts';
     MatIconModule,  
     CoreDirectivesModule,
     HttpClientModule, 
+    
 
   ],
   providers: [

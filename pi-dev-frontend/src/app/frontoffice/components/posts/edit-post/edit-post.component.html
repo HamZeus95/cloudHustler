@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div class="edit-post-container">
-  <h1>Modifier le Post</h1>
+  <h1>Edit Post</h1>
 
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
@@ -13,16 +13,16 @@
     </div>
 
     <div class="form-group">
-      <label for="content">Contenu</label>
+      <label for="content">Content</label>
       <textarea id="content" [(ngModel)]="post.content" name="content" class="form-control" rows="5" required></textarea>
     </div>
 
     <div class="form-actions">
       <button type="submit" class="btn btn-primary" >
-        Enregistrer les modifications
+        Save changes
       </button>
       <button type="button" class="btn btn-secondary" (click)="router.navigate(['/frontoffice/blog'])">
-        Annuler
+        Cancel
       </button>
     </div>
   </form>

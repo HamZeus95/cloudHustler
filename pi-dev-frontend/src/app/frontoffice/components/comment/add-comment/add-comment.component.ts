@@ -52,7 +52,7 @@ export class AddCommentComponent {
 
   submitComment() {
     if (this.commentForm.valid) {
-      const comment: any = this.commentForm.value;  // <= Remplacer ici
+    const comment: any = this.commentForm.value;  // <= Remplacer ici
       const userUuid = this.currentUser?.userUUID;
   
       if (!userUuid) {

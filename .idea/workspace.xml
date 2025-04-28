@@ -6,10 +6,26 @@
   <component name="ChangeListManager">
     <list default="true" id="1c799faf-77be-47d4-a413-81b6d78d4ec2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/gemini.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/gemini.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/comment/add-comment/add-comment.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/comment/add-comment/add-comment.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/PostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/backoffice.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/backoffice.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/comment-back/comment-back.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/comment-back/comment-back.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/post-back/post-back.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/post-back/post-back.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/post-back/post-back.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/post-back/post-back.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/post-back/post-back.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/post-back/post-back.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/stats/stats.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/stats/stats.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/stats/stats.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/stats/stats.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/chat-ai/chat-ai.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/chat-ai/chat-ai.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/chat-ai/chat-ai.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/chat-ai/chat-ai.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/chat-ai/chat-ai.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/chat-ai/chat-ai.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/comment/add-comment/add-comment.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/comment/add-comment/add-comment.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/comment/add-comment/add-comment.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/comment/add-comment/add-comment.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/comment/list-comment/list-comment.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/comment/list-comment/list-comment.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/gener-post/gener-post.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/gener-post/gener-post.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/add-post/add-post.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/add-post/add-post.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/edit-post/edit-post.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/edit-post/edit-post.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/post-details/pos" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/post-details/post-details.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/post-details/post-details.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,7 +195,7 @@
       <workItem from="1745516425033" duration="8000" />
       <workItem from="1745753133186" duration="20382000" />
       <workItem from="1745836379421" duration="478000" />
-      <workItem from="1745849249393" duration="3925000" />
+      <workItem from="1745849249393" duration="7870000" />
     </task>
     <task id="LOCAL-00001" summary="before merge">
       <option name="closed" value="true" />

@@ -53,14 +53,14 @@ export class StatsComponent implements OnInit {
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Nombre de commentaires'
+          text: 'Number of comments'
         }
       }
     },
     plugins: {
       title: {
         display: true,
-        text: 'Top 5 des posts les plus commentés'
+        text: 'Top 5 most commented posts'
       },
       tooltip: {
         callbacks: {

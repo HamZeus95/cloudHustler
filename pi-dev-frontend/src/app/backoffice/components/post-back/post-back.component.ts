@@ -5,6 +5,8 @@ import { Post } from '../../../core/models/Post';
 import { TypeReaction } from '../../../core/models/TypeReaction';
 import { environment } from '../../../../environments/environment';
 import { commentaires } from 'src/app/core/models/Comment';
+import { AuthService } from '../../../auth/service/authentication.service';
+import { TokenStorageService } from '../../../auth/service/token-storage.service';
 
 @Component({
   selector: 'app-post-back',
@@ -15,35 +17,57 @@ export class PostBackComponent {
   public TypeReaction = TypeReaction;
   posts: Post[] = [];
   comments: commentaires[] = [];
-  isLoading = false; // Ajout de la propriété manquante
+  isLoading = false;
+  isAdmin: boolean = false;
+  showComponent: boolean = false;
 
   paginatedPosts: Post[] = [];
   defaultImage = 'assets/images/default-image.png';
   selectedPostId: any;
   
-  // Pagination variables
   currentPage: number = 1;
-  itemsPerPage: number = 3; // Nombre d'éléments par page
+  itemsPerPage: number = 3;
   totalPosts: number = 0;
   totalPages: number = 0;
+  currentUser: any = null;
+  isAuthenticated = false;
 
   constructor(
     private postService: PostService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
+    private tokenStorageService: TokenStorageService
   ) {}
 
   ngOnInit(): void {
-    this.loadPosts();
+    this.checkAdminRoleAndLoadData();
   }
-  
 
-  reactions = [
-    { type: TypeReaction.LIKE, emoji: '👍', label: 'Like' },
-    { type: TypeReaction.LOVE, emoji: '❤️', label: 'Love' },
-    { type: TypeReaction.INSIGHTFUL, emoji: '💡', label: 'Insightful' },
-    { type: TypeReaction.SUPPORT, emoji: '🤝', label: 'Support' },
-    { type: TypeReaction.CURIOUS, emoji: '🤔', label: 'Curious' }
-  ];
+  checkAdminRoleAndLoadData(): void {
+    this.authService.isAuthenticated().subscribe(isAuth => {
+      this.isAuthenticated = isAuth;
+      if (isAuth) {
+        this.currentUser = this.tokenStorageService.getCurrentUser();
+        this.isAdmin = this.currentUser?.role === "ADMIN";
+        
+        if (this.isAdmin) {
+          this.showComponent = true;
+          this.loadPosts();
+          this.loadAllData();
+        } else {
+          this.showComponent = false;
+        }
+      } else {
+        this.showComponent = false;
+      }
+    });
+
+    this.tokenStorageService.getUser().subscribe(user => {
+      this.currentUser = user;
+      this.isAdmin = this.currentUser?.role === "ADMIN";
+      this.showComponent = this.isAdmin;
+    });
+  }
 
   loadPosts(): void {
     this.postService.getAllPosts().subscribe({
@@ -65,8 +89,6 @@ export class PostBackComponent {
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedPosts = this.posts.slice(startIndex, endIndex);
   }
-
- 
 
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
@@ -91,17 +113,14 @@ export class PostBackComponent {
 
   getFullMediaUrl(url: string | undefined): string {
     if (!url) return this.defaultImage;
-    
     if (url.startsWith('http') || url.startsWith('data:')) {
       return url;
     }
-    
     return `${environment.apiBaseUrl}${url.startsWith('/') ? '' : '/'}${url}`;
   }
 
   handleImageError(event: Event): void {
     const img = event.target as HTMLImageElement;
-    console.warn('Image load failed:', img.src);
     img.src = this.defaultImage;
     img.onerror = null;
   }
@@ -109,12 +128,8 @@ export class PostBackComponent {
   editPost(id: string) {
     if (id) {
       this.router.navigate(['/edit-post', id]);
-    } else {
-      console.error("ID du post manquant pour la navigation.");
     }
   }
-
-  
 
   getReactionCount(post: Post, type: TypeReaction): number {
     return post.reactions?.filter(r => r.typeReaction === type).length || 0;
@@ -134,7 +149,6 @@ export class PostBackComponent {
           this.totalPosts = this.posts.length;
           this.totalPages = Math.ceil(this.totalPosts / this.itemsPerPage);
           
-          // Si la page actuelle est vide après suppression, revenir à la page précédente
           if (this.currentPage > this.totalPages) {
             this.currentPage = Math.max(1, this.totalPages);
           }
@@ -149,9 +163,10 @@ export class PostBackComponent {
       });
     }
   }
+
   getPageNumbers(): number[] {
     const pages: number[] = [];
-    const maxVisiblePages = 5; // Nombre maximum de pages visibles
+    const maxVisiblePages = 5;
     
     let startPage = Math.max(1, this.currentPage - Math.floor(maxVisiblePages / 2));
     let endPage = startPage + maxVisiblePages - 1;
@@ -167,6 +182,7 @@ export class PostBackComponent {
     
     return pages;
   }
+
   loadAllData(): void {
     this.isLoading = true;
     
@@ -179,6 +195,7 @@ export class PostBackComponent {
       });
     });
   }
+
   filteredPostsWithDates(): Post[] {
     return this.posts
       .filter(post => post.idPost && post.createdAt && !isNaN(new Date(post.createdAt).getTime()))

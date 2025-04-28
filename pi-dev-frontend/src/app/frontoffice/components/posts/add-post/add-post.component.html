@@ -7,7 +7,7 @@
       
     </i>
     
-    {{ showForm ? 'Masquer le formulaire' : 'Créer un nouveau post' }}
+    {{ showForm ? 'Hide the form' : 'Create a new post' }}
   </button>
 
   <!-- Formulaire repliable -->
@@ -23,13 +23,13 @@
                    placeholder="Titre de votre post (5-100 caractères)">
             <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
               <div *ngIf="title.errors?.['required']">
-                Le titre est obligatoire.
+                The title is required.
               </div>
               <div *ngIf="title.errors?.['minlength']">
-                Le titre doit faire au moins 5 caractères.
+                The title must be at least 5 characters.
               </div>
               <div *ngIf="title.errors?.['maxlength']">
-                Le titre ne doit pas dépasser 100 caractères.
+                The title must not exceed 100 characters.
               </div>
             </div>
           </div>
@@ -43,17 +43,17 @@
                       placeholder="Contenu de votre post (20-2000 caractères)"></textarea>
             <div *ngIf="content.invalid && (content.dirty || content.touched)" class="alert alert-danger">
               <div *ngIf="content.errors?.['required']">
-                Le contenu est obligatoire.
+                Content is required.
               </div>
               <div *ngIf="content.errors?.['minlength']">
-                Le contenu doit faire au moins 20 caractères.
+                Content must be at least 20 characters.
               </div>
               <div *ngIf="content.errors?.['maxlength']">
-                Le contenu ne doit pas dépasser 2000 caractères.
+                Content should not exceed 2000 characters.
               </div>
             </div>
             <div class="character-count">
-              {{ post.content?.length || 0 }}/2000 caractères
+              {{ post.content?.length || 0 }}/2000 characters
             </div>
           </div>
         </div>
@@ -61,7 +61,7 @@
         <div class="col-12">
           <div class="form-group">
             <label for="media" class="file-input-label">
-              <span>Ajouter un média (image, vidéo ou PDF)</span>
+              <span>Add media (image, vidéo ou PDF)</span>
               <input type="file" class="form-control-file" id="media" name="media" 
                      (change)="onFileChange($event)"
                      accept="image/*,video/*,.pdf">
@@ -74,15 +74,15 @@
             <img *ngIf="isImage(post.mediaUrl)" [src]="post.mediaUrl" alt="Preview" class="img-fluid">
             <video *ngIf="isVideo(post.mediaUrl)" [src]="post.mediaUrl" controls class="img-fluid"></video>
             <div *ngIf="isPDF(post.mediaUrl)" class="pdf-preview">
-              <p>PDF sélectionné</p>
-              <a [href]="post.mediaUrl" target="_blank" class="btn famie-btn">Aperçu</a>
+              <p>Selected PDF</p>
+              <a [href]="post.mediaUrl" target="_blank" class="btn famie-btn">Preview</a>
             </div>
           </div>
         </div>
         
         <div class="col-12">
           <button type="submit" class="btn famie-btn" [disabled]="postForm.invalid">
-            Publier
+            Publish
           </button>
         </div>
       </div>

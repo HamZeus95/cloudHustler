@@ -82,6 +82,31 @@ public class PostController {
             post.setUser(user); // Associer l'utilisateur
 
             Post savedPost = postService.addPost(post);
+
+            // Envoi de l'email après création réussie du post
+            try {
+                emailService.sendPostNotification("mohamed242001taher@gmail.com", savedPost);
+            } catch (Exception e) {
+                System.err.println("Erreur lors de l'envoi de l'email: " + e.getMessage());
+                // Ne pas interrompre le flux même si l'email échoue
+            }
+
+
+            try {
+                // SMS
+                String smsContent = String.format(
+                        "Nouveau post créé:\nTitre: %s\n%s",
+                        savedPost.getTitle(),
+                        content.length() > 100 ? content.substring(0, 100) + "..." : content
+                );
+
+                smsService.sendSms("+21694790194", smsContent); // Numéro tunisien format E.164
+
+            } catch (Exception e) {
+                System.err.println("Erreur notification: " + e.getMessage());
+                // Continuer même si l'envoi échoue
+            }
+
             return ResponseEntity.ok(savedPost);
 
         } catch (Exception e) {

@@ -1,14 +1,14 @@
 <div class="toggle-container">
     <button class="toggle-button" (click)="toggleGenerator()">
-      {{ isGeneratorVisible ? 'Masquer' : 'Afficher' }} Générateur de Post
+      {{ isGeneratorVisible ? 'Masquer' : 'Afficher' }} Post Generator
     </button>
   </div>
   
   <div class="post-generator-container" *ngIf="isGeneratorVisible">
-    <h2>Générateur de Post</h2>
+    <h2>Post Generator</h2>
     
     <div class="input-section">
-      <label for="theme">Thème du post :</label>
+      <label for="theme">Post theme :</label>
       <input 
         type="text" 
         id="theme" 
@@ -26,13 +26,13 @@
       {{ errorMessage }}
     </div>
   
-    <div *ngIf="generatedPost" class="result-section">
+    <div *nResultgIf="generatedPost" class="result-section">
       <h3>Résultat :</h3>
       <div class="generated-text">
         {{ generatedPost }}
       </div>
       <button (click)="copyToClipboard()" class="copy-btn">
-        Copier le texte
+        Copy the text
       </button>
     </div>
   </div>
