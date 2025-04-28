@@ -21,6 +21,7 @@ import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-pas
 import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
 import { EventComponent } from './pages/event/event.component';
 import { EditCommentComponent } from './components/comment/edit-comment/edit-comment.component';
+import { EditPostComponent } from './components/posts/edit-post/edit-post.component';
 
 
 const routes: Routes = [
@@ -28,7 +29,12 @@ const routes: Routes = [
     {path:"about",component:AboutComponent},
     {path:"home",component:HomeComponent},
     {path:'contact',component:ContactComponent},
+    { 
+      path: 'post/:id', 
+      component: EditPostComponent,
+    },
     {path: 'not-found', component: NotFoundComponent},
+    
     { 
       path: 'post/:postId/edit-comment/:commentId', 
       component: EditCommentComponent 

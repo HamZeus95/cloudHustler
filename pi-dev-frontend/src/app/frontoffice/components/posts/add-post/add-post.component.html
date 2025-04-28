@@ -1,12 +1,18 @@
+
 <div class="post-form-container">
+
   <!-- Bouton pour afficher/masquer le formulaire -->
   <button class="toggle-form-btn" (click)="toggleForm()">
-    <i class="fas" [class.fa-plus]="!showForm" [class.fa-minus]="showForm"></i>
+    <i class="fas" [class.fa-plus]="!showForm" [class.fa-minus]="showForm">
+      
+    </i>
+    
     {{ showForm ? 'Masquer le formulaire' : 'Créer un nouveau post' }}
   </button>
 
   <!-- Formulaire repliable -->
   <div class="contact-form-area" [class.expanded]="showForm" *ngIf="showForm">
+
     <form (ngSubmit)="onSubmit()" #postForm="ngForm">
       <div class="row">
         <div class="col-12">
@@ -81,5 +87,7 @@
         </div>
       </div>
     </form>
+    <app-gener-post></app-gener-post>
+
   </div>
 </div>

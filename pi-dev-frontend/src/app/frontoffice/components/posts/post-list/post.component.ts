@@ -248,13 +248,12 @@ export class PostComponent implements OnInit {
   }
 
   editPost(id: string): void {
-    if (id) {
-      this.router.navigate(['frontoffice/edit-post', id]);
-    } else {
-      console.error("ID du post manquant pour la navigation.");
-    }
+    this.router.navigate(['/frontoffice/post', id]).catch(err => {
+      console.error('Navigation error:', err);
+      // Optional: Redirect to not-found if the navigation fails
+      this.router.navigate(['/not-found']);
+    });
   }
-
  
   getReactionCount(post: Post, type: TypeReaction): number {
     return post.reactions?.filter(r => r.typeReaction === type).length || 0;

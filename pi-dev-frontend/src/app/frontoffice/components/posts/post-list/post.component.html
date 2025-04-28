@@ -34,16 +34,23 @@
         </div>
         <div class="post-actions">
           <button *ngIf="post.idPost" 
+          (click)="editPost(post.idPost);$event.stopPropagation()" 
+          class="edit-btn"
+          title="Modifier ce post">
+    <i class="fas fa-edit"></i> 
+  </button>
+          <button *ngIf="post.idPost" 
                   (click)="deletePost(post.idPost); $event.stopPropagation()" 
                   class="delete-btn">
-            <i class="fas fa-trash"></i> Supprimer
+            <i class="fas fa-trash"></i> 
           </button>
           <button (click)="exportToPdf(post.idPost || '', postElement); $event.stopPropagation()" 
                   class="export-btn"
                   [disabled]="isGeneratingPdf">
             <i class="fas" [ngClass]="{'fa-file-pdf': !isGeneratingPdf, 'fa-spinner fa-spin': isGeneratingPdf}"></i> 
-            {{ isGeneratingPdf ? 'Génération...' : 'PDF' }}
+            {{ isGeneratingPdf ? 'Génération...' : '' }}
           </button>
+         
         </div>
       </div>
 

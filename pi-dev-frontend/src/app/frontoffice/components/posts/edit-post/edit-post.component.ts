@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../../../../core/services/service';
 import { Post } from '../../../../core/models/Post';
+import { AuthService } from '../../../../auth/service/authentication.service';
+import { TokenStorageService } from '../../../../auth/service/token-storage.service';
 
 @Component({
   selector: 'app-edit-post',
@@ -11,16 +13,36 @@ import { Post } from '../../../../core/models/Post';
 export class EditPostComponent implements OnInit {
   postId: string = '';
   post: Post = { idPost: '', title: '', content: '', mediaUrl: '', createdAt: '' };
-  selectedFile: File | null = null;
+  currentUser: any = null;
+  isAuthenticated = false;
+  errorMessage: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private postService: PostService,
-    private router: Router
+    public router: Router,
+    private authService: AuthService,
+    private tokenStorageService: TokenStorageService
   ) {}
 
   ngOnInit(): void {
+    this.authService.isAuthenticated().subscribe(isAuth => {
+      this.isAuthenticated = isAuth;
+      if (isAuth) {
+        this.currentUser = this.tokenStorageService.getCurrentUser();
+      }
+    });
+
+    this.tokenStorageService.getUser().subscribe(user => {
+      this.currentUser = user;
+    });
+
     this.route.params.subscribe(params => {
+      if (!params['id']) {
+        this.router.navigate(['/not-found']);
+        return;
+      }
+      
       this.postId = params['id'];
       this.loadPost();
     });
@@ -31,41 +53,33 @@ export class EditPostComponent implements OnInit {
       next: (data) => {
         this.post = data;
         this.post.idPost = this.postId;
-        console.log('Post chargé:', this.post);  // <--- Ajoute ça
       },
       error: (error) => {
         console.error('Erreur lors du chargement du post :', error);
+        this.errorMessage = 'Erreur lors du chargement du post';
       }
     });
   }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedFile = file;
-    }
-  }
-
   savePost() {
     if (!this.post.idPost) {
-      console.error('ID du post manquant');
+      this.errorMessage = 'ID du post manquant';
       return;
     }
 
-    const formData = new FormData();
-    formData.append('post', new Blob([JSON.stringify(this.post)], { type: 'application/json' }));
-    if (this.selectedFile) {
-      formData.append('file', this.selectedFile);
+    if (!this.post.title || !this.post.content) {
+      this.errorMessage = 'Le titre et le contenu sont obligatoires';
+      return;
     }
 
     this.postService.updatePost(this.post.idPost, this.post).subscribe({
       next: () => {
-        console.log('Post modifié avec succès');
-        this.router.navigate(['/homee']);
+        this.router.navigate(['/frontoffice/blog']);
       },
-      error: (error) => console.error('Erreur modification post :', error)
+      error: (error) => {
+        console.error('Erreur modification post :', error);
+        this.errorMessage = 'Erreur lors de la modification du post';
+      }
     });
   }
 }
-
-

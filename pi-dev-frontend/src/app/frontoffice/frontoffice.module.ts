@@ -39,6 +39,8 @@ import { ListCommentComponent } from "./components/comment/list-comment/list-com
 import { ChatAiComponent } from "./components/chat-ai/chat-ai.component";
 import { EventComponent } from './pages/event/event.component';
 import { EditCommentComponent } from './components/comment/edit-comment/edit-comment.component';
+import { EditPostComponent } from './components/posts/edit-post/edit-post.component';
+import { GenerPostComponent } from './components/gener-post/gener-post.component';
 
 
 
@@ -73,7 +75,9 @@ import { EditCommentComponent } from './components/comment/edit-comment/edit-com
     ListCommentComponent,
     ChatAiComponent,
     NotFoundComponent,
-    EditCommentComponent
+    EditCommentComponent,
+    EditPostComponent,
+    GenerPostComponent
 
   ],
   imports: [

@@ -6,37 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="1c799faf-77be-47d4-a413-81b6d78d4ec2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/WebMvcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/WebMvcConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/CommentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ReactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ReactionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Reaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Reaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/CommentServiceImplement.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/CommentServiceImplement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/ICommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/ICommentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/IReactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/IReactionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/ReactionServiceImplement.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/ReactionServiceImplement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/user/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/user/IUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/user/UserServiceImplement.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/user/UserServiceImplement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/post-back/post-back.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/post-back/post-back.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/Reaction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/Reaction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/gemini.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/gemini.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/comment/add-comment/add-comment.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/comment/add-comment/add-comment.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/comment/edit-comment/edit-comment.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/comment/edit-comment/edit-comment.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/add-post/add-post.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/add-post/add-post.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/edit-post/edit-post.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/edit-post/edit-post.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/edit-post/edit-post.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/edit-post/edit-post.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/edit-post/edit-post.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/edit-post/edit-post.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/post-list/post.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/post-list/post.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/post-list/post.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/post-list/post.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/post-list/post.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/post-list/post.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/reaction/add-reaction/add-reaction.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/reaction/add-reaction/add-reaction.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/reaction/add-reaction/add-reaction.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/reaction/add-reaction/add-reaction.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/reaction/add-reaction/add-reaction.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/reaction/add-reaction/add-reaction.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/frontoffice-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/frontoffice-routing.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/frontoffice.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/frontoffice.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/environments/environment.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,7 +181,9 @@
       <workItem from="1745440991502" duration="1949000" />
       <workItem from="1745516349816" duration="8000" />
       <workItem from="1745516425033" duration="8000" />
-      <workItem from="1745753133186" duration="19236000" />
+      <workItem from="1745753133186" duration="20382000" />
+      <workItem from="1745836379421" duration="478000" />
+      <workItem from="1745849249393" duration="2534000" />
     </task>
     <task id="LOCAL-00001" summary="before merge">
       <option name="closed" value="true" />
