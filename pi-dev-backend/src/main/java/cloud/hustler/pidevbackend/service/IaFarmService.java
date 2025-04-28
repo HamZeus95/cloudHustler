@@ -2,10 +2,14 @@ package cloud.hustler.pidevbackend.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -88,6 +92,19 @@ public class IaFarmService {
         }
     }
 
+    public Mono<String> predictFromImage(File imageFile) {
+        String url = "https://agropule-ia.onrender.com/predict"; // change it if needed
+
+        MultipartBodyBuilder bodyBuilder = new MultipartBodyBuilder();
+        bodyBuilder.part("file", new FileSystemResource(imageFile));
+
+        return webClient.post()
+                .uri(url)
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .bodyValue(bodyBuilder.build())
+                .retrieve()
+                .bodyToMono(String.class);
+    }
 
 
 
@@ -126,12 +143,7 @@ public class IaFarmService {
     }
 
 
-    //not worked yet
-    private String interpretImageAnalysisForCropHealth(String rawResponse) {
-        // In a real implementation, you'd parse the JSON response and extract relevant information
-        // For now, this is a placeholder that would interpret the model's output
-        return "Crop health analysis completed. " + rawResponse;
-    }
+
 
     public Mono<String> recommendCrop(Map<String, Object> input) {
         return webClient.post()
@@ -143,19 +155,6 @@ public class IaFarmService {
                 .bodyToMono(String.class);
     }
 
-    public Mono<String> analyzeCropHealth(Map<String, Object> imageData) {
-        return webClient.post()
-                .uri("https://api-inference.huggingface.co/models/google/vit-base-patch16-224")
-                .header("Authorization", "Bearer " + huggingFaceApiKey)
-                .header("Content-Type", "application/json")
-                .bodyValue(imageData)
-                .retrieve()
-                .bodyToMono(String.class)
-                .map(response -> {
-                    // Process the response to provide crop health insights
-                    return interpretImageAnalysisForCropHealth(response);
-                });
-    }
 
 
 

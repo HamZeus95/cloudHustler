@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FarmService } from 'src/app/core/services/farm-managment/farm.service';
 import { IaDashService } from 'src/app/core/services/farm-managment/ia-dash.service';
+import { Farm } from 'src/app/core/models/famrs/farm';
 
 @Component({
   selector: 'app-ia-farm-dash',
@@ -7,15 +9,21 @@ import { IaDashService } from 'src/app/core/services/farm-managment/ia-dash.serv
   styleUrls: ['./ia-farm-dash.component.css']
 })
 export class IaFarmDashComponent implements OnInit {
+  farms: Farm[] = [];
+  selectedFarm: Farm | null = null;
   farmData: any = null;
+
   selectedField: any = null;
+
   chatbotPrompt: string = '';
   chatbotResponse: string = '';
+  messages: { sender: string, content: string }[] = [];
   loadingChatResponse: boolean = false;
-  messages: any[] = [];
+
   cropInput: string = '';
   recommendedCrop: string | null = null;
   farmingTip: string | null = null;
+
   yieldPredictionData = {
     cropType: '',
     fieldSize: 0,
@@ -23,72 +31,66 @@ export class IaFarmDashComponent implements OnInit {
     soilType: '',
     recentWeather: ''
   };
-   farmData2 = {
-    fields: [
-      {
-        id: 1,
-        name: 'Field 1',
-        dimensions: { width: 50, length: 80 },
-        position: { x: -30, z: -40 }
-      },
-      {
-        id: 2,
-        name: 'Field 2',
-        dimensions: { width: 60, length: 90 },
-        position: { x: 20, z: 30 }
-      },
-      {
-        id: 3,
-        name: 'Field 3',
-        dimensions: { width: 70, length: 100 },
-        position: { x: -50, z: 50 }
-      },
-      {
-        id: 4,
-        name: 'Field 4',
-        dimensions: { width: 80, length: 60 },
-        position: { x: 40, z: -20 }
-      }
-    ]
-  };
 
+  loading = false;
+  predictedYieldData: any = null;
 
-  constructor(private iaDashService: IaDashService) {}
+  constructor(
+    private iaDashService: IaDashService,
+    private farmService: FarmService
+  ) {}
 
   ngOnInit(): void {
-    this.fetchFarmData();
+    this.fetchFarms();
+  }
+
+  fetchFarms(): void {
+    this.farmService.getFarms().subscribe(
+      (farms: Farm[]) => {
+        this.farms = farms;
+        if (farms.length > 0) {
+          this.selectedFarm = farms[0];
+          this.fetchFarmData();
+        }
+      },
+      error => {
+        console.error('Error fetching farms:', error);
+      }
+    );
+  }
+
+  onFarmSelect(farm: Farm): void {
+    this.selectedFarm = farm;
   }
 
   fetchFarmData(): void {
-    this.iaDashService.get3DFarmData(1).subscribe(
-      data => {
-        this.farmData = data;
-      },
-      error => {
-        console.error('Error fetching farm data:', error);
-      }
-    );
+    if (this.selectedFarm && typeof this.selectedFarm.uuid_farm === 'number') {
+      this.iaDashService.get3DFarmData(this.selectedFarm.uuid_farm).subscribe(
+        (data) => {
+          this.farmData = data;
+        },
+        (error) => {
+          console.error('Error fetching farm data:', error);
+        }
+      );
+    } else {
+      console.error('Invalid farm ID. Unable to fetch farm data.');
+    }
   }
 
   sendChatMessage(): void {
     if (!this.chatbotPrompt.trim()) return;
 
-    this.messages.push({
-      sender: 'user',
-      content: this.chatbotPrompt
-    });
-
+    this.messages.push({ sender: 'user', content: this.chatbotPrompt });
     this.loadingChatResponse = true;
 
     const fieldQuery = this.isFieldQuery(this.chatbotPrompt);
 
-    if (fieldQuery) {
-      const enhancedPrompt = `${this.chatbotPrompt} \nHere's data about this field: ${JSON.stringify(fieldQuery.fieldData)}`;
-      this.askFarmingQuestion(enhancedPrompt);
-    } else {
-      this.askFarmingQuestion(this.chatbotPrompt);
-    }
+    const promptToSend = fieldQuery
+      ? `${this.chatbotPrompt}\nHere's data about this field: ${JSON.stringify(fieldQuery.fieldData)}`
+      : this.chatbotPrompt;
 
+    this.askFarmingQuestion(promptToSend);
     this.chatbotPrompt = '';
   }
 
@@ -96,10 +98,7 @@ export class IaFarmDashComponent implements OnInit {
     this.iaDashService.askFarmingQuestion(prompt).subscribe(
       response => {
         this.loadingChatResponse = false;
-        this.messages.push({
-          sender: 'bot',
-          content: response
-        });
+        this.messages.push({ sender: 'bot', content: response });
       },
       error => {
         this.loadingChatResponse = false;
@@ -112,14 +111,13 @@ export class IaFarmDashComponent implements OnInit {
     );
   }
 
-  private isFieldQuery(query: string): { fieldName: string, fieldData: any } | null {
+  private isFieldQuery(query: string): { fieldName: string; fieldData: any } | null {
     if (!this.farmData || !this.farmData.fields) return null;
 
     const lowercaseQuery = query.toLowerCase();
 
     for (const field of this.farmData.fields) {
-      const fieldName = field.name.toLowerCase();
-      if (lowercaseQuery.includes(fieldName)) {
+      if (lowercaseQuery.includes(field.name.toLowerCase())) {
         return { fieldName: field.name, fieldData: field };
       }
     }
@@ -132,7 +130,7 @@ export class IaFarmDashComponent implements OnInit {
 
     this.iaDashService.recommendCrop({ cropInput: this.cropInput }).subscribe(
       response => {
-        this.recommendedCrop = response.recommendedCrop || response; // Adjust depending on your backend response structure
+        this.recommendedCrop = response.recommendedCrop || response;
       },
       error => {
         console.error('Error recommending crop:', error);
@@ -140,47 +138,52 @@ export class IaFarmDashComponent implements OnInit {
     );
   }
 
-  onImageUpload(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (!input.files || input.files.length === 0) {
-      return;
-    }
+selectedFile: File | null = null;
+analysisResult: any = null;
 
-    const file = input.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      const base64Image = reader.result as string;
-      const imageData = this.iaDashService.prepareImageData(base64Image);
+onFileSelected(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (!input.files?.length) return;
 
-      this.iaDashService.analyzeCropHealth(imageData).subscribe(
-        response => {
-          console.log('Crop health analysis response:', response);
-          // You can store the result in a variable to display on UI
-        },
-        error => {
-          console.error('Error analyzing crop health:', error);
-        }
-      );
-    };
-    reader.readAsDataURL(file);
-  }
+  this.selectedFile = input.files[0];
+}
+analysisLoading: boolean = false;
 
-  loading = false;
-  predictedYieldData: any = null;
 
-  predictYield(): void {
-  this.loading = true;
-  this.predictedYieldData = null;
+analyzeSelectedImage(): void {
+  if (!this.selectedFile) return;
 
-  this.iaDashService.predictYield(this.yieldPredictionData).subscribe(
+  this.analysisLoading = true; // Start analysisLoading
+
+  this.iaDashService.analyzeCropHealth(this.selectedFile).subscribe(
     response => {
-      this.predictedYieldData = response;
-      this.loading = false;
+      console.log('Crop health analysis response:', response);
+
+      this.analysisResult = response.sort((a: { score: number; }, b: { score: number; }) => b.score - a.score);
+      this.analysisLoading = false; // Stop analysisLoading
     },
     error => {
-      console.error('Error predicting yield:', error);
-      this.loading = false;
+      console.error('Error analyzing crop health:', error);
+
+      this.analysisResult = { error: 'Failed to analyze crop health.' };
+      this.analysisLoading = false; // Stop analysisLoading even on error
     }
   );
 }
+
+  predictYield(): void {
+    this.loading = true;
+    this.predictedYieldData = null;
+
+    this.iaDashService.predictYield(this.yieldPredictionData).subscribe(
+      response => {
+        this.predictedYieldData = response;
+        this.loading = false;
+      },
+      error => {
+        console.error('Error predicting yield:', error);
+        this.loading = false;
+      }
+    );
+  }
 }

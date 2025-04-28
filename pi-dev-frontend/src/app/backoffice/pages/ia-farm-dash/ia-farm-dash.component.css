@@ -1,210 +1,280 @@
 /* Main Container */
 .ia-farm-container {
-  padding: 20px;
-  background-color: #f0f4f8;
+  padding: 24px;
+  background-color: #f8fbfd;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #2d3748;
 }
 
 /* Cards */
 .card {
-  border-radius: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  border: none;
+  margin-bottom: 24px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
+  background-color: #ffffff;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
 }
 
 /* Card Header */
 .card-header {
   background-color: #ffffff;
-  border-bottom: none;
-  padding: 16px 20px;
+  border-bottom: 1px solid #edf2f7;
+  padding: 20px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .card-header h5, .card-header h6 {
   margin: 0;
-  font-weight: bold;
+  font-weight: 700;
+  color: #1a202c;
+  font-size: 20px;
 }
 
 /* Card Body */
 .card-body {
-  background-color: #ffffff;
-  padding: 20px;
+  padding: 28px;
 }
 
-/* Form Inputs */
-textarea,
-input[type="text"],
-input[type="number"],
-input[type="date"],
-select,
+/* Form Elements */
+label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+  color: #4a5568;
+  font-size: 15px;
+}
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+textarea, 
+input[type="text"], 
+input[type="number"], 
+input[type="date"], 
+select, 
 input[type="file"] {
   width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border-radius: 12px;
-  border: 1px solid #d1d5db;
+  padding: 16px 18px;
+  margin-top: 6px;
+  border-radius: 14px;
+  border: 1px solid #cbd5e0;
   font-size: 16px;
-  resize: vertical;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+input:focus, 
+textarea:focus, 
+select:focus {
+  outline: none;
+  border-color: #38b000;
+  box-shadow: 0 0 0 4px rgba(56, 176, 0, 0.15);
+}
+
+/* Placeholder */
+input::placeholder, textarea::placeholder {
+  color: #a0aec0;
+}
+
+/* Custom File Input */
+.custom-file-input {
+  position: relative;
+  margin-top: 10px;
+}
+
+.custom-file-input input[type="file"] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.custom-file-label {
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px dashed #86b9ff;
+  background-color: #ebf4ff;
+  color: #3182ce;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.custom-file-input:hover .custom-file-label {
+  background-color: #dbeafe;
 }
 
 /* Buttons */
-button, .btn {
-  margin-top: 15px;
-  padding: 12px 20px;
+button, 
+.btn {
+  padding: 14px 26px;
   border: none;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 16px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 17px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .btn-primary {
   background-color: #38b000;
-  color: white;
+  color: #ffffff;
 }
 
 .btn-primary:hover {
-  background-color: #2a8500;
+  background-color: #2f8e00;
+  box-shadow: 0 6px 16px rgba(56, 176, 0, 0.25);
+  transform: translateY(-2px);
 }
 
 .btn-success {
-  background-color: #1e88e5;
+  background-color: #1976d2;
+  color: white;
 }
 
 .btn-success:hover {
   background-color: #1565c0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(25, 118, 210, 0.25);
 }
 
-/* Farming Tips and Field Info */
+.btn-secondary {
+  background-color: #f0f4f8;
+  color: #4a5568;
+  border: 1px solid #cbd5e0;
+}
+
+.btn-secondary:hover {
+  background-color: #e2e8f0;
+}
+
+/* Farming Tips */
 .farming-tips {
-  margin-top: 20px;
-  background-color: #f9fafb;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
-}
-
-/* Canvas container for 3D visualization */
-.canvas-container {
-  position: relative;
-  width: 100%;
-  height: 400px;
-  background-color: #eef2f7;
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-/* Overlay Field Info */
-.overlay {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: rgba(255, 255, 255, 0.95);
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  max-width: 250px;
+  margin-top: 24px;
+  background-color: #f8fafc;
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e2e8f0;
 }
 
 /* Progress Bar */
 .progress {
-  background-color: #e0e0e0;
-  border-radius: 12px;
+  background-color: #e2e8f0;
+  border-radius: 10px;
   overflow: hidden;
-  height: 20px;
+  height: 14px;
+  margin: 10px 0 18px;
 }
 
 .progress-bar {
   height: 100%;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
+  border-radius: 10px;
+  transition: width 0.6s ease;
 }
 
-/* Chat Section */
+/* Chat */
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 500px;
+  height: 520px;
+  background-color: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
 }
 
+/* Chat Messages */
 .chat-messages {
   flex: 1;
   overflow-y: auto;
-  padding: 15px;
+  padding: 22px;
   background-color: #f9fafb;
 }
 
+/* Message */
 .message {
-  margin-bottom: 10px;
-  padding: 10px 15px;
-  border-radius: 12px;
+  margin-bottom: 18px;
+  padding: 16px 20px;
+  border-radius: 20px;
+  font-size: 15px;
+  max-width: 85%;
 }
 
+/* User Message */
 .user-message {
-  background-color: #d1e7dd;
-  text-align: right;
+  background-color: #e6fffa;
+  margin-left: auto;
+  color: #059669;
 }
 
+/* Bot Message */
 .bot-message {
-  background-color: #e2e3e5;
-  text-align: left;
-}
-
-.chat-input {
-  border-top: 1px solid #d1d5db;
-  padding: 10px;
-}
-
-.chat-input .input-group input {
-  border-radius: 12px 0 0 12px;
-}
-
-.chat-input .input-group button {
-  border-radius: 0 12px 12px 0;
+  background-color: #e2e8f0;
+  margin-right: auto;
+  color: #4a5568;
 }
 
 /* Typing Indicator */
 .typing-indicator span {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  margin: 0 2px;
-  background-color: #ccc;
-  border-radius: 50%;
-  animation: blink 1.4s infinite both;
-}
-
-.typing-indicator span:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.typing-indicator span:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-@keyframes blink {
-  0%, 80%, 100% {
-    opacity: 0;
-  }
-  40% {
-    opacity: 1;
-  }
+  width: 10px;
+  height: 10px;
+  margin: 0 3px;
 }
 
 /* Suggested Questions */
 .list-group-item {
-  border-radius: 12px;
-  margin-bottom: 8px;
-  transition: background-color 0.2s;
+  font-size: 15px;
+  padding: 16px 22px;
+  border-color: #e2e8f0;
 }
 
-.list-group-item:hover {
-  background-color: #e7f5ff;
+/* Status */
+.status {
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 14px;
 }
 
-/* Responsive */
+/* Responsive Tweaks */
 @media (max-width: 991px) {
-  .ia-farm-container {
-    flex-direction: column;
+  .card-header {
+    padding: 18px;
+  }
+  .card-body {
+    padding: 20px;
+  }
+  .chat-container {
+    height: 440px;
+  }
+  .canvas-container {
+    height: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .message {
+    max-width: 95%;
+    font-size: 14px;
+  }
+  .overlay {
+    max-width: 220px;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
@@ -15,7 +15,16 @@ interface FarmField {
 })
 export class Farm3DComponent implements OnInit {
   @ViewChild('canvas', { static: true }) private canvasRef!: ElementRef;
-  @Input() farmData: { fields: FarmField[] } = { fields: [] };
+
+  // Static sample farm data
+  farmData = {
+    fields: [
+      { id: 'field1', position: { x: -20, z: -20 }, dimensions: { width: 10, length: 20 } },
+      { id: 'field2', position: { x: 20, z: -20 }, dimensions: { width: 15, length: 15 } },
+      { id: 'field3', position: { x: -20, z: 20 }, dimensions: { width: 20, length: 10 } },
+      { id: 'field4', position: { x: 20, z: 20 }, dimensions: { width: 12, length: 18 } }
+    ]
+  };
 
   selectedField: FarmField | null = null;
 

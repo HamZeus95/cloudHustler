@@ -49,8 +49,11 @@ export class IaDashService {
       );
   }
 
-  analyzeCropHealth(imageData: any): Observable<any> {
-    return this.http.post(`${this.apiBaseUrl}/analyze-crop-health`, imageData)
+  analyzeCropHealth(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+  
+    return this.http.post(`${this.apiBaseUrl}/analyze-crop-health`, formData)
       .pipe(
         map(response => this.parseApiResponse(response))
       );
