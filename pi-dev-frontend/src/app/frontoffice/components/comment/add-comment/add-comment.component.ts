@@ -5,7 +5,7 @@ import { commentaires } from 'src/app/core/models/Comment';
 // Corrige le chemin
 import { AuthService } from '../../../../auth/service/authentication.service'; // Ajoutez cette importation
 import { TokenStorageService } from '../../../../auth/service/token-storage.service'; // Ajoutez cette importation
-
+import { GeminiService } from 'src/app/core/services/gemini.service';
 
 @Component({
   selector: 'app-add-comment',
@@ -20,7 +20,9 @@ export class AddCommentComponent {
 
   constructor(private postService: PostService, private fb: FormBuilder
               , private authService: AuthService,
-              private tokenStorageService: TokenStorageService) { // Ajoutez cette injection
+              private tokenStorageService: TokenStorageService,
+              private geminiService: GeminiService  // <= Ajout
+) { // Ajoutez cette injection
     this.commentForm = this.fb.group({
       content: ['']
     });
@@ -49,25 +51,47 @@ export class AddCommentComponent {
   }}
 
   submitComment() {
-  if (this.commentForm.valid) {
-    const comment: Comment = this.commentForm.value;
-    const userUuid = this.currentUser?.userUUID; // récupérer l'UUID du user
-
-    if (!userUuid) {
-      console.error('Utilisateur non connecté ou UUID manquant');
-      return;
-    }
-
-    this.postService.addCommentToPost(this.postId, comment, userUuid).subscribe({
-      next: (res: any) => {
-        console.log('Commentaire ajouté !', res);
-        this.commentForm.reset();
-        window.location.reload(); // Rafraîchir la page
-      },
-      error: (err: any) => {
-        console.error('Erreur lors de l\'ajout', err);
+    if (this.commentForm.valid) {
+      const comment: any = this.commentForm.value;  // <= Remplacer ici
+      const userUuid = this.currentUser?.userUUID;
+  
+      if (!userUuid) {
+        console.error('Utilisateur non connecté ou UUID manquant');
+        return;
       }
-    });
+  
+      const prompt = `Ce texte contient-il des insultes, propos haineux ou mots inappropriés ? Réponds uniquement par "OUI" ou "NON". Texte: "${comment.content}"`;
+  
+      // Vérification avec Gemini
+      this.geminiService.askGemini(prompt).subscribe({
+        next: (geminiResponse: any) => {
+          const response = geminiResponse.response?.toUpperCase().trim();
+  
+          if (response === 'NON') {
+            // Aucun badword, on peut envoyer le commentaire
+            this.postService.addCommentToPost(this.postId, comment, userUuid).subscribe({
+              next: (res: any) => {
+                console.log('Commentaire ajouté !', res);
+                this.commentForm.reset();
+                window.location.reload();
+              },
+              error: (err: any) => {
+                console.error('Erreur lors de l\'ajout', err);
+              }
+            });
+          } else if (response === 'OUI') {
+            // Badword détecté
+            alert('Votre commentaire contient des mots inappropriés. Veuillez le corriger.');
+          } else {
+            console.error('Réponse inattendue de Gemini:', geminiResponse);
+            alert('Erreur de validation du commentaire. Essayez encore.');
+          }
+        },
+        error: (error: any) => {
+          console.error('Erreur Gemini:', error);
+          alert('Erreur lors de la vérification du commentaire.');
+        }
+      });
+    }
   }
-}
 }

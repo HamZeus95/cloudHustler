@@ -49,7 +49,6 @@ import { BackofficeModule } from './backoffice/backoffice.module';
     //from marketplace
     FormsModule,
     RouterModule,
-    FrontofficeModule,
     BackofficeModule,
     NgChartsModule,
     JwtModule.forRoot({
