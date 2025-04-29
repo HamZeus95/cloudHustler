@@ -35,6 +35,11 @@ public class OrderController {
         return orderService.getOrdersByCustomer(customerUuid);
     }
 
+    @GetMapping("/allOrders")
+    public List<Order> getAllOrders() {
+        return orderService.getAllOrders();
+    }
+
     @GetMapping("/order/{orderUuid}")
     public Order getOrderById(@PathVariable UUID orderUuid) {
         return orderService.getOrderById(orderUuid);

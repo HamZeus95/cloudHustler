@@ -43,9 +43,9 @@ currentUser: any = null;
   }
 
   loadOrders(): void {
-    const customerUuid = this.currentUser.userUUID; 
+    
     this.isLoading = true;
-    this.orderService.getOrders(customerUuid).subscribe({
+    this.orderService.getAllOrders().subscribe({
       next: (orders) => {
         this.orders = orders;
         this.isLoading = false;

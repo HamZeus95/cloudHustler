@@ -90,7 +90,7 @@
   
     <!-- Grid View -->
     <div class="row" *ngIf="viewMode === 'grid' && !isLoading">
-      <div class="col-md-4 mb-4" *ngFor="let product of products">
+      <div class="col-md-4 mb-4" *ngFor="let product of paginatedProducts">
         <div class="card h-100">
           <div class="card-img-top-container">
             <img [src]="getFullImageUrl(product.imageUrl)" 
@@ -126,6 +126,26 @@
           </div>
         </div>
       </div>
+      <!-- Pagination -->
+      <nav *ngIf="totalPages > 1">
+        <ul class="pagination mb-0 mt-50">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          
+          <li class="page-item" *ngFor="let page of pages" [class.active]="page === currentPage">
+            <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+          </li>
+          
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   
     <!-- List View -->
@@ -144,7 +164,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let product of products">
+          <tr *ngFor="let product of paginatedProducts">
             <td>
               <img [src]="getFullImageUrl(product.imageUrl)" 
                class="img-thumbnail product-thumbnail" 
@@ -198,6 +218,26 @@
           </tr>
         </tbody>
       </table>
+      <!-- Pagination -->
+      <nav *ngIf="totalPages > 1">
+        <ul class="pagination mb-0 mt-50">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          
+          <li class="page-item" *ngFor="let page of pages" [class.active]="page === currentPage">
+            <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+          </li>
+          
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   
     <!-- Loading Indicator -->

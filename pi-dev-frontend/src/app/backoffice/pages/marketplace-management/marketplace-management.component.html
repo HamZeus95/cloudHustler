@@ -1,100 +1,73 @@
-<app-admin-layout >
+<app-admin-layout>
   <div class="card mb-4">
-      <div class="container-fluid py-4">
-        <div class="row">
-          <div class="col-xl-3 col-sm-6 mb-4">
-            <div class="card dashboard-card shadow-sm border-0">
-              <div class="card-body d-flex justify-content-between align-items-center">
-                <div>
-                  <app-top-selling-products></app-top-selling-products>
-                  
-                </div>
-                <div class="icon-circle d-flex align-items-center justify-content-center">
-                  <i class="bi bi-house-door-fill"></i>
-                </div>
+    <div class="container-fluid py-4">
+      <div class="row">
+        <!-- LEFT COLUMN: Top Selling Products -->
+        <div class="col-lg-6 mb-4">
+          <div class="card dashboard-card shadow-sm border-0 h-100">
+            <div class="card-body">
+              <app-top-selling-products></app-top-selling-products>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Orders, Products, Categories (stacked) -->
+        <div class="col-lg-6">
+          <!-- Products -->
+          <div class="card dashboard-card shadow-sm border-0 mb-4">
+            <div class="card-body d-flex justify-content-between align-items-center">
+              <div>
+                <p class="text-uppercase text-muted small fw-bold mb-1">Products</p>
+                <h4 class="fw-bold mb-2">{{ totalProducts }}</h4>
+              </div>
+              <div class="icon-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-flower1"></i>
               </div>
             </div>
           </div>
-        
-          <!-- Products -->
-<div class="col-xl-3 col-sm-6 mb-4">
-  <div class="card dashboard-card shadow-sm border-0">
-    <div class="card-body d-flex justify-content-between align-items-center">
-      <div>
-        <p class="text-uppercase text-muted small fw-bold mb-1">Products</p>
-        <h4 class="fw-bold mb-2">{{ totalProducts }}</h4>
-      </div>
-      <div class="icon-circle d-flex align-items-center justify-content-center">
-        <i class="bi bi-flower1"></i>
-      </div>
-    </div>
-  </div>
-</div>
 
-        
           <!-- Orders -->
-<div class="col-xl-3 col-sm-6 mb-4">
-  <div class="card dashboard-card shadow-sm border-0">
-    <div class="card-body d-flex justify-content-between align-items-center">
-      <div>
-        <p class="text-uppercase text-muted small fw-bold mb-1">Orders</p>
-        <h4 class="fw-bold mb-2">{{ totalOrders }}</h4>
+          <div class="card dashboard-card shadow-sm border-0 mb-4">
+            <div class="card-body d-flex justify-content-between align-items-center">
+              <div>
+                <p class="text-uppercase text-muted small fw-bold mb-1">Orders</p>
+                <h4 class="fw-bold mb-2">{{ totalOrders }}</h4>
+              </div>
+              <div class="icon-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-cash-stack"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Categories -->
+          <div class="card dashboard-card shadow-sm border-0">
+            <div class="card-body d-flex justify-content-between align-items-center">
+              <div>
+                <p class="text-uppercase text-muted small fw-bold mb-1">Categories</p>
+                <h4 class="fw-bold mb-2">{{ totalCategories }}</h4>
+              </div>
+              <div class="icon-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-tags-fill"></i>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="icon-circle d-flex align-items-center justify-content-center">
-        <i class="bi bi-cash-stack"></i>
+
+      <!-- OTHER SECTIONS BELOW -->
+      <div class="row mt-4">
+        <div class="col-lg-7 mb-lg-0 mb-4"></div>
+        <div class="col-lg-5"></div>
       </div>
+
+      <div class="row mt-4">
+        <div class="col-lg-7 mb-lg-0 mb-4"></div>
+        <div class="col-lg-5"></div>
+      </div>
+
+      <app-productslist></app-productslist>
+      <app-product-categorieslist></app-product-categorieslist>
+      <app-order-list></app-order-list>
     </div>
   </div>
-</div>
-
-        <!-- Orders -->
-<div class="col-xl-3 col-sm-6 mb-4">
-  <div class="card dashboard-card shadow-sm border-0">
-    <div class="card-body d-flex justify-content-between align-items-center">
-      <div>
-        <p class="text-uppercase text-muted small fw-bold mb-1">Orders</p>
-        <h4 class="fw-bold mb-2">{{ totalOrders }}</h4>
-      </div>
-      <div class="icon-circle d-flex align-items-center justify-content-center">
-        <i class="bi bi-cash-stack"></i>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-        </div>
-
-
-        <!-- ---------------------------------------------- -->
-        <div style="height: 20px;">
-        </div>
-        
-        <div class="row mt-4">
-          <div class="col-lg-7 mb-lg-0 mb-4">
-            <!-- <app-chart [farms]="farms"></app-chart> -->
-          </div>
-          <div class="col-lg-5">
-            <!-- <app-carousel></app-carousel> -->
-          </div>
-        </div>
-        <div class="row mt-4">
-          <div class="col-lg-7 mb-lg-0 mb-4">
-            <!-- <app-tasks-table></app-tasks-table> -->
-          </div>
-          <div class="col-lg-5">
-            <!-- <app-categories-list></app-categories-list> -->
-          </div>
-        </div>
-        <!-- <app-footer></app-footer> -->
-
-
-<app-productslist></app-productslist>
-       <app-product-categorieslist></app-product-categorieslist>
-<app-order-list></app-order-list>
-
-
-      </div>
-    </div>
-
 </app-admin-layout>

@@ -23,6 +23,9 @@ export class ProductslistComponent {
   previewUrl: string | ArrayBuffer | null = null;
   isUploading = false;
   isUsingAI = false;
+  currentPage = 1;
+  itemsPerPage = 3;
+  totalProducts = 0;
 
   constructor(
     private productService: ProductService,
@@ -338,6 +341,35 @@ export class ProductslistComponent {
       };
       reader.readAsDataURL(file);
     }
+  }
+
+  get paginatedProducts(): Product[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.products.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+  
+
+  // Change page
+  changePage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+  }
+
+  // Get total pages
+  get totalPages(): number {
+    return Math.ceil(this.products.length / this.itemsPerPage);
+  }
+  
+  
+  
+
+  // Generate page numbers
+  get pages(): number[] {
+    const pages = [];
+    for (let i = 1; i <= this.totalPages; i++) {
+      pages.push(i);
+    }
+    return pages;
   }
   
 
