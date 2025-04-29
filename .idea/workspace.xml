@@ -5,43 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c799faf-77be-47d4-a413-81b6d78d4ec2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/FactureController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/FactureController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/LivraisonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/LivraisonController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/PdfController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/PdfController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Consumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Consumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/DeliveryDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/DeliveryDriver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Livraison.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Livraison.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/OrderItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/OrderItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/entity/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/LivraisonRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/LivraisonRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/AiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/AiService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/FactureService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/FactureService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/IFactureService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/IFactureService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/LivraisonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/service/LivraisonService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/side-bar/side-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/side-bar/side-bar.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/details-facture/details-facture.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/details-facture/details-facture.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/details-livraison/details-livraison.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/details-livraison/details-livraison.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/factures/factures.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/factures/factures.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/factures/factures.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/factures/factures.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/factures/factures.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/factures/factures.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/livraisons/livraisons.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/livraisons/livraisons.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/livraisons/livraisons.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/livraisons/livraisons.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/livraisons/livraisons.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/livraisons/livraisons.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/facture.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/facture.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/livraison-prediction-service.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/livraison-prediction-service.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/livraison.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/livraison.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/suivilivraison.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/livraison/suivilivraison.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/validators/custom.validators.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/validators/custom.validators.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/navbar/navbar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/navbar/navbar.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/frontoffice-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/frontoffice-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/facture-client/facture-client.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/facture-client/facture-client.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraison-client/livraison-client.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraison-client/livraison-client.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraisondriver/livraisondriver.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraisondriver/livraisondriver.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -221,7 +187,8 @@
       <workItem from="1745834752661" duration="3349000" />
       <workItem from="1745839198279" duration="965000" />
       <workItem from="1745841762745" duration="2611000" />
-      <workItem from="1745877766611" duration="3058000" />
+      <workItem from="1745877766611" duration="3273000" />
+      <workItem from="1745915284511" duration="263000" />
     </task>
     <task id="LOCAL-00001" summary="before merge">
       <option name="closed" value="true" />
