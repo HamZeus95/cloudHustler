@@ -1,6 +1,6 @@
 // src/app/components/weather/weather.component.ts
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { WeatherService } from 'src/app/core/services/weather.service';
+import { WeatherService } from 'src/app/core/services/farm-managment/weather.service';
 
 @Component({
   selector: 'app-weather',

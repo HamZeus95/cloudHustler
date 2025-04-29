@@ -2,7 +2,9 @@
   <br><br><br><br><br><br> 
         
             <h2>Add Event</h2>
-            
+            <button (click)="generateRandomEvent()" class="btn-random-event">Random Event</button>
+
+
             <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
               <div class="form-group">
                 <label for="name">Event Name</label>
@@ -82,13 +84,22 @@
                   rows="3"
                 ></textarea>
               </div> -->
-              <button type="button" (click)="generateDescription()">Générer une description</button>
+       <!-- Bouton pour générer la description -->
+<button type="button" (click)="generateDescription()" class="btn btn-success">Generate Description</button>
 
-              <!-- Champ description éditable -->
-              <div>
-                <label for="description">Description</label>
-                <textarea id="description" formControlName="description" rows="5" cols="50"></textarea>
-              </div>
+<!-- Affichage du spinner pendant la génération -->
+<div *ngIf="isLoading" class="spinner-container">
+  <div class="spinner"></div> <!-- Spinner -->
+  <p>Chargement...</p> <!-- Message de chargement -->
+</div>
+
+<!-- Champ de description -->
+<div class="form-group">
+  <label for="description">Description</label>
+  <textarea id="description" formControlName="description" class="form-control" rows="5" cols="50"></textarea>
+</div>
+
+              
               
               <div class="form-group">
                 <label for="banner">URL Poster</label>
@@ -106,11 +117,11 @@
                   class="form-check-input"
                   formControlName="isOnline"
                 />
-                <label class="form-check-label" for="isOnline">Événement en ligne</label>
+                <label class="form-check-label" for="isOnline">Online Event</label>
               </div>
               
               <div class="form-group" *ngIf="eventForm.get('isOnline')!.value">
-                <label for="onlineLink">Lien de l'événement en ligne</label>
+                <label for="onlineLink">Url</label>
                 <input
                   type="text"
                   id="onlineLink"
@@ -122,5 +133,6 @@
               <button type="submit" class="btn btn-primary" [disabled]="eventForm.invalid">
                 Add Event
               </button>
+              
             </form> 
         </app-admin-layout>

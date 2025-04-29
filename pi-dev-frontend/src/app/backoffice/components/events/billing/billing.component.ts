@@ -57,7 +57,8 @@ export class BillingComponent implements OnInit {
         startDate.toLocaleDateString().toLowerCase().includes(query) ||
         endDate.toLocaleDateString().toLowerCase().includes(query) ||
         event.location.toLowerCase().includes(query) ||
-        event.description.toLowerCase().includes(query)
+        event.description.toLowerCase().includes(query) ||
+        event.maxParticipants
       );
     });
 
@@ -100,6 +101,9 @@ export class BillingComponent implements OnInit {
   showFullDescription(description: string): void {
     this.fullDescription = description;
     this.isModalVisible = true; // Ouvrir la modal
+    console.log("ghghghgh");
+    console.log(this.fullDescription);
+    console.log(this.isModalVisible);
   }
 
   // Fermer la modal
@@ -112,4 +116,5 @@ export class BillingComponent implements OnInit {
     const words = description.split(' ');
     return words.slice(0, 2).join(' '); // Affiche les 2 premiers mots
   }
+  
 }

@@ -4,10 +4,10 @@ import { Component, OnInit } from '@angular/core';
 import { Chart, LineController, LineElement, PointElement, LinearScale, Title, CategoryScale } from 'chart.js';
 import { Crop } from 'src/app/core/models/famrs/crop';
 import { Farm } from 'src/app/core/models/famrs/farm';
-import { CropService } from 'src/app/core/services/crop.service';
-import { FarmService } from 'src/app/core/services/farm.service';
-import { RessourceService } from 'src/app/core/services/ressource.service';
-import { ExpenseService } from 'src/app/core/services/expense.service';
+import { CropService } from 'src/app/core/services/farm-managment/crop.service';
+import { FarmService } from 'src/app/core/services/farm-managment/farm.service';
+import { RessourceService } from 'src/app/core/services/farm-managment/ressource.service';
+import { ExpenseService } from 'src/app/core/services/farm-managment/expense.service';
 
 @Component({
   selector: 'app-farm-managment',

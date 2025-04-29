@@ -1,0 +1,61 @@
+<!-- Job Application Form -->
+<div class="application-wrapper py-5 d-flex justify-content-center align-items-center">
+  <form 
+    (ngSubmit)="onSubmit()" 
+    #applicationForm="ngForm" 
+    class="form-box shadow-lg p-5 rounded-4 bg-white border border-2 border-light"
+    style="width: 100%; max-width: 750px;"
+  >
+    <h2 class="text-center mb-4 text-primary-emphasis fw-bold">
+      📄 Submit your application
+    </h2>
+
+    <!-- Decorative line -->
+    <div class="underline mx-auto mb-4"></div>
+
+    <!-- Motivation Letter -->
+    <div class="mb-4">
+      <label for="lettre" class="form-label fw-semibold text-secondary">Motivation Letter:</label>
+      <textarea
+        id="lettre"
+        name="lettreMotivation"
+        class="form-control shadow-sm border-1 border-secondary-subtle"
+        [(ngModel)]="request.lettreMotivation"
+        rows="6"
+        placeholder="Express your motivation here..."
+        required
+      ></textarea>
+      <div *ngIf="applicationForm.submitted && !request.lettreMotivation" class="text-danger">
+        Motivation letter is required.
+      </div>
+    </div>
+
+    <!-- Upload CV -->
+    <div class="mb-4">
+      <label for="cv" class="form-label fw-semibold text-secondary">Upload your CV:</label>
+      <input
+        type="file"
+        id="cv"
+        name="uploadCv"
+        class="form-control shadow-sm"
+        (change)="onFileSelected($event)"
+        required
+      />
+      <small class="text-muted">Accepted formats: PDF, JPG, PNG. Max size: 5MB</small>
+      <div *ngIf="applicationForm.submitted && !request.uploadCv" class="text-danger">
+        CV is required.
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center mt-4">
+      <button 
+        type="submit" 
+        class="btn btn-success btn-lg rounded-pill px-5 shadow-sm fw-semibold w-100"
+        [disabled]="!applicationForm.form.valid"
+      >
+        🚀 Submit my application
+      </button>
+    </div>
+  </form>
+</div>

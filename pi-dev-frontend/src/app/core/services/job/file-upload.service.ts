@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FileUploadService {
-  private apiUrl = 'http://localhost:8090/CloudHustel/api/files';
+  private apiUrl = 'http://localhost:8090/api/v1/files';
 
   constructor(private http:HttpClient) { }
   uploadFile(file: File,dir:string): Observable<any> {

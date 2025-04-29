@@ -38,8 +38,8 @@ public class EventNotificationService {
         String message = "Rappel : L'événement '" + event.getName() + "' commence demain à " + event.getStartDate() + ". Ne manquez pas !";
 
         // Envoi du SMS à chaque participant
-        for (String participant : event.getParticipants()) {
+      /*  for (String participant : event.getParticipants()) {
             smsService.sendSms(participant, message);  // Ton service d'envoi de SMS
-        }
+        }*/
     }
 }

@@ -32,14 +32,18 @@ public class Event {
     private boolean isOnline; 
     private String onlineLink;
     String ImageUrl;
+    @Column(nullable = false, columnDefinition = "integer default 0")
+    private Integer nbrParticipants = 0;
     @ElementCollection
     List<String> imgsUrls;
-    @ElementCollection
-    List<String> participants = new ArrayList<>();
+    @ManyToMany
+    @JsonIgnore
+    List<Consumer> participants = new ArrayList<>();
 
     @ManyToOne
     @JsonIgnore
     Expert expert;
+
 
 
 

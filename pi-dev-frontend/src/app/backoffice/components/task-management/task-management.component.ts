@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from 'src/app/core/models/famrs/task';
-import { TaskService } from 'src/app/core/services/task.service';
+import { TaskService } from 'src/app/core/services/farm-managment/task.service';
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({

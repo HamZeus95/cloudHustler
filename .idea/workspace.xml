@@ -6,9 +6,45 @@
   <component name="ChangeListManager">
     <list default="true" id="1c799faf-77be-47d4-a413-81b6d78d4ec2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/livraisons/livraisons.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/livraisons/livraisons.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/livraisons/livraisons.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/pages/livraison/livraisons/livraisons.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraisondriver/livraisondriver.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/livraison/livraisondriver/livraisondriver.component.ts" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/config/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/EmailJobsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/EmailJobsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/FileStorageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/FileStorageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/QuizController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/QuizController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ServiceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ServiceRequestsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers/ServiceRequestsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/backoffice-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/backoffice-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/backoffice.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/backoffice.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/side-bar/side-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/backoffice/components/side-bar/side-bar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/file-upload.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/file-upload.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/quiz.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/quiz.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/service-requests.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/service-requests.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/servicee.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/services/job/servicee.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/jobs-dashboard.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/jobs-dashboard.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/create-quiz/create-quiz.component.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/create-quiz/create-quiz.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/create-quiz/create-quiz.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/create-quiz/create-quiz.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/front-take-quiz/front-take-quiz.component.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/front-take-quiz/front-take-quiz.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/front-take-quiz/front-take-quiz.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/front-take-quiz/front-take-quiz.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/quiz.component.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/quiz.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/quiz.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/quiz.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/update-questions/update-questions.component.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/update-questions/update-questions.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/update-questions/update-questions.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/dashboard/jobs-dashboard/quiz/update-questions/update-questions.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/frontoffice-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/frontoffice-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/frontoffice.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/frontoffice.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/jobs/jobs.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/pages/jobs/jobs.component.ts" afterDir="false" />
+>>>>>>> 05584575fc08646d2066df98109b3e8c78eb025a
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +128,8 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;Spring Boot.PiDevBackendApplication.executor&quot;: &quot;Run&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Rebasing events&quot;,
+
+    &quot;git-widget-placeholder&quot;: &quot;Hiring&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_directory_selection&quot;: &quot;D:/cloudHustler2/pi-dev-backend/src/main/java/cloud/hustler/pidevbackend/controllers&quot;,
@@ -107,7 +144,7 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;c69308e65b72560394dc7547cfb9fef2&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\MSI\\Documents\\GitHub\\cloudHustler\\pi-dev-frontend\\node_modules\\typescript\\lib&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2024.3.2.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -205,6 +242,11 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="6a15f98b-7ed9-4faa-bf90-1b2c4cc4646f" value="TOOL_WINDOW" />
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="6a15f98b-7ed9-4faa-bf90-1b2c4cc4646f">
@@ -229,11 +271,6 @@
             </State>
           </value>
         </entry>
-      </map>
-    </option>
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="6a15f98b-7ed9-4faa-bf90-1b2c4cc4646f" value="TOOL_WINDOW" />
       </map>
     </option>
   </component>
