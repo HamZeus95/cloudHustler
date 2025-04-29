@@ -58,7 +58,7 @@ public abstract class User implements UserDetails {
       @JsonIgnore
       Set<Token> tokens = new HashSet<>();
   */
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     Set<Otp> otps = new HashSet<>();
 
@@ -75,11 +75,11 @@ public abstract class User implements UserDetails {
     @Column(name = "face_id_enabled")
     private boolean faceIdEnabled = false;
 
-    @OneToMany(mappedBy = "blocker", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "blocker", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     Set<BlockedUser> blockedUsers = new HashSet<>();
 
-    @OneToMany(mappedBy = "blocked", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "blocked", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     Set<BlockedUser> usersBlockedMe = new HashSet<>();
 
