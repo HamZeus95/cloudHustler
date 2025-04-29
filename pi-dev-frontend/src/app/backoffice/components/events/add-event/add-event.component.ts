@@ -143,8 +143,8 @@ export class AddEventComponent implements OnInit {
       endDate: this.todayDate(),
       location: `Location ${Math.floor(Math.random() * 100)}`,
       max: Math.floor(Math.random() * 100) + 1,
-      description: `Random description for Event ${Math.floor(Math.random() * 1000)}`,
-      banner: 'https://example.com/banner.jpg',
+      description: `Join Our Event ${Math.floor(Math.random() * 1000)}`,
+      banner: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_sAoFlybyAVhZsep6XdyHSYI9-q8UQELqUg&s',
       
     };
 

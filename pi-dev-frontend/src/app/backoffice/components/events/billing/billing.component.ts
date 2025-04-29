@@ -58,7 +58,9 @@ export class BillingComponent implements OnInit {
         endDate.toLocaleDateString().toLowerCase().includes(query) ||
         event.location.toLowerCase().includes(query) ||
         event.description.toLowerCase().includes(query) ||
-        event.maxParticipants
+        event.maxParticipants?.toString().includes(query) || false
+
+
       );
     });
 

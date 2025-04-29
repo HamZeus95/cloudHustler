@@ -10,6 +10,7 @@ import { Servicee } from 'src/app/core/models/servicee';
 export class ServiceeService {
   private apiUrl = '/api/v1/services';
 
+
   constructor(private http: HttpClient) {}
 
   // Récupérer tous les services
