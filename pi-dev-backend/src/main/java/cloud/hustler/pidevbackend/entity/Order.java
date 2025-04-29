@@ -15,7 +15,6 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 @ToString(exclude = "orderItems")
 @EqualsAndHashCode(of = "uuid_order")
 @FieldDefaults(level = AccessLevel.PRIVATE)

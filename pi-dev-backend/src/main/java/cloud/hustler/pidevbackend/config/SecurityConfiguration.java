@@ -48,11 +48,10 @@ public class SecurityConfiguration {
             "Event/**", // fix later
             "/product/**",
             "/cart/**",
-            "/orders/**",
             "/productcategory/**",
             "/payment/**",
-            "/livraisons/**",
-            "/factures/**",
+//            "/livraisons/**",
+//            "/factures/**",
             "/orders/**",
             "/swagger-resources",
             "/swagger-resources/**",

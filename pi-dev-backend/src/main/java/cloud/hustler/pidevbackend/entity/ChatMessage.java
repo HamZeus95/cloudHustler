@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -28,10 +29,12 @@ public class ChatMessage {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id", nullable = false)
+    @JsonIgnore
     User sender;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "receiver_id")
+    @JsonIgnore
     User receiver;
     
     @ManyToOne(fetch = FetchType.LAZY)
