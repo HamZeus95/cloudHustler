@@ -16,7 +16,7 @@ public class GeminiService {
     private final String apiKey;  // Add this field
 
     @Autowired
-    public GeminiService(WebClient geminiWebClient, @Value("${gemini.api.key}") String apiKey) {
+    public GeminiService(WebClient geminiWebClient, @Value("${gemini.apit.key}") String apiKey) {
         this.webClient = geminiWebClient;
         this.apiKey = apiKey;
     }

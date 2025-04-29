@@ -16,7 +16,6 @@ import java.util.Map;
 @RestController
 
 
-@CrossOrigin(origins = "*") // Autorise explicitement Angular
 
 @RequestMapping("/gemini")
 public class GeminiController {

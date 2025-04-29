@@ -1,4 +1,4 @@
-package cloud.hustler.pidevbackend.DTO;
+package cloud.hustler.pidevbackend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

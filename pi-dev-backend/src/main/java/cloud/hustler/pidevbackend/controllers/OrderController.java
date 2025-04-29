@@ -1,5 +1,5 @@
 package cloud.hustler.pidevbackend.controllers;
-import cloud.hustler.pidevbackend.DTO.StripeResponse;
+import cloud.hustler.pidevbackend.dto.StripeResponse;
 import cloud.hustler.pidevbackend.entity.Order;
 import cloud.hustler.pidevbackend.repository.OrderRepository;
 import cloud.hustler.pidevbackend.service.IOrderService;

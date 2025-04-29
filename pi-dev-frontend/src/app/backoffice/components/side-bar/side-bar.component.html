@@ -9,7 +9,8 @@
   <hr class="horizontal dark mt-0">
   <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main" [ngClass]="{'show': isSidebarOpen}">
     <ul class="navbar-nav">
-      <li class="nav-item">
+      <!-- Dashboard menu item - only visible to users with ADMIN role -->
+      <li class="nav-item" *ngIf="hasRequiredRole('/backoffice')">
         <a class="nav-link" [routerLink]="['/backoffice']" [ngClass]="{'active': isActive('/backoffice')}">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <span app-icon="home" library="fontawesome" variant="solid" class="text-primary text-sm opacity-10"></span>
@@ -17,8 +18,8 @@
           <span class="nav-link-text ms-1">Dashboard</span>
         </a>
       </li>
-      <!-- farm management -->
-      <li class="nav-item">
+      <!-- farm management - Only visible to farmers and admins -->
+      <li class="nav-item" *ngIf="hasRequiredRole('/backoffice/farm')">
         <a class="nav-link" [routerLink]="['/backoffice/farm']" [ngClass]="{'active': isActive('/backoffice/farm')}">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <span app-icon="leaf" library="fontawesome" variant="solid" class="text-success text-sm opacity-10"></span>
@@ -26,8 +27,8 @@
           <span class="nav-link-text ms-1">Farm Management</span>
         </a>
       </li>
-      <!-- market management -->
-      <li class="nav-item">
+      <!-- market management - Only visible to farmers and admins -->
+      <li class="nav-item" *ngIf="hasRequiredRole('/backoffice/market')">
         <a class="nav-link" [routerLink]="['/backoffice/market']" [ngClass]="{'active': isActive('/backoffice/market')}">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <span app-icon="store" library="fontawesome" variant="solid" class="text-warning text-sm opacity-10"></span>
@@ -35,8 +36,8 @@
           <span class="nav-link-text ms-1">Market Management</span>
         </a>
       </li>
-      <!-- delivery management -->
-      <li class="nav-item">
+      <!-- delivery management - Only visible to admins -->
+      <li class="nav-item" *ngIf="hasRequiredRole('/backoffice/livraisons')">
         <a class="nav-link" [routerLink]="['/backoffice/livraisons']" [ngClass]="{'active': isActive('/backoffice/livraisons')}">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <span app-icon="truck" library="fontawesome" variant="solid" class="text-danger text-sm opacity-10"></span>
@@ -44,17 +45,17 @@
           <span class="nav-link-text ms-1">Delivery Management</span>
         </a>
       </li>
-           <!-- Invoices management -->
-           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/backoffice/factures']" [ngClass]="{'active': isActive('/backoffice/factures')}">
-              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                <span app-icon="file-invoice" library="fontawesome" variant="solid" class="text-danger text-sm opacity-10"></span>
-              </div>
-              <span class="nav-link-text ms-1">Invoice Management</span>
-            </a>
-          </li>
-      <!-- event -->
-      <li class="nav-item">
+      <!-- Invoices management - Only visible to admins -->
+      <li class="nav-item" *ngIf="hasRequiredRole('/backoffice/factures')">
+        <a class="nav-link" [routerLink]="['/backoffice/factures']" [ngClass]="{'active': isActive('/backoffice/factures')}">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <span app-icon="file-invoice" library="fontawesome" variant="solid" class="text-danger text-sm opacity-10"></span>
+          </div>
+          <span class="nav-link-text ms-1">Invoice Management</span>
+        </a>
+      </li>
+      <!-- event - Only visible to farmers and admins -->
+      <li class="nav-item" *ngIf="hasRequiredRole('/backoffice/backEvent')">
         <a class="nav-link" [routerLink]="['/backoffice/backEvent']" [ngClass]="{'active': isActive('/backoffice/backEvent')}">
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center"> 
             <span app-icon="calendar" library="fontawesome" variant="regular" [inner]="true" class="text-primary text-sm opacity-10"></span>
@@ -62,8 +63,8 @@
           <span class="nav-link-text ms-1">Event</span>
         </a>
       </li>
-      <!-- blog -->
-      <li class="nav-item">
+      <!-- blog - Only visible to admins -->
+      <li class="nav-item" *ngIf="hasRequiredRole('/backoffice/blog')">
         <a class="nav-link" [routerLink]="['/backoffice/blog']" [ngClass]="{'active': isActive('/backoffice/blog')}"> 
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <span app-icon="newspaper" library="fontawesome" variant="regular" class="text-info text-sm opacity-10"></span>
@@ -71,8 +72,8 @@
           <span class="nav-link-text ms-1">Blog</span>
         </a>
       </li>
-      <!-- tasks -->
-      <li class="nav-item">
+      <!-- tasks - Only visible to farmers and admins -->
+      <li class="nav-item" *ngIf="hasRequiredRole('/backoffice/task')">
         <a class="nav-link" [routerLink]="['/backoffice/task']" [ngClass]="{'active': isActive('/backoffice/task')}"> 
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <span app-icon="tasks" library="fontawesome" variant="solid" class="text-warning text-sm opacity-10"></span>
@@ -80,9 +81,9 @@
           <span class="nav-link-text ms-1">Tasks</span> 
         </a>
       </li>
-      <!-- hiring -->
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/backoffice/jobs']" [ngClass]="{'active': isActive('/backoffice/billing')}"> 
+      <!-- hiring - Only visible to farmers and admins -->
+      <li class="nav-item" *ngIf="hasRequiredRole('/backoffice/jobs')">
+        <a class="nav-link" [routerLink]="['/backoffice/jobs']" [ngClass]="{'active': isActive('/backoffice/jobs')}"> 
           <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <span app-icon="fas fa-user-plus" library="fontawesome" variant="regular" class="text-info text-sm opacity-10"></span>
           </div>
@@ -92,14 +93,15 @@
       <li class="nav-item mt-3">
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account Pages</h6>
       </li> 
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/backoffice/chat']" [ngClass]="{'active': isActive('/backoffice/chat')}"> 
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <span app-icon="message" library="fontawesome" variant="regular" class="text-success text-sm opacity-10"></span>
-            </div>
-            <span class="nav-link-text ms-1">Chat</span>
-          </a>
-        </li>
+      <!-- chat - Available to all authenticated users -->
+      <li class="nav-item" *ngIf="hasRequiredRole('/backoffice/chat')">
+        <a class="nav-link" [routerLink]="['/backoffice/chat']" [ngClass]="{'active': isActive('/backoffice/chat')}"> 
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <span app-icon="message" library="fontawesome" variant="regular" class="text-success text-sm opacity-10"></span>
+          </div>
+          <span class="nav-link-text ms-1">Chat</span>
+        </a>
+      </li>
     </ul>
   </div>
   <div class="sidenav-footer mx-3">
@@ -112,7 +114,7 @@
         </div>
       </div>
     </div>
-    <a [routerLink]="['/backoffice/farm-ia']"  class="btn btn-success btn-sm w-100 mb-3 hover-effect">
+    <a [routerLink]="['/backoffice/farm-ia']" *ngIf="hasRequiredRole('/backoffice/farm-ia')" class="btn btn-success btn-sm w-100 mb-3 hover-effect">
       <span app-icon="twitch" library="feather" class="me-1"></span>
       Try It right now !!</a>
   </div>

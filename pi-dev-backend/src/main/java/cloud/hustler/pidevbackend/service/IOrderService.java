@@ -1,6 +1,6 @@
 package cloud.hustler.pidevbackend.service;
 
-import cloud.hustler.pidevbackend.DTO.StripeResponse;
+import cloud.hustler.pidevbackend.dto.StripeResponse;
 import cloud.hustler.pidevbackend.entity.Order;
 import cloud.hustler.pidevbackend.entity.ProductSalesDTO;
 import com.stripe.exception.StripeException;
