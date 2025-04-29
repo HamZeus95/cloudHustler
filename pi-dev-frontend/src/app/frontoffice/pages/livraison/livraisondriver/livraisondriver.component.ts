@@ -38,7 +38,7 @@ displayModal: boolean = false;
       private http: HttpClient // Inject HttpClient
 
     ) {
-      this.loadLivraisons();
+      //this.loadLivraisons();
     }
     ngOnInit(): void {
       this.authService.isAuthenticated().subscribe(isAuth => {
