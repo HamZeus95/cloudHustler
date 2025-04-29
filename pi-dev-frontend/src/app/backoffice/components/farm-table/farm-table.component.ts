@@ -102,7 +102,16 @@ export class FarmTableComponent implements AfterViewInit {
   }
 
   onDelete(farmId: string) {
-    this.farms = this.farms.filter(farm => farm.uuid_farm !== farmId);
+    this.farmService.deleteFarm(farmId).subscribe({
+      next: () => {
+        this.farms = this.farms.filter(farm => farm.uuid_farm !== farmId);
+
+      },
+      error: (error) => {
+        console.error('Failed to delete farm:', error);
+      }
+    });
+    
   }
 
   private initFarm(): Farm {

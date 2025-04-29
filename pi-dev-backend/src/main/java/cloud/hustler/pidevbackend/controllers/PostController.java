@@ -93,20 +93,20 @@ public class PostController {
             }
 
 
-            try {
-                // SMS
-                String smsContent = String.format(
-                        "Nouveau post créé:\nTitre: %s\n%s",
-                        savedPost.getTitle(),
-                        content.length() > 100 ? content.substring(0, 100) + "..." : content
-                );
+//            try {
+//                // SMS
+//                String smsContent = String.format(
+//                        "Nouveau post créé:\nTitre: %s\n%s",
+//                        savedPost.getTitle(),
+//                        content.length() > 100 ? content.substring(0, 100) + "..." : content
+//                );
+//
+//                smsService.sendSms("+21694790194", smsContent); // Numéro tunisien format E.164
 
-                smsService.sendSms("+21694790194", smsContent); // Numéro tunisien format E.164
-
-            } catch (Exception e) {
-                System.err.println("Erreur notification: " + e.getMessage());
-                // Continuer même si l'envoi échoue
-            }
+//            } catch (Exception e) {
+//                System.err.println("Erreur notification: " + e.getMessage());
+//                // Continuer même si l'envoi échoue
+//            }
 
             return ResponseEntity.ok(savedPost);
 
