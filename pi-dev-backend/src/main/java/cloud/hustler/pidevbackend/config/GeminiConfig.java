@@ -8,7 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class GeminiConfig {
-    @Value("${gemini.api.url}")
+    @Value("${gemini.apit.url}")
     private String apiUrl;
 
     @Bean
