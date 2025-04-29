@@ -23,6 +23,7 @@ import { LivraisonComponent } from './pages/livraison/livraisons/livraisons.comp
 import { SuiviLivraisonComponent } from './pages/livraison/suivilivraisons/suivilivraisons.component';
 import { MarketplaceManagementComponent } from './pages/marketplace-management/marketplace-management.component';
 import { BillingComponent } from './components/events/billing/billing.component';
+import { ChatPageComponent } from './chat/pages/chat-page/chat-page.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -46,12 +47,11 @@ const routes: Routes = [
     { path:'factures',  component: FactureComponent},
     { path:'livraisons',  component: LivraisonComponent},
     { path:'suivilivraison',  component: SuiviLivraisonComponent},
-    //market routes
+  //market routes
     { path: 'market', component: MarketplaceManagementComponent },
-
-
-
-
+    // { path: 'chat', component: ChatPageComponent },
+  //chat routes
+    { path: 'chat', loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule) },
 ];
 
 

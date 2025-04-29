@@ -3,6 +3,7 @@ package cloud.hustler.pidevbackend.config;
 import cloud.hustler.pidevbackend.config.oauth2.OAuth2AuthenticationFailureHandler;
 import cloud.hustler.pidevbackend.config.oauth2.OAuth2AuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -11,10 +12,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.filter.CorsFilter;
+
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
 
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -56,6 +63,8 @@ public class SecurityConfiguration {
     private final CorsFilter corsFilter;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
+    @Value("${application.security.jwt.secret-key}")
+    private String secretKey;
     
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -95,5 +104,15 @@ public class SecurityConfiguration {
     @Bean
     public CustomOAuth2UserService customOAuth2UserService() {
         return new CustomOAuth2UserService();
+    }
+    
+    @Bean
+    public JwtDecoder jwtDecoder() {
+        // Create a signing key from the secret
+        byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
+        Key signingKey = new SecretKeySpec(keyBytes, "HmacSHA256");
+        
+        // Return a JWT decoder that uses this key
+        return NimbusJwtDecoder.withSecretKey((javax.crypto.SecretKey) signingKey).build();
     }
 }

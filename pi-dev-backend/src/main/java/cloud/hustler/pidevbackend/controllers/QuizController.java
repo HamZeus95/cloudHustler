@@ -1,7 +1,7 @@
 package cloud.hustler.pidevbackend.controllers;
 
-import cloud.hustler.pidevbackend.DTO.QuestionDto;
-import cloud.hustler.pidevbackend.DTO.QuizDTO;
+import cloud.hustler.pidevbackend.dto.QuestionDto;
+import cloud.hustler.pidevbackend.dto.QuizDTO;
 import cloud.hustler.pidevbackend.entity.Answer;
 import cloud.hustler.pidevbackend.entity.Question;
 import cloud.hustler.pidevbackend.entity.Quiz;

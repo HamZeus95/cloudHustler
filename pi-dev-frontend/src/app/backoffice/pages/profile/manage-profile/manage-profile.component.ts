@@ -3,8 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TokenStorageService } from '../../../../auth/service/token-storage.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
-import { Observable, Subject } from 'rxjs';
-import { environment } from '../../../../../environments/environment';
+import { Observable, Subject } from 'rxjs'; 
 
 @Component({
   selector: 'app-manage-profile',
@@ -43,7 +42,7 @@ export class ManageProfileComponent implements OnInit, OnDestroy {
   verificationForm: FormGroup;
   
   // API URLs - Using environment configuration
-  private apiUrl = environment.apiUrl;
+  private apiUrl = "api/v1/";
 
   constructor(
     private tokenStorage: TokenStorageService,

@@ -1,6 +1,6 @@
 package cloud.hustler.pidevbackend.controllers;
 
-import cloud.hustler.pidevbackend.DTO.ServiceRequestRequestBody;
+import cloud.hustler.pidevbackend.dto.ServiceRequestRequestBody;
 import cloud.hustler.pidevbackend.entity.ServiceRequests;
 import cloud.hustler.pidevbackend.entity.TypeStatus;
 import cloud.hustler.pidevbackend.service.IServiceRequestsService;

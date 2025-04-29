@@ -17,7 +17,7 @@ const routes: Routes = [
     loadChildren: () => import('./backoffice/backoffice.module').then(m => m.BackofficeModule),
     canActivate: [AuthGuard, RoleGuard],
     data: { 
-      roles: ['Admin', 'Farmer', 'DeliveryDriver', 'Expert'] // Allowed roles for backoffice
+      roles: ['ADMIN', 'Farmer', 'DeliveryDriver', 'Expert'] // Allowed roles for backoffice
     }
   },
 

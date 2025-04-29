@@ -1,0 +1,54 @@
+<app-admin-layout>
+<div class="chat-container">
+  <div class="chat-wrapper">
+    <!-- Sidebar -->
+    <div class="chat-sidebar">
+      <div class="chat-sections">
+        <button 
+          [class.active]="activeSection === 'chats'"
+          (click)="switchSection('chats')"
+          class="section-btn"
+        >
+          <i class="fas fa-comments"></i>
+          <span>Chats</span>
+        </button>
+        <button 
+          [class.active]="activeSection === 'requests'"
+          (click)="switchSection('requests')"
+          class="section-btn"
+        >
+          <i class="fas fa-user-plus"></i>
+          <span>Requests</span>
+        </button>
+        <button 
+          [class.active]="activeSection === 'groups'"
+          (click)="switchSection('groups')"
+          class="section-btn"
+        >
+          <i class="fas fa-users"></i>
+          <span>Groups</span>
+        </button>
+        <button 
+          [class.active]="activeSection === 'blocked'"
+          (click)="switchSection('blocked')"
+          class="section-btn"
+        >
+          <i class="fas fa-ban"></i>
+          <span>Blocked</span>
+        </button>
+      </div>
+      
+      <!-- Dynamic sidebar content -->
+      <app-chat-sidebar 
+        [activeSection]="activeSection"
+        [currentUser]="currentUser">
+      </app-chat-sidebar>
+    </div>
+
+    <!-- Main chat area -->
+    <div class="chat-main">
+      <app-chat-conversation></app-chat-conversation>
+    </div>
+  </div>
+</div>
+</app-admin-layout>

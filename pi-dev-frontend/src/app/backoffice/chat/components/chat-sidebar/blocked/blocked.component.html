@@ -1,0 +1,19 @@
+<div class="section-header">
+  <h4>Blocked Users</h4>
+</div>
+<div class="blocked-user-item" *ngFor="let user of blockedUsers">
+  <div class="user-avatar">
+    <img [src]="user.blocked.profileImage || 'assets/images/default-avatar.png'" alt="User avatar">
+  </div>
+  <div class="user-info">
+    <h4>{{ user.blocked.firstName || '' }} {{ user.blocked.lastName || '' }}</h4>
+    <p *ngIf="user.reason">Reason: {{ user.reason }}</p> 
+    <small>Blocked on: {{ user.blockedAt | date:'medium' }}</small>
+  </div>
+  <div class="unblock-action">
+    <button class="unblock-btn" (click)="unblockUser(user.blocked.id)">Unblock</button>
+  </div>
+</div>
+<div class="no-blocked-users" *ngIf="blockedUsers.length === 0">
+  <p>You haven't blocked any users</p>
+</div>

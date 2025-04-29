@@ -21,6 +21,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BackofficeModule } from './backoffice/backoffice.module';
 import { Oauth2RestrictedComponent } from './core/oauth2-restricted/oauth2-restricted.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -56,11 +57,7 @@ import { Oauth2RestrictedComponent } from './core/oauth2-restricted/oauth2-restr
     NgChartsModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => { 
-          // Get token from TokenStorageService instead of returning null
-          const tokenStorage = new TokenStorageService();
-          return tokenStorage.getToken();
-        },
+        tokenGetter: () => {return null},
         allowedDomains: ["localhost:4200"],
         disallowedRoutes: [
           "/api/v1/auth/authenticate",
@@ -70,7 +67,8 @@ import { Oauth2RestrictedComponent } from './core/oauth2-restricted/oauth2-restr
           "/api/v1/auth/validate-session"
         ]
       }
-    })
+    }),
+    NgbModule
   ],
   providers: [
     TokenStorageService,
