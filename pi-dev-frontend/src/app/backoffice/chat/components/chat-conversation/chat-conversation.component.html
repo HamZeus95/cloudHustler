@@ -1,0 +1,110 @@
+<div class="chat-conversation">
+  <!-- Empty state -->
+  <div *ngIf="showEmptyState" class="empty-state">
+    <div class="empty-state-content">
+      <div class="empty-state-icon">
+        <i class="far fa-comments"></i>
+      </div>
+      <h3>Select a conversation</h3>
+      <p>Choose a contact or group to start messaging</p>
+    </div>
+  </div>
+  
+  <!-- Conversation content -->
+  <div *ngIf="!showEmptyState" class="conversation-container">
+    <!-- Header -->
+    <div class="conversation-header">
+      <div class="partner-info">
+        <div class="avatar">
+          <img *ngIf="partnerInfo?.avatar" [src]="partnerInfo.avatar" alt="Avatar">
+          <div *ngIf="!partnerInfo?.avatar" class="default-avatar">
+            {{ partnerInfo?.name?.charAt(0) }}
+          </div>
+        </div>
+        <div class="info">
+          <h4>{{ partnerInfo?.name }}</h4>
+          <span *ngIf="conversationType === 'direct'" class="status">
+            <span class="status-indicator" [class.online]="partnerInfo?.online"></span>
+            {{ partnerInfo?.online ? 'Online' : 'Offline' }}
+          </span>
+          <span *ngIf="conversationType === 'group'" class="members">
+            {{ partnerInfo?.memberCount }} members
+          </span>
+        </div>
+      </div>
+      <div class="conversation-actions">
+        <!-- Add any actions like search, call, etc. -->
+      </div>
+    </div>
+    
+    <!-- Messages -->
+    <div class="conversation-messages" #messagesContainer>
+      <!-- Load more button -->
+      <div *ngIf="hasMoreMessages" class="load-more">
+        <button [disabled]="loadingMessages" (click)="loadMoreMessages()">
+          {{ loadingMessages ? 'Loading...' : 'Load more' }}
+        </button>
+      </div>
+      
+      <!-- Messages list -->
+      <ng-container *ngFor="let message of messages; let i = index">
+        <!-- Date separator -->
+        <div *ngIf="shouldShowDate(i)" class="date-separator">
+          <span>{{ formatDate(message.timestamp) }}</span>
+        </div>
+        
+        <!-- Message -->
+        <app-chat-message 
+          [message]="message" 
+          [isFromCurrentUser]="isFromCurrentUser(message)" 
+          [showSender]="conversationType === 'group'"
+          (deleteMessageEvent)="deleteMessage($event)">
+        </app-chat-message>
+      </ng-container>
+      
+      <!-- No messages yet -->
+      <div *ngIf="messages.length === 0 && !loadingMessages" class="no-messages">
+        <p>No messages yet. Start a conversation!</p>
+      </div>
+      
+      <!-- Loading indicator -->
+      <div *ngIf="loadingMessages && messages.length === 0" class="loading-messages">
+        <div class="spinner"></div>
+        <p>Loading messages...</p>
+      </div>
+    </div>
+    
+    <!-- Message input -->
+    <div class="conversation-input">
+      <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+        <div class="input-area">
+          <div class="attachment-button">
+            <label for="file-upload">
+              <i class="fas fa-paperclip"></i>
+            </label>
+            <input id="file-upload" type="file" (change)="onFileSelected($event)" style="display: none;" />
+          </div>
+          
+          <div class="message-input">
+            <textarea formControlName="content" placeholder="Type a message..." rows="1" (keydown.enter)="$event.preventDefault(); sendMessage();"></textarea>
+          </div>
+          
+          <button type="submit" [disabled]="messageForm.invalid || isSubmitting" class="send-button">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+        
+        <!-- File preview if a file is selected -->
+        <div *ngIf="messageForm.get('file')?.value" class="file-preview">
+          <div class="file-info">
+            <i class="fas fa-file"></i>
+            <span>{{ messageForm.get('file')?.value?.name }}</span>
+          </div>
+          <button type="button" (click)="clearSelectedFile()" class="clear-file">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

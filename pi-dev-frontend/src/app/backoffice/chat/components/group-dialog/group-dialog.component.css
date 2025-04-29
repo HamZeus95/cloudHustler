@@ -1,0 +1,28 @@
+.group-dialog-container {
+  min-width: 350px;
+  max-width: 500px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+mat-dialog-content {
+  margin-bottom: 1rem;
+  padding: 1rem 0;
+}
+
+mat-dialog-actions {
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+textarea {
+  resize: none;
+}
+
+h2 {
+  margin-bottom: 0;
+  color: #2c3e50;
+}

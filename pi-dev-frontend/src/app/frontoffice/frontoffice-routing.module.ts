@@ -20,8 +20,11 @@ import { LogoutComponent } from './pages/auth/logout/logout.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
 import { EventComponent } from './pages/event/event.component';
+import {PublicGuard} from '../auth/guards/public.guard';
+import { AuthGuard } from "../auth/guards/auth.guard";
 import { JobRequestsComponent } from './pages/job-requests/job-requests.component';
 import { FrontTakeQuizComponent } from './pages/front-take-quiz/front-take-quiz.component';
+
 
 
 const routes: Routes = [
@@ -30,13 +33,19 @@ const routes: Routes = [
     {path:"home",component:HomeComponent},
     {path:'contact',component:ContactComponent},
     {path: 'not-found', component: NotFoundComponent},
-  //auth routes
-    {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent},
+    { path:'factures', component: FactureClientComponent, canActivate: [AuthGuard]},
+    { path:'livraisons', component: LivraisonClientComponent, canActivate: [AuthGuard]},
+    { path:'livraison-client-details/:id', component: LivraisonClientdetailsComponent, canActivate: [AuthGuard]},
+    { path:'facture-client-details/:id', component: FactureClientdetailsComponent, canActivate: [AuthGuard]},
+    { path:'suivrelivraison/:id', component: MapComponent, canActivate: [AuthGuard]},
+    { path:'livraisonsDriver', component: LivraisondriverComponent, canActivate: [AuthGuard]},
+    {path: 'login', component: LoginComponent, canActivate: [PublicGuard]},
+    {path: 'register', component: RegisterComponent, canActivate: [PublicGuard]},
     {path: "verify-email", component: OtpComponent},
     {path: 'logout', component: LogoutComponent},
-    {path: 'forgot-password', component: ForgotPasswordComponent},
-    {path: 'reset-password', component: ResetPasswordComponent},
+    {path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [PublicGuard]},
+    {path: 'reset-password', component: ResetPasswordComponent, canActivate: [PublicGuard]},
+    {path: 'not-found', component: NotFoundComponent},
   //event routes
     {path:'event',component:EventComponent},
   //blog routes

@@ -1,6 +1,7 @@
 package cloud.hustler.pidevbackend.controllers;
 
 import cloud.hustler.pidevbackend.dto.ChangePasswordRequest;
+import cloud.hustler.pidevbackend.dto.UserNotConsumerDTO;
 import cloud.hustler.pidevbackend.dto.UserResponse;
 import cloud.hustler.pidevbackend.dto.UserUpdateRequest;
 import cloud.hustler.pidevbackend.service.user.IUserService;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -110,4 +112,14 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
+    // find users not consumer by role with query param
+    @GetMapping("/not-consumer")
+    public ResponseEntity<List<UserNotConsumerDTO>> getAllUsersNotConsumer(
+        @RequestParam(value = "query", required = false) String query) {
+    List<UserNotConsumerDTO> users = userService.getAllUsersNotConsumer(query);
+    return ResponseEntity.ok(users);
+}
+
+    
+   
 }
