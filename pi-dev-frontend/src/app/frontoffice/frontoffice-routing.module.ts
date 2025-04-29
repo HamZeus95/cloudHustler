@@ -26,8 +26,10 @@ import { FrontTakeQuizComponent } from './pages/front-take-quiz/front-take-quiz.
 
 
 import { EventComponent } from './pages/event/event.component';
+import { PaymentComponent } from './components/payment/payment.component';
 import { EditCommentComponent } from './components/comment/edit-comment/edit-comment.component';
 import { EditPostComponent } from './components/posts/edit-post/edit-post.component';
+
 
 
 const routes: Routes = [
@@ -78,6 +80,7 @@ const routes: Routes = [
     { path:'livraisonsDriver',  component: LivraisondriverComponent}, // ya hamza rodeha ken el user connectee w driver
   //market routes
     {path:'market', component: MarketComponent},
+    {path:'payment', component: PaymentComponent},
   //hiring routes
     {path:'jobs',component:JobsComponent},
     { path: 'job-request/:jobId', component: JobRequestsComponent },

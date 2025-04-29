@@ -47,6 +47,10 @@ public class SecurityConfiguration {
             "/Event/getEvents", // temporary
             "Event/**", // fix later
             "/product/**",
+            "/cart/**",
+            "/orders/**",
+            "/productcategory/**",
+            "/payment/**",
             "/livraisons/**",
             "/factures/**",
             "/orders/**",

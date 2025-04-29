@@ -2,6 +2,7 @@ package cloud.hustler.pidevbackend.controllers;
 
 import cloud.hustler.pidevbackend.entity.Post;
 import cloud.hustler.pidevbackend.entity.User;
+import cloud.hustler.pidevbackend.repository.UserRepository;
 import cloud.hustler.pidevbackend.service.EmailService;
 import cloud.hustler.pidevbackend.service.IPostService;
 import cloud.hustler.pidevbackend.service.SmsService;
@@ -32,7 +33,7 @@ public class PostController {
     @Autowired
     private IPostService postService;
     @Autowired
-    private IUserService userService;
+    private UserRepository userService;
 
     @Autowired
     private EmailService emailService;
@@ -48,11 +49,11 @@ public class PostController {
             @RequestParam(value = "media", required = false) MultipartFile media,
             @RequestParam(value = "createdAt", required = false) String createdAt,
             @RequestParam(value = "updatedAt", required = false) String updatedAt,
-            @RequestParam("userUuid") String userUuid) {
+            @RequestParam("userUuid") UUID userUuid) {
 
         try {
             // Rechercher l'utilisateur
-            User user = userService.findByUuid(userUuid)
+            User user = userService.findByUuid_user(userUuid)
                     .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé avec UUID: " + userUuid));
 
             String mediaUrl = null;

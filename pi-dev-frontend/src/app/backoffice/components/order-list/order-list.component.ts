@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService, TokenStorageService } from 'src/app/auth/service';
 import { Order } from 'src/app/core/models/market/order.model';
 
 import { OrderService } from 'src/app/core/services/order.service';
@@ -14,20 +15,37 @@ export class OrderListComponent implements OnInit {
   isLoading = true;
   viewMode: 'list' | 'grid' = 'list'; // Default to list view for orders
   selectedOrder: Order | null = null;
-  customerUuid = '7421256b-be17-455a-8c89-8b382ba0a28a'; // Replace with actual customer ID logic
+  isAuthenticated = false;
+currentUser: any = null;
 
   constructor(
     private orderService: OrderService,
-    private productService: ProductService
+    private productService: ProductService,
+    private authService: AuthService,
+      private tokenStorageService: TokenStorageService
   ) {}
 
   ngOnInit(): void {
+    // Check authentication status
+    this.authService.isAuthenticated().subscribe(isAuth => {
+      this.isAuthenticated = isAuth;
+      if (isAuth) {
+        this.currentUser = this.tokenStorageService.getCurrentUser();
+      }
+      console.log(this.currentUser)
+    });
+
+    // Subscribe to user changes
+    this.tokenStorageService.getUser().subscribe(user => {
+      this.currentUser = user;
+    });
     this.loadOrders();
   }
 
   loadOrders(): void {
+    const customerUuid = this.currentUser.userUUID; 
     this.isLoading = true;
-    this.orderService.getOrders(this.customerUuid).subscribe({
+    this.orderService.getOrders(customerUuid).subscribe({
       next: (orders) => {
         this.orders = orders;
         this.isLoading = false;
@@ -37,6 +55,18 @@ export class OrderListComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  getFullImageUrl(filename: string): string {
+    if (!filename) return 'assets/img/placeholder-product.png';
+    
+    // If it's already a full URL or data URI
+    if (filename.startsWith('http') || filename.startsWith('data:')) {
+      return filename;
+    }
+    
+    // For images stored in your backend
+    return `http://localhost:8090/api/v1${filename}`;
   }
 
   viewOrderDetails(order: Order): void {

@@ -9,33 +9,32 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-
 @Entity
+@Table(name = "orders")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+
 @ToString(exclude = "orderItems")
 @EqualsAndHashCode(of = "uuid_order")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "orders")
 public class Order {
-    @Id
-    @GeneratedValue(strategy= GenerationType.UUID)
-    UUID uuid_order;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    UUID uuid_order;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     Set<OrderItem> orderItems = new HashSet<>();
 
     double totalPrice;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "customer_uuid")
     Consumer consumer;
 
     @Enumerated(EnumType.STRING)
     OrderStatus status;
-
 
 }

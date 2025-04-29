@@ -13,7 +13,7 @@ import { LivraisonService } from 'src/app/core/services/livraison/livraison.serv
 export class LivraisondriverComponent {
 
 displayModal: boolean = false;
-  readonly userUuid = '428067bc-f4ce-4b6c-913e-d8a0a7e6eb9e'; // Replace with actual UUID retrieval
+  //readonly userUuid = '428067bc-f4ce-4b6c-913e-d8a0a7e6eb9e'; // Replace with actual UUID retrieval
 
   isAuthenticated = false;
   currentUser: any = null;
@@ -59,12 +59,12 @@ displayModal: boolean = false;
   
 
     loadLivraisons() {
-      //const userUuid = this.currentUser.userUUID;  
+      const userUuid = this.currentUser.userUUID;  
       //readonly userUuid = '428067bc-f4ce-4b6c-913e-d8a0a7e6eb9e'; // Replace with actual UUID retrieval
 
       // Assuming you store the UUID somewhere
-      if (this.userUuid) {
-        this.http.get<Livraison[]>(`/api/v1/livraisons/livreur/${this.userUuid}/ordered`).subscribe(
+      if (userUuid) {
+        this.http.get<Livraison[]>(`/api/v1/livraisons/livreur/${userUuid}/ordered`).subscribe(
           (data: Livraison[]) => {
             this.livraisons = data;
           },

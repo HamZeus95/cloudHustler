@@ -6,6 +6,9 @@ import { Cart } from '../../../core/models/market/cart.model';
 import { Order } from '../../../core/models/market/order.model';
 import { OrderService } from '../../../core/services/order.service';
 import { ProductCategoryService } from 'src/app/core/services/productCategory.service';
+import { AuthService } from '../../../auth/service/authentication.service';
+import { TokenStorageService } from '../../../auth/service/token-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-market',
@@ -30,18 +33,39 @@ export class MarketComponent {
   isCartOpen = false;
   sortOption: string = '';
 priceFilter: { min: number; max: number } | null = null;
+isAuthenticated = false;
+currentUser: any = null;
+searchTerm: string = '';
+filteredProducts: Product[] = [];
 
-  customerUuid = '7421256b-be17-455a-8c89-8b382ba0a28a'; // Replace with logic to retrieve actual user
+ 
 
-  constructor(private productService: ProductService, private cartService: CartService,private orderService: OrderService,private categoryService: ProductCategoryService) { }
+  constructor(
+    private productService: ProductService, private cartService: CartService,private orderService: OrderService,private categoryService: ProductCategoryService
+  ,private authService: AuthService,
+  private tokenStorageService: TokenStorageService,
+  private router: Router,) { }
 
   ngOnInit(): void {
+      // Check authentication status
+      this.authService.isAuthenticated().subscribe(isAuth => {
+        this.isAuthenticated = isAuth;
+        if (isAuth) {
+          this.currentUser = this.tokenStorageService.getCurrentUser();
+        }
+        console.log(this.currentUser)
+      });
+  
+      // Subscribe to user changes
+      this.tokenStorageService.getUser().subscribe(user => {
+        this.currentUser = user;
+      });
     this.loadProducts();
     this.loadCategories();
     this.loadCart();
     this.loadOrders();
   }
-/*
+/*load_products_1.0
   loadProducts(categoryId?: string): void {
     this.isLoading = true;
     
@@ -62,8 +86,8 @@ priceFilter: { min: number; max: number } | null = null;
     });
   }**/
 
-
-
+//LOAD_PRODUCTS2.0
+/*
     loadProducts(categoryId?: string): void {
       this.isLoading = true;
     
@@ -90,6 +114,52 @@ priceFilter: { min: number; max: number } | null = null;
         }
       });
     }
+*/
+
+loadProducts(categoryId?: string): void {
+  this.isLoading = true;
+
+  const productObservable = categoryId
+    ? this.productService.getProductsByCategory(categoryId)
+    : this.productService.getAllProducts();
+
+  productObservable.subscribe({
+    next: (data) => {
+      let filtered = data;
+
+      if (this.priceFilter) {
+        filtered = filtered.filter(p => p.price >= this.priceFilter!.min && p.price <= this.priceFilter!.max);
+      }
+
+      // Update products list
+      this.products = filtered;
+      this.sortProducts();
+
+      // 🔥 Apply search after loading and sorting
+      this.applySearchFilter();
+
+      this.totalProducts = this.filteredProducts.length;
+      this.isLoading = false;
+    },
+    error: (err) => {
+      console.error('Error fetching products:', err);
+      this.isLoading = false;
+    }
+  });
+}
+
+applySearchFilter(): void {
+  if (!this.searchTerm) {
+    this.filteredProducts = this.products;
+  } else {
+    const lowerSearch = this.searchTerm.toLowerCase();
+    this.filteredProducts = this.products.filter(product =>
+      product.name.toLowerCase().includes(lowerSearch) ||
+      (product.description && product.description.toLowerCase().includes(lowerSearch))
+    );
+  }
+}
+
 
 
   sortProducts(): void {
@@ -119,7 +189,8 @@ priceFilter: { min: number; max: number } | null = null;
   
   
   addToCart(productId: string) {
-    this.cartService.addToCart(this.customerUuid, productId, 1).subscribe({
+    const customerUuid = this.currentUser.userUUID; 
+    this.cartService.addToCart(customerUuid, productId, 1).subscribe({
       next: () => {
         this.loadCart();
         
@@ -139,7 +210,8 @@ priceFilter: { min: number; max: number } | null = null;
     }
   }
   loadCart() {
-    this.cartService.getCart(this.customerUuid).subscribe({
+    const customerUuid = this.currentUser.userUUID; 
+    this.cartService.getCart(customerUuid).subscribe({
       
       next: (data) => {
         console.log('Cart data from backend:', data);
@@ -149,21 +221,24 @@ priceFilter: { min: number; max: number } | null = null;
     });
   }
   removeFromCart(productId: string) {
-    this.cartService.removeFromCart(this.customerUuid, productId).subscribe({
+    const customerUuid = this.currentUser.userUUID; 
+    this.cartService.removeFromCart(customerUuid, productId).subscribe({
       next: () => this.loadCart(),
       error: (err) => console.error('Failed to remove product', err)
     });
   }
 
   clearCart() {
-    this.cartService.clearCart(this.customerUuid).subscribe({
+    const customerUuid = this.currentUser.userUUID; 
+    this.cartService.clearCart(customerUuid).subscribe({
       next: () => this.loadCart(),
       error: (err) => console.error('Failed to clear cart', err)
     });
   }
 
   loadOrders() {
-    this.orderService.getOrders(this.customerUuid).subscribe({
+    const customerUuid = this.currentUser.userUUID; 
+    this.orderService.getOrders(customerUuid).subscribe({
       next: (data) =>{ 
         console.log("Order data from backend ", data);
         this.orders = data;},
@@ -171,16 +246,27 @@ priceFilter: { min: number; max: number } | null = null;
     });
   }
 
+
+  
+
+
+  
   checkout() {
-    this.orderService.checkout(this.customerUuid).subscribe({
-      next: () => {
-        alert('Order placed successfully!');
-        this.loadOrders(); 
-        this.loadCart();// Refresh orders list
+    const customerUuid = this.currentUser.userUUID; 
+    this.orderService.prepareCheckout(customerUuid).subscribe({
+      next: (response) => {
+        console.log('Stripe Checkout URL:', response.sessionUrl);
+        alert(`Redirecting to Stripe: ${response.sessionUrl}`);
+        
+        // 👉 OPTIONAL: If you want to automatically redirect the user to Stripe checkout
+        window.location.href = response.sessionUrl;
+  
+        // If you don't want to redirect automatically, you can just show the URL
+         this.loadOrders(); 
+         this.loadCart();
       },
       error: (err) => console.error('Checkout failed', err)
     });
-    
   }
 
   loadCategories(): void {
@@ -211,8 +297,9 @@ priceFilter: { min: number; max: number } | null = null;
 
   get paginatedProducts(): Product[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.products.slice(startIndex, startIndex + this.itemsPerPage);
+    return this.filteredProducts.slice(startIndex, startIndex + this.itemsPerPage);
   }
+  
 
   // Change page
   changePage(page: number): void {
@@ -222,8 +309,14 @@ priceFilter: { min: number; max: number } | null = null;
 
   // Get total pages
   get totalPages(): number {
-    return Math.ceil(this.totalProducts / this.itemsPerPage);
+    return Math.ceil(this.filteredProducts.length / this.itemsPerPage);
   }
+  
+  onSearchChange(): void {
+    this.applySearchFilter();
+    this.currentPage = 1; // Reset to first page after search
+  }
+  
 
   // Generate page numbers
   get pages(): number[] {
@@ -242,6 +335,18 @@ priceFilter: { min: number; max: number } | null = null;
 
   toggleCartPanel(): void {
     this.isCartOpen = !this.isCartOpen;
+  }
+
+  getFullImageUrl(filename: string): string {
+    if (!filename) return 'assets/img/placeholder-product.png';
+    
+    // If it's already a full URL or data URI
+    if (filename.startsWith('http') || filename.startsWith('data:')) {
+      return filename;
+    }
+    
+    // For images stored in your backend
+    return `http://localhost:8090/api/v1${filename}`;
   }
   
 }

@@ -23,14 +23,59 @@ export class ProductService {
   getProductById(id: string): Observable<Product> {
     return this.http.get<Product>(`${this.apiUrl}/retrieveProduct/${id}`);
   }
-
+/*
   createProduct(product: Product, idProductCategory: string): Observable<Product> {
     return this.http.post<Product>(`${this.apiUrl}/addProduct/${idProductCategory}`, product);
-  }
+  }*/
 
+    
+
+    createProductWithImage(product: Product, imageFile: File | null, categoryId: string): Observable<Product> {
+      const formData = new FormData();
+      
+      // Append product data as JSON
+      formData.append('product', new Blob([JSON.stringify({
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        quantity: product.quantity,
+        isAvailable: product.isAvailable
+      })], { type: 'application/json' }));
+  
+      // Append image file if it exists
+      if (imageFile) {
+        formData.append('image', imageFile);
+      }
+  
+      return this.http.post<Product>(`${this.apiUrl}/addProduct/${categoryId}`, formData);
+    }
+
+    /*
   updateProduct(product: Product): Observable<Product> {
     return this.http.put<Product>(`${this.apiUrl}/updateProduct`, product);
+  }*/
+
+    updateProductWithImage(productId: string, product: Product, imageFile: File | null): Observable<Product> {
+      const formData = new FormData();
+      
+      formData.append('product', new Blob([JSON.stringify({
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          quantity: product.quantity,
+          isAvailable: product.isAvailable,
+          imageUrl: product.imageUrl // Include existing image URL
+      })], { type: 'application/json' }));
+  
+      if (imageFile) {
+          formData.append('image', imageFile);
+      }
+  
+      return this.http.put<Product>(`${this.apiUrl}/updateProduct/${productId}`, formData);
   }
+  
+
+  
 
   deleteProduct(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/deleteProduct/${id}`);

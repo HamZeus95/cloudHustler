@@ -101,9 +101,9 @@ import { Farm3DComponent } from "./components/farm3d/farm3d.component";
     EmailJobsComponent,
     QuizComponent,
     CreateQuizComponent,
-    UpdateQuestionsComponent
+    UpdateQuestionsComponent,
     IaFarmDashComponent,
-    Farm3DComponent,
+    Farm3DComponent
   ],
   imports: [
     CommonModule,
@@ -119,12 +119,11 @@ import { Farm3DComponent } from "./components/farm3d/farm3d.component";
     MatIconModule,  
     CoreDirectivesModule,
     HttpClientModule,
-    //added by the user
     SharedLayoutsModule,
     WebcamModule,
-    MatDialogModule, // Add MatDialogModule
-    MatFormFieldModule, // Add MatFormFieldModule for mat-form-field
-    MatInputModule, // Add MatInputModule for matInput
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule, 
 
   ],
   providers: [

@@ -7,21 +7,20 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.UUID;
-
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of = "uuid_orderItem")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
 public class OrderItem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID uuid_orderItem;
 
-    @ManyToOne
+    @ManyToOne()
     @JsonIgnore
     @JoinColumn(name = "order_uuid")
     Order order;
@@ -32,9 +31,8 @@ public class OrderItem {
 
     int quantity;
 
-    double totalPrice() {
+    public double getTotalPrice() {
         return product.getPrice() * quantity;
     }
-
 
 }

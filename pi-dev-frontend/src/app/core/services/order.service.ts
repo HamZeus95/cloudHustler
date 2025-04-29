@@ -11,8 +11,18 @@ export class OrderService {
 
   constructor(private http: HttpClient) {}
 
-  checkout(customerUuid: string): Observable<Order> {
-    return this.http.post<Order>(`${this.apiUrl}/${customerUuid}/checkout`, {});
+  prepareCheckout(customerUuid: string): Observable<{ sessionUrl: string }> {
+    return this.http.post<{ sessionUrl: string }>(
+      `${this.apiUrl}/prepare-checkout/${customerUuid}`,
+      {}
+    );
+  }
+
+  confirmOrderAfterPayment(sessionId: string, customerUuid: string): Observable<Order> {
+    return this.http.post<Order>(
+      `${this.apiUrl}/confirm?sessionId=${sessionId}&customerUuid=${customerUuid}`,
+      {}
+    );
   }
 
   getOrders(customerUuid: string): Observable<Order[]> {

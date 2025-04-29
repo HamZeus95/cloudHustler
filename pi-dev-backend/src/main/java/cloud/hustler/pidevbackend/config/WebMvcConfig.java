@@ -12,40 +12,35 @@ import static cloud.hustler.pidevbackend.controllers.PostController.UPLOAD_DIR;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-    
+
     @Value("${app.upload.dir:${user.dir}/src/main/resources/static/images}")
     private String uploadDir;
-    
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // We need to explicitly register resource handlers due to the custom context path
-        System.out.println("Images will be served from the static resources directory: " + uploadDir);
-        
         // Create directory if it doesn't exist
         File directory = new File(uploadDir);
         if (!directory.exists()) {
-            boolean created = directory.mkdirs();
-            if (created) {
-                System.out.println("Created upload directory: " + directory.getAbsolutePath());
-            }
+            directory.mkdirs();
         }
 
-        // Create the file URL to serve from the physical path
-        String imageFilePath = "file:" + uploadDir + "/";
-        System.out.println("Image file path for resource handler: " + imageFilePath);
-        
-        // 1. Register handler for direct access to images (bypassing context path)
-        registry.addResourceHandler("/images/**")
-                .addResourceLocations(imageFilePath)
-                .setCachePeriod(3600);
-                
-        // 2. Register handler for accessing images through the API context path
-        registry.addResourceHandler("/api/v1/images/**")
-                .addResourceLocations(imageFilePath)
+        // Register handler for product images
+        registry.addResourceHandler("/product/images/**")
+                .addResourceLocations("file:" + uploadDir + "/")
                 .setCachePeriod(3600);
         registry.addResourceHandler("/pi-dev-backend/uploads/**")
                 .addResourceLocations("file:" + UPLOAD_DIR)
                 .setCachePeriod(0);
     }
-    
+
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:4200")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true);
+    }
+
 }

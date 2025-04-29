@@ -15,19 +15,18 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 @Entity
+@DiscriminatorValue("Consumer")
 @Getter
 @Setter
-@ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@DiscriminatorValue("Consumer")
 public class Consumer extends User {
 
     @JsonIgnore
+
     @OneToMany(mappedBy = "consumer",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     Set<Order> orders= new HashSet<>();
 
@@ -46,7 +45,7 @@ public class Consumer extends User {
     }
 
     @Override
-    public  String getPassword() {
+    public String getPassword() {
         return super.getPassword();
     }
 
