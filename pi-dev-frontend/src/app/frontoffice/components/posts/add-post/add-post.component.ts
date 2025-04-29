@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { PostService } from '../../../../core/services/service';
 import { Post } from '../../../../core/models/Post';
-
-import { AuthService } from '../../../../auth/service/authentication.service'; // Ajoutez cette importation
-import { TokenStorageService } from '../../../../auth/service/token-storage.service'; // Ajoutez cette importation
+import { AuthService } from '../../../../auth/service/authentication.service';
+import { TokenStorageService } from '../../../../auth/service/token-storage.service';
 
 @Component({
   selector: 'app-add-post',
@@ -12,51 +11,50 @@ import { TokenStorageService } from '../../../../auth/service/token-storage.serv
 })
 export class AddPostComponent {
   @Output() postAdded = new EventEmitter<void>();
-  showForm = false; // État initial: formulaire masqué
+  showForm = false;
  
   post: Post = {
     title: '',
     content: '',
     mediaUrl: '',
-    
   };
+  
   currentUser: any = null;
   isAuthenticated = false;
   fileToUpload: File | null = null;
 
-  constructor(private postService: PostService ,
-              private authService: AuthService,
-              private tokenStorageService: TokenStorageService) { // Ajoutez cette injection
-    
-      }
-    
-    
-  
+  constructor(
+    private postService: PostService,
+    private authService: AuthService,
+    private tokenStorageService: TokenStorageService
+  ) {}
+
   ngOnInit(): void {
     this.authService.isAuthenticated().subscribe(isAuth => {
       this.isAuthenticated = isAuth;
       if (isAuth) {
-        this.currentUser = this.tokenStorageService.getCurrentUser();
+        // Récupérer l'utilisateur directement depuis le stockage local
+        const user = this.tokenStorageService.getCurrentUser();
+        if (user) {
+          this.currentUser = user;
+          console.log('Current user:', this.currentUser); // Vérifiez les données de l'utilisateur
+        }
       }
-      console.log(this.currentUser)
     });
-
-    // Subscribe to user changes
     this.tokenStorageService.getUser().subscribe(user => {
       this.currentUser = user;
+      console.log('User updated:', this.currentUser); // Vérifiez les mises à jour
     });
-    
-    
   }
 
   isImage(url: string | undefined): boolean {
     if (!url) return false;
     return url.startsWith('data:image');
   }
+
   toggleForm(): void {
     this.showForm = !this.showForm;
   }
-
 
   isVideo(url: string | undefined): boolean {
     if (!url) return false;
@@ -85,11 +83,12 @@ export class AddPostComponent {
   }
 
   onSubmit(): void {
-    if (!this.currentUser?.userUUID) {
-      console.error('User UUID is missing');
+    const user = this.tokenStorageService.getCurrentUser();
+    if (!user?.userUUID) {
+      console.error('User UUID is missing', user);
       return;
     }
-  
+
     const formData = new FormData();
     formData.append('title', this.post.title);
     formData.append('content', this.post.content);
@@ -98,14 +97,12 @@ export class AddPostComponent {
       formData.append('media', this.fileToUpload);
     }
     
-    // Add user UUID to the request
-    formData.append('userUuid', this.currentUser.userUUID);
-  
-    console.log('FormData contents:');
-    formData.forEach((value, key) => {
-      console.log(key, value);
-    });
-  
+    formData.append('userUuid', user.userUUID); // Assurez-vous que user.userUUID est une chaîne
+      // formData.append('userUuid', "37fcb2b3-662e-4389-9187-2333d5f38f4b");
+
+
+    // console.log('Submitting form with userUuid:', user.userUUID); // Vérifiez l'UUID
+
     this.postService.addPost(formData).subscribe({
       next: () => {
         this.resetForm();
@@ -118,10 +115,10 @@ export class AddPostComponent {
       }
     });
   }
+  
 
   resetForm(): void {
     this.post = { title: '', content: '', mediaUrl: '' };
     this.fileToUpload = null;
   }
-  
 }

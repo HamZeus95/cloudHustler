@@ -513,6 +513,104 @@ button[type="button"]:hover {
   }
 }
 
+/* Updated styles for the invoice addition form to make it more attractive */
+
+/* Form container */
+.form-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  background: linear-gradient(135deg, #4e5ef2, #6a82fb);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgb(237, 227, 227);
+  color: #fff;
+}
+
+/* Form title */
+.form-container h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+/* Input fields */
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #f4f4f4;
+  color: #333;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input:focus, select:focus {
+  outline: none;
+  border: 2px solid #6a82fb;
+  box-shadow: 0 0 8px rgba(106, 130, 251, 0.5);
+}
+
+/* Buttons */
+button.action-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background: #6a82fb;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button.action-button:hover {
+  background: #4e5ef2;
+}
+
+button.cancel-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background: #e53e3e;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 10px;
+}
+
+button.cancel-button:hover {
+  background: #c53030;
+}
+
+/* Form group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .form-container {
+    padding: 20px;
+  }
+
+  button.action-button, button.cancel-button {
+    font-size: 0.9rem;
+  }
+}
+
 .titre-facture {
   text-align: center;         /* Centre le texte horizontalement */
   color: #000000;             /* Couleur noire */
