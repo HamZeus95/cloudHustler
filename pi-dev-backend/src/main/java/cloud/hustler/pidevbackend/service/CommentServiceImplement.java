@@ -2,8 +2,10 @@ package cloud.hustler.pidevbackend.service;
 
 import cloud.hustler.pidevbackend.entity.Comment;
 import cloud.hustler.pidevbackend.entity.Post;
+import cloud.hustler.pidevbackend.entity.User;
 import cloud.hustler.pidevbackend.repository.CommentRepository;
 import cloud.hustler.pidevbackend.repository.PostRepository;
+import cloud.hustler.pidevbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +21,25 @@ public class CommentServiceImplement implements ICommentService {
     private CommentRepository commentRepository;
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Override
     public Comment addComment(Comment comment) {
         return commentRepository.save(comment);
     }
 
     @Override
-    public Comment ajouterCommentEtAffecterPost(Comment comment, UUID postId) {
-    Post post = postRepository.findById(postId).get();
-    comment.setPost(post);
-    return commentRepository.save(comment);}
+    public Comment ajouterCommentEtAffecterPost(Comment comment, UUID postId, UUID userUuid) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found with ID: " + postId));
+
+        User user = userRepository.findByUuid_user(userUuid)
+                .orElseThrow(() -> new RuntimeException("User not found with UUID: " + userUuid));
+
+        comment.setPost(post);
+        comment.setUser(user); // Associer aussi l'utilisateur au commentaire
+        return commentRepository.save(comment);
+    }
 
     @Override
     public Comment updateComment(Comment comment) {

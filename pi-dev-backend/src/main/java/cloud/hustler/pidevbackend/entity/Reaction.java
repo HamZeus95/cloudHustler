@@ -23,6 +23,10 @@ public class Reaction {
     @JoinColumn(name = "post_uuid", nullable = false)
     Post post;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;  // Relation avec le Farmer qui a écrit ce post
+
 
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
