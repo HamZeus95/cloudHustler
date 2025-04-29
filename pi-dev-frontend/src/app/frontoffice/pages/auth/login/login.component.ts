@@ -107,7 +107,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           localStorage.removeItem('logged_out');
         
           setTimeout(() => {
-            if (userRole && ['expert', 'farmer', 'delivery', 'deliverydriver'].some(
+            if (userRole && ['expert', 'farmer', 'delivery', 'deliverydriver','ADMIN'].some(
               role => userRole.toLowerCase().includes(role.toLowerCase())
             )) {
               this.router.navigate(['backoffice']);

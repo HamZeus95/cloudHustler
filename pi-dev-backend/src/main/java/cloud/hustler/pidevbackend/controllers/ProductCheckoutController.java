@@ -1,8 +1,8 @@
 package cloud.hustler.pidevbackend.controllers;
 
 
-import cloud.hustler.pidevbackend.DTO.ProductRequest;
-import cloud.hustler.pidevbackend.DTO.StripeResponse;
+import cloud.hustler.pidevbackend.dto.ProductRequest;
+import cloud.hustler.pidevbackend.dto.StripeResponse;
 import cloud.hustler.pidevbackend.service.StripeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

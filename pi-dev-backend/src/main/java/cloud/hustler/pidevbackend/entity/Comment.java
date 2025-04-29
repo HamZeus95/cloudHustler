@@ -36,16 +36,13 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     Date updatedAt;
 
-
-    @ManyToOne
     @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "post_uuid", nullable = false)
     Post post;
 
-
-    @ManyToOne
     @JsonIgnore
-
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;  // Relation avec le Farmer qui a écrit ce post
 

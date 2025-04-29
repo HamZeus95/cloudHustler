@@ -8,7 +8,8 @@ import { Servicee } from 'src/app/core/models/servicee';
   providedIn: 'root'
 })
 export class ServiceeService {
-  private apiUrl = 'http://localhost:8090/api/v1/services';
+  private apiUrl = '/api/v1/services';
+
 
   constructor(private http: HttpClient) {}
 

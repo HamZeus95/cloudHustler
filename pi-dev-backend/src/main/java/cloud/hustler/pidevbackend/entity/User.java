@@ -51,7 +51,7 @@ public abstract class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     Set<ServiceRequests> serviceRequests= new HashSet<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     Set<Post> posts = new HashSet<>();
     /*
       @OneToMany(mappedBy = "user")

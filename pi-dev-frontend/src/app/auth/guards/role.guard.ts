@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, map, take } from 'rxjs';
 import { AuthService } from '../service/authentication.service';
-import { TokenStorageService } from '../service/token-storage.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { TokenStorageService } from '../service/token-storage.service'; 
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +11,7 @@ export class RoleGuard implements CanActivate {
   constructor(
     private authService: AuthService,
     private tokenStorageService: TokenStorageService,
-    private router: Router,
-    private jwtHelper: JwtHelperService
+    private router: Router, 
   ) {}
 
   canActivate(
