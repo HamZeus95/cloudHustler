@@ -1,8 +1,10 @@
 package cloud.hustler.pidevbackend.service.user;
 
 import cloud.hustler.pidevbackend.dto.ChangePasswordRequest;
+import cloud.hustler.pidevbackend.dto.UserNotConsumerDTO;
 import cloud.hustler.pidevbackend.dto.UserResponse;
 import cloud.hustler.pidevbackend.dto.UserUpdateRequest;
+import cloud.hustler.pidevbackend.entity.Consumer;
 import cloud.hustler.pidevbackend.entity.User;
 import cloud.hustler.pidevbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -209,4 +212,25 @@ public class UserServiceImplement implements IUserService {
         return user.getProvider() != null && 
                (user.getProvider().equals("google") || user.getProvider().equals("github"));
     }
+
+    @Override
+    public List<UserNotConsumerDTO> getAllUsersNotConsumer(String query) {
+        List<User> users = userRepository.findByTypeNot(Consumer.class);
+    
+        if (query != null && !query.isEmpty()) {
+            users = users.stream()
+                .filter(user -> (user.getFirstName() != null && user.getFirstName().toLowerCase().contains(query.toLowerCase())) ||
+                                (user.getLastName() != null && user.getLastName().toLowerCase().contains(query.toLowerCase())) )
+                .toList();
+        }
+    
+        return users.stream()
+                .map(user -> new UserNotConsumerDTO(
+                        user.getUuid_user(),
+                        user.getFirstName(),
+                        user.getLastName(),
+                        user.getImage()))
+                .toList();
+    }
+    
 }

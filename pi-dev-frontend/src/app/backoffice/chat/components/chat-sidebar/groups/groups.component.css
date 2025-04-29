@@ -1,0 +1,236 @@
+.chat-sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    border-right: 1px solid #e0e0e0;
+  }
+  
+  .sidebar-header {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #f8f8f8;
+  }
+  
+  .sidebar-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .search-container {
+    position: relative;
+    margin-top: 10px;
+  }
+  
+  .search-container input {
+    width: 100%;
+    padding: 8px 30px 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .search-icon {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+  }
+  
+  .search-icon.loading {
+    animation: spin 1s infinite linear;
+  }
+  
+  .sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+  }
+  
+  .user-item, .request-item, .group-item, .blocked-user-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .user-item:hover, .group-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .user-avatar, .group-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+  
+  .user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .group-icon {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e1e1e1;
+    font-size: 18px;
+  }
+  
+  .user-info, .group-info {
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  .user-info h4, .group-info h4 {
+    margin: 0;
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .user-info p, .group-info p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .unread-badge {
+    background-color: #ff5252;
+    color: white;
+    border-radius: 50%;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .section-header {
+    margin: 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .section-header h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .no-chats, .no-requests, .no-groups, .no-blocked-users, .no-results {
+    text-align: center;
+    padding: 20px;
+    color: #999;
+  }
+  
+  .request-item {
+    background-color: #f9f9f9;
+    border-left: 3px solid #4caf50;
+  }
+  
+  .request-actions {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .approve-btn, .reject-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .approve-btn {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .reject-btn {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .blocked-user-item {
+    background-color: #fff0f0;
+    border-left: 3px solid #f44336;
+    margin-bottom: 10px;
+  }
+  
+  .user-info small {
+    display: block;
+    font-size: 11px;
+    color: #888;
+    margin-top: 2px;
+  }
+  
+  .unblock-action {
+    margin-left: 10px;
+  }
+  
+  .unblock-btn {
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.2s;
+  }
+  
+  .unblock-btn:hover {
+    background-color: #d32f2f;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .scrollable {
+    max-height: 250px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding-right: 5px;
+  }
+  
+  .scrollable::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  .scrollable::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .scrollable::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  
+  .scrollable::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }

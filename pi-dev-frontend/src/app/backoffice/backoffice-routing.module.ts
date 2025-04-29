@@ -4,8 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FarmService } from '../core/services/farm-managment/farm.service';
 import { CropService } from '../core/services/farm-managment/crop.service';
 import { FarmManagmentComponent } from './pages/farm-managment/farm-managment.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { EventComponent } from './pages/event/event.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component'; 
 import { TaskManagementComponent } from './components/task-management/task-management.component';
 import { WeatherComponent } from './components/weather/weather.component';
 import { CropDiseaseDetectorComponent } from "./components/crop-disease-detector/crop-disease-detector.component"
@@ -22,6 +21,8 @@ import { LivraisonComponent } from './pages/livraison/livraisons/livraisons.comp
 import { SuiviLivraisonComponent } from './pages/livraison/suivilivraisons/suivilivraisons.component';
 import { MarketplaceManagementComponent } from './pages/marketplace-management/marketplace-management.component';
 import { BillingComponent } from './components/events/billing/billing.component';
+import { ChatPageComponent } from './chat/pages/chat-page/chat-page.component';
+
 import { JobsBackComponent } from './pages/hiring/jobs-back/jobs-back.component';
 import { JobsRequestsDashboardComponent } from './pages/hiring/jobs-requests-dashboard/jobs-requests-dashboard.component';
 import { DipslayComponent } from './pages/hiring/dipslay/dipslay.component';
@@ -55,8 +56,11 @@ const routes: Routes = [
     { path:'factures',  component: FactureComponent},
     { path:'livraisons',  component: LivraisonComponent},
     { path:'suivilivraison',  component: SuiviLivraisonComponent},
-    //market routes
+  //market routes
     { path: 'market', component: MarketplaceManagementComponent },
+    // { path: 'chat', component: ChatPageComponent },
+  //chat routes
+    { path: 'chat', loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule) },
     {path:'jobs',component:JobsBackComponent},
     {path:'jobsRequests',component:JobsRequestsDashboardComponent},
     { path: 'display-cv/:cvurl', component: DipslayComponent },

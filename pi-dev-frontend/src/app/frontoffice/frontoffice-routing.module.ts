@@ -19,28 +19,56 @@ import { OtpComponent } from './pages/auth/otp/otp.component';
 import { LogoutComponent } from './pages/auth/logout/logout.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
-import { EventComponent } from './pages/event/event.component';
+import {PublicGuard} from '../auth/guards/public.guard';
+import { AuthGuard } from "../auth/guards/auth.guard";
 import { JobRequestsComponent } from './pages/job-requests/job-requests.component';
 import { FrontTakeQuizComponent } from './pages/front-take-quiz/front-take-quiz.component';
 
 
+import { EventComponent } from './pages/event/event.component';
+import { EditCommentComponent } from './components/comment/edit-comment/edit-comment.component';
+import { EditPostComponent } from './components/posts/edit-post/edit-post.component';
+
+
 const routes: Routes = [
+
     {path: '', component:HomeComponent },
+    { path: 'blog', component: BlogComponent },
     {path:"about",component:AboutComponent},
     {path:"home",component:HomeComponent},
+    {path:'market', component: MarketComponent},
+    {path: 'blog', component: BlogComponent},
+    {path:'event',component:EventComponent},
+    {path:'jobs',component:JobsComponent},
     {path:'contact',component:ContactComponent},
     {path: 'not-found', component: NotFoundComponent},
-  //auth routes
-    {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent},
+    { path:'factures', component: FactureClientComponent, canActivate: [AuthGuard]},
+    { path:'livraisons', component: LivraisonClientComponent, canActivate: [AuthGuard]},
+    { path:'livraison-client-details/:id', component: LivraisonClientdetailsComponent, canActivate: [AuthGuard]},
+    { path:'facture-client-details/:id', component: FactureClientdetailsComponent, canActivate: [AuthGuard]},
+    { path:'suivrelivraison/:id', component: MapComponent, canActivate: [AuthGuard]},
+    { path:'livraisonsDriver', component: LivraisondriverComponent, canActivate: [AuthGuard]},
+    {path: 'login', component: LoginComponent, canActivate: [PublicGuard]},
+    {path: 'register', component: RegisterComponent, canActivate: [PublicGuard]},
     {path: "verify-email", component: OtpComponent},
     {path: 'logout', component: LogoutComponent},
-    {path: 'forgot-password', component: ForgotPasswordComponent},
-    {path: 'reset-password', component: ResetPasswordComponent},
+    {path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [PublicGuard]},
+    {path: 'reset-password', component: ResetPasswordComponent, canActivate: [PublicGuard]},
+    {path: 'not-found', component: NotFoundComponent},
   //event routes
     {path:'event',component:EventComponent},
   //blog routes
     { path: 'blog', component: BlogComponent },
+  {
+    path: 'post/:id',
+    component: EditPostComponent,
+  },
+  {path: 'not-found', component: NotFoundComponent},
+
+  {
+    path: 'post/:postId/edit-comment/:commentId',
+    component: EditCommentComponent
+  },
   //livraison routes
     { path:'factures',  component: FactureClientComponent}, // ya hamza rodeha ken el user connectee
     { path:'livraisons',  component: LivraisonClientComponent}, // ya hamza rodeha ken el user connectee

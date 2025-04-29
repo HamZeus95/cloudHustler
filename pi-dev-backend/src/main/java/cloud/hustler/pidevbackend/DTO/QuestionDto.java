@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package cloud.hustler.pidevbackend.DTO;
+=======
+package cloud.hustler.pidevbackend.dto;
+>>>>>>> origin/main
 
 import lombok.Data;
 

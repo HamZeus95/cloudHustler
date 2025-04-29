@@ -29,10 +29,10 @@ public class Expert extends User {
 
 
 
-    @OneToMany(mappedBy = "expert")
+    @OneToMany(mappedBy = "expert" , fetch = FetchType.EAGER)
     Set<Event> events = new HashSet<>();
 
-    @OneToMany(mappedBy = "expert")
+    @OneToMany(mappedBy = "expert", fetch = FetchType.EAGER)
     Set<Certification> certifications = new HashSet<>();
 
 

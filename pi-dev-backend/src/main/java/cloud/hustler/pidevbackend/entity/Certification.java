@@ -3,6 +3,7 @@ package cloud.hustler.pidevbackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.util.Date;
 import java.util.UUID;
@@ -26,6 +27,7 @@ public class Certification {
     Date endDate;
 
     @ManyToOne
+    @JsonIgnore
     Expert expert;
 
 

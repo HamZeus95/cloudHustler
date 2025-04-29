@@ -3,6 +3,7 @@ package cloud.hustler.pidevbackend.config;
 import cloud.hustler.pidevbackend.config.oauth2.OAuth2AuthenticationFailureHandler;
 import cloud.hustler.pidevbackend.config.oauth2.OAuth2AuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -11,10 +12,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.filter.CorsFilter;
+
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
 
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -29,8 +36,11 @@ public class SecurityConfiguration {
             "/auth/**",
             "/oauth2/**",
             "/farm/**",  // Add OAuth2 endpoints to whitelist
+            "/face-id/login-with-face-only", // Add Face ID endpoints to whitelist
             "/v2/api-docs",
             "/v3/api-docs",
+            "/reactions/**",
+            "/**",
             "/users/**", // temporary
             "/v3/api-docs/**",
             "/posts/**", // temporary
@@ -65,13 +75,15 @@ public class SecurityConfiguration {
     private final CorsFilter corsFilter;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
-    
+    @Value("${application.security.jwt.secret-key}")
+    private String secretKey;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> {}) // Enable CORS
-                .authorizeHttpRequests(req -> 
+                .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
                                 .anyRequest()
@@ -81,7 +93,7 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .logout(logout -> 
+                .logout(logout ->
                         logout.logoutUrl("/auth/logout")  // context path is already /api/v1
                                 .addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
@@ -104,5 +116,15 @@ public class SecurityConfiguration {
     @Bean
     public CustomOAuth2UserService customOAuth2UserService() {
         return new CustomOAuth2UserService();
+    }
+
+    @Bean
+    public JwtDecoder jwtDecoder() {
+        // Create a signing key from the secret
+        byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
+        Key signingKey = new SecretKeySpec(keyBytes, "HmacSHA256");
+
+        // Return a JWT decoder that uses this key
+        return NimbusJwtDecoder.withSecretKey((javax.crypto.SecretKey) signingKey).build();
     }
 }

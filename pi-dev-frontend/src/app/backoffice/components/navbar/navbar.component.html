@@ -30,6 +30,23 @@
               </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" id="userDropdownMenuList" aria-labelledby="userDropdownMenu">
+              <li class="mb-2">
+                <a class="dropdown-item border-radius-md hover-overlay" [routerLink]="['/frontoffice']" > 
+                  <div class="d-flex py-1">
+                  <div class="avatar avatar-sm bg-gradient-success rounded-circle me-3 d-flex align-items-center justify-content-center">
+                    <i app-icon="Home" library="fontawesome" variant="solid" class="text-white"></i>
+                  </div>
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="text-sm font-weight-bold mb-0">
+                    Front Office
+                    </h6>
+                    <p class="text-xs text-muted mb-0">
+                    View your Front Office
+                    </p>
+                  </div>
+                  </div>
+                </a>
+                </li>
                 <li class="mb-2">
                 <a class="dropdown-item border-radius-md hover-overlay" [routerLink]="['/backoffice/profile/edit-profile/',currentUser.userUUID]" > 
                   <div class="d-flex py-1">

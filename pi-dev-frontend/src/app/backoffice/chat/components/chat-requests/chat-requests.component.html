@@ -1,0 +1,36 @@
+<div class="chat-requests">
+  <h3 class="requests-title">Chat Requests</h3>
+  
+  <div class="no-requests" *ngIf="requests.length === 0">
+    <p>No pending requests</p>
+  </div>
+  
+  <div class="request-item" *ngFor="let request of requests">
+    <div class="user-avatar">
+      <img *ngIf="request.senderProfileImage" [src]="request.senderProfileImage" alt="Profile">
+      <div *ngIf="!request.senderProfileImage" class="default-avatar">
+        {{ getInitials(request.senderName) }}
+      </div>
+    </div>
+    
+    <div class="request-details">
+      <p class="sender-name">{{ request.senderName }}</p>
+      <p class="request-time">{{ request.timestamp | date }}</p>
+    </div>
+    
+    <div class="request-actions" *ngIf="request.status === 'PENDING'">
+      <button class="btn-approve" (click)="approveRequest(request.id)">
+        <i class="fas fa-check"></i>
+      </button>
+      <button class="btn-reject" (click)="rejectRequest(request.id)">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div class="request-status" *ngIf="request.status !== 'PENDING'">
+      <span [ngClass]="getStatusClass(request.status)">
+        {{ request.status }}
+      </span>
+    </div>
+  </div>
+</div>

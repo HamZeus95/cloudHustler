@@ -1,0 +1,40 @@
+<div class="toggle-container">
+  <button class="toggle-button" (click)="toggleGenerator()">
+    {{ isGeneratorVisible ? 'Masquer' : 'Afficher' }} Post Generator
+  </button>
+</div>
+
+<div class="post-generator-scrollable" *ngIf="isGeneratorVisible">
+<div class="post-generator-container">
+  <h2>Post Generator</h2>
+  
+  <div class="input-section">
+    <label for="theme">Post theme :</label>
+    <input 
+      type="text" 
+      id="theme" 
+      [(ngModel)]="theme" 
+      placeholder="Entrez votre thème ici..."
+      (keydown.enter)="generatePost()"
+    />
+    <button (click)="generatePost()" [disabled]="isGenerating || !theme.trim()">
+      <span *ngIf="!isGenerating">Générer</span>
+      <span *ngIf="isGenerating" class="spinner"></span>
+    </button>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="generatedPost" class="result-section">
+    <h3>Résultat :</h3>
+    <div class="generated-text">
+      {{ generatedPost }}
+    </div>
+    <button (click)="copyToClipboard()" class="copy-btn">
+      Copy the text
+    </button>
+  </div>
+</div>
+</div>

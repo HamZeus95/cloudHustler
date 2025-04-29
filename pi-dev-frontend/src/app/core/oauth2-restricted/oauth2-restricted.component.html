@@ -1,0 +1,33 @@
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header bg-warning">
+      <h2 class="text-white"><i class="fas fa-exclamation-triangle me-2"></i>Access Restricted</h2>
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">OAuth2 Account Access Limitation</h4>
+      <p class="card-text">
+        Your account was authenticated through a third-party provider (Google or GitHub), 
+        but this area requires specific role permissions that are not assigned to your account.
+      </p>
+      <p>
+        This could be because:
+      </p>
+      <ul>
+        <li>Your OAuth2 account is not fully integrated with our role-based permission system</li>
+        <li>Your account needs additional authorization from an administrator</li>
+        <li>The requested resource is not available to external authentication users</li>
+      </ul>
+      <p>
+        To resolve this issue, you can:
+      </p>
+      <ol>
+        <li>Contact an administrator to assign the necessary roles to your account</li>
+        <li>Log out and sign in using a regular account with the appropriate permissions</li>
+      </ol>
+      <div class="mt-4">
+        <button class="btn btn-primary me-2" (click)="navigateToHome()">Go to Home</button>
+        <button class="btn btn-outline-danger" (click)="logout()">Log Out</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -230,3 +230,39 @@
 .export-btn:hover {
   background-color: #c0392b;
 }
+.edit-btn {
+  background: white;
+  color: #4CAF50;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.edit-btn:hover {
+  background: #4CAF50;
+  color: white;
+  box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3);
+}
+
+.edit-btn:active {
+  transform: translateY(1px);
+}
+
+.edit-btn:disabled {
+  background: #e0e0e0;
+  color: white;
+  border-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+/* Icône optionnelle */
+.edit-btn i {
+  font-size: 16px;
+}
