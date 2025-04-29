@@ -103,7 +103,7 @@ import { Farm3DComponent } from "./components/farm3d/farm3d.component";
     CreateQuizComponent,
     UpdateQuestionsComponent,
     IaFarmDashComponent,
-    Farm3DComponent,
+    Farm3DComponent
   ],
   imports: [
     CommonModule,

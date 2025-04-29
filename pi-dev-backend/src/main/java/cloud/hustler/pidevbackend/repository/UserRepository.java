@@ -30,8 +30,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
   @Query("SELECT u FROM User u WHERE TYPE(u) <> :#{#role}")
   List<User> findByTypeNot(@Param("role") Class<?> role);
 
-  //  boolean existsByEmail(String email);
-  //@Query("SELECT u FROM User u WHERE u.uuid_user = :uuid")
-  //Optional<User> findByUuid_user(@Param("uuid") UUID uuid);
+  // boolean existsByEmail(String email);
+  @Query("SELECT u FROM User u WHERE u.uuid_user = :uuid")
+  Optional<User> findByUuid_user(@Param("uuid") UUID uuid);
 
 }
