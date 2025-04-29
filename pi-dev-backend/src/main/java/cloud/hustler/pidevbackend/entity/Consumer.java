@@ -1,9 +1,7 @@
 package cloud.hustler.pidevbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -13,22 +11,19 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 @Entity
+@DiscriminatorValue("Consumer")
 @Getter
 @Setter
-@ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@DiscriminatorValue("Consumer")
 public class Consumer extends User {
 
-    @OneToMany(mappedBy = "consumer")
     @JsonIgnore
-    Set<Order> orders= new HashSet<>();
-
+    @OneToMany(mappedBy = "consumer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    Set<Order> orders = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -41,7 +36,7 @@ public class Consumer extends User {
     }
 
     @Override
-    public  String getPassword() {
+    public String getPassword() {
         return super.getPassword();
     }
 

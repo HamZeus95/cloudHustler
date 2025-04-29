@@ -20,6 +20,7 @@ import { LogoutComponent } from './pages/auth/logout/logout.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
 import { EventComponent } from './pages/event/event.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 
 const routes: Routes = [
@@ -48,6 +49,7 @@ const routes: Routes = [
     { path:'livraisonsDriver',  component: LivraisondriverComponent},
   //market routes
     {path:'market', component: MarketComponent},
+    {path:'payment', component: PaymentComponent},
   //hiring routes
     {path:'jobs',component:JobsComponent},
 ];

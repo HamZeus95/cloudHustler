@@ -38,6 +38,7 @@ import { AddCommentComponent } from "./components/comment/add-comment/add-commen
 import { ListCommentComponent } from "./components/comment/list-comment/list-comment.component";
 import { ChatAiComponent } from "./components/chat-ai/chat-ai.component";
 import { EventComponent } from './pages/event/event.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 
 
@@ -71,7 +72,8 @@ import { EventComponent } from './pages/event/event.component';
     AddCommentComponent,
     ListCommentComponent,
     ChatAiComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    PaymentComponent
 
   ],
   imports: [

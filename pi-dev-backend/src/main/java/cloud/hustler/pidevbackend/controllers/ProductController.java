@@ -2,10 +2,16 @@ package cloud.hustler.pidevbackend.controllers;
 
 import cloud.hustler.pidevbackend.entity.Product;
 import cloud.hustler.pidevbackend.entity.ProductSalesDTO;
+import cloud.hustler.pidevbackend.service.FileStorageService;
 import cloud.hustler.pidevbackend.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,18 +22,73 @@ public class ProductController {
 
     @Autowired
     IProductService productService;
+    private final FileStorageService fileStorageService;
 
-    @PostMapping("/addProduct/{idProductCategory}")
-    Product addProduct(@RequestBody Product product, @PathVariable UUID idProductCategory) {
+    public ProductController(FileStorageService fileStorageService) {
 
-        return productService.addProduct(product, idProductCategory);
+        this.fileStorageService = fileStorageService;
     }
 
-    @PutMapping("/updateProduct")
-    Product updateProduct(@RequestBody Product product) {
-        return productService.updateProduct(product);
+    @PostMapping(value = "/addProduct/{idProductCategory}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Product> addProduct(
+            @RequestPart("product") Product product,
+            @PathVariable UUID idProductCategory,
+            @RequestPart(value = "image", required = false) MultipartFile imageFile) {
+
+        try {
+            if (imageFile != null && !imageFile.isEmpty()) {
+                String filename = fileStorageService.store(imageFile);
+                // Set the URL to match your resource handler
+                product.setImageUrl("/product/images/" + filename);
+            }
+
+            Product savedProduct = productService.addProduct(product, idProductCategory);
+            return ResponseEntity.ok(savedProduct);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
+    @PutMapping(value = "/updateProduct/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Product> updateProduct(
+            @PathVariable UUID id,
+            @RequestPart("product") Product product,
+            @RequestPart(value = "image", required = false) MultipartFile imageFile) {
+
+        try {
+            // Get the existing product first
+            Product existingProduct = productService.retrieveProduct(id);
+
+            if (imageFile != null && !imageFile.isEmpty()) {
+                // Delete old image if it exists
+                if (existingProduct.getImageUrl() != null && !existingProduct.getImageUrl().isEmpty()) {
+                    try {
+                        // Extract just the filename from the URL
+                        String oldFilename = existingProduct.getImageUrl()
+                                .replace("/product/images/", "")
+                                .replace("/api/v1/product/images/", "");
+                        fileStorageService.deleteFile(oldFilename);
+                    } catch (IOException e) {
+                        // Log the error but continue with the update
+                        System.err.println("Failed to delete old image: " + e.getMessage());
+                    }
+                }
+
+                // Store new image
+                String filename = fileStorageService.store(imageFile);
+                product.setImageUrl("/product/images/" + filename);
+            } else {
+                // Keep the existing image if no new image is provided
+                product.setImageUrl(existingProduct.getImageUrl());
+            }
+
+            Product updatedProduct = productService.updateProduct(id, product);
+            return ResponseEntity.ok(updatedProduct);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
     @DeleteMapping("/deleteProduct/{idProduct}")
     void deleteProduct(@PathVariable UUID idProduct) {
         productService.deleteProduct(idProduct);
