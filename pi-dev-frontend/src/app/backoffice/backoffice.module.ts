@@ -101,7 +101,7 @@ import { Farm3DComponent } from "./components/farm3d/farm3d.component";
     EmailJobsComponent,
     QuizComponent,
     CreateQuizComponent,
-    UpdateQuestionsComponent
+    UpdateQuestionsComponent,
     IaFarmDashComponent,
     Farm3DComponent,
   ],

@@ -70,7 +70,6 @@
     "@angular/cli": "^16.2.16",
     "@angular/compiler-cli": "^16.2.0",
     "@angular/localize": "^16.2.0",
-
     "@types/canvas-confetti": "^1.9.0",
     "@types/feather-icons": "^4.29.4",
     "@types/jasmine": "~4.3.0",
