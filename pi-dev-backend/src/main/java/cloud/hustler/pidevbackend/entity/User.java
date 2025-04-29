@@ -58,7 +58,7 @@ public abstract class User implements UserDetails {
       @JsonIgnore
       Set<Token> tokens = new HashSet<>();
   */
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     Set<Otp> otps = new HashSet<>();
 
