@@ -1,0 +1,82 @@
+<!-- Chat sidebar container -->
+<div class="chat-sidebar">
+  <!-- Header with search input -->
+  <div class="sidebar-header">
+    <h3>{{ activeSection | titlecase }}</h3>
+    
+    <!-- Show search only in chats section -->
+    <div class="search-container" *ngIf="activeSection === 'chats'">
+      <input 
+        type="text" 
+        placeholder="Search users..."
+        [(ngModel)]="searchTerm"
+        (input)="searchUsers()"
+      >
+      <span class="search-icon" *ngIf="!isSearching">🔍</span>
+      <span class="search-icon loading" *ngIf="isSearching">⌛</span>
+    </div>
+    
+    <!-- Show search for groups section -->
+    <div class="search-container" *ngIf="activeSection === 'groups'">
+      <input 
+        type="text" 
+        placeholder="Search groups..."
+        [(ngModel)]="groupSearchTerm"
+        (input)="searchGroups()"
+      >
+      <span class="search-icon" *ngIf="!isGroupSearching">🔍</span>
+      <span class="search-icon loading" *ngIf="isGroupSearching">⌛</span>
+    </div>
+  </div>
+  
+  <!-- Content based on active section -->
+  <div class="sidebar-content" [ngSwitch]="activeSection">
+    
+    <!-- Chats section -->
+    <div class="chats-container" *ngSwitchCase="'chats'">
+      <app-chats
+        [searchTerm]="searchTerm"
+        [isSearching]="isSearching"
+        [searchResults]="searchResults"
+        [chats]="chats"
+        (chatSelected)="selectChat($event)"
+        (chatInitiated)="initiateChat($event)"
+      ></app-chats>
+    </div>
+    
+    <!-- Requests section -->
+    <div class="requests-container" *ngSwitchCase="'requests'">
+      <app-requests
+        [requests]="requests"
+        (requestApproved)="approveChatRequest($event)"
+        (requestRejected)="rejectChatRequest($event)"
+      ></app-requests>
+    </div>
+    
+    <!-- Groups section -->
+    <div class="groups-container" *ngSwitchCase="'groups'">
+      <app-groups
+        [currentUser]="currentUser"
+        [groupSearchTerm]="groupSearchTerm"
+        [isGroupSearching]="isGroupSearching"
+        [groupSearchResults]="groupSearchResults"
+        [adminGroups]="adminGroups"
+        [memberGroups]="memberGroups"
+        (selectGroup)="selectGroupChat($event)"
+        (createGroup)="createNewGroup($event)"
+        (searchTermChange)="onGroupSearchTermChange($event)"
+        (groupDeleted)="deleteGroup($event)"
+        (groupLeft)="leaveGroup($event)"
+      ></app-groups>
+    </div>
+    
+    <!-- Blocked users section -->
+    <div class="blocked-users-container" *ngSwitchCase="'blocked'">
+      <app-blocked
+        [blockedUsers]="blockedUsers"
+        (userUnblocked)="unblockUser($event)"
+      ></app-blocked>
+    </div>
+    
+  </div>
+</div>

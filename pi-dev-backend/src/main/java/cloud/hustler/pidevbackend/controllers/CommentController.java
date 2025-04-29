@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping
+@RequestMapping("/comments")
 public class CommentController {
 
     @Autowired
@@ -53,9 +53,9 @@ public class CommentController {
         System.out.println("Get comment by id: " + uuid_comment);
         return commentService.getCommentById(uuid_comment);
     }
-    @PostMapping("/ajouterCommentEtAffecterPost/{postId}")
-    Comment ajouterCommentEtAffecterPost(@PathVariable UUID postId, @RequestBody Comment comment) {
-        return commentService.ajouterCommentEtAffecterPost(comment, postId);
+    @PostMapping("/ajouterCommentEtAffecterPost/{postId}/{userUuid}")
+    public Comment ajouterCommentEtAffecterPost(@PathVariable UUID postId, @PathVariable UUID userUuid, @RequestBody Comment comment) {
+        return commentService.ajouterCommentEtAffecterPost(comment, postId, userUuid);
     }
 
     @GetMapping("/getCommentsByPostId/{idPost}")

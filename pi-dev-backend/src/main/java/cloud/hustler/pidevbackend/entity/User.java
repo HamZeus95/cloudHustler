@@ -48,17 +48,17 @@ public abstract class User implements UserDetails {
     String providerId; // ID from the OAuth2 provider
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     Set<ServiceRequests> serviceRequests= new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     Set<Post> posts = new HashSet<>();
     /*
       @OneToMany(mappedBy = "user")
       @JsonIgnore
       Set<Token> tokens = new HashSet<>();
   */
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonIgnore
     Set<Otp> otps = new HashSet<>();
 
@@ -67,6 +67,21 @@ public abstract class User implements UserDetails {
         DiscriminatorValue discriminator = this.getClass().getAnnotation(DiscriminatorValue.class);
         return (discriminator != null) ? discriminator.value() : "Consumer";
     }
+
+    // Face ID related fields
+    @Column(name = "face_id")
+    private String faceId;
+
+    @Column(name = "face_id_enabled")
+    private boolean faceIdEnabled = false;
+
+    @OneToMany(mappedBy = "blocker", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonIgnore
+    Set<BlockedUser> blockedUsers = new HashSet<>();
+
+    @OneToMany(mappedBy = "blocked", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonIgnore
+    Set<BlockedUser> usersBlockedMe = new HashSet<>();
 
 
 }

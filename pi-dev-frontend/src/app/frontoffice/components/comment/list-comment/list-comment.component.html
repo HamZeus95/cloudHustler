@@ -3,7 +3,7 @@
     <div class="section-header" (click)="toggleComments()">
       <h3>
         <i class="fas fa-comments"></i> 
-        Commentaires ({{ comments.length }})
+        Comments ({{ comments.length }})
         <i class="fas toggle-icon" 
            [class.fa-chevron-down]="!showComments" 
            [class.fa-chevron-up]="showComments"></i>
@@ -42,7 +42,7 @@
       </div>
   
       <div *ngIf="comments.length === 0" class="no-comments">
-        <p><i class="fas fa-comment-slash"></i> Aucun commentaire disponible pour ce post.</p>
+        <p><i class="fas fa-comment-slash"></i>No comments available for this post.</p>
       </div>
     </div>
   

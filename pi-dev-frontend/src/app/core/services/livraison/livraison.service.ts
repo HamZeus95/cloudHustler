@@ -5,7 +5,7 @@ import { Livraison } from 'src/app/core/models/livraison/livraison';
 
 @Injectable({ providedIn: 'root' })
 export class LivraisonService {
-  private baseUrl = 'http://localhost:8090/tpfoyer/livraisons';
+  private baseUrl = '/api/v1/livraisons';
   livraisons: Livraison[] = [];
 
   constructor(private http: HttpClient) {}
@@ -31,6 +31,7 @@ export class LivraisonService {
   }
 
   getLivraisonsByUser(uuid: string): Observable<Livraison[]> {
+    console.log('Fetching deliveries for user:', uuid);
     return this.http.get<Livraison[]>(`${this.baseUrl}/by-user/${uuid}`);
   }
   getLivraisonsBydriver(uuid: string): Observable<Livraison[]> {
@@ -84,23 +85,23 @@ export class LivraisonService {
     }
   
     private isStatusLivree(status: string): boolean {
-      return status.includes('livree') || status.includes('DELEVRED')|| status.includes('LIVREE')|| status.includes('LIVRÉE');
+      return status.includes('DELIVERED') || 
+             status.includes('DELEVRED') || 
+             status.includes('COMPLETE');
     }
   
     private isStatusEnAttente(status: string): boolean {
-      return status.includes('ENATTENTE') || 
-             status.includes('PENDING') || 
-             status.includes('ATTENTE');
+      return status.includes('PENDING') || 
+             status.includes('WAITING');
     }
   
     private isStatusEnTransit(status: string): boolean {
-      return status.includes('En Transit') || 
-             status.includes('en transit') || 
-             status.includes('EN TRANSIT') || 
-             status.includes('In Transit') ;
+      return status.includes('TRANSIT') || 
+             status.includes('IN_TRANSIT') || 
+             status.includes('SHIPPING');
     }
     getPrediction(origin: string, destination: string): Observable<number> {
-      return this.http.get<number>('http://localhost:8090/tpfoyer/livraison/predict-time', {
+      return this.http.get<number>('/api/v1/livraison/predict-time', {
         params: { origin, destination }
       });
 }}

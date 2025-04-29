@@ -1,6 +1,8 @@
 import { Component, Input, AfterViewInit } from '@angular/core';
 import { Farm } from 'src/app/core/models/famrs/farm';
+import { FarmService } from 'src/app/core/services/farm-managment/farm.service'; // ✅ Make sure the path is correct
 import * as mapboxgl from 'mapbox-gl';
+import { UserService } from 'src/app/auth/service/user.service';
 
 @Component({
   selector: 'app-farm-table',
@@ -17,17 +19,30 @@ export class FarmTableComponent implements AfterViewInit {
   irrigationTypes = ['Drip', 'Sprinkler', 'Flood', 'None'];
 
   newFarm: Farm = this.initFarm();
+  userUuid: string | null = null; //het el userid
+
+
+  constructor(private farmService: FarmService,
+    private userService: UserService // ✅ Inject UserService
+
+
+  ) {} // ✅ Inject the service
 
   ngAfterViewInit(): void {
     this.initializeMap();
+    this.getUserUuid();
   }
-
+  private getUserUuid() {
+    const currentUser = this.userService.getCurrentUser(); 
+    this.userUuid = currentUser?.uuid || null; 
+    console.log('User UUID:', this.userUuid); 
+  }
   private initializeMap() {
-    (mapboxgl as any).accessToken = 'pk.eyJ1IjoibWRhMjAwMCIsImEiOiJjbTl0bW1sb2owMGY5MmxzOTkzZjhlYXh4In0.883JgQoLDr0iIpu833xKGA'; // 🔐 Replace with your token
+    (mapboxgl as any).accessToken = 'pk.eyJ1IjoibWRhMjAwMCIsImEiOiJjbTl0bW1sb2owMGY5MmxzOTkzZjhlYXh4In0.883JgQoLDr0iIpu833xKGA';
     this.map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [10, 34], // Tunisia default
+      center: [10, 34],
       zoom: 5
     });
 
@@ -47,17 +62,33 @@ export class FarmTableComponent implements AfterViewInit {
     this.showAddForm = !this.showAddForm;
     setTimeout(() => {
       if (this.showAddForm) {
-        this.initializeMap(); // Reinitialize map when form shows
+        this.initializeMap();
       }
     });
   }
 
   saveNewFarm() {
     if (this.newFarm.name && this.newFarm.size) {
-      this.newFarm.uuid_farm = Math.random().toString(36).substr(2, 9);
-      this.farms.push({ ...this.newFarm });
-      this.showAddForm = false;
-      this.newFarm = this.initFarm();
+      this.farmService.addFarm({
+        name: this.newFarm.name,
+        size: this.newFarm.size,
+        latitude: this.newFarm.latitude,
+        longitude: this.newFarm.longitude,
+        irrigation_type: this.newFarm.irrigation_type,
+        resources: [],
+        crops: [],
+        tasks: [],
+        expenses: []
+      }).subscribe({
+        next: (savedFarm) => {
+          this.farms.push(savedFarm); 
+          this.showAddForm = false;
+          this.newFarm = this.initFarm();
+        },
+        error: (error) => {
+          console.error('Failed to add farm:', error);
+        }
+      });
     }
   }
 

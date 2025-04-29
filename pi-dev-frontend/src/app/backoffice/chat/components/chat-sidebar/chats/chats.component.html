@@ -1,0 +1,59 @@
+<!-- Search results -->
+<div class="search-results" *ngIf="searchTerm && searchResults.length > 0">
+  <div class="search-results-header">
+    <h4>Search Results</h4>
+  </div>
+  <div class="search-results-container">
+    <div class="user-item" *ngFor="let user of searchResults" (click)="initiateChat(user)">
+      <div class="user-avatar size-1/2">
+        <img [src]="user.avatar || 'assets/images/default-avatar.png'" alt="User avatar">
+        <span class="status-indicator" [ngClass]="{'online': isUserOnline(user.id)}"></span>
+      </div>
+      <div class="user-info"> 
+        <small class="user-name">{{user.firstName}} {{user.lastName}}</small>
+      </div>
+    </div>
+    <div class="no-results" *ngIf="searchTerm && searchResults.length === 0 && !isSearching">
+      <p>No users found</p>
+    </div>
+  </div>
+</div> 
+
+<!-- Recent chats -->
+<div class="recent-chats">
+  <div class="section-header">
+    <h4>Recent Conversations</h4>
+  </div>
+  <div class="user-item" *ngFor="let chat of chats" (click)="selectChat(chat)" [ngClass]="{'active': chat.active}">
+    <div class="user-avatar">
+      <img [src]="chat.avatar || 'assets/images/default-avatar.png'" alt="User avatar">
+      <span class="status-indicator" 
+            *ngIf="!chat.isGroup" 
+            [ngClass]="{'online': isUserOnline(chat.userId)}">
+      </span>
+    </div>
+    <div class="user-info">
+      <div class="name-time">
+        <h4>{{ chat.name }}</h4>
+        <span class="time" *ngIf="chat.lastMessageTime">
+          {{ formatTime(chat.lastMessageTime) }}
+        </span>
+      </div>
+      <div class="message-preview">
+        <p>
+          <span *ngIf="chat.isGroup && chat.lastMessageSender">
+            {{ chat.lastMessageSender }}: 
+          </span>
+          {{ formatLastMessage(chat.lastMessage) }}
+        </p>
+        <div class="unread-badge" *ngIf="getUnreadCount(chat.userId || 'group_' + chat.id) > 0">
+          {{ getUnreadCount(chat.userId || 'group_' + chat.id) }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="no-chats" *ngIf="chats.length === 0 && !searchTerm">
+    <p>No conversations yet</p>
+    <p>Search for users to start chatting</p>
+  </div>
+</div>

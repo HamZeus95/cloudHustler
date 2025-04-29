@@ -12,7 +12,7 @@ public interface IReactionService {
     void deleteReaction(UUID uuid_reaction);
     Reaction getReactionById(UUID uuid_reaction);
     List<Reaction> getAllReactions();
-    Reaction ajouterReactionEtAffecterPost(Reaction reaction, UUID postId);
+    Reaction ajouterReactionEtAffecterPost(Reaction reaction, UUID postId,UUID userUuid );
 
 
 }

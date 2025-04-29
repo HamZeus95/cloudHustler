@@ -30,6 +30,7 @@ public class Farmer extends User {
 
 
     @OneToMany(mappedBy = "farmer")
+    @JsonIgnore
     Set<Servicee> servicees = new HashSet<>();
 
     @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL)

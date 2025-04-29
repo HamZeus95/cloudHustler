@@ -1,0 +1,56 @@
+.canvas-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.field-info {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  border-radius: 8px;
+  max-width: 300px;
+  margin: auto;
+}
+
+.field-info h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.field-info p {
+  font-size: 1em;
+  margin: 5px 0;
+}
+
+.field-info p strong {
+  font-weight: bold;
+}

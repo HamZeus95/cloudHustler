@@ -43,6 +43,13 @@ public class Comment {
     Post post;
 
 
+    @ManyToOne
+    @JsonIgnore
+
+    @JoinColumn(name = "user_id")
+    private User user;  // Relation avec le Farmer qui a écrit ce post
+
+
 
 
 

@@ -1,5 +1,8 @@
 package cloud.hustler.pidevbackend.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -22,7 +25,6 @@ public class Livraison {
     private Long id;
 
     @NotNull(message = "Le statut ne peut pas être nul.")
-    @Pattern(regexp = "^(En attente|En transit|Livrée)$", message = "Le statut doit être 'En attente', 'En transit', 'Livrée'.")
     private String statut;
 
     @NotNull
@@ -34,49 +36,22 @@ public class Livraison {
     @NotNull(message = "La date de creation ne peut pas être nulle.")
     private LocalDate dateCreation;
 
-    /*@OneToOne(mappedBy = "livraison", cascade = CascadeType.ALL)
-    @JsonBackReference
-    private Facture facture;*/
+
 
     public Livraison() {
         this.dateCreation = LocalDate.now();
     }
 
     // Getter pour id
-    public Long getId() {
-        return id;
-    }
 
-    // Setter pour id
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    // Getter pour statut
-    public String getStatut() {
-        return statut;
-    }
-
-    // Setter pour statut
-    public void setStatut(String statut) {
-        this.statut = statut;
-    }
 
     // Getter pour dateCreation
-    public LocalDate getDateCreation() {
-        return dateCreation;
-    }
     @OneToOne
     @JoinColumn(name = "order_id") // Clé étrangère vers Order
+    //@JsonIgnore
     private Order order;
 
-    public Order getOrder() {
-        return order;
-    }
 
-    public void setOrder(Order order) {
-        this.order = order;
-    }
 
 
 
@@ -84,20 +59,22 @@ public class Livraison {
     @JoinColumn(name = "delivery_man_id") // Clé étrangère vers DeliveryMan
     private DeliveryDriver deliveryDriver;
 
-    public DeliveryDriver getDeliveryDriver() {
-        return deliveryDriver;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setDeliveryDriver(DeliveryDriver deliveryDriver) {
-        this.deliveryDriver = deliveryDriver;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    // Setter pour dateCreation
-    public void setDateCreation(LocalDate dateCreation) {
-        this.dateCreation = dateCreation;
+    public String getStatut() {
+        return statut;
     }
 
-    // Getter pour facture
+    public void setStatut(String statut) {
+        this.statut = statut;
+    }
 
     public String getAdresseLivraison() {
         return adresseLivraison;
@@ -115,6 +92,27 @@ public class Livraison {
         this.dateLivraison = dateLivraison;
     }
 
+    public LocalDate getDateCreation() {
+        return dateCreation;
+    }
 
+    public void setDateCreation(LocalDate dateCreation) {
+        this.dateCreation = dateCreation;
+    }
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public DeliveryDriver getDeliveryDriver() {
+        return deliveryDriver;
+    }
+
+    public void setDeliveryDriver(DeliveryDriver deliveryDriver) {
+        this.deliveryDriver = deliveryDriver;
+    }
 }

@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService, TokenStorageService } from 'src/app/auth/service';
 import { Livraison } from 'src/app/core/models/livraison/livraison';
 import { LivraisonService } from 'src/app/core/services/livraison/livraison.service';
 
@@ -11,82 +13,71 @@ import { LivraisonService } from 'src/app/core/services/livraison/livraison.serv
 export class LivraisondriverComponent {
 
 displayModal: boolean = false;
-  readonly userUuid = '04000000-0000-0000-0000-000000000000'; // Replace with actual UUID retrieval
+  //readonly userUuid = '428067bc-f4ce-4b6c-913e-d8a0a7e6eb9e'; // Replace with actual UUID retrieval
 
-  
+  isAuthenticated = false;
+  currentUser: any = null;
     closeDialog(): void {
       this.displayModal = false;
     }
     navigateToMap(livraisonId: number) {
       this.router.navigate(['/frontoffice/suivrelivraison', livraisonId]);
     }
-    openDialog(livraison: Livraison) {
-      this.selectedLivraison = livraison;
-      this.displayModal = true;
-    }
+
     selectedLivraison: Livraison | null = null; // <-- à ajouter
   
     @Output() livraisonSelected = new EventEmitter<Livraison>();
   
     livraisons: Livraison[] = [];
-    newLivraison: Livraison = {
-      id: 0,
-      //dateEmission: '',
-      //montantTotal: 0,
-      statut: 'En attente',
-      dateCreation: '',
-      adresseLivraison: '',
-      dateLivraison: '',
-     // totalPrice: 0
-    };
   
     constructor(
       private livraisonService: LivraisonService,
-      private router: Router
+      private router: Router,
+      private authService: AuthService,
+      private tokenStorageService: TokenStorageService,
+      private http: HttpClient // Inject HttpClient
+
     ) {
       this.loadLivraisons();
     }
     ngOnInit(): void {
-      this.loadLivraisons();
-    }
-  
-  
-    // onCardClick(livraison: Livraison) {
-    //   this.selectedLivraison = livraison;
-    //   this.livraisonSelected.emit(livraison);
-    //   // Navigate to details page with the livraison id
-    //   this.router.navigate(['/frontoffice/livraison-client-details', livraison.id]);
-    // }
-  
-    loadLivraisons() {
-      // Assuming you store the UUID somewhere
-      this.livraisonService.getLivraisonsBydriver(this.userUuid).subscribe((data: Livraison[]) => {
-        this.livraisons = data;
-      });
-    }
-  
-    ajouterLivraison() {
-      this.livraisonService.create(this.newLivraison).subscribe({
-        next: (livraisonCreated) => {
-          // Ajoute la nouvelle livraison directement au tableau
-          this.livraisons = [...this.livraisons, livraisonCreated];
-          // Reset le formulaire
-          this.newLivraison = {
-            id: 0,
-            //dateEmission: '',
-            //montantTotal: 0,
-            statut: 'En attente',
-            dateCreation: '',
-            adresseLivraison: '',
-            dateLivraison: '',
-            //totalPrice: 0
-          };
-        },
-        error: (error) => {
-          console.error('Erreur lors de la création de la livraison:', error);
+      this.authService.isAuthenticated().subscribe(isAuth => {
+        this.isAuthenticated = isAuth;
+        if (isAuth) {
+          this.currentUser = this.tokenStorageService.getCurrentUser();
         }
+        
       });
+       // Subscribe to user changes
+       this.tokenStorageService.getUser().subscribe(user => {
+        this.currentUser = user;
+      });
+      console.log("yooooo",this.currentUser);
+      this.loadLivraisons();
+          }
+  
+  
+
+    loadLivraisons() {
+      const userUuid = this.currentUser.userUUID;  
+      //readonly userUuid = '428067bc-f4ce-4b6c-913e-d8a0a7e6eb9e'; // Replace with actual UUID retrieval
+
+      // Assuming you store the UUID somewhere
+      if (userUuid) {
+        this.http.get<Livraison[]>(`/api/v1/livraisons/livreur/${userUuid}/ordered`).subscribe(
+          (data: Livraison[]) => {
+            this.livraisons = data;
+          },
+          (error) => {
+            console.error('Error loading reordered deliveries:', error);
+          }
+        );
+      } else {
+        console.warn('User UUID not found.');
+      }
     }
+  
+   
   
     getStatutClass(statut: string): string {
       switch (statut) {
@@ -102,65 +93,10 @@ displayModal: boolean = false;
     }
     
   
-    supprimerLivraison(id: number) {
-      if (confirm("Êtes-vous sûr de vouloir supprimer cette livraison ?")) {
-        this.livraisonService.delete(id).subscribe(() => {
-          this.loadLivraisons(); // Recharge la liste après suppression
-        });
-      }}
   
-  /**
-   * Récupère l'UUID de l'utilisateur à partir du token JWT stocké
-   * @returns string UUID de l'utilisateur ou null si non trouvé
-   */
-  private getUserUuidFromToken(): string | null {
-    try {
-      // Récupérer le token depuis le localStorage
-      const token = localStorage.getItem('token');
-      
-      if (!token) {
-        console.warn('Aucun token trouvé');
-        return null;
-      }
+  
 
-      // Décoder le token (partie payload)
-      const tokenParts = token.split('.');
-      if (tokenParts.length !== 3) {
-        console.error('Format de token invalide');
-        return null;
-      }
-
-      // Décoder la partie payload (2ème partie du token)
-      const payload = JSON.parse(atob(tokenParts[1]));
-      
-      // Récupérer l'UUID depuis les claims du token
-      const uuid = payload.uuid; // Ajuster selon la structure réelle de votre token
-      
-      if (!uuid) {
-        console.error('UUID non trouvé dans le token');
-        return null;
-      }
-
-      return uuid;
-
-    } catch (error) {
-      console.error('Erreur lors de l\'extraction de l\'UUID:', error);
-      return null;
-    }
-  }
-  // Exemple d'utilisation dans loadLivraisons():
-  /* 
-  loadLivraisons() {
-    const userUuid = this.getUserUuidFromToken();
-    if (!userUuid) {
-      console.error('UUID non disponible');
-      return;
-    }
-    this.livraisonService.getLivraisonsByUser(userUuid).subscribe((data: Livraison[]) => {
-      this.livraisons = data;
-    });
-  }
-  */
+  
   navigateToSuivre(id: number) {
     this.router.navigate(['/frontoffice/suivrelivraison', id]);
   }

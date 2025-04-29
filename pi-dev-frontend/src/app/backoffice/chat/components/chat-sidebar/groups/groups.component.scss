@@ -1,0 +1,332 @@
+// Groups component styling
+$primary-color: #4285f4;
+$secondary-color: #269744;
+$light-bg: #f8f9fa;
+$darker-bg: #e9ecef;
+$border-color: #dee2e6;
+$text-color: #212529;
+$light-text: #6c757d;
+$warning-color: #ffc107;
+$danger-color: #dc3545;
+$success-color: #28a745;
+$hover-bg: rgba(0, 0, 0, 0.05);
+
+.groups-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  // New wrapper for scrollable content
+  .groups-content-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .search-bar {
+    position: relative;
+    padding: 12px;
+
+    .search-input {
+      width: 100%;
+      padding: 10px 36px 10px 12px;
+      border-radius: 20px;
+      border: 1px solid $border-color;
+      outline: none;
+      transition: box-shadow 0.3s, border-color 0.3s;
+      font-size: 0.9rem;
+
+      &:focus {
+        border-color: $primary-color;
+        box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+      }
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 24px;
+      top: 22px;
+      color: $light-text;
+    }
+
+    .search-spinner {
+      position: absolute;
+      right: 24px;
+      top: 22px;
+      color: $primary-color;
+    }
+  }
+
+  .create-group {
+    padding: 0 12px 12px;
+
+    .create-group-btn {
+      width: 100%;
+      padding: 10px;
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+
+      i {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .search-results, .my-groups {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 12px;
+    
+    .search-results-header, .section-header {
+      padding: 8px 0;
+      margin-bottom: 8px;
+      
+      h4 {
+        margin: 0;
+        color: $text-color;
+        font-size: 0.95rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        i {
+          color: $primary-color;
+        }
+      }
+    }
+
+    .member-groups-header {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid $border-color;
+
+      h4 i {
+        color: $secondary-color;
+      }
+    }
+
+    .group-list {
+      .group-item {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        margin-bottom: 8px;
+        border-radius: 10px;
+        background-color: $light-bg;
+        cursor: pointer;
+        transition: background-color 0.2s, transform 0.1s;
+        position: relative;
+        
+        &:hover {
+          background-color: $darker-bg;
+          transform: translateY(-2px);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .group-avatar {
+          width: 40px;
+          height: 40px;
+          margin-right: 12px;
+          flex-shrink: 0;
+          
+          .group-icon {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba($secondary-color, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            
+            &.admin-group {
+              background-color: rgba($warning-color, 0.2);
+            }
+          }
+        }
+        
+        .group-info {
+          flex: 1;
+          overflow: hidden;
+          min-width: 0;
+          
+          h4 {
+            margin: 0 0 4px 0;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          
+          p {
+            margin: 0 0 4px 0;
+            font-size: 0.8rem;
+            color: $light-text;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          
+          .member-count, .created-date, .created-by {
+            display: inline-block;
+            margin-right: 10px;
+            font-size: 0.7rem;
+            color: $light-text;
+            background-color: rgba($light-text, 0.1);
+            padding: 2px 6px;
+            border-radius: 10px;
+          }
+        }
+        
+        .group-actions, .leave-group {
+          display: flex;
+          gap: 5px;
+          opacity: 0;
+          transition: opacity 0.2s;
+          margin-left: 8px;
+          
+          button {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            
+            &.edit-btn {
+              background-color: rgba($warning-color, 0.2);
+              color: darken($warning-color, 10%);
+              
+              &:hover {
+                background-color: rgba($warning-color, 0.4);
+              }
+            }
+            
+            &.delete-btn {
+              background-color: rgba($danger-color, 0.2);
+              color: $danger-color;
+              
+              &:hover {
+                background-color: rgba($danger-color, 0.4);
+              }
+            }
+            
+            &.leave-btn {
+              background-color: rgba($light-text, 0.2);
+              color: $light-text;
+              
+              &:hover {
+                background-color: rgba($light-text, 0.4);
+              }
+            }
+          }
+        }
+        
+        &:hover {
+          .group-actions, .leave-group {
+            opacity: 1;
+          }
+        }
+      }
+      
+      .no-groups {
+        text-align: center;
+        padding: 20px 0;
+        color: $light-text;
+        
+        p {
+          margin: 5px 0;
+          font-size: 0.9rem;
+        }
+        
+        .create-group-small {
+          background-color: $primary-color;
+          color: white;
+          border: none;
+          border-radius: 15px;
+          padding: 5px 12px;
+          margin-top: 10px;
+          cursor: pointer;
+          font-size: 0.8rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          
+          &:hover {
+            background-color: darken($primary-color, 10%);
+          }
+        }
+      }
+    }
+    
+    .no-results {
+      text-align: center;
+      padding: 20px 0;
+      color: $light-text;
+      
+      p {
+        margin: 0 0 10px 0;
+      }
+      
+      .create-from-search {
+        background-color: $primary-color;
+        color: white;
+        border: none;
+        border-radius: 15px;
+        padding: 8px 15px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        
+        &:hover {
+          background-color: darken($primary-color, 10%);
+        }
+      }
+    }
+  }
+
+  // Add scrollable class
+  .scrollable {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 5px;
+  }
+}
+
+// Improve scrollbar styling for all scrollable elements
+.scrollable, .groups-content-wrapper {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba($light-text, 0.3);
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgba($light-text, 0.5);
+  }
+}

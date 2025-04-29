@@ -3,7 +3,7 @@
   <div class="section-header" (click)="toggleComments()">
     <h3>
       <i class="fas fa-comments"></i> 
-      Commentaires ({{ comments.length }})
+      Comments ({{ comments.length }})
       <i class="fas toggle-icon" 
          [class.fa-chevron-down]="!showComments" 
          [class.fa-chevron-up]="showComments"></i>
@@ -33,14 +33,14 @@
         matTooltip="Supprimer le commentaire"
         aria-label="Supprimer le commentaire">
   <i class="fas fa-trash"></i>
-  <span class="delete-text">Supprimer</span>
+  <span class="delete-text">DELETE</span>
 </button>
         </div>
       </div>
     </div>
 
     <div *ngIf="comments.length === 0" class="no-comments">
-      <p><i class="fas fa-comment-slash"></i> Aucun commentaire disponible pour ce post.</p>
+      <p><i class="fas fa-comment-slash"></i> No comments available for this post.</p>
     </div>
   </div>
 

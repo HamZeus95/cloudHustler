@@ -8,6 +8,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.File;
 
+import static cloud.hustler.pidevbackend.controllers.PostController.UPLOAD_DIR;
+
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
@@ -26,7 +28,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/product/images/**")
                 .addResourceLocations("file:" + uploadDir + "/")
                 .setCachePeriod(3600);
+        registry.addResourceHandler("/pi-dev-backend/uploads/**")
+                .addResourceLocations("file:" + UPLOAD_DIR)
+                .setCachePeriod(0);
     }
+
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -36,4 +42,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
+
 }

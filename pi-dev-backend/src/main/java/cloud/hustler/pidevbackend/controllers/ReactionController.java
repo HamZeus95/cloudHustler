@@ -11,8 +11,9 @@ import java.util.List;
 import java.util.UUID;
 
 @CrossOrigin(origins = "*")
+@RequestMapping("/reactions")
+
 @RestController
-@RequestMapping
 
 public class ReactionController {
     @Autowired
@@ -31,6 +32,8 @@ public class ReactionController {
     void deleteReaction(@PathVariable UUID uuid_reaction) {
         reactionService.deleteReaction(uuid_reaction);
     }
+
+
     @GetMapping ("/getAllReaction")
     public List<Reaction> getAllReaction() {
         return reactionService.getAllReactions();
@@ -40,9 +43,13 @@ public class ReactionController {
     Reaction getReactionById(@PathVariable UUID uuid_reaction) {
         return reactionService.getReactionById(uuid_reaction);
     }
-    @PostMapping("/ajouterReactionEtAffecterPost/{postId}")
-    Reaction ajouterReactionEtAffecterPost(@PathVariable UUID postId, @RequestBody Reaction reaction) {
-        return reactionService.ajouterReactionEtAffecterPost(reaction, postId);
+    @PostMapping("/ajouterReactionEtAffecterPost/{postId}/{userUuid}")
+    public Reaction ajouterReactionEtAffecterPost(
+            @PathVariable UUID postId,
+            @PathVariable UUID userUuid,
+            @RequestBody Reaction reaction
+    ) {
+        return reactionService.ajouterReactionEtAffecterPost(reaction, postId, userUuid);
     }
 
 }

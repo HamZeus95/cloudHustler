@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
@@ -67,7 +68,8 @@ public class DeliveryDriver extends User {
     }
 
     //si louay
-    @OneToMany(mappedBy = "deliveryDriver") // Un livreur a plusieurs livraisons
+    @OneToMany(mappedBy = "deliveryDriver")// Un livreur a plusieurs livraisons
+    @JsonIgnore
     private List<Livraison> livraisons = new ArrayList<>();
     @Transient // ne sera pas stocké dans la BDD
     private String positionLivreur;

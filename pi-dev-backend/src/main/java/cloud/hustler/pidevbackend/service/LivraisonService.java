@@ -52,6 +52,7 @@ public class LivraisonService implements ILivraisonService {
 
     @Override
     public List<Livraison> findByOrdreConsumerUuid(UUID uuid_user) {
+        System.out.println(uuid_user);
         return livraisonRepository.findByOrderConsumerUuid(uuid_user);
     }
 
@@ -62,6 +63,12 @@ public class LivraisonService implements ILivraisonService {
 
     public Livraison getLastLivraison() {
         return livraisonRepository.findTopByOrderByIdDesc();  // Récupère la dernière Livraison par ID
+    }
+    public void desaffecterLivraison(Long livraisonId) {
+        Livraison livraison = livraisonRepository.findById(livraisonId)
+                .orElseThrow(() -> new RuntimeException("Livraison introuvable"));
+        livraison.setDeliveryDriver(null);
+        livraisonRepository.save(livraison);
     }
 
 

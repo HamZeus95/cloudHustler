@@ -16,8 +16,7 @@ import java.util.UUID;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 @RestController
-@RequestMapping("/api/files")
-@CrossOrigin(origins = "*")
+@RequestMapping("/files")
 
 public class FileStorageController {
 
@@ -26,6 +25,7 @@ public class FileStorageController {
     @PostMapping("/upload/{directory}")
     public ResponseEntity<Map<String, String>> uploadCVFile(@RequestParam("file") MultipartFile file,@PathVariable String directory) {
         try {
+            System.out.println("@ upload ");
             // Crée le dossier s'il n'existe pas
             Files.createDirectories(Paths.get(UPLOAD_DIR+"/"+directory));
 
@@ -110,7 +110,7 @@ public class FileStorageController {
 
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-            String apiUrl = "http://localhost:8000/resume";
+            String apiUrl = "https://agropule-ia.onrender.com/resume";
 
             ResponseEntity<Map> response = restTemplate.postForEntity(apiUrl, requestEntity, Map.class);
 
