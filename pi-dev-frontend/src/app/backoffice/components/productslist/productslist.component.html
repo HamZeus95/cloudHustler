@@ -6,9 +6,15 @@
           <i class="bi bi-{{viewMode === 'grid' ? 'list' : 'grid'}}"></i> 
           Switch to {{viewMode === 'grid' ? 'List' : 'Grid'}} View
         </button>
-        <button class="btn btn-primary" (click)="startAdd()" *ngIf="!isAdding && !isEditing">
+        <button class="btn btn-primary me-2" (click)="startAdd()" *ngIf="!isAdding && !isEditing">
           <i class="bi bi-plus"></i> Add New Product
         </button>
+        
+        <button class="btn btn-success" (click)="startAddWithAI()" *ngIf="!isAdding && !isEditing">
+          <i class="bi bi-magic"></i> Add with AI
+        </button>
+        
+        
       </div>
     </div>
   
@@ -32,8 +38,15 @@
               <textarea class="form-control" formControlName="description" rows="2"></textarea>
             </div>
             <div class="mb-3">
-              <label class="form-label">Image URL</label>
-              <input type="text" class="form-control" formControlName="imageUrl" placeholder="https://example.com/image.jpg">
+              <label class="form-label">Product Image</label>
+              <input type="file" class="form-control" (change)="isUsingAI ? onFileSelectedForAI($event) : onFileSelected($event)" accept="image/*">
+              <small class="form-text text-muted">Max size: 10MB (JPEG, PNG, GIF)</small>
+              <div *ngIf="selectedFile && selectedFile.size > 10485760" class="text-danger">
+                File size exceeds 10MB limit
+              </div>
+              <div *ngIf="previewUrl" class="mt-2">
+                <img [src]="previewUrl" class="img-thumbnail" style="max-height: 200px;">
+              </div>
             </div>
           </div>
           <div class="col-md-6">
@@ -80,7 +93,7 @@
       <div class="col-md-4 mb-4" *ngFor="let product of products">
         <div class="card h-100">
           <div class="card-img-top-container">
-            <img [src]="product.imageUrl || 'assets/img/placeholder-product.png'" 
+            <img [src]="getFullImageUrl(product.imageUrl)" 
                  class="card-img-top" 
                  alt="{{product.name}}"
                  onerror="this.src='assets/img/placeholder-product.png'">
@@ -133,10 +146,10 @@
         <tbody>
           <tr *ngFor="let product of products">
             <td>
-              <img [src]="product.imageUrl || 'assets/img/placeholder-product.png'" 
-                   class="img-thumbnail product-thumbnail" 
-                   alt="{{product.name}}"
-                   onerror="this.src='assets/img/placeholder-product.png'">
+              <img [src]="getFullImageUrl(product.imageUrl)" 
+               class="img-thumbnail product-thumbnail" 
+               alt="{{product.name}}"
+               onerror="this.src='assets/img/placeholder-product.png'">
             </td>
             <td>{{product.name}}</td>
             <td class="text-muted">{{product.description || '-'}}</td>

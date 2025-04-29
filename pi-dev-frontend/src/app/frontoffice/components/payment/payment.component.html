@@ -1,0 +1,54 @@
+<app-navbar></app-navbar>
+
+<section *ngIf="orders.length > 0; else noOrders" class="orders-section py-5">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2 class="section-title">🛒 My Orders</h2>
+      <p class="section-subtitle">Here are your recent orders. Thank you for shopping with us!</p>
+    </div>
+
+    <div class="row">
+      <div *ngFor="let order of orders" class="col-md-6 col-lg-4 mb-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title mb-3">
+              <strong>Order #{{ order.uuid_order | slice:0:8 }}</strong>
+            </h5>
+
+            <ul class="list-unstyled flex-grow-1">
+              <li *ngFor="let item of order.orderItems" class="d-flex justify-content-between mb-2">
+                <span>{{ item.product.name }} <small class="text-muted">x{{ item.quantity }}</small></span>
+                <span>{{ item.product.price * item.quantity | currency }}</span>
+              </li>
+            </ul>
+
+            <hr>
+
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <div>
+                <strong>Total:</strong> 
+                <span>{{ order.totalPrice | currency }}</span>
+              </div>
+              <span class="badge" [ngClass]="{
+                'bg-success': order.status.toLowerCase() === 'completed',
+                'bg-warning text-dark': order.status.toLowerCase() === 'pending',
+                'bg-danger': order.status.toLowerCase() === 'cancelled'
+              }">
+                {{ order.status | titlecase }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #noOrders>
+  <div class="container py-5 text-center">
+    <h3>No orders yet 😕</h3>
+    <p>Go to the shop and make your first purchase!</p>
+    <a routerLink="/frontoffice/products" class="btn btn-primary mt-3">Go Shopping</a>
+  </div>
+</ng-template>
+<app-footer></app-footer>

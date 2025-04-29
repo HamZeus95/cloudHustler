@@ -39,10 +39,10 @@ import { AddCommentComponent } from "./components/comment/add-comment/add-commen
 import { ListCommentComponent } from "./components/comment/list-comment/list-comment.component";
 import { ChatAiComponent } from "./components/chat-ai/chat-ai.component";
 import { EventComponent } from './pages/event/event.component';
+import { PaymentComponent } from './components/payment/payment.component';
 import { JobRequestsComponent } from './pages/job-requests/job-requests.component';
 import { JobFormComponent } from './pages/job-requests/job-form/job-form.component';
 import { FrontTakeQuizComponent } from './pages/front-take-quiz/front-take-quiz.component';
-
 import { FactureClientComponent } from './pages/livraison/facture-client/facture-client.component';
 import { LivraisonClientComponent } from './pages/livraison/livraison-client/livraison-client.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -107,6 +107,9 @@ import { GenerPostComponent } from './components/gener-post/gener-post.component
     ListCommentComponent,
     ChatAiComponent,
     NotFoundComponent,
+    PaymentComponent
+
+
     JobRequestsComponent,
     JobFormComponent,
     FrontTakeQuizComponent,

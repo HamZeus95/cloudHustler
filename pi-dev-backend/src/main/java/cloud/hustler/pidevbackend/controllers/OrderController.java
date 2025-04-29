@@ -1,8 +1,10 @@
 package cloud.hustler.pidevbackend.controllers;
+import cloud.hustler.pidevbackend.DTO.StripeResponse;
 import cloud.hustler.pidevbackend.entity.Order;
 import cloud.hustler.pidevbackend.repository.OrderRepository;
 import cloud.hustler.pidevbackend.service.IOrderService;
 import cloud.hustler.pidevbackend.service.OrderService;
+import com.stripe.exception.StripeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +20,14 @@ public class OrderController {
     @Autowired
     IOrderService orderService;
 
+    @PostMapping("/prepare-checkout/{customerUuid}")
+    public StripeResponse prepareCheckout(@PathVariable UUID customerUuid) {
+        return orderService.prepareCheckout(customerUuid);
+    }
 
-    @PostMapping("/{customerUuid}/checkout")
-    public Order checkout(@PathVariable UUID customerUuid) {
-        return orderService.checkout(customerUuid);
+    @PostMapping("/confirm")
+    public Order confirmOrder(@RequestParam String sessionId, @RequestParam UUID customerUuid) throws StripeException {
+        return orderService.confirmOrderAfterPayment(sessionId, customerUuid);
     }
 
     @GetMapping("/{customerUuid}")

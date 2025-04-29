@@ -7,7 +7,7 @@ import { Cart } from '../models/market/cart.model';
   providedIn: 'root',
 })
 export class CartService {
-  private apiUrl = 'http://localhost:8090/pi/cart'; // Update with your backend URL
+  private apiUrl = '/api/v1/cart'; // Update with your backend URL
 
   constructor(private http: HttpClient) {}
 
