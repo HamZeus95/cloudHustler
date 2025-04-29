@@ -436,12 +436,14 @@ export class LivraisonComponent implements OnInit {
     }
   }
   desaffecterLivreur(idLivraison: number) {
-    this.http.put(`/api/v1/livraisons/desaffecter/${idLivraison}`, {}).subscribe(
-      response => {
-        console.log('Livreur désaffecté avec succès', response);
-        this.loadlivraisons(); // Reload the deliveries to update the view
-      },
-      error => console.error('Erreur lors de la désaffectation', error)
-    );
+    if (confirm('Are you sure you want to disassociate this delivery driver?')) {
+      this.http.put(`/api/v1/livraisons/desaffecter/${idLivraison}`, {}).subscribe(
+        response => {
+          console.log('Livreur désaffecté avec succès', response);
+          this.loadlivraisons(); // Reload the deliveries to update the view
+        },
+        error => console.error('Erreur lors de la désaffectation', error)
+      );
+    }
   }
 }
