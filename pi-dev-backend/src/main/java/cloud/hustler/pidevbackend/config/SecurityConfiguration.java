@@ -39,12 +39,18 @@ public class SecurityConfiguration {
             "/face-id/login-with-face-only", // Add Face ID endpoints to whitelist
             "/v2/api-docs",
             "/v3/api-docs",
+            "/reactions/**",
+            "/**",
             "/users/**", // temporary
             "/v3/api-docs/**",
             "/posts/**", // temporary
             "/Event/getEvents", // temporary
             "Event/**", // fix later
             "/product/**",
+            "/cart/**",
+            "/orders/**",
+            "/productcategory/**",
+            "/payment/**",
             "/livraisons/**",
             "/factures/**",
             "/orders/**",
@@ -75,13 +81,13 @@ public class SecurityConfiguration {
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     @Value("${application.security.jwt.secret-key}")
     private String secretKey;
-    
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> {}) // Enable CORS
-                .authorizeHttpRequests(req -> 
+                .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
                                 .anyRequest()
@@ -91,7 +97,7 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .logout(logout -> 
+                .logout(logout ->
                         logout.logoutUrl("/auth/logout")  // context path is already /api/v1
                                 .addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
@@ -115,13 +121,13 @@ public class SecurityConfiguration {
     public CustomOAuth2UserService customOAuth2UserService() {
         return new CustomOAuth2UserService();
     }
-    
+
     @Bean
     public JwtDecoder jwtDecoder() {
         // Create a signing key from the secret
         byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
         Key signingKey = new SecretKeySpec(keyBytes, "HmacSHA256");
-        
+
         // Return a JWT decoder that uses this key
         return NimbusJwtDecoder.withSecretKey((javax.crypto.SecretKey) signingKey).build();
     }

@@ -14,19 +14,22 @@ export class PostService {
 
   constructor(private http: HttpClient) {}
 
-  addCommentToPost(postId: string, comment: Comment): Observable<Comment> {
+  addCommentToPost(postId: string, comment: Comment, userUuid: string): Observable<Comment> {
     return this.http.post<Comment>(
-      `${this.baseUrl}/ajouterCommentEtAffecterPost/${postId}`,
+      `${this.baseUrl}/comments/ajouterCommentEtAffecterPost/${postId}/${userUuid}`,
       comment
-    );}
+    );
+  }
+  
+  
 
 
-    addReactionToPost(postId: string, reaction: Reaction): Observable<Reaction> {
-      return this.http.post<Reaction>(
-        `${this.baseUrl}/ajouterReactionEtAffecterPost/${postId}`,
-        reaction
-      );}
-
+  addReactionToPost(postId: string, reaction: any, userUuid: string): Observable<any> {
+    return this.http.post<any>(
+      `${this.baseUrl}/reactions/ajouterReactionEtAffecterPost/${postId}/${userUuid}`,
+      reaction
+    );
+  }
 
 
 
@@ -37,7 +40,7 @@ export class PostService {
   }
 
   getCommentById(commentId: string): Observable<commentaires> {
-    return this.http.get<commentaires>(`${this.baseUrl}/getCommentById/${commentId}`);
+    return this.http.get<commentaires>(`${this.baseUrl}/comments/getCommentById/${commentId}`);
   }
 
 
@@ -45,7 +48,7 @@ export class PostService {
     return this.http.get<commentaires[]>(`${this.baseUrl}/getAllComments`);
   }
   getCommentByPostId(postId: string): Observable<commentaires[]> {
-    return this.http.get<commentaires[]>(`${this.baseUrl}/getCommentsByPostId/${postId}`);
+    return this.http.get<commentaires[]>(`${this.baseUrl}/comments/getCommentsByPostId/${postId}`);
   }
 
   getPostById(id: string): Observable<Post> {
@@ -66,13 +69,16 @@ export class PostService {
   }
 
   deleteComment(id: string  ): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/deleteComment/${id}` );
+    return this.http.delete<void>(`${this.baseUrl}/comments/deleteComment/${id}` );
   }
 
   
 updateCommentById(commentId: string, comment: commentaires): Observable<commentaires> {
-    return this.http.put<commentaires>(`${this.baseUrl}/updateCommentById/${commentId}`, comment);
+    return this.http.put<commentaires>(`${this.baseUrl}/comments/updateCommentById/${commentId}`, comment);
 
+}
+deleteReactionFromPost( reactionId: string) {
+  return this.http.delete(`${this.baseUrl}/reactions/deleteReaction/${reactionId}`);
 }
 
 }

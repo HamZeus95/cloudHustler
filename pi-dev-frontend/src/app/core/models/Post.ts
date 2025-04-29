@@ -8,6 +8,7 @@ export interface Post {
    mediaUrl: string;
    createdAt?: Date | string;
    updatedAt?: Date | string;
+   
    comments?: Comment[];
    reactions?: Reaction[];
 }

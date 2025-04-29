@@ -4,10 +4,9 @@
     <input type="text" 
            [(ngModel)]="searchTerm" 
            (input)="filterPosts()"
-           placeholder="Rechercher des posts...">
+           placeholder="Rechercher des posts... ">
     <i class="fas fa-search"></i>
   </div>
-
   <!-- Message si aucun post -->
   <div *ngIf="filteredPosts.length === 0" class="no-posts">
     <img src="assets/images/empty-feed.svg" alt="Aucun post" class="empty-illustration">
@@ -23,6 +22,7 @@
 
   <!-- Liste des posts -->
   <div class="post-list">
+
     <div *ngFor="let post of filteredPosts" class="post-card" [id]="'post-' + (post.idPost || '')" #postElement>
       <!-- En-tête du post -->
       <div class="post-header">
@@ -34,16 +34,23 @@
         </div>
         <div class="post-actions">
           <button *ngIf="post.idPost" 
+          (click)="editPost(post.idPost);$event.stopPropagation()" 
+          class="edit-btn"
+          title="Modifier ce post">
+    <i class="fas fa-edit"></i> 
+  </button>
+          <button *ngIf="post.idPost" 
                   (click)="deletePost(post.idPost); $event.stopPropagation()" 
                   class="delete-btn">
-            <i class="fas fa-trash"></i> Supprimer
+            <i class="fas fa-trash"></i> 
           </button>
           <button (click)="exportToPdf(post.idPost || '', postElement); $event.stopPropagation()" 
                   class="export-btn"
                   [disabled]="isGeneratingPdf">
             <i class="fas" [ngClass]="{'fa-file-pdf': !isGeneratingPdf, 'fa-spinner fa-spin': isGeneratingPdf}"></i> 
-            {{ isGeneratingPdf ? 'Génération...' : 'PDF' }}
+            {{ isGeneratingPdf ? 'Génération...' : '' }}
           </button>
+         
         </div>
       </div>
 

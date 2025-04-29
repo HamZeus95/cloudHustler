@@ -47,7 +47,7 @@ public class Post {
     @ManyToOne
     @JsonIgnore
 
-    @JoinColumn(name = "farmer_id")
+    @JoinColumn(name = "user_id")
     private User user;  // Relation avec le Farmer qui a écrit ce post
 
 

@@ -192,7 +192,7 @@
               <button class="action-button" mat-raised-button [routerLink]="['/backoffice/livraison', livraison.id]">
                 <mat-icon>visibility</mat-icon>
             </button>
-                          <button class="action-button" (click)="desaffecterLivreur(livraison.id)">
+                          <button class="action-button" (click)="$event.stopPropagation(); livraison.id && desaffecterLivreur(livraison.id)">
                 <mat-icon>link_off</mat-icon>
             </button>
               <button class="delete-button" style="margin-left: 8px;" (click)="$event.stopPropagation(); livraison.id && supprimerlivraison(livraison.id)">  <mat-icon>delete</mat-icon>  

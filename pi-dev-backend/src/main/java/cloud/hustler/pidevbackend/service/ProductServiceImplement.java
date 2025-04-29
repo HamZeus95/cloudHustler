@@ -38,19 +38,24 @@ public class ProductServiceImplement implements IProductService {
     }
 
     @Override
-    public Product updateProduct(Product product) {
-        UUID id = product.getUuid_product(); // or whatever your ID field is
+    public Product updateProduct(UUID id, Product product) {
         Product existingProduct = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Product not found"));
 
-        // Optional: preserve original ProductCategory if it's not being updated
-        if (product.getProductCategory() == null) {
-            product.setProductCategory(existingProduct.getProductCategory());
+        // Update fields
+        existingProduct.setName(product.getName());
+        existingProduct.setDescription(product.getDescription());
+        existingProduct.setPrice(product.getPrice());
+        existingProduct.setQuantity(product.getQuantity());
+        existingProduct.setAvailable(product.isAvailable());
+
+        // Only update imageUrl if a new one was provided
+        if (product.getImageUrl() != null) {
+            existingProduct.setImageUrl(product.getImageUrl());
         }
 
-        return productRepository.save(product);
+        return productRepository.save(existingProduct);
     }
-
 
     @Override
     public void deleteProduct(UUID idProduct) {

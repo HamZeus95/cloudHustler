@@ -11,11 +11,21 @@
             <div class="product-show">
               <h6>Showing 1–6 of {{products.length}} results</h6>
             </div>
+            <div >
+              
+
+            </div>
+            
 
             <!-- Product View Mode -->
             <div class="produtc-view-mode">
-              <a href="#"><i class="fa fa-th"></i></a>
-              <a href="#"><i class="fa fa-list-ul"></i></a>
+              <input
+  type="text"
+  placeholder="Search products..."
+  [(ngModel)]="searchTerm"
+  (ngModelChange)="onSearchChange()"
+  class="form-control mb-3"
+/>
             </div>
           </div>
         </div>
@@ -78,70 +88,12 @@
 </div>
 
 
-          <section *ngIf="orders.length > 0" class="orders-area mb-50">
-            <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <div class="section-heading">
-                    <h3>My Orders</h3>
-                  </div>
-                </div>
-              </div>
-          
-              <div class="row">
-                <div class="col-12">
-                  <div class="orders-table">
-                    <div class="table-responsive">
-                      <table class="table table-bordered">
-                        <thead class="thead-light">
-                          <tr>
-                            <th>Order ID</th>
-                            <th>Items</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let order of orders">
-                            <td class="order-id">
-                              <strong>#{{ order.uuid_order | slice:0:8 }}</strong>
-                            </td>
-                            <td class="order-items">
-                              <ul class="list-unstyled mb-0">
-                                <li *ngFor="let item of order.orderItems" class="d-flex justify-content-between py-2 border-bottom">
-                                  <span>
-                                    {{ item.product.name }} 
-                                    <small class="text-muted">x{{ item.quantity }}</small>
-                                  </span>
-                                  <span>{{ item.product.price * item.quantity | currency }}</span>
-                                </li>
-                              </ul>
-                            </td>
-                            <td class="order-total">
-                              {{ order.totalPrice | currency }}
-                            </td>
-                            <td class="order-status">
-                              <span class="status-badge" [class]="'status-' + order.status">
-                                {{ order.status | titlecase }}
-                              </span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          
-
-          
-
          
+          
 
           
 
+      
           <!-- Single Widget Area -->
           <div class="single-widget-area">
             <!-- Title -->
@@ -231,7 +183,7 @@
               <div class="single-product-area mb-50">
                 <!-- Product Thumbnail -->
                 <div class="product-thumbnail">
-                  <img [src]="product.imageUrl" alt="">
+                  <img [src]="getFullImageUrl(product.imageUrl)"  alt="">
                   <!-- Product Tags -->
                   <span class="product-tags">{{product.description}}</span>
 

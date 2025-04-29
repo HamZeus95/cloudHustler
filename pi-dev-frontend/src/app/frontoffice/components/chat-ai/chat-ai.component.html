@@ -1,35 +1,55 @@
-<div class="chat-container">
-    <div class="chat-header" (click)="toggleChat()">
-      <h2>Taher</h2>
-      <div class="ai-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-        </svg>
+<div class="chat-container" [class.open]="isOpen">
+  <div class="chat-header" (click)="toggleChat()">
+    <div class="header-content">
+      <span class="header-icon">🚜</span>
+      <h3>Agricultural Assistant</h3>
+    </div>
+    <span class="toggle-icon">{{ isOpen ? '▼' : '▲' }}</span>
+  </div>
+  
+  <div *ngIf="isOpen" class="chat-content">
+    <div #chatHistory class="chat-history">
+      <div *ngFor="let message of messages" class="message" [class.user]="message.isUser">
+        <div class="message-header">
+          <span class="sender-icon">{{ message.isUser ? '👤' : '🚜' }}</span>
+          <span class="sender">{{ message.isUser ? 'Vous' : 'AgriBot' }}</span>
+          <span class="time">{{ message.time | date:'HH:mm' }}</span>
+        </div>
+        <div class="message-text">{{ message.text }}</div>
+        <div *ngIf="!message.isAgricultureRelated && !message.isUser" class="agriculture-alert">
+          ⚠️ I only answer agricultural questions
+        </div>
+      </div>
+      <div *ngIf="isLoading" class="loading-message">
+        <div class="loading-dots">
+          <span>🌱</span>
+          <span>🌾</span>
+          <span>🚜</span>
+        </div>
+        <div>Search for agricultural solutions...</div>
       </div>
     </div>
-  
-    <div class="chat-history" #chatHistory *ngIf="isOpen">
-      <div *ngFor="let message of messages" 
-           [class.user-message]="message.isUser" 
-           [class.ai-message]="!message.isUser">
-        <div class="message-content">{{message.text}}</div>
-        <div class="message-time">{{message.time | date:'shortTime'}}</div>
-      </div>
-    </div>
-  
-    <div class="input-area" *ngIf="isOpen">
-      <textarea [(ngModel)]="prompt" 
-                placeholder="Posez votre question..." 
-                (keydown.enter)="askAI()"></textarea>
-      <button (click)="askAI()" [disabled]="!prompt || isLoading">
-        <span *ngIf="!isLoading">→</span>
-        <span *ngIf="isLoading" class="spinner"></span>
+
+    <div class="quick-questions">
+      <button (click)="suggestQuestion('Comment traiter les maladies des plantes ?')">
+        🌱 Plant diseases
+      </button>
+      <button (click)="suggestQuestion('Quels engrais bio recommandez-vous ?')">
+        🧪 Organic fertilizer
+      </button>
+      <button (click)="suggestQuestion('Techniques d\'irrigation économes ?')">
+        💧 Irrigation
       </button>
     </div>
-    
-    <div class="chat-minimized" *ngIf="!isOpen" (click)="toggleChat()">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-      </svg>
+
+    <div class="input-area">
+      <textarea #inputTextarea 
+                [(ngModel)]="prompt" 
+                (keydown)="onKeyDown($event)"
+                placeholder="Votre question agricole..."></textarea>
+      <button (click)="askAI()" [disabled]="!prompt.trim() || isLoading">
+        {{ isLoading ? 'Envoi...' : 'Envoyer' }}
+      </button>
     </div>
   </div>
+</div>

@@ -15,13 +15,13 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, UUID> {
 
   Optional<User> findByEmail(String email);
-  
+
   // Find user by faceId - needed for face-only login
   Optional<User> findByFaceId(String faceId);
-  
+
   // Find all users with faceIdEnabled true
   List<User> findByFaceIdEnabled(boolean faceIdEnabled);
-  
+
   // email exists
 
   boolean existsByEmail(String email);
@@ -29,5 +29,9 @@ public interface UserRepository extends JpaRepository<User, UUID> {
   // find users not having the specified discriminator value
   @Query("SELECT u FROM User u WHERE TYPE(u) <> :#{#role}")
   List<User> findByTypeNot(@Param("role") Class<?> role);
+
+  //  boolean existsByEmail(String email);
+  //@Query("SELECT u FROM User u WHERE u.uuid_user = :uuid")
+  //Optional<User> findByUuid_user(@Param("uuid") UUID uuid);
 
 }

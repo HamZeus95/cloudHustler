@@ -7,6 +7,7 @@ interface Message {
   text: string;
   isUser: boolean;
   time: Date;
+  isAgricultureRelated?: boolean;
 }
 
 @Component({
@@ -17,18 +18,27 @@ interface Message {
 export class ChatAiComponent implements AfterViewChecked {
   @ViewChild('chatHistory') private chatHistory!: ElementRef;
   @ViewChild('inputTextarea') private inputTextarea!: ElementRef;
+  
   isOpen: boolean = false;
-  toggleChat() {
-    this.isOpen = !this.isOpen;
-  }
-  prompt = '';
-  isLoading = false;
+  prompt: string = '';
+  isLoading: boolean = false;
+  
   messages: Message[] = [
     {
-      text: 'Bonjour ! Je suis votre assistant taher. Comment puis-je vous aider ?',
+      text: 'Bonjour ! Je suis votre assistant agricole expert. Je peux vous aider avec :\n- Techniques de culture\n- Problèmes de plantes\n- Gestion des sols\n- Technologies agricoles\n\nPosez-moi votre question agricole !',
       isUser: false,
-      time: new Date()
+      time: new Date(),
+      isAgricultureRelated: true
     }
+  ];
+
+  private agricultureKeywords = [
+    'agriculture', 'cultiver', 'culture', 'plante', 'sol', 'terre', 
+    'irrigation', 'engrais', 'fertilisant', 'récolte', 'semence',
+    'plantation', 'végétal', 'céréale', 'légume', 'fruit', 'élevage',
+    'bétail', 'pesticide', 'serre', 'tracteur', 'moisson', 'jardinage',
+    'horticulture', 'agronomie', 'agroécologie', 'sylviculture', 'viticulture',
+    'ferme', 'champ', 'compost', 'phytosanitaire', 'arrosage', 'saison'
   ];
 
   constructor(private geminiService: GeminiService) {}
@@ -38,6 +48,13 @@ export class ChatAiComponent implements AfterViewChecked {
     this.adjustTextareaHeight();
   }
 
+  toggleChat() {
+    this.isOpen = !this.isOpen;
+    if (this.isOpen) {
+      setTimeout(() => this.scrollToBottom(), 100);
+    }
+  }
+
   private scrollToBottom(): void {
     try {
       this.chatHistory.nativeElement.scrollTop = this.chatHistory.nativeElement.scrollHeight;
@@ -45,76 +62,101 @@ export class ChatAiComponent implements AfterViewChecked {
   }
 
   private adjustTextareaHeight(): void {
-  if (!this.inputTextarea?.nativeElement) return;
-  
-  const textarea = this.inputTextarea.nativeElement;
-  textarea.style.height = 'auto';
-  textarea.style.height = `${Math.min(textarea.scrollHeight, 120)}px`;
-}
+    if (!this.inputTextarea?.nativeElement) return;
+    const textarea = this.inputTextarea.nativeElement;
+    textarea.style.height = 'auto';
+    textarea.style.height = `${Math.min(textarea.scrollHeight, 120)}px`;
+  }
 
-askAI(): void {
-  if (!this.prompt.trim()) return;
+  askAI(): void {
+    if (!this.prompt.trim()) return;
 
-  const userMessage = this.prompt;
-  this.addMessage(userMessage, true);
-  this.isLoading = true;
-  this.prompt = '';
+    const userMessage = this.prompt;
+    this.addMessage(userMessage, true);
+    this.isLoading = true;
+    this.prompt = '';
 
-  this.geminiService.askGemini(userMessage).subscribe({
-    next: (res) => {
-      this.addMessage(res.response || 'No response received', false);
-      this.isLoading = false;
-    },
-    error: (err) => {
-      this.addMessage(err.error || 'Error processing request', false);
-      this.isLoading = false;
-    }
-  });
-}
+    const farmingPrompt = `[STRICTEMENT AGRICOLE]
+    Tu es un expert agricole. Réponds uniquement si la question concerne:
+    - Techniques de culture
+    - Problèmes de plantes
+    - Gestion des sols
+    - Technologies agricoles
+    
+    Si la question n'est pas agricole, réponds: "Je suis spécialisé en agriculture uniquement. Posez-moi une question sur les cultures, plantes ou techniques agricoles."
+    
+    Question: ${userMessage}
+    
+    Réponse (en français, technique mais claire):`;
 
-private addMessage(text: string, isUser: boolean): void {
-  this.messages.push({
-    text,
-    isUser,
-    time: new Date()
-  });
-}
+    this.geminiService.askGemini(farmingPrompt).pipe(
+      catchError(err => {
+        this.addBotMessage("Désolé, service indisponible. Réessayez plus tard.");
+        return throwError(err);
+      })
+    ).subscribe({
+      next: (res) => {
+        const response = res.response || '';
+        this.addBotMessage(response);
+      },
+      error: () => this.isLoading = false
+    });
+  }
 
+  private addBotMessage(text: string): void {
+    const isAgricultureRelated = this.checkAgricultureRelated(text);
+    const finalText = isAgricultureRelated 
+      ? this.formatAgricultureResponse(text)
+      : "Je suis spécialisé en agriculture uniquement. Posez-moi une question sur les cultures, plantes ou techniques agricoles.";
+    
+    this.messages.push({
+      text: finalText,
+      isUser: false,
+      time: new Date(),
+      isAgricultureRelated
+    });
+    this.isLoading = false;
+    this.scrollToBottom();
+  }
 
-  private addUserMessage(text: string): void {
+  private addMessage(text: string, isUser: boolean): void {
     this.messages.push({
       text,
-      isUser: true,
-      time: new Date()
+      isUser,
+      time: new Date(),
+      isAgricultureRelated: isUser ? true : this.checkAgricultureRelated(text)
     });
+    this.scrollToBottom();
   }
 
-  private addBotMessage(response: any): void {
-    let messageText = 'Pas de réponse';
-    
-    if (typeof response === 'string') {
-      messageText = response;
-    } else if (response?.response) {
-      messageText = response.response;
-    } else if (response?.error) {
-      messageText = `Erreur: ${response.error}`;
-    }
-
-    this.messages.push({
-      text: messageText,
-      isUser: false,
-      time: new Date()
-    });
-    this.isLoading = false;
+  private checkAgricultureRelated(text: string): boolean {
+    const lowerText = text.toLowerCase();
+    return this.agricultureKeywords.some(keyword => lowerText.includes(keyword));
   }
 
-  private addErrorMessage(error: any): void {
-    this.messages.push({
-      text: `Erreur: ${error.message || 'Erreur inconnue'}`,
-      isUser: false,
-      time: new Date()
-    });
-    this.isLoading = false;
+  private formatAgricultureResponse(text: string): string {
+    const emojiMap: Record<string, string> = {
+      'agriculture': '🚜',
+      'cultiver': '🌾',
+      'plante': '🌱',
+      'sol': '🌍',
+      'eau': '💧',
+      'engrais': '🧪',
+      'récolte': '🪓',
+      'conseil': '💡',
+      'agriculteur': '👨‍🌾',
+      'maladie': '🦠',
+      'semence': '🌰',
+      'serre': '🏡',
+      'tracteur': '🚜',
+      'compost': '♻️',
+      'irrigation': '⛲'
+    };
+
+    return text.split(' ').map(word => {
+      const emoji = emojiMap[word.toLowerCase()];
+      return emoji ? `${emoji} ${word}` : word;
+    }).join(' ');
   }
 
   onKeyDown(event: KeyboardEvent): void {
@@ -122,5 +164,10 @@ private addMessage(text: string, isUser: boolean): void {
       event.preventDefault();
       this.askAI();
     }
+  }
+
+  suggestQuestion(question: string): void {
+    this.prompt = question;
+    this.askAI();
   }
 }
