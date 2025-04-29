@@ -22,7 +22,6 @@ import { SuiviLivraisonComponent } from './pages/livraison/suivilivraisons/suivi
 import { MarketplaceManagementComponent } from './pages/marketplace-management/marketplace-management.component';
 import { BillingComponent } from './components/events/billing/billing.component';
 import { ChatPageComponent } from './chat/pages/chat-page/chat-page.component';
-
 import { JobsBackComponent } from './pages/hiring/jobs-back/jobs-back.component';
 import { JobsRequestsDashboardComponent } from './pages/hiring/jobs-requests-dashboard/jobs-requests-dashboard.component';
 import { DipslayComponent } from './pages/hiring/dipslay/dipslay.component';
