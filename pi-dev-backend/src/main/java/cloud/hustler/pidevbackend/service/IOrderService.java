@@ -17,5 +17,6 @@ public interface IOrderService {
     StripeResponse prepareCheckout(UUID customerUuid);
     Order confirmOrderAfterPayment(String sessionId, UUID customerUuid) throws StripeException;
     Order createOrderFromCart(UUID customerUuid);
+    List<Order> getAllOrders();
 
 }

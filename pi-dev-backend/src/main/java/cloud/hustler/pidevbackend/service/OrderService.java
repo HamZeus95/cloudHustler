@@ -120,7 +120,10 @@ public class OrderService implements IOrderService {
         return order;
     }
 
-
+    @Override
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
 
 
     public List<Order> getOrdersByCustomer( UUID customerUuid) {

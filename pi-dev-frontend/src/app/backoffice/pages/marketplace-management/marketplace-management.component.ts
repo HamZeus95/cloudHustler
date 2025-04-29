@@ -53,7 +53,7 @@ currentUser: any = null;
       this.totalCategories = categories.length;
     });
 
-    this.orderService.getOrders(this.currentUser.userUUID).subscribe(orders => {
+    this.orderService.getAllOrders().subscribe(orders => {
       this.totalOrders = orders.length;
     });
   }
