@@ -22,6 +22,9 @@ import { ResetPasswordComponent } from './pages/auth/reset-password/reset-passwo
 import { EventComponent } from './pages/event/event.component';
 import {PublicGuard} from '../auth/guards/public.guard';
 import { AuthGuard } from "../auth/guards/auth.guard";
+import { JobRequestsComponent } from './pages/job-requests/job-requests.component';
+import { FrontTakeQuizComponent } from './pages/front-take-quiz/front-take-quiz.component';
+
 
 
 const routes: Routes = [
@@ -43,6 +46,23 @@ const routes: Routes = [
     {path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [PublicGuard]},
     {path: 'reset-password', component: ResetPasswordComponent, canActivate: [PublicGuard]},
     {path: 'not-found', component: NotFoundComponent},
+  //event routes
+    {path:'event',component:EventComponent},
+  //blog routes
+    { path: 'blog', component: BlogComponent },
+  //livraison routes
+    { path:'factures',  component: FactureClientComponent}, // ya hamza rodeha ken el user connectee
+    { path:'livraisons',  component: LivraisonClientComponent}, // ya hamza rodeha ken el user connectee
+    { path:'livraison-client-details/:id',  component: LivraisonClientdetailsComponent},// ya hamza rodeha ken el user connectee
+    { path:'facture-client-details/:id',  component: FactureClientdetailsComponent}, // ya hamza rodeha ken el user connectee
+    { path:'suivrelivraison/:id',  component: MapComponent}, // ya hamza rodeha ken el user connectee
+    { path:'livraisonsDriver',  component: LivraisondriverComponent}, // ya hamza rodeha ken el user connectee w driver
+  //market routes
+    {path:'market', component: MarketComponent},
+  //hiring routes
+    {path:'jobs',component:JobsComponent},
+    { path: 'job-request/:jobId', component: JobRequestsComponent },
+    { path: 'take-quiz/:id', component: FrontTakeQuizComponent }, // Front-office quiz
 
 
 ];

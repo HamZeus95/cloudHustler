@@ -30,8 +30,8 @@ public class Product {
 
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "order_uuid_order")
+    @JsonIgnore
     Order order;
 
     @ManyToOne

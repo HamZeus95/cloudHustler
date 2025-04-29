@@ -10,6 +10,7 @@ import java.util.UUID;
 
 public interface LivraisonRepository extends JpaRepository<Livraison, Long> {
     Livraison findTopByOrderByIdDesc();
+
     @Query("SELECT l FROM Livraison l WHERE l.order.consumer.uuid_user = :uuid")
     List<Livraison> findByOrderConsumerUuid(@Param("uuid") UUID uuid);
     @Query("SELECT l FROM Livraison l WHERE l.deliveryDriver.uuid_user = :uuid")

@@ -1,5 +1,6 @@
 package cloud.hustler.pidevbackend.repository;
 
+import cloud.hustler.pidevbackend.entity.DeliveryDriver;
 import cloud.hustler.pidevbackend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,10 +23,11 @@ public interface UserRepository extends JpaRepository<User, UUID> {
   List<User> findByFaceIdEnabled(boolean faceIdEnabled);
   
   // email exists
+
   boolean existsByEmail(String email);
 
   // find users not having the specified discriminator value
   @Query("SELECT u FROM User u WHERE TYPE(u) <> :#{#role}")
   List<User> findByTypeNot(@Param("role") Class<?> role);
-   
+
 }

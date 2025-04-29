@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Livraison } from 'src/app/core/models/livraison/livraison';
 import { LivraisonPredictionService } from 'src/app/core/services/livraison/livraison-prediction-service.service';
 import { LivraisonService } from 'src/app/core/services/livraison/livraison.service';
+import { AuthService } from '../../../../auth/service/authentication.service';
+import { TokenStorageService } from '../../../../auth/service/token-storage.service';
 
 @Component({
   selector: 'app-livraison-client',
@@ -11,8 +13,9 @@ import { LivraisonService } from 'src/app/core/services/livraison/livraison.serv
 })
 export class LivraisonClientComponent implements OnInit {
   displayModal: boolean = false;
-  readonly userUuid = '01230000-0000-0000-0000-000000000000'; // Replace with actual UUID retrieval
-
+  // Replace with actual UUID retrieval
+  isAuthenticated = false;
+  currentUser: any = null;
   
     closeDialog(): void {
       this.displayModal = false;
@@ -44,13 +47,29 @@ export class LivraisonClientComponent implements OnInit {
     constructor(
       private livraisonService: LivraisonService,
       private router: Router,
-      private predictionService: LivraisonPredictionService
+      private predictionService: LivraisonPredictionService,
+      private authService: AuthService,
+      private tokenStorageService: TokenStorageService,
 
-    ) {
-      this.loadLivraisons();
-    }
+    ) {}
     ngOnInit(): void {
+      
+      this.authService.isAuthenticated().subscribe(isAuth => {
+        this.isAuthenticated = isAuth;
+        if (isAuth) {
+          this.currentUser = this.tokenStorageService.getCurrentUser();
+        }
+        
+      });
+       // Subscribe to user changes
+       this.tokenStorageService.getUser().subscribe(user => {
+        this.currentUser = user;
+      });
+      console.log("yooooo",this.currentUser);
       this.loadLivraisons();
+      
+  
+     
     }
   
   
@@ -62,8 +81,9 @@ export class LivraisonClientComponent implements OnInit {
     }
   
     loadLivraisons() {
-      // Assuming you store the UUID somewhere
-      this.livraisonService.getLivraisonsByUser(this.userUuid).subscribe((data: Livraison[]) => {
+      
+      const userUuid = this.currentUser.userUUID;  
+      this.livraisonService.getLivraisonsByUser(userUuid).subscribe((data: Livraison[]) => {
         this.livraisons = data;
       });
     }
@@ -112,58 +132,7 @@ export class LivraisonClientComponent implements OnInit {
         });
       }}
   
-  /**
-   * Récupère l'UUID de l'utilisateur à partir du token JWT stocké
-   * @returns string UUID de l'utilisateur ou null si non trouvé
-   */
-  private getUserUuidFromToken(): string | null {
-    try {
-      // Récupérer le token depuis le localStorage
-      const token = localStorage.getItem('token');
-      
-      if (!token) {
-        console.warn('Aucun token trouvé');
-        return null;
-      }
-
-      // Décoder le token (partie payload)
-      const tokenParts = token.split('.');
-      if (tokenParts.length !== 3) {
-        console.error('Format de token invalide');
-        return null;
-      }
-
-      // Décoder la partie payload (2ème partie du token)
-      const payload = JSON.parse(atob(tokenParts[1]));
-      
-      // Récupérer l'UUID depuis les claims du token
-      const uuid = payload.uuid; // Ajuster selon la structure réelle de votre token
-      
-      if (!uuid) {
-        console.error('UUID non trouvé dans le token');
-        return null;
-      }
-
-      return uuid;
-
-    } catch (error) {
-      console.error('Erreur lors de l\'extraction de l\'UUID:', error);
-      return null;
-    }
-  }
-  // Exemple d'utilisation dans loadLivraisons():
-  /* 
-  loadLivraisons() {
-    const userUuid = this.getUserUuidFromToken();
-    if (!userUuid) {
-      console.error('UUID non disponible');
-      return;
-    }
-    this.livraisonService.getLivraisonsByUser(userUuid).subscribe((data: Livraison[]) => {
-      this.livraisons = data;
-    });
-  }
-  */
+  
   navigateToSuivre(id: number) {
     this.router.navigate(['/frontoffice/suivrelivraison', id]);
   }

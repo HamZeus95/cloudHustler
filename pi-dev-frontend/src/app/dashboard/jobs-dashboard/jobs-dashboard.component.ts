@@ -71,6 +71,6 @@ goToJobsRequest() {
 
 addQuizToService(uuid_service:any){
   console.log(uuid_service)
-  this.router.navigate([`/dashboard/quiz/${uuid_service}`]);
+  this.router.navigate([`/backoffice/quiz/${uuid_service}`]);
 }
 }

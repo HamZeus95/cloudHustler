@@ -75,7 +75,7 @@ export class CustomValidators {
 
   static validStatutFacture1(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const validStatuses = ['EN ATTENTE'];
+      const validStatuses = ['PENDING'];
       //      const validStatuses = ['PAYÉE', 'EN ATTENTE', 'ANNULÉE'];
 
       return validStatuses.includes(control.value?.toUpperCase()) ? null : { invalidStatus: true };

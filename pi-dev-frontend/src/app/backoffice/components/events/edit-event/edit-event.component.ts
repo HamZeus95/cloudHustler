@@ -63,7 +63,7 @@ export class EditEventComponent implements OnInit {
         (updatedEvent) => {
           console.log('Event updated:', updatedEvent);
           // Rediriger vers une autre page après la mise à jour, par exemple vers le tableau de bord
-          this.router.navigate(['/dashboard/billing']);
+          this.router.navigate(['/backoffice/backEvent']);
         },
         (error) => {
           console.error('Error updating event:', error);  // Afficher l'erreur dans la console

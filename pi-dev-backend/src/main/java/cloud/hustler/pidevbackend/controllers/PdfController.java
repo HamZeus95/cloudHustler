@@ -20,7 +20,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@CrossOrigin("*")
 public class PdfController {
 
     @PostMapping("/generate-pdf")

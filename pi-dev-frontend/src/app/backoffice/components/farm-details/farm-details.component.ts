@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Crop } from 'src/app/core/models/famrs/crop';
 import { Expense } from 'src/app/core/models/famrs/expense';
-import { CropService } from 'src/app/core/services/crop.service';
+import { CropService } from 'src/app/core/services/farm-managment/crop.service';
 import { Farm } from 'src/app/core/models/famrs/farm';
-import { ExpenseService } from 'src/app/core/services/expense.service';
-import { RessourceService } from 'src/app/core/services/ressource.service';
 import { Ressource } from 'src/app/core/models/famrs/resource';
+import { RessourceService } from 'src/app/core/services/farm-managment/ressource.service';
+import { ExpenseService } from 'src/app/core/services/farm-managment/expense.service';
 
 @Component({
   selector: 'app-farm-details',

@@ -124,9 +124,9 @@
             formControlName="statut"
             [class.is-invalid]="editForm.get('statut')?.invalid && (editForm.get('statut')?.touched || editForm.get('statut')?.dirty)"
           >
-            <option value="EN ATTENTE">Pending</option>
-            <option value="EN TRANSIT">In Transit</option>
-            <option value="LIVRÉE">Delivered</option>
+            <option value="Pending">Pending</option>
+            <option value="In Transit">In Transit</option>
+            <option value="Delivered">Delivered</option>
           </select>
           <div *ngIf="editForm.get('statut')?.invalid && (editForm.get('statut')?.touched || editForm.get('statut')?.dirty)" class="error-message">
             <small *ngIf="editForm.get('statut')?.errors?.['required']">Status required</small>

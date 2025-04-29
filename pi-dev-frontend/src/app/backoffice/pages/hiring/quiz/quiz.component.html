@@ -1,0 +1,57 @@
+<app-admin-layout>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <div class="card shadow border-0 rounded-4 bg-white p-4" style="background: linear-gradient(135deg, #f5f7fa, #c3cfe2);">
+          
+          <div class="text-center mb-5">
+            <h2 class="fw-bold" style="font-size: 2rem; color: #2e7d32;">Quiz Management</h2>
+            <p class="text-muted" style="font-size: 1rem;">Create or Update your Service Quiz easily</p>
+          </div>
+
+          <div class="d-flex flex-column gap-4">
+
+            <!-- Create Quiz Section -->
+            <div *ngIf="!thereIsAquiz; else updateQuiz" 
+                 class="p-4 rounded-4 border bg-white shadow-sm animate__animated animate__fadeIn">
+              <div class="text-center mb-4">
+                <h4 class="fw-semibold" style="color: #43a047;">Create a New Quiz</h4>
+                <p class="text-muted small">You don't have a quiz yet. Create one to get started!</p>
+              </div>
+              <app-create-quiz [serviceId]="serviceId"></app-create-quiz>
+              <div class="d-flex justify-content-center mt-4">
+                <button class="btn btn-success px-4 py-2 rounded-pill fw-bold" disabled>
+                  No Quiz Yet
+                </button>
+              </div>
+            </div>
+
+            <!-- Update Quiz Section -->
+            <ng-template #updateQuiz>
+              <div class="p-4 rounded-4 border bg-white shadow-sm animate__animated animate__fadeIn">
+                <div class="text-center mb-4">
+                  <h4 class="fw-semibold" style="color: #1976d2;">Update Existing Quiz</h4>
+                  <p class="text-muted small">Manage and update your quiz information easily.</p>
+                </div>
+                <app-update-questions 
+                  #quizComponentRef
+                  [quiz]="quiz" 
+                  (reloadQuiz)="realodQuiz()">
+                </app-update-questions>
+                <div class="d-flex justify-content-center mt-4">
+                  <button class="btn btn-primary px-4 py-2 rounded-pill fw-bold">
+                    Update Quiz
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</app-admin-layout>
