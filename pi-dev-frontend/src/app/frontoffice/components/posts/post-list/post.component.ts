@@ -56,6 +56,7 @@ export class PostComponent implements OnInit {
     
   }
   
+  
 
   reactions = [
     { type: TypeReaction.LIKE, emoji: '👍', label: 'Like' },

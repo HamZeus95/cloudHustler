@@ -17,7 +17,8 @@ export class AddPostComponent {
   post: Post = {
     title: '',
     content: '',
-    mediaUrl: ''
+    mediaUrl: '',
+    
   };
   currentUser: any = null;
   isAuthenticated = false;

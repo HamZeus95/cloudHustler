@@ -12,7 +12,7 @@ import { TokenStorageService } from '../../../../auth/service/token-storage.serv
 })
 export class EditPostComponent implements OnInit {
   postId: string = '';
-  post: Post = { idPost: '', title: '', content: '', mediaUrl: '', createdAt: '' };
+  post: Post = { idPost: '', title: '', content: '', mediaUrl: '', createdAt: '' , };
   currentUser: any = null;
   isAuthenticated = false;
   errorMessage: string = '';

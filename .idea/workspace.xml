@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c799faf-77be-47d4-a413-81b6d78d4ec2" name="Changes" comment="" />
+    <list default="true" id="1c799faf-77be-47d4-a413-81b6d78d4ec2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/Post.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/core/models/Post.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/gener-post/gener-post.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/gener-post/gener-post.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/gener-post/gener-post.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/gener-post/gener-post.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/add-post/add-post.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/add-post/add-post.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/edit-post/edit-post.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/edit-post/edit-post.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/post-list/post.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pi-dev-frontend/src/app/frontoffice/components/posts/post-list/post.component.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -173,7 +181,8 @@
       <workItem from="1745516425033" duration="8000" />
       <workItem from="1745753133186" duration="20382000" />
       <workItem from="1745836379421" duration="478000" />
-      <workItem from="1745849249393" duration="8527000" />
+      <workItem from="1745849249393" duration="10323000" />
+      <workItem from="1745916344585" duration="4069000" />
     </task>
     <task id="LOCAL-00001" summary="before merge">
       <option name="closed" value="true" />
