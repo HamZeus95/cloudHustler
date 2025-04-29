@@ -11,25 +11,33 @@
 }
 
 .task-column {
-  min-height: 200px;
-  background: #f8f9fa;
-  border-radius: 0 0 0.25rem 0.25rem;
-  padding: 1rem;
+  min-height: 250px;
+  background: #f1f5f9;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: background 0.3s ease;
 }
 
 .task-card {
+  border-radius: 1rem;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: move;
+  cursor: grab;
 }
 
 .task-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.task-card:active {
+  cursor: grabbing;
 }
 
 .task-card.cdk-drag-preview {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  opacity: 0.9;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  opacity: 0.95;
 }
 
 .task-column.cdk-drop-list-dragging .task-card:not(.cdk-drag-placeholder) {
@@ -38,24 +46,84 @@
 
 .placeholder {
   padding: 1rem;
+  font-size: 0.9rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.placeholder::before {
+  content: "📋";
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .card-header {
-  border-radius: 0.25rem 0.25rem 0 0;
+  border-radius: 1rem 1rem 0 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.card-header.bg-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+}
+
+.card-header.bg-warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+}
+
+.card-header.bg-success {
+  background: linear-gradient(135deg, #10b981 0%, #22c55e 100%);
 }
 
 .btn-sm {
-  padding: 0.25rem 0.5rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 0.5rem;
 }
 
 .text-sm {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
 }
 
 .modal-backdrop {
-  opacity: 0.5;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
 }
 
 .modal.show {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-footer {
+  border-top: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  border: none;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+}
+
+.btn-secondary {
+  background-color: #e5e7eb;
+  color: #374151;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #d1d5db;
 }

@@ -7,7 +7,7 @@ import { Servicee } from 'src/app/core/models/servicee';
   providedIn: 'root'
 })
 export class QuizService {
-private apiUrl = 'http://localhost:8090/CloudHustel/quiz';
+private apiUrl = 'http://localhost:8090/api/v1/quiz';
 
   constructor(private http: HttpClient) {}
 

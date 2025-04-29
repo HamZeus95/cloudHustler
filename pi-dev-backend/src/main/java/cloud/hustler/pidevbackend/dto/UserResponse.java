@@ -12,6 +12,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserResponse {
+    // Face ID related fields
+    private boolean faceIdEnabled;
+    
     UUID userUUID;
     String email;
     String firstName;

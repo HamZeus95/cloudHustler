@@ -1,0 +1,62 @@
+<div class="chat-message" [class.incoming]="!isFromCurrentUser" [class.outgoing]="isFromCurrentUser">
+  <!-- Message container -->
+  <div class="message-container">
+    <!-- Sender information for group chats -->
+    <div *ngIf="showSender && !isFromCurrentUser" class="sender-info">
+      {{ message.senderName || 'User' }}
+    </div>
+    
+    <!-- Message content -->
+    <div class="message-content">
+      <!-- Text message -->
+      <div *ngIf="message.messageType === MessageType.TEXT" class="text-content">
+        <!-- Check if it's a URL -->
+        <a *ngIf="isUrl(message.content)" [href]="message.content" target="_blank" class="message-link">
+          {{ message.content }}
+        </a>
+        
+        <!-- Regular text -->
+        <span *ngIf="!isUrl(message.content)">{{ message.content }}</span>
+      </div>
+      
+      <!-- Image message -->
+      <div *ngIf="message.messageType === MessageType.IMAGE" class="media-content">
+        <img [src]="message.mediaUrl" alt="Image" class="message-image">
+      </div>
+      
+      <!-- File message -->
+      <div *ngIf="message.messageType === MessageType.FILE" class="file-content">
+        <div class="file-icon">
+          <i class="fas fa-file"></i>
+        </div>
+        <div class="file-info">
+          <a [href]="message.mediaUrl" download>
+            {{ message.content || (message.mediaUrl ? getFileNameFromUrl(message.mediaUrl) : 'Download File') }}
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Message metadata -->
+    <div class="message-meta">
+      <span class="message-time">{{ formatTime(message.timestamp) }}</span>
+      <!-- Read indicator for outgoing messages -->
+      <span *ngIf="isFromCurrentUser" class="read-status">
+        <i class="fas" [class.fa-check]="!message.read" [class.fa-check-double]="message.read"></i>
+      </span>
+    </div>
+  </div>
+  
+  <!-- Message actions -->
+  <div class="message-actions" [class.show]="showOptions">
+    <button *ngIf="isFromCurrentUser" class="action-btn" (click)="deleteMessage()">
+      <i class="fas fa-trash"></i>
+    </button>
+    <!-- Add more action buttons as needed -->
+  </div>
+  
+  <!-- Options toggle button -->
+  <button class="options-btn" (click)="toggleOptions()">
+    <i class="fas fa-ellipsis-v"></i>
+  </button>
+</div>

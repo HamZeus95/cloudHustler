@@ -5,6 +5,7 @@ import cloud.hustler.pidevbackend.entity.Otp;
 import cloud.hustler.pidevbackend.entity.User;
 import cloud.hustler.pidevbackend.repository.OtpRepository;
 import cloud.hustler.pidevbackend.repository.UserRepository;
+import cloud.hustler.pidevbackend.service.IFaceIdService;
 import cloud.hustler.pidevbackend.service.auth.AuthenticationServiceImplement;
 import cloud.hustler.pidevbackend.service.auth.JwtServiceImplement;
 import jakarta.mail.MessagingException;
@@ -46,6 +47,8 @@ public class AuthenticationController {
     @Autowired
     OtpRepository otpRepository;
     
+    @Autowired
+    private IFaceIdService faceIdServiceImpl;
     
     @Value("${application.security.jwt.refresh-token.expiration}")
     private long refreshExpiration;
@@ -412,6 +415,64 @@ public class AuthenticationController {
         return ResponseEntity.ok(response);
     }
     
+    // Face ID login endpoint
+    @PostMapping("/login-with-face")
+    public ResponseEntity<?> loginWithFace(@RequestBody FaceIdLoginRequest request, HttpServletResponse response) {
+        try {
+            // Find user by email
+            User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + request.getEmail()));
+            
+            // Check if Face ID is enabled for this user
+            if (!user.isFaceIdEnabled() || user.getFaceId() == null) {
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("success", false);
+                errorResponse.put("message", "Face ID not enabled for this user");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+            }
+            
+            // Verify face with Azure Face API
+            FaceIdResponse verificationResult = faceIdServiceImpl.verifyFaceByEmail(
+                request.getEmail(), 
+                request.getImageBase64()
+            );
+            
+            if (!verificationResult.isSuccess()) {
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("success", false);
+                errorResponse.put("message", verificationResult.getMessage());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+            }
+            
+            // Face verified, generate JWT tokens as done in normal authentication
+            var jwtToken = jwtService.generateToken(user);
+            var refreshToken = jwtService.generateRefreshToken(user);
+            
+            // Set the refresh token in an HttpOnly cookie
+            addRefreshTokenCookie(response, refreshToken);
+            
+            // Create user response DTO
+            UserResponse userResponse = mapToUserResponse(user);
+            
+            // Return the auth response without the refresh token in the JSON body
+            return ResponseEntity.ok(AuthenticationResponse.builder()
+                    .accessToken(jwtToken)
+                    .userResponse(userResponse)
+                    .build());
+            
+        } catch (UsernameNotFoundException e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Invalid email");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+        } catch (Exception e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Error during Face ID login: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+    
     private void addRefreshTokenCookie(HttpServletResponse response, String refreshToken) {
         // Standard cookie approach
         Cookie cookie = new Cookie("refresh_token", refreshToken);
@@ -439,5 +500,21 @@ public class AuthenticationController {
             }
         }
         return null;
+    }
+
+    private UserResponse mapToUserResponse(User user) {
+        return UserResponse.builder()
+                .userUUID(user.getUuid_user())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .image(user.getImage())
+                .phone(user.getPhone())
+                .address(user.getAddress())
+                .birthDate(user.getBirthDate())
+                .isActif(user.isActif())
+                .Role(user.getRole())
+                .faceIdEnabled(user.isFaceIdEnabled())
+                .build();
     }
 }

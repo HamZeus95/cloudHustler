@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorDialogComponent } from 'src/app/core/error-dialog/error-dialog.component';
 import { CustomValidators } from 'src/app/core/validators/custom.validators';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-livraison',
@@ -96,7 +97,8 @@ export class LivraisonComponent implements OnInit {
     private datePipe: DatePipe,
     private factureService: FactureService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private http: HttpClient // Inject HttpClient
   ) {
     this.filteredlivraisons = [];
     this.initializeForm();
@@ -416,5 +418,30 @@ export class LivraisonComponent implements OnInit {
   }
 
   // Validateur pour la disponibilité du livreur
- 
+  getDeliveryStatusClass(status: string): string {
+    const normalizedStatus = status?.toUpperCase();
+    switch (normalizedStatus) {
+      case 'PENDING':
+      case 'EN ATTENTE':
+        return 'EN_ATTENTE';
+      case 'DELIVERED':
+      case 'LIVREE':
+      case 'LIVRÉE':
+        return 'LIVREE';
+      case 'IN TRANSIT':
+      case 'EN TRANSIT':
+        return 'EN_TRANSIT';
+      default:
+        return '';
+    }
+  }
+  desaffecterLivreur(idLivraison: number) {
+    this.http.put(`/api/v1/livraisons/desaffecter/${idLivraison}`, {}).subscribe(
+      response => {
+        console.log('Livreur désaffecté avec succès', response);
+        this.loadlivraisons(); // Reload the deliveries to update the view
+      },
+      error => console.error('Erreur lors de la désaffectation', error)
+    );
+  }
 }

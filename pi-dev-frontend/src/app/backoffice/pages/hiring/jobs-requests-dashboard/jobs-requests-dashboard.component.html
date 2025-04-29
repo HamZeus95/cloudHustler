@@ -1,0 +1,112 @@
+<app-admin-layout>
+  <div class="container py-5">
+
+    <!-- Header avec Ombre et Fond Stylé -->
+    <div class="card mb-5 shadow-lg rounded-4 border-0">
+      <div class="card-header bg-gradient text-white text-center py-4">
+        <h3 class="fw-bold mb-0"> Service Request Dashboard</h3>
+        <p class="text-lg">Manage all service requests in one place</p>
+      </div>
+
+      <!-- Loading Message -->
+      <div *ngIf="isLoading" class="alert alert-info text-center my-3 fadeIn">
+        Loading requests, please wait...
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="error" class="alert alert-danger text-center my-3 fadeIn">
+        {{ error }}
+      </div>
+
+      <!-- Requests Table -->
+      <div *ngIf="servicesRequests.length > 0" class="px-4 pb-4">
+        <div class="table-responsive rounded-4">
+          <table class="table table-hover table-striped align-middle mb-0 bg-white rounded-4 shadow-sm">
+            <thead class="bg-light">
+              <tr>
+                <th class="text-uppercase text-muted text-xs font-weight-bold">Score</th>
+                <th class="text-uppercase text-muted text-xs font-weight-bold">Status</th>
+                <th class="text-uppercase text-muted text-xs font-weight-bold">Motivation Letter</th>
+                <th class="text-uppercase text-muted text-xs font-weight-bold text-center">CV</th>
+                <th class="text-uppercase text-muted text-xs font-weight-bold text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let request of servicesRequests" class="align-middle">
+                <td>{{ request?.score ? request.score : 'No score' }}</td>
+                <td><span class="badge bg-primary animated fadeIn">{{ request.status }}</span></td>
+                <td>{{ request.lettreMotivation }}</td>
+                <td class="text-center">
+                  <a [routerLink]="['/backoffice/display-cv', request.uploadCv.replace('cvs/', '')]"
+                     target="_blank"
+                     class="btn btn-outline-success btn-sm hover-scale">
+                    View CV
+                  </a>
+                </td>
+                <td class="text-center">
+                  <div class="d-flex justify-content-center gap-2 flex-wrap">
+
+                    <!-- View Summary Button -->
+                    <button class="btn btn-outline-info btn-sm hover-scale" (click)="resume(request.uploadCv)">
+                       View Summary
+                    </button>
+
+                    <!-- Accept Button -->
+                    <button class="btn btn-success btn-sm hover-scale" (click)="accepterDemande(request)">
+                      ✅ Accept
+                    </button>
+
+                    <!-- Reject Button -->
+                    <button class="btn btn-danger btn-sm hover-scale" (click)="rejeterDemande(request)">
+                      ❌ Reject
+                    </button>
+
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Requests Found Message -->
+    <div *ngIf="!isLoading && servicesRequests.length === 0" class="alert alert-warning text-center">
+      No requests found. It's empty here!
+    </div>
+
+    <!-- Modal for Summary -->
+    <div class="modal" *ngIf="isModalVisible" (click)="closeModal()">
+      <div class="modal-dialog modal-dialog-centered" (click)="$event.stopPropagation()">
+        <div class="modal-content shadow-lg rounded-4">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold">Candidate Summary</h5>
+            <button type="button" class="btn-close" (click)="closeModal()"></button>
+          </div>
+          <div class="modal-body">
+            <div *ngIf="resumeContent">
+              <h6>Summary Content:</h6>
+              <pre class="bg-light p-3 rounded-3">{{ resumeContent }}</pre>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistics Card -->
+    <div class="card mt-5 shadow-lg rounded-4 border-0">
+      <div class="card-header bg-gradient text-white py-4">
+        <h4 class="fw-bold text-center">📊 Service Request Statistics</h4>
+      </div>
+      <div class="card-body">
+        <div class="position-relative" style="min-height: 300px;">
+          <canvas id="barChartCanvas" class="w-100 h-100"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</app-admin-layout>

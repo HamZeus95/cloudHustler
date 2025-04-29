@@ -34,14 +34,13 @@ export class NavbarComponent implements OnInit {
       if (isAuth) {
         this.currentUser = this.tokenStorageService.getCurrentUser();
       }
-      console.log(this.currentUser)
+       
     });
 
     // Subscribe to user changes
     this.tokenStorageService.getUser().subscribe(user => {
       this.currentUser = user;
     });
-    
     // Add click handler to close dropdowns when clicking outside
     document.addEventListener('click', (event: Event) => {
       const target = event.target as HTMLElement;

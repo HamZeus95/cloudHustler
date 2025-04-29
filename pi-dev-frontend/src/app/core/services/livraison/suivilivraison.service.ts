@@ -8,7 +8,7 @@ import { SuiviLivraison } from 'src/app/core/models/livraison/suivilivraison';
 })
 export class SuiviLivraisonService {
   private suivis: SuiviLivraison[] = [];
-  private baseUrl = 'http://localhost:8090/tpfoyer/suiviLivraison';
+  private baseUrl = '/api/v1/suiviLivraison';
   constructor(private http: HttpClient) {}
 
   getAll(): SuiviLivraison[] {

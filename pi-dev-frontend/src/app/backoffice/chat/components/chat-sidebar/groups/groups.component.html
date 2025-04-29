@@ -1,0 +1,92 @@
+<div class="groups-container">
+  <!-- Create group button (fixed at top) -->
+  <div class="create-group">
+    <button class="create-group-btn" (click)="openCreateGroupDialog()">
+      <i class="fas fa-plus"></i> Create New Group
+    </button>
+  </div>
+
+  <!-- Content container with scrolling -->
+  <div class="groups-content-wrapper">
+    <!-- Group search results -->
+    <div class="search-results" *ngIf="groupSearchTerm && groupSearchResults.length > 0">
+      <div class="search-results-header">
+        <h4>Group Search Results</h4>
+      </div>
+      <div class="group-list scrollable">
+        <div class="group-item" *ngFor="let group of groupSearchResults" (click)="selectGroupChat(group)">
+          <div class="group-avatar">
+            <div class="group-icon">👥</div>
+          </div>
+          <div class="group-info">
+            <h4>{{ group.name }}</h4>
+            <p>{{ group.description || 'No description' }}</p>
+            <span class="member-count">{{ group.memberCount }} members</span>
+          </div>
+        </div>
+      </div>
+      <div class="no-results" *ngIf="groupSearchTerm && groupSearchResults.length === 0 && !isGroupSearching">
+        <p>No groups found</p>
+        <button class="create-from-search" (click)="openCreateGroupDialog()">
+          Create "{{ groupSearchTerm }}" group
+        </button>
+      </div>
+    </div>
+
+    <!-- User's groups -->
+    <div class="my-groups" *ngIf="!groupSearchTerm || groupSearchResults.length === 0">
+      <!-- Admin groups -->
+      <div class="section-header">
+        <h4><i class="fas fa-crown"></i> Groups You Manage</h4>
+      </div>
+      <div class="group-list scrollable">
+        <div class="group-item" *ngFor="let group of adminGroups" (click)="selectGroupChat(group)">
+          <div class="group-avatar">
+            <div class="group-icon admin-group">👑</div>
+          </div>
+          <div class="group-info">
+            <h4>{{ group.name }}</h4>
+            <p>{{ group.description || 'No description' }}</p>
+            <span class="member-count">{{ group.memberCount }} members</span>
+            <span class="created-date">Created: {{ group.createdAt | date:'short' }}</span>
+          </div>
+          <div class="group-actions">
+            <button class="edit-btn" matTooltip="Edit Group" (click)="editGroup(group); $event.stopPropagation()">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="delete-btn" matTooltip="Delete Group" (click)="deleteGroup(group.id); $event.stopPropagation()">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Member groups -->
+      <div class="section-header member-groups-header">
+        <h4><i class="fas fa-users"></i> Your Groups</h4>
+      </div>
+      <div class="group-list scrollable">
+        <div class="group-item" *ngFor="let group of memberGroups" (click)="selectGroupChat(group)">
+          <div class="group-avatar">
+            <div class="group-icon">👥</div>
+          </div>
+          <div class="group-info">
+            <h4>{{ group.name }}</h4>
+            <p>{{ group.description || 'No description' }}</p>
+            <span class="member-count">{{ group.memberCount }} members</span>
+            <span *ngIf="group.creator" class="created-by">Created by: {{ group.creator.firstName }} {{ group.creator.lastName }}</span>
+          </div>
+          <div class="leave-group">
+            <button class="leave-btn" matTooltip="Leave Group" (click)="leaveGroup(group.id); $event.stopPropagation()">
+              <i class="fas fa-sign-out-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div class="no-groups" *ngIf="memberGroups.length === 0 && adminGroups.length === 0">
+          <p>You're not in any groups yet</p>
+          <p>Create a new group or search for existing ones</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

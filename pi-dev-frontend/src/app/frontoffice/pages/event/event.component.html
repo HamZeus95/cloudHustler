@@ -28,14 +28,11 @@
 
 <!-- ##### Breadcrumb Area End ##### -->
 
-<div class="ms-md-auto pe-md-3 d-flex align-items-center mb-4">
+<!-- <div class="ms-md-auto pe-md-3 d-flex align-items-center mb-4">
   <div class="input-group">
-
-    <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Rechercher un événement..." (input)="filterEvents()">
+    <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search Event..." (input)="filterEvents()">
   </div>
-</div>
-
-<!-- ***** Blog Area Start ***** -->
+</div> -->
 <!-- ***** Blog Area Start ***** -->
 <section class="blog-area section-padding-100">
   <div class="container">
@@ -43,12 +40,23 @@
       <!-- Section Heading -->
       <div class="col-12 text-center mb-5">
         <div class="section-heading">
-          <h2>Liste des événements</h2>
-          <p>Découvrez tous nos événements à venir</p>
+          <h2>EVENTS</h2>
+          <p>Discover Our Events</p>
         </div>
       </div>
     </div>
-
+    <div class="search-container">
+      <div class="search-box">
+        <input type="text" 
+               class="search-input" 
+               [(ngModel)]="searchText"
+               placeholder="Search Event..."
+               (input)="filterEvents()">
+        <button class="search-btn" type="button">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
     <div class="row">
       <!-- Loop through filtered events -->
       <div class="col-12 col-md-6 col-lg-4" *ngFor="let event of filteredEvents">
@@ -91,17 +99,17 @@
 
                 <span *ngIf="event.description.length > 100">
                   <a (click)="showFullDescription(event.description)" style="cursor:pointer; color: #007bff; font-weight: 500;">
-                    Voir plus
+                    More
                   </a>
                 </span>
               </p>
 
               <p class="mb-1"><i class="fas fa-map-marker-alt text-danger"></i> {{ event.location }}</p>
-              <p class="mb-1"><strong>Début :</strong> {{ event.startDate | date:'dd MMM yyyy' }}</p>
-              <p class="mb-0"><strong>Fin :</strong> {{ event.endDate | date:'dd MMM yyyy' }}</p>
+              <p class="mb-1"><strong>Start :</strong> {{ event.startDate | date:'dd MMM yyyy' }}</p>
+              <p class="mb-0"><strong>End :</strong> {{ event.endDate | date:'dd MMM yyyy' }}</p>
 
               <!-- Afficher la carte -->
-              <button class="btn btn-info mt-3" (click)="toggleMap(event.uuid_event)">Afficher la carte</button>
+              <button class="btn btn-info mt-3" (click)="toggleMap(event.uuid_event)">Show Card</button>
 
               <!-- Modal pour la carte -->
               <div class="modal fade full-screen-modal" 
@@ -111,7 +119,7 @@
               <div class="modal-dialog modal-fullscreen">
                 <div class="modal-content" style="height: 100vh;">
                   <div class="modal-header">
-                    <h5 class="modal-title text-black">Emplacement de l'événement</h5>
+                    <h5 class="modal-title text-black">Event Location</h5>
                     <button type="button" class="btn-close btn-close-black" aria-label="Close" (click)="toggleMap(event.uuid_event)"></button>
                   </div>
                   <div class="modal-body p-0" style="height: calc(100vh - 56px);">
@@ -122,34 +130,26 @@
             </div>
             </div>
 
-            <!-- Nombre de participants -->
-            <p class="mt-3">Participants : {{ (event.participants?.length ?? 0) }} / {{ event.maxParticipants || '∞' }}</p>
+            <p class="mt-3">Participants : {{ event.nbrParticipants ?? 0 }} / {{ event.maxParticipants || '∞' }}</p>
 
             <!-- Participer -->
-            <button class="btn btn-success w-100" (click)="participate(event.uuid_event)"
-                    [disabled]="event.maxParticipants && (event.participants?.length ?? 0) >= event.maxParticipants">
-              Participer
+            <button class="btn btn-success w-100" (click)="onParticipate(event.uuid_event)"
+                    [disabled]="event.maxParticipants && (event.nbrParticipants ?? 0) >= event.maxParticipants">
+              Participate
             </button>
-
-       
-
-            <div *ngIf="event.participants?.includes(participantName)" class="mt-3 text-center">
-              <a class="btn btn-success" [href]="event.onlineLink" target="_blank">
-                Rejoindre l'événement en ligne
-              </a>
-            </div>
+            
 <!-- Champ d'upload d'image si l'événement a commencé -->
 <div *ngIf="hasEventStarted(event)" class="mt-3">
-  <label for="imageUpload{{ event.uuid_event }}" class="form-label fw-bold">Télécharger une image :</label>
+  <label for="imageUpload{{ event.uuid_event }}" class="form-label fw-bold">Upload Image :</label>
   <input type="file" class="form-control" id="imageUpload{{ event.uuid_event }}"
          (change)="onImageSelected($event, event.uuid_event)">
   <button class="btn btn-primary mt-2" (click)="uploadImage(event.uuid_event)">
-    Envoyer l'image
+    Upload Image
   </button>
 </div>
 <button *ngIf="imageUrls[event.uuid_event]" class="btn btn-success mt-2 ms-2"
         (click)="openImage(imageUrls[event.uuid_event])">
-  Voir l'image
+  Open Image
 </button>
 
 
@@ -163,11 +163,11 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title text-black">Description complète</h5>
+            <h5 class="modal-title text-black">Description</h5>
             <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
           </div>
           <div class="modal-body">
-            <p>{{ fullDescription }}</p> <!-- Affiche la description complète -->
+            <p>{{ fullDescription }}</p> 
           </div>
         </div>
       </div>
@@ -192,12 +192,6 @@
 
   </div>
 </section>
-
-
-
-
-
-
 
 
 <!-- ***** Blog Area End ***** -->

@@ -1,6 +1,6 @@
 package cloud.hustler.pidevbackend.controllers;
 
-import cloud.hustler.pidevbackend.DTO.ServiceRequestRequestBody;
+import cloud.hustler.pidevbackend.dto.ServiceRequestRequestBody;
 import cloud.hustler.pidevbackend.entity.ServiceRequests;
 import cloud.hustler.pidevbackend.entity.TypeStatus;
 import cloud.hustler.pidevbackend.service.IServiceRequestsService;
@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-@CrossOrigin(origins = "*")
-@RestController
+ @RestController
 @RequestMapping("/service-requests")
 @AllArgsConstructor
 public class ServiceRequestsController {

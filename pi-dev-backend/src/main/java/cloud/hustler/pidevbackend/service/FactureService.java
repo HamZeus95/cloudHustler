@@ -1,12 +1,10 @@
 package cloud.hustler.pidevbackend.service;
 
-import cloud.hustler.pidevbackend.entity.DeliveryDriver;
-import cloud.hustler.pidevbackend.entity.Facture;
-import cloud.hustler.pidevbackend.entity.Livraison;
-import cloud.hustler.pidevbackend.entity.Order;
+import cloud.hustler.pidevbackend.entity.*;
 import cloud.hustler.pidevbackend.repository.DeliverDriverRepository;
 import cloud.hustler.pidevbackend.repository.FactureRepository;
 import cloud.hustler.pidevbackend.repository.LivraisonRepository;
+import cloud.hustler.pidevbackend.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
@@ -105,7 +103,7 @@ public class FactureService implements IFactureService{
         }
 
         // Modifier le statut de la facture
-        facture.setStatut("ANNULÉE");
+        facture.setStatut("Cancelled");
 
         // Sauvegarder les modifications dans la base de données
         factureRepository.save(facture);

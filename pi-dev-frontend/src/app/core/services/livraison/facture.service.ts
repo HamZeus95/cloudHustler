@@ -10,7 +10,7 @@ import { Order } from '../../models/market/order.model';
   providedIn: 'root'
 })
 export class FactureService {
-  private baseUrl = 'http://localhost:8090/tpfoyer/factures'; // URL du backend
+  private baseUrl = '/api/v1/factures'; // URL du backend
   factures: Facture[] = [];
 
 
@@ -87,22 +87,19 @@ export class FactureService {
   }
 
   private isStatusPayee(status: string): boolean {
-    return status.includes('PAYE') || status.includes('PAID')|| status.includes('PAYÉE')|| status.includes('PAYEE');
+    return status.includes('PAID') || 
+           status.includes('COMPLETED');
   }
 
   private isStatusEnAttente(status: string): boolean {
-    return status.includes('ENATTENTE') || 
-           status.includes('PENDING') || 
-           status.includes('ATTENTE');
+    return status.includes('PENDING') || 
+           status.includes('WAITING');
   }
 
   private isStatusAnnulee(status: string): boolean {
-    return status.includes('ANNULE') || 
-           status.includes('CANCELLED') || 
-           status.includes('ANNULEE') ||
-           status.includes('ANNULÉE') ||
-           
-           status.includes('REFUSE');
+    return status.includes('CANCELLED') || 
+           status.includes('CANCELED') || 
+           status.includes('REJECTED');
   }
    getFacturesByUser(uuid: string): Observable<Facture[]> {
       return this.http.get<Facture[]>(`${this.baseUrl}/by-user/${uuid}`);

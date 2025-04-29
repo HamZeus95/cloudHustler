@@ -1,0 +1,32 @@
+.empty-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+}
+
+.empty-content {
+  text-align: center;
+  padding: 20px;
+  max-width: 400px;
+}
+
+.empty-icon {
+  font-size: 70px;
+  color: #adb5bd;
+  margin-bottom: 20px;
+}
+
+.empty-content h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  color: #495057;
+}
+
+.empty-content p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 15px;
+  line-height: 1.5;
+}

@@ -1,7 +1,7 @@
 package cloud.hustler.pidevbackend.controllers;
 
-import cloud.hustler.pidevbackend.DTO.QuestionDto;
-import cloud.hustler.pidevbackend.DTO.QuizDTO;
+import cloud.hustler.pidevbackend.dto.QuestionDto;
+import cloud.hustler.pidevbackend.dto.QuizDTO;
 import cloud.hustler.pidevbackend.entity.Answer;
 import cloud.hustler.pidevbackend.entity.Question;
 import cloud.hustler.pidevbackend.entity.Quiz;
@@ -18,8 +18,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/quiz")
-@CrossOrigin("*")
-public class QuizController {
+ public class QuizController {
 
     @Autowired
     private QuizRepository quizRepository;
