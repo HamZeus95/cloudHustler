@@ -1,111 +1,111 @@
 <app-admin-layout>
-  <br><br><br><br><br><br>
+  <div class="container-fluid py-4" style="background-color: #f2f1f1; border-radius: 10px;">
+    <div *ngIf="event">
+      <h2>Edit Event</h2>
+      <form #editForm="ngForm" (ngSubmit)="onSubmit(editForm)">
 
-  <div *ngIf="event">
-    <h2>Edit Event</h2>
-    <form #editForm="ngForm" (ngSubmit)="onSubmit(editForm)">
-      <!-- Event Name -->
-      <div class="form-group">
-        <label for="name">Event Name:</label>
-        <input 
-          type="text" 
-          id="name" 
-          name="name" 
-          [(ngModel)]="event.name" 
-          required 
-          class="form-control" 
-        />
-        <div *ngIf="editForm.controls['name']?.hasError('required') && editForm.controls['name']?.touched" class="text-danger">
-          Event Name is required.
+        <!-- Event Name -->
+        <div class="form-group">
+          <label for="name">Event Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            [(ngModel)]="event.name"
+            required
+            class="form-control"
+          />
+          <div *ngIf="editForm.controls['name']?.invalid && editForm.controls['name']?.touched" class="text-danger">
+            Event Name is required.
+          </div>
         </div>
-      </div>
 
-      <!-- Start Date -->
-      <div class="form-group">
-        <label for="startDate">Start Date:</label>
-        <input 
-          type="date" 
-          id="startDate" 
-          name="startDate" 
-          [(ngModel)]="event.startDate" 
-          required 
-          class="form-control" 
-        />
-        <div *ngIf="editForm.controls['startDate']?.hasError('required') && editForm.controls['startDate']?.touched" class="text-danger">
-          Start Date is required.
+        <!-- Start Date -->
+        <div class="form-group">
+          <label for="startDate">Start Date</label>
+          <input
+            type="date"
+            id="startDate"
+            name="startDate"
+            [(ngModel)]="event.startDate"
+            required
+            class="form-control"
+          />
+          <div *ngIf="editForm.controls['startDate']?.hasError('required') && editForm.controls['startDate']?.touched" class="text-danger">
+            Start Date is required.
+          </div>
+          <div *ngIf="editForm.controls['startDate']?.hasError('pastDate') && editForm.controls['startDate']?.touched" class="text-danger">
+            Start Date cannot be in the past.
+          </div>
         </div>
-        <div *ngIf="editForm.controls['startDate']?.hasError('pastDate') && editForm.controls['startDate']?.touched" class="text-danger">
-          Start Date cannot be in the past.
-        </div>
-      </div>
 
-      <!-- End Date -->
-      <div class="form-group">
-        <label for="endDate">End Date:</label>
-        <input 
-          type="date" 
-          id="endDate" 
-          name="endDate" 
-          [(ngModel)]="event.endDate" 
-          required 
-          class="form-control" 
-        />
-        <div *ngIf="editForm.controls['endDate']?.hasError('required') && editForm.controls['endDate']?.touched" class="text-danger">
-          End Date is required.
+        <!-- End Date -->
+        <div class="form-group">
+          <label for="endDate">End Date</label>
+          <input
+            type="date"
+            id="endDate"
+            name="endDate"
+            [(ngModel)]="event.endDate"
+            required
+            class="form-control"
+          />
+          <div *ngIf="editForm.controls['endDate']?.hasError('required') && editForm.controls['endDate']?.touched" class="text-danger">
+            End Date is required.
+          </div>
+          <div *ngIf="editForm.controls['endDate']?.hasError('endBeforeStart') && editForm.controls['endDate']?.touched" class="text-danger">
+            End Date must be after Start Date.
+          </div>
         </div>
-        <div *ngIf="editForm.controls['endDate']?.hasError('endBeforeStart') && editForm.controls['endDate']?.touched" class="text-danger">
-          End Date must be after Start Date.
-        </div>
-      </div>
 
-      <!-- Location -->
-      <div class="form-group">
-        <label for="location">Location:</label>
-        <input 
-          type="text" 
-          id="location" 
-          name="location" 
-          [(ngModel)]="event.location" 
-          required 
-          class="form-control" 
-        />
-        <div *ngIf="editForm.controls['location']?.hasError('required') && editForm.controls['location']?.touched" class="text-danger">
-          Location is required.
+        <!-- Location -->
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input
+            type="text"
+            id="location"
+            name="location"
+            [(ngModel)]="event.location"
+            required
+            class="form-control"
+          />
+          <div *ngIf="editForm.controls['location']?.invalid && editForm.controls['location']?.touched" class="text-danger">
+            Location is required.
+          </div>
         </div>
-      </div>
 
-      <!-- Description -->
-      <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea 
-          id="description" 
-          name="description" 
-          [(ngModel)]="event.description" 
-          required 
-          class="form-control"
-        ></textarea>
-        <div *ngIf="editForm.controls['description']?.hasError('required') && editForm.controls['description']?.touched" class="text-danger">
-          Description is required.
+        <!-- Description -->
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            [(ngModel)]="event.description"
+            required
+            class="form-control"
+          ></textarea>
+          <div *ngIf="editForm.controls['description']?.invalid && editForm.controls['description']?.touched" class="text-danger">
+            Description is required.
+          </div>
         </div>
-      </div>
 
-      <!-- Banner URL -->
-      <div class="form-group">
-        <label for="banner">Banner URL:</label>
-        <input 
-          type="text" 
-          id="banner" 
-          name="banner" 
-          [(ngModel)]="event.banner" 
-          class="form-control" 
-        />
-        <div *ngIf="editForm.controls['banner']?.hasError('required') && editForm.controls['banner']?.touched" class="text-danger">
-          Banner is required.
+        <!-- Banner URL -->
+        <div class="form-group">
+          <label for="banner">Banner URL</label>
+          <input
+            type="text"
+            id="banner"
+            name="banner"
+            [(ngModel)]="event.banner"
+            class="form-control"
+          />
         </div>
-      </div>
 
-      <!-- Submit Button -->
-      <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid">Update Event</button>
-    </form>
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid">
+          ✏️ Update Event
+        </button>
+      </form>
+    </div>
   </div>
 </app-admin-layout>

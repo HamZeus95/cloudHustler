@@ -64,17 +64,16 @@ export class IaFarmDashComponent implements OnInit {
   }
 
   fetchFarmData(): void {
-    if (this.selectedFarm && typeof this.selectedFarm.uuid_farm === 'number') {
-      this.iaDashService.get3DFarmData(this.selectedFarm.uuid_farm).subscribe(
+    if (this.selectedFarm) {
+      this.farmService.getFarmById(this.selectedFarm.uuid_farm).subscribe(
         (data) => {
+          console.log('Fetched farm data:', data); // Debugging log
           this.farmData = data;
         },
         (error) => {
           console.error('Error fetching farm data:', error);
         }
       );
-    } else {
-      console.error('Invalid farm ID. Unable to fetch farm data.');
     }
   }
 

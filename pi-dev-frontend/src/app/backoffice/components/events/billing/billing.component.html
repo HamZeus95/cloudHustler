@@ -1,124 +1,113 @@
- 
 <app-admin-layout>
   <main class="main-content position-relative border-radius-lg">
-   
     <div class="container-fluid py-4">
-    <div class="row justify-content-center">
-      <div class="col-md-10 mt-4">
-        <div class="card">
-          <div class="card-header d-flex justify-content-between align-items-center px-3 pb-0">
-            <h6 class="mb-0">Event List</h6>
-            <button class="btn btn-success btn-sm" routerLink="/backoffice/add-event">
-              <i class="fas fa-plus me-1"></i>
-            </button>
-          </div>
-          
-    
-          <!-- Recherche des événements -->
-           <div class="search-bar p-3">
-            <input 
-              type="text" 
-              class="form-control" 
-              placeholder="Search events..." 
-              [(ngModel)]="searchQuery" 
-              (input)="filterEvents()" 
-            />
-          </div> 
-    
-          <!-- Liste des événements -->
-          <div class="event-list p-3">
-            <!-- Message si aucun événement n'est trouvé -->
-            <div *ngIf="filteredEvents.length === 0">
-              <p class="text-center">Aucun événement disponible.</p>
+      <div class="row justify-content-center">
+        <div class="col-md-10 mt-4">
+          <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center px-3 pb-0">
+              <h6 class="mb-0 text-primary">Event List</h6>
+              <button class="btn btn-primary btn-sm" routerLink="/backoffice/add-event">
+                <i class="fas fa-plus me-1"></i> Add Event
+              </button>
             </div>
-    
-            <!-- Affichage des événements filtrés -->
-            <div *ngIf="filteredEvents.length > 0">
-              <table class="event-table table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    <th>Event Name</th>
-                    <th>Start</th>
-                    <th>End</th>
-                    <th>Location</th>
-                    <th>Description</th>
-                    <th>MaxParticipant</th>
-                    <th>Actions</th>
-           
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let event of filteredEvents">
-                    <td>{{ event.name }}</td>
-                    <td>{{ event.startDate | date:'dd/MM/yyyy' }}</td>
-                    <td>{{ event.endDate | date:'dd/MM/yyyy' }}</td>
-                    <td>{{ event.location }}</td>
-                  
-                
-                    <td>
-                      <div>
-                        {{ getFirstTwoWords(event.description) }}
-                        <span *ngIf="event.description.length > 50">...</span>
-                      </div>
-                      <div *ngIf="event.description.length > 50">
-                        <a (click)="showFullDescription(event.description)" style="cursor:pointer; color: #007bff; font-weight: 500;">
-                          More
-                        </a>
-                      </div>
-                    </td>
-                    <td>{{ event.maxParticipants }}</td>
-                    <td class="actions">
-                      <button (click)="editEvent(event)" class="btn btn-success btn-sm me-1" title="Modifier">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button (click)="deleteEvent(event.uuid_event)" class="btn btn-danger btn-sm" title="Supprimer">
-                        <i class="fas fa-trash-alt"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+
+            <!-- Search Bar -->
+            <div class="search-bar p-3">
+              <input 
+                type="text" 
+                class="form-control rounded-pill" 
+                placeholder="Search events..." 
+                [(ngModel)]="searchQuery" 
+                (input)="filterEvents()" 
+              />
             </div>
+
+            <!-- Event List -->
+            <div class="event-list p-3">
+              <!-- No Events Found Message -->
+              <div *ngIf="filteredEvents.length === 0" class="text-center text-muted">
+                <p>No events available.</p>
+              </div>
+
+              <!-- Display Filtered Events -->
+              <div *ngIf="filteredEvents.length > 0">
+                <table class="table table-hover table-striped">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Event Name</th>
+                      <th>Start</th>
+                      <th>End</th>
+                      <th>Location</th>
+                      <th>Description</th>
+                      <th>Max Participants</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let event of filteredEvents">
+                      <td>{{ event.name }}</td>
+                      <td>{{ event.startDate | date:'dd/MM/yyyy' }}</td>
+                      <td>{{ event.endDate | date:'dd/MM/yyyy' }}</td>
+                      <td>{{ event.location }}</td>
+                      <td>
+                        <div>
+                          {{ getFirstTwoWords(event.description) }}
+                          <span *ngIf="event.description.length > 50">...</span>
+                        </div>
+                        <div *ngIf="event.description.length > 50">
+                          <a (click)="showFullDescription(event.description)" style="cursor:pointer; color: #007bff; font-weight: 500;">
+                            More
+                          </a>
+                        </div>
+                      </td>
+                      <td>{{ event.maxParticipants }}</td>
+                      <td class="actions">
+                        <button (click)="editEvent(event)" class="btn btn-outline-success btn-sm me-1" title="Edit">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button (click)="deleteEvent(event.uuid_event)" class="btn btn-outline-danger btn-sm" title="Delete">
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <ul class="pagination justify-content-center mt-3">
+              <li class="page-item" [ngClass]="{'disabled': currentPage === 1}">
+                <a class="page-link" href="#" (click)="changePage(currentPage - 1); $event.preventDefault()">
+                  <i class="fa fa-angle-left"></i>
+                </a>
+              </li>
+
+              <!-- Display Pages -->
+              <li *ngFor="let page of [].constructor(totalPages); let i = index" class="page-item" [ngClass]="{'active': currentPage === (i + 1)}">
+                <a class="page-link" href="#" (click)="changePage(i + 1); $event.preventDefault()">
+                  {{ i + 1 }}
+                </a>
+              </li>
+
+              <li class="page-item" [ngClass]="{'disabled': currentPage === totalPages}">
+                <a class="page-link" href="#" (click)="changePage(currentPage + 1); $event.preventDefault()">
+                  <i class="fa fa-angle-right"></i>
+                </a>
+              </li>
+            </ul>
           </div>
-    
-          <!-- Pagination -->
-          <ul class="pagination justify-content-center mt-3">
-            <li class="page-item" [ngClass]="{'disabled': currentPage === 1}">
-              <a class="page-link" href="#" (click)="changePage(currentPage - 1); $event.preventDefault()">
-                <i class="fa fa-angle-left"></i>
-              </a>
-            </li>
-    
-            <!-- Affichage des pages -->
-            <li *ngFor="let page of [].constructor(totalPages); let i = index" class="page-item" [ngClass]="{'active': currentPage === (i + 1)}">
-              <a class="page-link" href="#" (click)="changePage(i + 1); $event.preventDefault()">
-                {{ i + 1 }}
-              </a>
-            </li>
-    
-            <li class="page-item" [ngClass]="{'disabled': currentPage === totalPages}">
-              <a class="page-link" href="#" (click)="changePage(currentPage + 1); $event.preventDefault()">
-                <i class="fa fa-angle-right"></i>
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
-  </div>
-  <!-- Modal pour afficher la description complète -->
 
-<div *ngIf="isModalVisible" class="modal-backdrop">
-  <div class="modal-box position-relative">
-    <button class="close-button" (click)="closeModal()">&times;</button>
-    <h5 class="mb-3">Description</h5>
-    <p>{{ fullDescription }}</p>
-  </div>
-</div>
-
-
-</main>
-
- 
+    <!-- Modal for Full Description -->
+    <div *ngIf="isModalVisible" class="modal-backdrop">
+      <div class="modal-box position-relative">
+        <button class="close-button" (click)="closeModal()">&times;</button>
+        <h5 class="mb-3">Description</h5>
+        <p>{{ fullDescription }}</p>
+      </div>
+    </div>
+  </main>
 </app-admin-layout>
-  

@@ -49,12 +49,7 @@ export class IaDashService {
       );
   }
 
-  get3DFarmData(farmId: number): Observable<any> {
-    return this.http.get(`${this.apiBaseUrl}/3d-farm-data/${farmId}`)
-      .pipe(
-        map(response => this.parseApiResponse(response))
-      );
-  }
+  
 
   // Helper method to parse Gemini API responses
   private parseApiResponse(response: any): any {
