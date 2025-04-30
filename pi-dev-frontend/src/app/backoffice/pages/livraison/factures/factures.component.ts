@@ -275,11 +275,17 @@ export class FactureComponent implements OnInit {
   public miniChartType: ChartType = 'doughnut';
 
 public miniChartOptions: ChartConfiguration['options'] = {
-  responsive: false,
-  //cutoutPercentage: 75,
+  responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: { display: false },
     tooltip: { enabled: false }
+  },
+  
+  elements: {
+    arc: {
+      borderWidth: 0
+    }
   }
 };
 
@@ -289,7 +295,13 @@ getMiniChartData(count: number): ChartConfiguration['data'] {
     labels: ['Statut', 'Reste'],
     datasets: [
       {
-        data: [count, remaining > 0 ? remaining : 0]
+        data: [count, remaining > 0 ? remaining : 0],
+        backgroundColor: [
+          count === this.counts.payee ? '#1cc88a' : 
+          count === this.counts.enAttente ? '#f6c23e' : '#e74a3b',
+          '#eaecf4'
+        ],
+        borderWidth: 0
       }
     ]
   };

@@ -93,7 +93,7 @@ export class SideBarComponent implements OnInit, OnDestroy {
     return this.router.url === route;
   }
   
-  // New method to check if user has permission for a specific route
+  // tchouf if user has permission for a  route eli mawjdin fel sidebar
   hasRequiredRole(route: string): boolean {
     if (!this.isAuthenticated || !this.currentUser) {
       return false;

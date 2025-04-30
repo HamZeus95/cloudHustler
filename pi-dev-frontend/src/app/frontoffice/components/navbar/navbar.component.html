@@ -8,12 +8,12 @@
             <div class="top-header-content d-flex align-items-center justify-content-between">
               <!-- Top Header Content -->
               <div class="top-header-meta">
-                <p>Welcome to <span>Farmie</span>, we hope you will enjoy our products and have good experience</p>
+                <p>Welcome to <span>AgroPulse</span>, connecting farmers, consumers, and agricultural experts</p>
               </div>
               <!-- Top Header Content -->
               <div class="top-header-meta text-right">
-                <a href="#" data-toggle="tooltip" data-placement="bottom" title="infodeercreative@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> <span>Email: infodeercreativegmail.com</span></a>
-                <a href="#" data-toggle="tooltip" data-placement="bottom" title="+1 234 122 122"><i class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +84 223 9000</span></a>
+                <a href="#" data-toggle="tooltip" data-placement="bottom" title="support@agropulse.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> <span>Email: support@agropulse.com</span></a>
+                <a href="#" data-toggle="tooltip" data-placement="bottom" title="+216 71 345 678"><i class="fa fa-phone" aria-hidden="true"></i> <span>Call Us: +216 71 345 678</span></a>
               </div>
             </div>
           </div>
@@ -28,7 +28,7 @@
           <!-- Menu -->
           <nav class="classy-navbar justify-content-between" id="famieNav">
             <!-- Nav Brand -->
-            <a routerLink="/" class="nav-brand"><img src="assets/img/core-img/logo11.png" style="height: 60px;"  alt=""></a>
+            <a routerLink="/" class="nav-brand"><img src="assets/img/core-img/logo11.png" style="height: 60px;"  alt="AgroPulse Logo"></a>
             <!-- Navbar Toggler -->
             <div class="classy-navbar-toggler">
               <span class="navbarToggler"><span></span><span></span><span></span></span>
@@ -44,12 +44,14 @@
                 <ul>
                   <li><a routerLink="/frontoffice/home">Home</a></li>
                   <li><a routerLink="/frontoffice/about">About</a></li>
-                  <li><a routerLink="/frontoffice/market">Shop</a></li>
+                  <li><a routerLink="/frontoffice/market">Marketplace</a></li>
                   <li><a routerLink="/frontoffice/blog">Blog</a></li>
-                  <li><a routerLink="/frontoffice/event">Event</a></li>
-                  <li><a routerLink="/frontoffice/jobs">Jobs</a></li>
-                  <li><a routerLink="/frontoffice/livraisons">Deliveries</a></li>
-                  <li><a routerLink="/frontoffice/factures">Invoices</a></li>
+                  <li><a routerLink="/frontoffice/event">Events</a></li>
+                  <li><a routerLink="/frontoffice/jobs"> Jobs</a></li>
+                  <li *ngIf="isAuthenticated && currentUser.role=='Consumer'"><a routerLink="/frontoffice/livraisons">Deliveries</a></li>
+                  <li *ngIf="isAuthenticated && currentUser.role=='DeliveryDriver'"><a routerLink="/frontoffice/livraisonsDriver">Deliveries</a></li>
+
+                  <li *ngIf="isAuthenticated && currentUser.role=='Consumer'"><a routerLink="/frontoffice/factures">Invoices</a></li>
                   <li><a routerLink="/frontoffice/contact">Contact</a></li>
                 </ul>
                 
@@ -57,7 +59,6 @@
                 <div id="cartIcon">
                   <a [routerLink]="['/frontoffice/payment']">
                     <i app-icon='shopping-cart'></i>
-                    
                   </a>
                 </div>
                 
@@ -87,12 +88,9 @@
                       
                       <!-- Dropdown Menu -->
                       <div class="dropdown-menu" [class.show]="userDropdownOpen">
-                         
-                        <a class="dropdown-item">
-                          <i app-icon="user" class="me-2"></i> My Profile
-                        </a>
-                        <a class="dropdown-item" *ngIf="currentUser?.role != 'Consumer'" routerLink="/backoffice">
-                          <i app-icon="home" class="me-2"></i> Back Office
+                        
+                        <a class="dropdown-item" *ngIf="currentUser?.role != 'Consumer'" (click)="navigateToBackoffice()">
+                          <i app-icon="home" class="me-2"></i> Farm Dashboard
                          </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" (click)="logout()">

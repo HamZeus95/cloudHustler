@@ -314,7 +314,7 @@
               <h5 class="mb-3">Farmer Details</h5>
               <div class="form-group mb-3">
                 <label for="farmerExperience">Experience</label>
-                <textarea class="form-control" id="farmerExperience" formControlName="farmerExperience" rows="3"></textarea>
+                <input type="number" class="form-control" id="farmerExperience" formControlName="farmerExperience"/> 
                 <small class="text-danger" *ngIf="isFieldInvalid('farmerExperience')">{{ getErrorMessage('farmerExperience') }}</small>
               </div>
             </div>

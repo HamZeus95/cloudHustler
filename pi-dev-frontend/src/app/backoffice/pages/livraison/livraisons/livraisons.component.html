@@ -1,238 +1,225 @@
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-
 <app-admin-layout>
   <div class="main">
     <div class="header">
-      <h1>Deliveries & Invoices</h1>
+      <h1>Deliveries Management</h1>
       <div class="search-box">
         <i class="fas fa-search search-icon"></i>
         <input 
           type="text" 
-          placeholder="Search for a delivery..." 
+          placeholder="Search by ID, status, address..." 
           [(ngModel)]="searchTerm"
           (input)="filteredLivraisonsFn(searchTerm)" 
           class="search-input"
         />
       </div>
-      <!-- Bouton pour ouvrir la fenêtre modale -->
-<button class="ajouter-button" (click)="openModal()">
-  <i class="fas fa-plus"></i> Add Delivery
-</button>
-
-<!-- Fenêtre modale -->
-<div class="modal-overlay" *ngIf="isModalOpen" (click)="closeModal()">
-  <div class="modal-content" (click)="$event.stopPropagation()">
-    <h2 class="titre-facture">Add Delivery</h2>
-    <form [formGroup]="livraisonForm" (ngSubmit)="onSubmit()">
-      <!-- Date livraison -->
-     
-      <div class="form-group">
-        <label for="dateLivraison">Delivery Date</label>
-        <input type="date" id="dateLivraison" formControlName="dateLivraison" class="priority"
-          [ngClass]="{ 'is-invalid': livraisonForm.get('dateLivraison')?.invalid && (livraisonForm.get('dateLivraison')?.touched || livraisonForm.get('dateLivraison')?.dirty) }">
-        
-        <div *ngIf="livraisonForm.get('dateLivraison')?.invalid && (livraisonForm.get('dateLivraison')?.touched || livraisonForm.get('dateLivraison')?.dirty)" class="error-message">
-          <small *ngIf="livraisonForm.get('dateLivraison')?.errors?.['required']">Delivery date required</small>
-          <small *ngIf="livraisonForm.get('dateLivraison')?.errors?.['pastDate']">Date cannot be in the past</small>
-          <small *ngIf="livraisonForm.get('dateLivraison')?.errors?.['maxFutureDays']">Date cannot exceed 5 days</small>
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <label for="statut">Status</label>
-        <select id="statut" formControlName="statut" class="priority"
-          [ngClass]="{ 'is-invalid': livraisonForm.get('statut')?.invalid && (livraisonForm.get('statut')?.touched || livraisonForm.get('statut')?.dirty) }">
-          <option value="Pending">Pending</option>
-          <!--option value="EN TRANSIT">En transit</option>
-          <option value="LIVRÉE">Livrée</option-->
-        </select>
-        <div *ngIf="livraisonForm.get('statut')?.invalid && (livraisonForm.get('statut')?.touched || livraisonForm.get('statut')?.dirty)" class="error-message">
-          <small *ngIf="livraisonForm.get('statut')?.errors?.['required']">Status required</small>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="adresseLivraison">Delivery Address</label>
-        <input type="text" id="adresseLivraison" formControlName="adresseLivraison" class="priority"
-          placeholder="Delivery Address" [ngClass]="{ 'is-invalid': livraisonForm.get('adresseLivraison')?.invalid && livraisonForm.get('adresseLivraison')?.touched }">
-        <div *ngIf="livraisonForm.get('adresseLivraison')?.invalid && livraisonForm.get('adresseLivraison')?.touched" class="error-message">
-          <small *ngIf="livraisonForm.get('adresseLivraison')?.errors?.['required']">Address required</small>
-          <small *ngIf="livraisonForm.get('adresseLivraison')?.errors?.['minlength']">Address must contain at least 5 characters</small>
-          <small *ngIf="livraisonForm.get('adresseLivraison')?.errors?.['pattern']">Invalid address format</small>
-        </div>
-      </div>
-
-      
-
-      <div class="form-group">
-        <label for="deliveryDriver">Driver</label>
-        <select id="deliveryDriver" formControlName="deliveryDriver" class="priority"
-          [ngClass]="{ 'is-invalid': livraisonForm.get('deliveryDriver')?.invalid && livraisonForm.get('deliveryDriver')?.touched }">
-          <option value="">Select a driver</option>
-          <option *ngFor="let driver of deliveryDrivers" [ngValue]="driver">
-            {{driver.firstName}} {{driver.lastName}} - {{driver.phone}}
-          </option>
-        </select>
-        <div *ngIf="livraisonForm.get('deliveryDriver')?.invalid && livraisonForm.get('deliveryDriver')?.touched" class="error-message">
-          <small *ngIf="livraisonForm.get('deliveryDriver')?.errors?.['required']">Driver required</small>
-
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="order">Order</label>
-        <select id="order" formControlName="order" class="priority"
-          [ngClass]="{ 'is-invalid': livraisonForm.get('order')?.invalid && livraisonForm.get('order')?.touched }">
-          <option value="">Select an order</option>
-          <option *ngFor="let order of orders" [ngValue]="order">
-            Order #{{order.uuid_order}} - {{order.totalPrice}}€
-          </option>
-        </select>
-      </div>
-
-     <div *ngIf="livraisonForm.invalid && livraisonForm.touched" class="error-message">
-      <p>Veuillez remplir correctement tous les champs.</p>
+      <button class="ajouter-button" (click)="openModal()">
+        <i class="fas fa-plus"></i> New Delivery
+      </button>
     </div>
-      
-      <div class="form-group">
-        <button type="submit" class="action-button">Save</button>
-        <button type="button" class="action-button" (click)="closeModal()">Cancel</button>
-      </div>
-    </form>
-  </div>
-</div>
 
-    </div>
-    <div class="status-cards-container">
-      <div class="status-card">
-        <h6>Delivered</h6>
-        <div class="status-content">
-          <div class="status-info">
-            <div class="status-count">{{ counts.livree }}</div>
-            <div class="status-percent text-success">{{ percentages.Livree }}%</div>
+    <!-- Status Cards -->
+    <div class="status-cards-container row">
+      <div class="col-md-4">
+        <div class="status-card">
+          <h6>Delivered Packages</h6>
+          <div class="status-content">
+            <div class="status-info">
+              <div class="status-count">{{ counts.livree }}</div>
+              <div class="status-percent text-success">{{ percentages.Livree }}%</div>
+            </div>
+            <div class="chart-container">
+              <canvas baseChart
+                      [data]="getMiniChartData(counts.livree)"
+                      [type]="miniChartType"
+                      [options]="miniChartOptions">
+              </canvas>
+            </div>
           </div>
-          <canvas baseChart
-                  [data]="getMiniChartData(counts.livree)"
-                  [type]="miniChartType"
-                  [options]="miniChartOptions"
-                  >
-          </canvas>
         </div>
       </div>
-    
-      <div class="status-card">
-        <h6>Pending</h6>
-        <div class="status-content">
-          <div class="status-info">
-            <div class="status-count">{{ counts.enAttente }}</div>
-            <div class="status-percent text-warning">{{ percentages.enAttente }}%</div>
+
+      <div class="col-md-4">
+        <div class="status-card">
+          <h6>Pending Deliveries</h6>
+          <div class="status-content">
+            <div class="status-info">
+              <div class="status-count">{{ counts.enAttente }}</div>
+              <div class="status-percent text-warning">{{ percentages.enAttente }}%</div>
+            </div>
+            <div class="chart-container">
+              <canvas baseChart
+                      [data]="getMiniChartData(counts.enAttente)"
+                      [type]="miniChartType"
+                      [options]="miniChartOptions">
+              </canvas>
+            </div>
           </div>
-          <canvas baseChart
-                  [data]="getMiniChartData(counts.enAttente)"
-                  [type]="miniChartType"
-                  [options]="miniChartOptions"
-                  >
-          </canvas>
         </div>
       </div>
-    
-      <div class="status-card">
-        <h6>En transit</h6>
-        <div class="status-content">
-          <div class="status-info">
-            <div class="status-count">{{ counts.enTransit }}</div>
-            <div class="status-percent text-danger">{{ percentages.enTransit }}%</div>
+
+      <div class="col-md-4">
+        <div class="status-card">
+          <h6>In Transit</h6>
+          <div class="status-content">
+            <div class="status-info">
+              <div class="status-count">{{ counts.enTransit }}</div>
+              <div class="status-percent text-danger">{{ percentages.enTransit }}%</div>
+            </div>
+            <div class="chart-container">
+              <canvas baseChart
+                      [data]="getMiniChartData(counts.enTransit)"
+                      [type]="miniChartType"
+                      [options]="miniChartOptions">
+              </canvas>
+            </div>
           </div>
-          <canvas baseChart
-                  [data]="getMiniChartData(counts.enTransit)"
-                  [type]="miniChartType"
-                  [options]="miniChartOptions"
-                  >
-          </canvas>
         </div>
       </div>
     </div>
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Delivery ID</th>
-            <th>Status</th>
-            <!--th>Delivery Rating</th-->
-            <!--th>Customer</th-->
-            <th>Delivery Address</th>
-            <th>Creation Date</th>
-            <th>Delivery Date</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let livraison of paginatedlivraisons">
-            <td>DEL {{ livraison?.id }}</td>
-            <td>
-              <span class="badge" [ngClass]="getDeliveryStatusClass(livraison.statut)">
-                {{ livraison.statut }}
-              </span>
-            </td>
-            <!--td>
-              <img [src]="facture.customerAvatar" width="30" height="30" style="border-radius: 50%" />
-            </td-->
-            <td>
-              {{ livraison.adresseLivraison }} 
-            </td>
-            <td>
-              {{ livraison.dateCreation | date:'dd/MM/yyyy' }} 
-            </td>
-            <td>
-              {{ livraison.dateLivraison | date:'dd/MM/yyyy' }} 
-            </td>
-            <td>
-              <button class="action-button" mat-raised-button [routerLink]="['/backoffice/livraison', livraison.id]">
-                <mat-icon>visibility</mat-icon>
-            </button>
-                          <button class="action-button" (click)="$event.stopPropagation(); livraison.id && desaffecterLivreur(livraison.id)">
-                <mat-icon>link_off</mat-icon>
-            </button>
-              <button class="delete-button" style="margin-left: 8px;" (click)="$event.stopPropagation(); livraison.id && supprimerlivraison(livraison.id)">  <mat-icon>delete</mat-icon>  
-              </button>
-              
-            </td>
-          </tr>
-          <tr *ngIf="paginatedlivraisons.length === 0">
-            <td colspan="6" class="text-center">No deliveries available</td>
-          </tr>
-        </tbody>
-        
-      </table>
+
+    <!-- Deliveries Table -->
+    <div class="table-responsive">
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Delivery ID</th>
+              <th>Status</th>
+              <th>Delivery Address</th>
+              <th class="hide-sm">Created</th>
+              <th class="hide-sm">Delivery Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let livraison of paginatedlivraisons">
+              <td>DEL {{ livraison?.id }}</td>
+              <td>
+                <span class="badge" [ngClass]="getDeliveryStatusClass(livraison.statut)">
+                  {{ livraison.statut }}
+                </span>
+              </td>
+              <td>{{ livraison.adresseLivraison }}</td>
+              <td class="hide-sm">{{ livraison.dateCreation | date:'dd/MM/yyyy' }}</td>
+              <td class="hide-sm">{{ livraison.dateLivraison | date:'dd/MM/yyyy' }}</td>
+              <td>
+                <div class="action-buttons">
+                  <button class="action-button" mat-raised-button [routerLink]="['/backoffice/livraison', livraison.id]" title="View Details">
+                    <i app-icon="eye"></i>
+                  </button>
+                  <button class="action-button disassociate-button" (click)="$event.stopPropagation(); livraison.id && desaffecterLivreur(livraison.id)" title="Remove Driver">
+                    <i app-icon="user-x"></i>
+                  </button>
+                  <button class="delete-button" (click)="$event.stopPropagation(); livraison.id && supprimerlivraison(livraison.id)" title="Delete Delivery">
+                    <i app-icon="trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="paginatedlivraisons.length === 0">
+              <td colspan="6" class="text-center">No deliveries available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+
+    <!-- Pagination -->
+    <nav *ngIf="filteredlivraisons.length > itemsPerPage">
+      <ul class="pagination justify-content-center mt-3">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button class="page-link" (click)="currentPage = currentPage - 1">&lt;</button>
+        </li>
+        <li 
+          class="page-item"
+          *ngFor="let page of totalPages"
+          [class.active]="currentPage === page"
+        >
+          <button class="page-link" (click)="currentPage = page">{{ page }}</button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages.length">
+          <button class="page-link" (click)="currentPage = currentPage + 1">&gt;</button>
+        </li>
+      </ul>
+    </nav>
   </div>
 
-  <nav *ngIf="filteredlivraisons.length > itemsPerPage">
-    <ul class="pagination justify-content-center mt-3">
-  
-      <!-- Précédent -->
-      <li class="page-item" [class.disabled]="currentPage === 1">
-        <button class="page-link" (click)="currentPage = currentPage - 1">&lt;</button>
-      </li>
-  
-      <!-- Boutons des pages -->
-      <li 
-        class="page-item"
-        *ngFor="let page of totalPages"
-        [class.active]="currentPage === page"
-      >
-        <button class="page-link" (click)="currentPage = page">{{ page }}</button>
-      </li>
-  
-      <!-- Suivant -->
-      <li class="page-item" [class.disabled]="currentPage === totalPages.length">
-        <button class="page-link" (click)="currentPage = currentPage + 1">&gt;</button>
-      </li>
-  
-    </ul>
-  </nav>
-  </app-admin-layout>
-  <!--app-settings-panel></app-settings-panel-->
+  <!-- Modal Form -->
+  <div class="modal-overlay" *ngIf="isModalOpen" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h2 class="titre-facture">Add New Delivery</h2>
+      <form [formGroup]="livraisonForm" (ngSubmit)="onSubmit()">
+        <!-- Form groups remain the same -->
+        <!-- Date livraison -->
+        <div class="form-group">
+          <label for="dateLivraison">Delivery Date</label>
+          <input type="date" id="dateLivraison" formControlName="dateLivraison" class="priority"
+            [ngClass]="{ 'is-invalid': livraisonForm.get('dateLivraison')?.invalid && (livraisonForm.get('dateLivraison')?.touched || livraisonForm.get('dateLivraison')?.dirty) }">
+          
+          <div *ngIf="livraisonForm.get('dateLivraison')?.invalid && (livraisonForm.get('dateLivraison')?.touched || livraisonForm.get('dateLivraison')?.dirty)" class="error-message">
+            <small *ngIf="livraisonForm.get('dateLivraison')?.errors?.['required']">Delivery date required</small>
+            <small *ngIf="livraisonForm.get('dateLivraison')?.errors?.['pastDate']">Date cannot be in the past</small>
+            <small *ngIf="livraisonForm.get('dateLivraison')?.errors?.['maxFutureDays']">Date cannot exceed 5 days</small>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="statut">Status</label>
+          <select id="statut" formControlName="statut" class="priority"
+            [ngClass]="{ 'is-invalid': livraisonForm.get('statut')?.invalid && (livraisonForm.get('statut')?.touched || livraisonForm.get('statut')?.dirty) }">
+            <option value="Pending">Pending</option>
+          </select>
+          <div *ngIf="livraisonForm.get('statut')?.invalid && (livraisonForm.get('statut')?.touched || livraisonForm.get('statut')?.dirty)" class="error-message">
+            <small *ngIf="livraisonForm.get('statut')?.errors?.['required']">Status required</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="adresseLivraison">Delivery Address</label>
+          <input type="text" id="adresseLivraison" formControlName="adresseLivraison" class="priority"
+            placeholder="Delivery Address" [ngClass]="{ 'is-invalid': livraisonForm.get('adresseLivraison')?.invalid && livraisonForm.get('adresseLivraison')?.touched }">
+          <div *ngIf="livraisonForm.get('adresseLivraison')?.invalid && livraisonForm.get('adresseLivraison')?.touched" class="error-message">
+            <small *ngIf="livraisonForm.get('adresseLivraison')?.errors?.['required']">Address required</small>
+            <small *ngIf="livraisonForm.get('adresseLivraison')?.errors?.['minlength']">Address must contain at least 5 characters</small>
+            <small *ngIf="livraisonForm.get('adresseLivraison')?.errors?.['pattern']">Invalid address format</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="deliveryDriver">Driver</label>
+          <select id="deliveryDriver" formControlName="deliveryDriver" class="priority"
+            [ngClass]="{ 'is-invalid': livraisonForm.get('deliveryDriver')?.invalid && livraisonForm.get('deliveryDriver')?.touched }">
+            <option value="">Select a driver</option>
+            <option *ngFor="let driver of deliveryDrivers" [ngValue]="driver">
+              {{driver.firstName}} {{driver.lastName}} - {{driver.phone}}
+            </option>
+          </select>
+          <div *ngIf="livraisonForm.get('deliveryDriver')?.invalid && livraisonForm.get('deliveryDriver')?.touched" class="error-message">
+            <small *ngIf="livraisonForm.get('deliveryDriver')?.errors?.['required']">Driver required</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="order">Order</label>
+          <select id="order" formControlName="order" class="priority"
+            [ngClass]="{ 'is-invalid': livraisonForm.get('order')?.invalid && livraisonForm.get('order')?.touched }">
+            <option value="">Select an order</option>
+            <option *ngFor="let order of orders" [ngValue]="order">
+              Order #{{order.uuid_order}} - {{order.totalPrice}}€
+            </option>
+          </select>
+        </div>
+
+        <div *ngIf="livraisonForm.invalid && livraisonForm.touched" class="error-message">
+          <p>Please fill in all required fields correctly.</p>
+        </div>
+        
+        <div class="form-group">
+          <button type="submit" class="action-button">Save Delivery</button>
+          <button type="button" class="delete-button" (click)="closeModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</app-admin-layout>
 

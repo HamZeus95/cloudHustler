@@ -61,6 +61,37 @@ export class NavbarComponent implements OnInit {
     }
   }
   
+  // Navigate to appropriate backoffice section based on user role
+  navigateToBackoffice(): void {
+    if (!this.currentUser || !this.currentUser.role) {
+      this.router.navigate(['frontoffice']);
+      return;
+    }
+    
+    const userRole = this.currentUser.role;
+    
+    switch(userRole.toUpperCase()) {
+      case 'ADMIN':
+        // Admin goes to dashboard
+        this.router.navigate(['backoffice']);
+        break;
+      case 'FARMER':
+        // Farmers go to farm management
+        this.router.navigate(['backoffice/farm']);
+        break;
+      case 'EXPERT':
+        // Experts go to events
+        this.router.navigate(['backoffice/backEvent']);
+        break; 
+      case 'DELIVERYDRIVER':
+        // Delivery roles go to livraison tracking
+        this.router.navigate(['backoffice/suivilivraison']);
+        break;
+      default:
+        // Default to frontoffice for consumers or if role is not recognized
+        this.router.navigate(['frontoffice']);
+    }
+  }
 
   // Method to handle image loading errors
   handleImageError(event: any): void {
@@ -99,9 +130,6 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
-  
-  
- 
 
   hasProfileImage(): boolean {
     return this.currentUser?.image != null && this.currentUser?.image !== '';
@@ -126,6 +154,4 @@ export class NavbarComponent implements OnInit {
       return `${imagesPath}${imageName}`;
     }
   }
-
-  
 }

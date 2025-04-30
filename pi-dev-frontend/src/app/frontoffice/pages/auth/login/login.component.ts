@@ -107,12 +107,31 @@ export class LoginComponent implements OnInit, OnDestroy {
           localStorage.removeItem('logged_out');
         
           setTimeout(() => {
-            if (userRole && ['expert', 'farmer', 'delivery', 'deliverydriver','ADMIN'].some(
-              role => userRole.toLowerCase().includes(role.toLowerCase())
-            )) {
-              this.router.navigate(['backoffice']);
+            if (userRole) {
+              // Navigate to specific routes based on user role
+              switch(userRole.toUpperCase()) {
+                case 'ADMIN':
+                  // Admin goes to dashboard
+                  this.router.navigate(['backoffice']);
+                  break;
+                case 'FARMER':
+                  // Farmers go to farm management
+                  this.router.navigate(['backoffice/farm']);
+                  break;
+                case 'EXPERT':
+                  // Experts go to events
+                  this.router.navigate(['backoffice/backEvent']);
+                  break; 
+                case 'DeliveryDriver':
+                  // Delivery roles go to livraison tracking
+                  this.router.navigate(['backoffice/suivilivraison']);
+                  break;
+                default:
+                  // Default to frontoffice for consumers or if role is not recognized
+                  this.router.navigate(['frontoffice']);
+              }
             } else {
-              // Default to frontoffice for consumers or if role is not specified
+              // Default to frontoffice if role is not specified
               this.router.navigate(['frontoffice']);
             }
           }, 500);

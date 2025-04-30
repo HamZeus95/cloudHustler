@@ -228,10 +228,18 @@ export class LivraisonComponent implements OnInit {
   public miniChartType: ChartType = 'doughnut';
 
   public miniChartOptions: ChartConfiguration['options'] = {
-    responsive: false,
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
       tooltip: { enabled: false }
+    },
+    // Using the correct property for doughnut chart cutout percentage
+   
+    elements: {
+      arc: {
+        borderWidth: 0,
+      }
     }
   };
 
@@ -241,7 +249,13 @@ export class LivraisonComponent implements OnInit {
       labels: ['Statut', 'Reste'],
       datasets: [
         {
-          data: [count, remaining > 0 ? remaining : 0]
+          data: [count, remaining > 0 ? remaining : 0],
+          backgroundColor: [
+            count === this.counts.livree ? '#1cc88a' : 
+            count === this.counts.enAttente ? '#f6c23e' : '#4e73df',
+            '#eaecf4'
+          ],
+          borderWidth: 0
         }
       ]
     };
