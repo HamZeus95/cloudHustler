@@ -36,6 +36,8 @@ public class Event {
     private Integer nbrParticipants = 0;
     @ElementCollection
     List<String> imgsUrls;
+
+
     @ManyToMany
     @JsonIgnore
     List<Consumer> participants = new ArrayList<>();
