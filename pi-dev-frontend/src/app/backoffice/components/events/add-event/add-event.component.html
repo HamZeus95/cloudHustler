@@ -1,138 +1,100 @@
 <app-admin-layout>
-  <br><br><br><br><br><br> 
-        
-            <h2>Add Event</h2>
-            <button (click)="generateRandomEvent()" class="btn-random-event">Random Event</button>
+  <div class="container-fluid py-4" style="background-color: #f2f1f1; border-radius: 10px;">
+    <div class="event-form-wrapper">
+      <h2 class="form-title">Add Event</h2>
+      <button (click)="generateRandomEvent()" class="btn-random-event">🎲 Generate Random Event</button>
 
+      <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+        <div class="form-grid">
 
-            <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
-              <div class="form-group">
-                <label for="name">Event Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  class="form-control"
-                  formControlName="name"
-                />
-                <div *ngIf="eventForm.get('name')!.invalid && eventForm.get('name')!.touched" class="text-danger">
-                  The name is required.
-                </div>
-              </div>
-          
-              <div class="form-group">
-                <label for="date">Start Date</label>
-                <input
-                  type="date"
-                  id="date"
-                  class="form-control"
-                  formControlName="date"
-                  [min]="todayDate()"
-                />
-                <div *ngIf="eventForm.get('date')!.hasError('pastDate') && eventForm.get('date')!.touched" class="text-danger">
-                  Start date cannot be in the past.
-                </div>
-                <div *ngIf="eventForm.get('date')!.invalid && eventForm.get('date')!.touched" class="text-danger">
-                  Start Date is required.
-                </div>
-              </div>
-          
-              <div class="form-group">
-                <label for="endDate">End Date</label>
-                <input
-                  type="date"
-                  id="endDate"
-                  class="form-control"
-                  formControlName="endDate"
-                  [min]="todayDate()"
-                />
-                <div *ngIf="eventForm.get('endDate')!.invalid && eventForm.get('endDate')!.touched" class="text-danger">
-                  End Date is required.
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="max">Max </label>
-                <input
-                  type="text"
-                  id="max"
-                  class="form-control"
-                  formControlName="max"
-                />
-                <div *ngIf="eventForm.get('max')!.invalid && eventForm.get('max')!.touched" class="text-danger">
-                  max is required.
-                </div>
-              </div>
-              <div class="form-group" *ngIf="!eventForm.get('isOnline')!.value">
-                <label for="location">Location</label>
-                <input
-                  type="text"
-                  id="location"
-                  class="form-control"
-                  formControlName="location"
-                />
-                <div *ngIf="eventForm.get('location')!.invalid && eventForm.get('location')!.touched" class="text-danger">
-                  Location is required.
-                </div>
-              </div>
-              
-          
-              <!-- <div class="form-group">
-                <label for="description">Description </label>
-                <textarea
-                  id="description"
-                  class="form-control"
-                  formControlName="description"
-                  rows="3"
-                ></textarea>
-              </div> -->
-       <!-- Bouton pour générer la description -->
-<button type="button" (click)="generateDescription()" class="btn btn-success">Generate Description</button>
+          <!-- Event Name -->
+          <div class="form-group">
+            <label for="name">Event Name</label>
+            <input type="text" id="name" class="form-control" formControlName="name" />
+            <div *ngIf="eventForm.get('name')!.invalid && eventForm.get('name')!.touched" class="text-danger">
+              The name is required.
+            </div>
+          </div>
 
-<!-- Affichage du spinner pendant la génération -->
-<div *ngIf="isLoading" class="spinner-container">
-  <div class="spinner"></div> <!-- Spinner -->
-  <p>Chargement...</p> <!-- Message de chargement -->
-</div>
+          <!-- Start Date -->
+          <div class="form-group">
+            <label for="date">Start Date</label>
+            <input type="date" id="date" class="form-control" formControlName="date" [min]="todayDate()" />
+            <div *ngIf="eventForm.get('date')!.hasError('pastDate') && eventForm.get('date')!.touched" class="text-danger">
+              Start date cannot be in the past.
+            </div>
+            <div *ngIf="eventForm.get('date')!.invalid && eventForm.get('date')!.touched" class="text-danger">
+              Start Date is required.
+            </div>
+          </div>
 
-<!-- Champ de description -->
-<div class="form-group">
-  <label for="description">Description</label>
-  <textarea id="description" formControlName="description" class="form-control" rows="5" cols="50"></textarea>
-</div>
+          <!-- End Date -->
+          <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate" class="form-control" formControlName="endDate" [min]="todayDate()" />
+            <div *ngIf="eventForm.get('endDate')!.invalid && eventForm.get('endDate')!.touched" class="text-danger">
+              End Date is required.
+            </div>
+          </div>
 
-              
-              
-              <div class="form-group">
-                <label for="banner">URL Poster</label>
-                <input
-                  type="text"
-                  id="banner"
-                  class="form-control"
-                  formControlName="banner"
-                />
-              </div>
-              <div class="form-group form-check">
-                <input
-                  type="checkbox"
-                  id="isOnline"
-                  class="form-check-input"
-                  formControlName="isOnline"
-                />
-                <label class="form-check-label" for="isOnline">Online Event</label>
-              </div>
-              
-              <div class="form-group" *ngIf="eventForm.get('isOnline')!.value">
-                <label for="onlineLink">Url</label>
-                <input
-                  type="text"
-                  id="onlineLink"
-                  class="form-control"
-                  formControlName="onlineLink"
-                />
-              </div>
-              
-              <button type="submit" class="btn btn-primary" [disabled]="eventForm.invalid">
-                Add Event
-              </button>
-              
-            </form> 
-        </app-admin-layout>
+          <!-- Max -->
+          <div class="form-group">
+            <label for="max">Max Capacity</label>
+            <input type="text" id="max" class="form-control" formControlName="max" />
+            <div *ngIf="eventForm.get('max')!.invalid && eventForm.get('max')!.touched" class="text-danger">
+              Max is required.
+            </div>
+          </div>
+
+          <!-- Location -->
+          <div class="form-group" *ngIf="!eventForm.get('isOnline')!.value">
+            <label for="location">Location</label>
+            <input type="text" id="location" class="form-control" formControlName="location" />
+            <div *ngIf="eventForm.get('location')!.invalid && eventForm.get('location')!.touched" class="text-danger">
+              Location is required.
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="form-group full-width">
+            <label for="description">Description</label>
+            <button type="button" (click)="generateDescription()" class="btn btn-success ml-2">Auto Generate</button>
+
+            <div *ngIf="isLoading" class="spinner-container">
+              <div class="spinner"></div>
+              <p>Loading...</p>
+            </div>
+
+            <textarea id="description" formControlName="description" class="form-control" rows="4"></textarea>
+          </div>
+
+          <!-- Banner -->
+          <div class="form-group">
+            <label for="banner">Poster URL</label>
+            <input type="text" id="banner" class="form-control" formControlName="banner" />
+          </div>
+
+          <!-- Online Checkbox -->
+          <div class="form-group form-check">
+            <input type="checkbox" id="isOnline" class="form-check-input" formControlName="isOnline" />
+            <label class="form-check-label" for="isOnline">Online Event</label>
+          </div>
+
+          <!-- Online Link -->
+          <div class="form-group" *ngIf="eventForm.get('isOnline')!.value">
+            <label for="onlineLink">Online Link</label>
+            <input type="text" id="onlineLink" class="form-control" formControlName="onlineLink" />
+          </div>
+
+          <!-- Submit -->
+          <div class="form-group full-width">
+            <button type="submit" class="btn btn-primary" [disabled]="eventForm.invalid">
+              ➕ Add Event
+            </button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</app-admin-layout>
