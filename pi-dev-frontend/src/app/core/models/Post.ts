@@ -8,7 +8,8 @@ export interface Post {
    mediaUrl: string;
    createdAt?: Date | string;
    updatedAt?: Date | string;
-   
+   posterId?: string;
+   isPoster?: boolean;
    comments?: Comment[];
    reactions?: Reaction[];
 }

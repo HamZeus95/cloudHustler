@@ -150,9 +150,10 @@ private deleteReaction(reactionId: string): Promise<void> {
    
   
 
-  getReactionCount(type: TypeReaction): number {
-    return this.reactionCounts[type] || 0;
-  }
+getReactionCount(type: TypeReaction): number | null {
+  const count = this.reactionCounts[type] || 0;
+  return count > 0 ? count : null;
+}
 
   getReactionEmoji(type: TypeReaction): string {
     const emojiMap: Record<TypeReaction, string> = {

@@ -46,12 +46,13 @@ public class Post {
 
     @ManyToOne
     @JsonIgnore
-
     @JoinColumn(name = "user_id")
     private User user;  // Relation avec le Farmer qui a écrit ce post
 
 
-
+    public UUID getPosterId() {
+      return user != null ? user.getUuid_user() : null;
+  }
 
 
 
