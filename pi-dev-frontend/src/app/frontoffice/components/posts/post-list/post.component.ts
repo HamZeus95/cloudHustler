@@ -28,6 +28,7 @@ export class PostComponent implements OnInit {
   isGeneratingPdf = false;
   currentUser: any = null;
   isAuthenticated = false;
+  isPoster: boolean = false;
   
   @ViewChildren('postElement') postElements!: QueryList<ElementRef>;
 
@@ -65,6 +66,12 @@ export class PostComponent implements OnInit {
     { type: TypeReaction.SUPPORT, emoji: '🤝', label: 'Support' },
     { type: TypeReaction.CURIOUS, emoji: '🤔', label: 'Curious' }
   ];
+
+  isUserPoster(posterId: string | undefined): boolean {
+    if (!this.currentUser || !posterId) return false;
+     
+    return posterId == this.currentUser.userUUID;
+  }
 
   async exportToPdf(postId: string, element: HTMLElement): Promise<void> {
     if (!postId || this.isGeneratingPdf) return;
@@ -202,10 +209,15 @@ export class PostComponent implements OnInit {
     console.log('currentUser:', this.currentUser);
     this.postService.getAllPosts().subscribe({
       next: (data) => {
-        this.posts = data.map(post => ({
-          ...post,
-          mediaUrl: this.getFullMediaUrl(post.mediaUrl)
-        }));
+        this.posts = data.map(post => {
+          const isPoster = this.isUserPoster(post.posterId);
+           
+          return {
+            ...post, 
+            mediaUrl: this.getFullMediaUrl(post.mediaUrl),
+            isPoster: isPoster
+          };
+        });
         this.filteredPosts = [...this.posts];
       },
       error: (error) => console.error('Error loading posts:', error)

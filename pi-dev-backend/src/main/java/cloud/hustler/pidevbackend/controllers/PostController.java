@@ -7,8 +7,11 @@ import cloud.hustler.pidevbackend.service.EmailService;
 import cloud.hustler.pidevbackend.service.IPostService;
 import cloud.hustler.pidevbackend.service.SmsService;
 import cloud.hustler.pidevbackend.service.user.IUserService;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +37,8 @@ public class PostController {
     private IPostService postService;
     @Autowired
     private UserRepository userService;
+    @Autowired
+    private JavaMailSenderImpl mailSender;
 
     @Autowired
     private EmailService emailService;
@@ -85,11 +90,39 @@ public class PostController {
             Post savedPost = postService.addPost(post);
 
             // Envoi de l'email après création réussie du post
+            String emailTo ="mohamed242001taher@gmail.com";
+            String subject = "Nouveau post créé";
+            String htmlContent = String.format(
+                    "Détails du nouveau post:\n\n" +
+                            "Titre: %s\n" +
+                            "Contenu: %s\n" +
+                            "Date de création: %s\n" +
+                            "Cordialement,\nVotre équipe",
+                    post.getTitle(),
+                    post.getContent(),
+                    post.getCreatedAt().toString()
+            );
+
             try {
-                emailService.sendPostNotification("mohamed242001taher@gmail.com", savedPost);
+                System.out.println("Attempting to send email to: " + emailTo);
+                System.out.println("Using mail server: " + mailSender.getHost() + ":" + mailSender.getPort());
+
+                MimeMessage message = mailSender.createMimeMessage();
+                MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+                helper.setTo(emailTo);
+                helper.setSubject(subject);
+                helper.setText(htmlContent, true); // Set HTML content
+                System.out.printf("email sender: %s\n", mailSender.getUsername());
+                helper.setFrom(mailSender.getUsername()); // Explicitly set sender
+
+                mailSender.send(message);
+                System.out.println("Email sent successfully to: " + emailTo);
             } catch (Exception e) {
-                System.err.println("Erreur lors de l'envoi de l'email: " + e.getMessage());
-                // Ne pas interrompre le flux même si l'email échoue
+                System.err.println("Failed to send email to: " + emailTo);
+                System.err.println("Error: " + e.getMessage());
+                e.printStackTrace();
+                throw e; // Re-throw to be handled by caller
             }
 
 

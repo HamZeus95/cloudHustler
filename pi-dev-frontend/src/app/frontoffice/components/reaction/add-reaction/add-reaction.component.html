@@ -7,6 +7,6 @@
     [class.inactive]="!isActive(reactionType) && activeReaction !== null"
     [attr.aria-label]="reactionType">
     {{ getReactionEmoji(reactionType) }} {{ reactionType }}
-    <span>{{ getReactionCount(reactionType) }}</span>
+    <span *ngIf="getReactionCount(reactionType)">{{ getReactionCount(reactionType) }}</span>
   </button>
 </div>

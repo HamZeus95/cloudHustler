@@ -47,8 +47,9 @@ public class Comment {
     private User user;  // Relation avec le Farmer qui a écrit ce post
 
 
-
-
+    public UUID getCommantairId() {
+        return user != null ? user.getUuid_user() : null;
+    }
 
 
 }

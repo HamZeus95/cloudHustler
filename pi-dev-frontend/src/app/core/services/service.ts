@@ -45,7 +45,7 @@ export class PostService {
 
 
   getAllComment(): Observable<commentaires[]> {
-    return this.http.get<commentaires[]>(`${this.baseUrl}/getAllComments`);
+    return this.http.get<commentaires[]>(`${this.baseUrl}/comments/getAllComment`);
   }
   getCommentByPostId(postId: string): Observable<commentaires[]> {
     return this.http.get<commentaires[]>(`${this.baseUrl}/comments/getCommentsByPostId/${postId}`);

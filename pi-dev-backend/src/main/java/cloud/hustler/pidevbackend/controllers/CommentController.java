@@ -2,6 +2,7 @@ package cloud.hustler.pidevbackend.controllers;
 
 import cloud.hustler.pidevbackend.entity.Comment;
 import cloud.hustler.pidevbackend.entity.Post;
+import cloud.hustler.pidevbackend.service.CommentServiceImplement;
 import cloud.hustler.pidevbackend.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-//@CrossOrigin(origins = "*")
+
 @RestController
 @RequestMapping("/comments")
 public class CommentController {
 
     @Autowired
-    ICommentService commentService;
+    CommentServiceImplement commentService;
     @PostMapping("/addComment")
     Comment addComment(@RequestBody Comment comment) {
         return commentService.addComment(comment);

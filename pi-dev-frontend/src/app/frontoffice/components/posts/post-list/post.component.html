@@ -15,7 +15,7 @@
   </div>
 
   <!-- Formulaire de création de post -->
-  <div class="create-post-card">
+  <div class="create-post-card" *ngIf="currentUser">
     <app-add-post (postAdded)="loadPosts()"></app-add-post>
 
   </div>
@@ -32,14 +32,14 @@
             <div class="post-time">{{post.createdAt | date:'dd MMM yyyy à HH:mm'}}</div>
           </div>
         </div>
-        <div class="post-actions">
-          <button *ngIf="post.idPost" 
+        <div class="post-actions" >
+          <button *ngIf="post.idPost && post.isPoster" 
           (click)="editPost(post.idPost);$event.stopPropagation()" 
           class="edit-btn"
           title="Modifier ce post">
     <i class="fas fa-edit"></i> 
   </button>
-          <button *ngIf="post.idPost" 
+          <button *ngIf="post.idPost && post.isPoster" 
                   (click)="deletePost(post.idPost); $event.stopPropagation()" 
                   class="delete-btn">
             <i class="fas fa-trash"></i> 
@@ -67,11 +67,11 @@
                (error)="handleImageError($event)">
         </div>
       </div>
-      <app-add-reaction [post]="post"></app-add-reaction>
+      <app-add-reaction *ngIf="currentUser" [post]="post"></app-add-reaction>
 
       <!-- Section commentaires -->
-      <div class="comments-section" *ngIf="post.idPost">
-        <app-add-comment [postId]="post.idPost" (commentAdded)="loadPosts()"></app-add-comment>
+      <div class="comments-section" *ngIf="post.idPost && currentUser" >
+        <app-add-comment  [postId]="post.idPost" (commentAdded)="loadPosts()"></app-add-comment>
       </div>
 
       <div class="comments-section" *ngIf="post.idPost">

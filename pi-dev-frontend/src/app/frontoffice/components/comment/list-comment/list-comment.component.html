@@ -26,7 +26,7 @@
             </div>
           </div>
           
-          <div class="comment-actions">
+          <div class="comment-actions" *ngIf="comment.isCommantair">
             <button (click)="editComment(comment.commentId)" 
                     class="action-btn edit-btn"
                     *ngIf="comment.commentId">
@@ -45,6 +45,4 @@
         <p><i class="fas fa-comment-slash"></i>No comments available for this post.</p>
       </div>
     </div>
-  
-    
   </div>
