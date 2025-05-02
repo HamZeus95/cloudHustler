@@ -29,7 +29,7 @@ export class LivraisonComponent implements OnInit {
   displayModal: boolean = false;
   selectedlivraison: Livraison | null = null;
   currentPage = 1;
-  itemsPerPage = 5;
+  itemsPerPage = 3;
 
   newlivraison: Livraison = {
     id: 0,

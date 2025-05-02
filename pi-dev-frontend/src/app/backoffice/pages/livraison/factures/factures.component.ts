@@ -32,7 +32,7 @@ export class FactureComponent implements OnInit {
     @Output() factureSelected = new EventEmitter<Livraison>();
   
     currentPage = 1;
-    itemsPerPage = 5; // Par exemple, 5 factures par page
+    itemsPerPage = 3; // Par exemple, 5 factures par page
     
 
   newFacture: Facture = {

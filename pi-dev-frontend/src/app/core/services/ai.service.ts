@@ -7,6 +7,8 @@ import { Injectable } from '@angular/core';
 export class AiService {
 
   private flaskUrl = 'http://localhost:5050/analyze-image'; // Flask endpoint
+  //private flaskUrl = 'https://11f2-197-19-214-79.ngrok-free.app/analyze-image';
+   
 
   constructor(private http: HttpClient) {}
 
