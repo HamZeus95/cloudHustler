@@ -16,6 +16,13 @@
             "allowedCommonJsDependencies": [
               "feather-icons",
               "mapbox-gl",
+              "canvg",
+              "sockjs-client",
+              "leaflet",
+              "html2canvas",
+              "bs-stepper",
+              "rgbcolor",
+              "raf"
 
 
             ],

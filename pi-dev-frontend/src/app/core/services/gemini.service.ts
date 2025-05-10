@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class GeminiService {
-  private readonly apiUrl = 'http://localhost:8090/api/v1/gemini/chat';
+  private readonly apiUrl = '/api/v1/gemini/chat';
 
   constructor(private http: HttpClient) { }
 

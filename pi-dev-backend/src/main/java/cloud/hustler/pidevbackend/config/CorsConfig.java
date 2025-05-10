@@ -25,11 +25,12 @@ public class CorsConfig {
             "http://localhost:4200",          // Dev
             "http://127.0.0.1:4200"           // Dev alternative
             // Add your production URLs here when deploying
+
         );
 
         // Use setAllowedOriginPatterns instead of setAllowedOrigins for specific origins when allowCredentials=true
-        config.setAllowedOriginPatterns(allowedOrigins);
-
+        config.setAllowedOriginPatterns(List.of("*"));
+        config.setAllowCredentials(true); // Only works with allowedOriginPatterns("*")
         // Allow all HTTP methods
         config.addAllowedMethod("*");
 
