@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { ChatService } from '../../services/chat.service';
-import { ChatWebsocketService } from '../../services/chat-websocket.service';
+import { Subscription, debounceTime } from 'rxjs';
+import { ChatService, TypingStatus } from '../../services/chat.service';
 import { ChatMessage, MessageType, ChatPaginatedResponse } from '../../models';
 import { TokenStorageService } from 'src/app/auth/service/token-storage.service';
 
@@ -36,13 +35,15 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked, OnDe
   showEmptyState: boolean = true;
   currentUser: any = null;
   shouldScrollToBottom: boolean = true;
+  isTyping: boolean = false;
+  typingUser: any = null;
+  private typingTimeout: any;
   
   // Track subscriptions for cleanup
   private subscriptions: Subscription[] = [];
 
   constructor(
     private chatService: ChatService,
-    private chatWebsocketService: ChatWebsocketService,
     private tokenStorage: TokenStorageService,
     private route: ActivatedRoute,
     private fb: FormBuilder
@@ -55,35 +56,18 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked, OnDe
 
   ngOnInit(): void {
     // Get current user
-    this.currentUser = this.tokenStorage.getCurrentUser();
+    this.currentUser = this.tokenStorage.getCurrentUser() || {
+      userUUID: 'current',
+      firstName: 'Current',
+      lastName: 'User',
+      email: 'current.user@example.com'
+    };
     
-    // Connect to WebSocket if not already connected
-    if (!this.chatWebsocketService.isConnected()) {
-      const token = this.tokenStorage.getToken();
-      if (token && this.currentUser?.uuid_user) {
-        this.chatWebsocketService.connect(token, this.currentUser.uuid_user);
-      }
-    }
-    
-    // Subscribe to direct messages from WebSocket
+    // Subscribe to messages from service
     this.subscriptions.push(
-      this.chatWebsocketService.getDirectMessages().subscribe(message => {
-        this.handleIncomingMessage(message);
-      })
-    );
-    
-    // Subscribe to group messages from WebSocket
-    this.subscriptions.push(
-      this.chatWebsocketService.getGroupMessages().subscribe(message => {
-        this.handleIncomingMessage(message);
-      })
-    );
-    
-    // Subscribe to errors from WebSocket
-    this.subscriptions.push(
-      this.chatWebsocketService.getErrors().subscribe(error => {
-        console.error('WebSocket error:', error);
-        // Implement error handling/notification here
+      this.chatService.messages$.subscribe(messages => {
+        this.messages = messages;
+        this.shouldScrollToBottom = true;
       })
     );
     
@@ -125,13 +109,6 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked, OnDe
             
             // Load group messages
             this.loadGroupMessages();
-            
-            // Subscribe to this group's messages specifically
-            if (this.conversationId) {
-              this.chatWebsocketService.subscribeToGroup(this.conversationId, (message) => {
-                this.handleIncomingMessage(message);
-              });
-            }
           }
         } else {
           this.showEmptyState = true;
@@ -140,11 +117,33 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked, OnDe
       })
     );
     
-    // Subscribe to read receipts from WebSocket
+    // Add subscription to typing events
     this.subscriptions.push(
-      this.chatWebsocketService.getReadReceipts().subscribe(message => {
-        this.updateMessageReadStatus(message.id);
+      this.chatService.typingStatus$.subscribe((status: TypingStatus | null) => {
+        if (status && status.conversationId === this.conversationId) {
+          this.isTyping = status.isTyping;
+          this.typingUser = status.user;
+          
+          // Auto-clear typing indicator after 3 seconds
+          if (this.isTyping) {
+            clearTimeout(this.typingTimeout);
+            this.typingTimeout = setTimeout(() => {
+              this.isTyping = false;
+            }, 3000);
+          }
+        }
       })
+    );
+    
+    // Add typing indicator when user types
+    this.subscriptions.push(
+      this.messageForm.get('content')?.valueChanges
+        .pipe(debounceTime(300))
+        .subscribe(value => {
+          if (value && value.trim() !== '' && this.conversationId) {
+            this.sendTypingStatus(true);
+          }
+        }) || new Subscription()
     );
   }
 
@@ -157,6 +156,7 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked, OnDe
   ngOnDestroy(): void {
     // Clean up subscriptions
     this.subscriptions.forEach(sub => sub.unsubscribe());
+    clearTimeout(this.typingTimeout);
   }
 
   // Reset conversation data when changing conversations
@@ -218,13 +218,18 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked, OnDe
       return;
     }
     
+    // Reverse the order of messages for column-reverse display
+    const sortedMessages = [...response.content].sort((a, b) => {
+      return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+    });
+    
     // If loading first page, replace all messages and scroll to bottom
     if (this.currentPage === 0) {
-      this.messages = response.content;
+      this.messages = sortedMessages;
       this.shouldScrollToBottom = true;
     } else {
-      // Otherwise prepend older messages to the top
-      this.messages = [...response.content, ...this.messages];
+      // Otherwise prepend older messages
+      this.messages = [...sortedMessages, ...this.messages];
       // Don't scroll to bottom when loading more
       this.shouldScrollToBottom = false;
     }
@@ -247,64 +252,54 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked, OnDe
     }
   }
 
-  // Handle incoming WebSocket messages
+  // Handle incoming messages
   handleIncomingMessage(message: ChatMessage): void {
-    if (!this.conversationId) return;
-    
-    // Check if message belongs to current conversation
-    const isRelevant = 
+    // Check if this message belongs to the current conversation
+    if (
       (this.conversationType === 'direct' && 
-        ((message.senderId === this.conversationId && message.receiverId === this.currentUser.uuid_user) || 
-         (message.senderId === this.currentUser.uuid_user && message.receiverId === this.conversationId))) ||
-      (this.conversationType === 'group' && message.groupId === this.conversationId);
-    
-    if (isRelevant) {
-      // Add message to list
+       ((message.senderId === this.conversationId && message.receiverId === 'current') || 
+        (message.senderId === 'current' && message.receiverId === this.conversationId))) ||
+      (this.conversationType === 'group' && message.groupId === this.conversationId)
+    ) {
       this.messages = [...this.messages, message];
       this.shouldScrollToBottom = true;
       
-      // Mark as read if from someone else
-      if (message.senderId !== this.currentUser.uuid_user) {
-        this.markMessageAsRead(message.id);
+      // Mark as read if it's not from the current user
+      if (message.senderId !== 'current' && !message.read) {
+        this.markMessageAsRead(message.id!);
       }
     }
   }
 
   // Send a message
   sendMessage(): void {
-    if (this.messageForm.invalid || !this.conversationId || this.isSubmitting) {
+    if (this.messageForm.invalid) {
       return;
     }
     
-    const content = this.messageForm.get('content')?.value;
-    const file = this.messageForm.get('file')?.value;
-    
-    if (!content && !file) {
+    const content = this.messageForm.get('content')?.value.trim();
+    if (!content) {
       return;
     }
     
     this.isSubmitting = true;
     
-    if (this.conversationType === 'direct') {
-      // Send direct message
+    if (this.conversationType === 'direct' && this.conversationId) {
       this.chatService.sendDirectMessage(this.conversationId, content)
         .subscribe({
-          next: () => {
-            this.messageForm.reset();
-            this.isSubmitting = false;
+          next: (message) => {
+            this.handleSendMessageSuccess();
           },
           error: (error) => {
-            console.error('Error sending message:', error);
+            console.error('Error sending direct message:', error);
             this.isSubmitting = false;
           }
         });
-    } else {
-      // Send group message
+    } else if (this.conversationType === 'group' && this.conversationId) {
       this.chatService.sendGroupMessage(this.conversationId, content)
         .subscribe({
-          next: () => {
-            this.messageForm.reset();
-            this.isSubmitting = false;
+          next: (message) => {
+            this.handleSendMessageSuccess();
           },
           error: (error) => {
             console.error('Error sending group message:', error);
@@ -312,6 +307,13 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked, OnDe
           }
         });
     }
+  }
+  
+  // Handle successful message send
+  private handleSendMessageSuccess(): void {
+    this.messageForm.reset();
+    this.isSubmitting = false;
+    this.shouldScrollToBottom = true;
   }
 
   // Mark a message as read
@@ -328,8 +330,10 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked, OnDe
   deleteMessage(messageId: string): void {
     this.chatService.deleteMessage(messageId).subscribe({
       next: () => {
-        // Remove message from UI or mark as deleted
-        this.messages = this.messages.filter(msg => msg.id !== messageId);
+        // Update the message in the list
+        this.messages = this.messages.map(msg => 
+          msg.id === messageId ? {...msg, deleted: true, content: 'This message was deleted'} : msg
+        );
       },
       error: (error) => {
         console.error('Error deleting message:', error);
@@ -337,20 +341,22 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked, OnDe
     });
   }
 
-  // Determine if a message is from the current user
+  // Check if a message is from the current user
   isFromCurrentUser(message: ChatMessage): boolean {
-    return message.senderId === this.currentUser?.uuid_user;
+    return message.senderId === 'current';
   }
 
-  // Format message timestamp
+  // Format time for display
   formatTime(timestamp: string): string {
     if (!timestamp) return '';
     const date = new Date(timestamp);
     return date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
   }
-  
-  // Format date for date separators
+
+  // Format date for display
   formatDate(timestamp: string): string {
+    if (!timestamp) return '';
+    
     const date = new Date(timestamp);
     const today = new Date();
     const yesterday = new Date(today);
@@ -361,13 +367,19 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked, OnDe
     } else if (date.toDateString() === yesterday.toDateString()) {
       return 'Yesterday';
     } else {
-      return date.toLocaleDateString();
+      return date.toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
     }
   }
-  
-  // Check if we should show a date separator
+
+  // Check if we should show the date separator
   shouldShowDate(index: number): boolean {
-    if (index === 0) return true;
+    if (index === 0) {
+      return true;
+    }
     
     const currentDate = new Date(this.messages[index].timestamp).toDateString();
     const prevDate = new Date(this.messages[index - 1].timestamp).toDateString();
@@ -379,30 +391,47 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked, OnDe
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
-      this.messageForm.patchValue({ file: file });
+      this.messageForm.patchValue({
+        file: file
+      });
     }
   }
 
   // Clear selected file
   clearSelectedFile(): void {
-    this.messageForm.patchValue({ file: null });
+    this.messageForm.patchValue({
+      file: null
+    });
   }
 
-  // Update a message's read status
-  private updateMessageReadStatus(messageId: string): void {
-    this.messages = this.messages.map(msg => 
-      msg.id === messageId ? {...msg, read: true} : msg
-    );
-  }
-
-  // Scroll to bottom of messages
+  // Scroll to the bottom of the messages container
   private scrollToBottom(): void {
     try {
-      const element = this.messagesContainer.nativeElement;
-      element.scrollTop = element.scrollHeight;
-      this.shouldScrollToBottom = false;
+      if (this.messagesContainer) {
+        // For column-reverse layout, scrolling to top shows the most recent messages
+        this.messagesContainer.nativeElement.scrollTop = 0;
+        
+        // Ensure input field is visible by focusing on it after scrolling
+        setTimeout(() => {
+          const inputField = document.querySelector('.message-input textarea');
+          if (inputField) {
+            (inputField as HTMLElement).focus();
+          }
+        }, 100);
+      }
     } catch (err) {
       console.error('Error scrolling to bottom:', err);
+    }
+  }
+
+  // Send typing status to other users
+  sendTypingStatus(isTyping: boolean): void {
+    if (this.conversationId) {
+      if (this.conversationType === 'direct') {
+        this.chatService.sendTypingStatus(this.conversationId, isTyping, 'direct');
+      } else {
+        this.chatService.sendTypingStatus(this.conversationId, isTyping, 'group');
+      }
     }
   }
 }

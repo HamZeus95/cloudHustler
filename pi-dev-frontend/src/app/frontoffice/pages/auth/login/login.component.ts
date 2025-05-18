@@ -276,14 +276,48 @@ export class LoginComponent implements OnInit, OnDestroy {
           const userRole = user.role || user.Role;
           console.log('User logged in with Face ID. Role:', userRole);
           
-          // Navigate based on user role
+
+          // Clear the logged_out flag on successful login
+          localStorage.removeItem('logged_out');
+        
           setTimeout(() => {
-            // Force navigation to backoffice for face login users
-            this.router.navigate(['/backoffice'], { replaceUrl: true }).then(
-              success => console.log('Navigation success:', success),
-              error => console.error('Navigation error:', error)
-            );
-          }, 1000);
+            if (userRole) {
+              // Navigate to specific routes based on user role
+              switch(userRole.toUpperCase()) {
+                case 'ADMIN':
+                  // Admin goes to dashboard
+                  this.router.navigate(['backoffice']);
+                  break;
+                case 'FARMER':
+                  // Farmers go to farm management
+                  this.router.navigate(['backoffice/farm']);
+                  break;
+                case 'EXPERT':
+                  // Experts go to events
+                  this.router.navigate(['backoffice/backEvent']);
+                  break; 
+                case 'DeliveryDriver':
+                  // Delivery roles go to livraison tracking
+                  this.router.navigate(['backoffice/suivilivraison']);
+                  break;
+                default:
+                  // Default to frontoffice for consumers or if role is not recognized
+                  this.router.navigate(['frontoffice']);
+              }
+            } else {
+              // Default to frontoffice if role is not specified
+              this.router.navigate(['frontoffice']);
+            }
+          }, 500);
+          
+          // Navigate based on user role
+          // setTimeout(() => {
+          //   // Force navigation to backoffice for face login users
+          //   this.router.navigate(['/backoffice/farm'], { replaceUrl: true }).then(
+          //     success => console.log('Navigation success:', success),
+          //     error => console.error('Navigation error:', error)
+          //   );
+          // }, 1000);
         } else {
           // Fallback if user object is not available
           console.log('No user data in response - using fallback navigation');

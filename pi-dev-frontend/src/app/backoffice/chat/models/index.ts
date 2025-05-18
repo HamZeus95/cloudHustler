@@ -11,10 +11,14 @@ export interface ChatMessage {
   senderId: string;
   senderName?: string;
   senderAvatar?: string;
+  senderProfileImage?: string;
   receiverId?: string;
+  receiverName?: string;
   groupId?: string;
+  groupName?: string;
   timestamp: string;
   read: boolean;
+  readAt?: string;
   messageType: MessageType;
   mediaUrl?: string;
   deleted?: boolean;
@@ -22,10 +26,19 @@ export interface ChatMessage {
 
 export interface ChatPaginatedResponse {
   content: ChatMessage[];
+  pageable?: {
+    pageNumber: number;
+    pageSize: number;
+    sort: any;
+  };
   totalPages: number;
   totalElements: number;
-  currentPage: number;
+  currentPage?: number;
   size: number;
+  number?: number;
+  last?: boolean;
+  first?: boolean;
+  empty?: boolean;
 }
 
 export interface ChatRequest {
@@ -39,30 +52,34 @@ export interface ChatRequest {
   
   // Additional properties for UI
   senderProfileImage?: string;
+  senderUsername?: string;
+  receiverUsername?: string;
+  receiverProfileImage?: string;
   createdAt?: string; // For backward compatibility
+  updatedAt?: string;
 }
 
 export enum ChatRequestStatus {
   PENDING = 'PENDING',
   ACCEPTED = 'ACCEPTED',
+  APPROVED = 'APPROVED',
   REJECTED = 'REJECTED'
-}
-
-export interface ChatGroup {
-  id: string;
-  name: string;
-  description?: string;
-  createdAt: string;
-  memberCount: number;
-  creatorId: string;
-  avatar?: string;
 }
 
 export interface BlockedUser {
   id: string;
-  blockedUserId: string;
-  blockedUserName: string;
-  blockDate: string;
+  blockedUserId?: string;
+  userId?: string;
+  blockedUserName?: string;
+  name?: string;
+  blockDate?: string;
+  profileImage?: string;
+  blockedAt?: string;
+  unblockedAt?: string;
+  blockedByUserId?: string;
+  blockedByUserName?: string;
+  reason?: string;
+  status?: string;
 }
 
 export interface NotConsumer {
@@ -72,3 +89,18 @@ export interface NotConsumer {
   avatar?: string;
   role: string;
 }
+
+export interface UserInfo {
+  id: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  profileImage?: string;
+  online?: boolean;
+}
+
+export * from './chat-message.model';
+export * from './chat-request.model';
+export * from './blocked-user.model';
+export * from './chat-group.model';
+export * from './not-consumer.model';

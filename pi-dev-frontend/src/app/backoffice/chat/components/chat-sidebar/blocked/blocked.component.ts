@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { BlockedUser } from "../../../models/blocked-user.model";
+import { BlockedUser } from "../../../models";
 import { BlockUserService } from "../../../services/block-user.service";
 
 @Component({

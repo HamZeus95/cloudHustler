@@ -31,41 +31,50 @@ export class ChatPageComponent implements OnInit, OnDestroy {
       if (isAuth) {
         this.currentUser = this.tokenStorageService.getCurrentUser();
         this.token = this.tokenStorageService.getToken() || undefined;
+        
+        // For fake data, we can create a default user if none exists
+        if (!this.currentUser) {
+          this.currentUser = {
+            userUUID: 'current',
+            firstName: 'Current',
+            lastName: 'User',
+            email: 'current.user@example.com'
+          };
+        }
       }
-       
     });
 
     // Subscribe to user changes
-    this.tokenStorageService.getUser().subscribe(user => {
-      this.currentUser = user;
-    });
+    this.subscriptions.push(
+      this.tokenStorageService.getUser().subscribe(user => {
+        this.currentUser = user || {
+          userUUID: 'current',
+          firstName: 'Current',
+          lastName: 'User',
+          email: 'current.user@example.com'
+        };
+      })
+    );
 
-    
-  //  console.log("first user", this.currentUser);
-    
-  //   // Connect to WebSocket
-  //   this.chatService.connectWebSocket(this.token || undefined, this.currentUser.userUUID);
-
-  //   // Check if there's a user ID in the route
-  //   this.subscriptions.push(
-  //     this.route.queryParams.subscribe(params => {
-  //       if (params['userId']) {
-  //         this.chatService.canChatWithUser(params['userId']).subscribe(
-  //           canChat => {
-  //             if (canChat) {
-  //               this.chatService.setActiveConversation({ userId: params['userId'] });
-  //             }
-  //           }
-  //         );
-  //       }
-  //     })
-  //   );
+    // Check if there's a user ID in the route
+    this.subscriptions.push(
+      this.route.queryParams.subscribe(params => {
+        if (params['userId']) {
+          this.chatService.canChatWithUser(params['userId']).subscribe(
+            canChat => {
+              if (canChat) {
+                this.chatService.setActiveConversation({ userId: params['userId'] });
+              }
+            }
+          );
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    // Disconnect WebSocket and unsubscribe from observables
-    // this.chatService.disconnectWebSocket();
-    // this.subscriptions.forEach(sub => sub.unsubscribe());
+    // Unsubscribe from observables
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   switchSection(section: string): void {

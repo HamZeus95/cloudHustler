@@ -7,6 +7,11 @@ import { ChatMessage, ChatRequest, ChatGroup, BlockedUser, ChatRequestStatus, No
 import { TokenStorageService } from "../../../auth/service/token-storage.service";
 import { ChatWebsocketService } from './chat-websocket.service';
 
+export interface TypingStatus {
+  conversationId: string;
+  isTyping: boolean;
+  user?: any;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +25,7 @@ export class ChatService {
   private selectedChatSource = new BehaviorSubject<any>(null);
   private chatRequestsSource = new BehaviorSubject<ChatRequest[]>([]);
   private unreadCountsSource = new BehaviorSubject<{[key: string]: number}>({});
+  private typingStatusSource = new BehaviorSubject<TypingStatus | null>(null);
   
 
   // Observable streams
@@ -28,6 +34,7 @@ export class ChatService {
   public selectedChat$ = this.selectedChatSource.asObservable();
   public chatRequests$ = this.chatRequestsSource.asObservable();
   public unreadCounts$ = this.unreadCountsSource.asObservable();
+  public typingStatus$ = this.typingStatusSource.asObservable();
   
   private connected = false;
 
@@ -44,6 +51,17 @@ export class ChatService {
 
     this.chatWebsocketService.getGroupMessages().subscribe(message => {
       this.addMessageToList(message as ChatMessage);
+    });
+    
+    // Subscribe to typing status events
+    this.chatWebsocketService.getTypingStatus().subscribe(status => {
+      if (status) {
+        this.typingStatusSource.next({
+          conversationId: status.senderId || status.groupId,
+          isTyping: status.isTyping,
+          user: status.user
+        });
+      }
     });
   }
 
@@ -367,5 +385,16 @@ export class ChatService {
     return this.http.get<NotConsumer[]>(`${environment.apiUrl}/users/not-consumer`, {
       headers: this.getAuthHeaders()
     });
+  }
+
+  // Send typing status
+  sendTypingStatus(recipientId: string, isTyping: boolean, type: 'direct' | 'group'): void {
+    if (this.connected) {
+      if (type === 'direct') {
+        this.chatWebsocketService.sendTypingStatus(recipientId, isTyping);
+      } else {
+        this.chatWebsocketService.sendGroupTypingStatus(recipientId, isTyping);
+      }
+    }
   }
 }

@@ -1,9 +1,14 @@
 export interface BlockedUser {
   id: string;
-  blocker: User;
-  blocked: User;
+  userId: string;
+  name: string;
+  profileImage?: string;
   blockedAt: string;
+  unblockedAt?: string;
+  blockedByUserId?: string;
+  blockedByUserName?: string;
   reason?: string;
+  status?: string;
 }
 
 export interface User {

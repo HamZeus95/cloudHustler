@@ -4,9 +4,22 @@ import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ChatService, BlockUserService } from '../../services/index';
 import { ChatGroupService } from '../../services/chat-group.service';
-import { ChatGroup } from '../../models/chat-group.model';
+import { ChatGroup, UserInfo, BlockedUser, ChatRequest } from '../../models';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupDialogComponent } from '../group-dialog/group-dialog.component'; 
+
+interface ChatPreview {
+  userId?: string;
+  id?: string;
+  name: string;
+  avatar?: string;
+  lastMessage?: string;
+  lastMessageTime?: string;
+  lastMessageSender?: string;
+  isGroup: boolean;
+  memberCount?: number;
+  active: boolean;
+}
 
 @Component({
   selector: 'app-chat-sidebar',
@@ -23,11 +36,11 @@ export class ChatSidebarComponent implements OnInit, OnDestroy {
   // Chats related properties
   searchTerm = '';
   isSearching = false;
-  searchResults: any[] = [];
-  chats = [];
+  searchResults: UserInfo[] = [];
+  chats: ChatPreview[] = [];
   
   // Requests related properties
-  requests = [];
+  requests: ChatRequest[] = [];
   
   // Groups related properties
   groupSearchTerm = '';
@@ -37,7 +50,7 @@ export class ChatSidebarComponent implements OnInit, OnDestroy {
   memberGroups: ChatGroup[] = [];
   
   // Blocked users related properties
-  blockedUsers = [];
+  blockedUsers: BlockedUser[] = [];
   
   private subscriptions: Subscription[] = [];
   
@@ -86,8 +99,61 @@ export class ChatSidebarComponent implements OnInit, OnDestroy {
   
   // CHAT SECTION METHODS
   loadChats(): void {
-    // Implement chat loading logic
-    // ...existing code...
+    // Generate chat previews from messages in fake service
+    const chatPreviews: ChatPreview[] = [];
+    
+    // Process user chats from the fake direct messages
+    this.chatService.getAllUsers().subscribe(users => {
+      users.forEach(user => {
+        // Get the most recent message for this user
+        this.chatService.getDirectMessages(user.id, 0, 1).subscribe(result => {
+          if (result.content && result.content.length > 0) {
+            const lastMessage = result.content[result.content.length - 1];
+            
+            // Create a chat preview
+            chatPreviews.push({
+              userId: user.id,
+              name: `${user.firstName} ${user.lastName}`,
+              avatar: user.profileImage,
+              lastMessage: lastMessage.content,
+              lastMessageTime: lastMessage.timestamp,
+              isGroup: false,
+              active: false
+            });
+            
+            // Update the chats array
+            this.chats = [...chatPreviews];
+          }
+        });
+      });
+    });
+    
+    // Process group chats
+    this.chatGroupService.getUserGroups().subscribe(groups => {
+      groups.forEach(group => {
+        this.chatService.getGroupMessages(group.id, 0, 1).subscribe(result => {
+          const lastMessage = result.content && result.content.length > 0 
+            ? result.content[result.content.length - 1] 
+            : null;
+          
+          // Create a group chat preview
+          chatPreviews.push({
+            id: group.id,
+            name: group.name,
+            avatar: undefined,
+            lastMessage: lastMessage ? lastMessage.content : undefined,
+            lastMessageTime: lastMessage ? lastMessage.timestamp : group.createdAt,
+            lastMessageSender: lastMessage ? lastMessage.senderName : undefined,
+            isGroup: true,
+            memberCount: group.memberCount,
+            active: false
+          });
+          
+          // Update the chats array
+          this.chats = [...chatPreviews];
+        });
+      });
+    });
   }
   
   searchUsers(): void {  
@@ -107,35 +173,106 @@ export class ChatSidebarComponent implements OnInit, OnDestroy {
     );
   }
   
-  selectChat(chat: any): void {
-    // Implement chat selection logic
-    this.chatSelected.emit(chat);
+  selectChat(chat: ChatPreview): void {
+    // Reset active state for all chats
+    this.chats.forEach(c => c.active = false);
+    
+    // Set this chat as active
+    const chatIndex = this.chats.findIndex(c => 
+      (chat.userId && c.userId === chat.userId) || 
+      (chat.id && c.id === chat.id)
+    );
+    
+    if (chatIndex >= 0) {
+      this.chats[chatIndex].active = true;
+    }
+    
+    // Set the active conversation in the chat service
+    if (chat.isGroup) {
+      this.chatService.setActiveConversation({ 
+        id: chat.id,
+        name: chat.name,
+        memberCount: chat.memberCount
+      });
+      // Use a fully populated ChatGroup object
+      this.chatGroupService.getGroupById(chat.id!).subscribe(group => {
+        if (group) {
+          this.groupChatSelected.emit(group);
+        }
+      });
+    } else {
+      this.chatService.setActiveConversation({ 
+        userId: chat.userId,
+        username: chat.name,
+        avatar: chat.avatar
+      });
+      this.chatSelected.emit(chat);
+    }
   }
   
-  initiateChat(user: any): void {
-    // Implement initiating a new chat
-    // ...existing code...
+  initiateChat(user: UserInfo): void {
+    // Create a chat preview for this user
+    const chatPreview: ChatPreview = {
+      userId: user.id,
+      name: `${user.firstName} ${user.lastName}`,
+      avatar: user.profileImage,
+      isGroup: false,
+      active: true
+    };
+    
+    // Check if this chat already exists
+    const existingChatIndex = this.chats.findIndex(c => c.userId === user.id);
+    
+    if (existingChatIndex >= 0) {
+      // Reset active state for all chats
+      this.chats.forEach(c => c.active = false);
+      
+      // Set existing chat as active
+      this.chats[existingChatIndex].active = true;
+      this.selectChat(this.chats[existingChatIndex]);
+    } else {
+      // Add to chats list
+      this.chats = [chatPreview, ...this.chats];
+      
+      // Reset active state for all other chats
+      for (let i = 1; i < this.chats.length; i++) {
+        this.chats[i].active = false;
+      }
+      
+      // Select the new chat
+      this.selectChat(chatPreview);
+    }
   }
   
   getUnreadCount(userId: string): number {
-    // Implement unread count logic
-    return 0; // Replace with actual implementation
+    // Get unread count from the chat service
+    let count = 0;
+    this.chatService.unreadCounts$.subscribe(counts => {
+      count = counts[userId] || 0;
+    });
+    return count;
   }
   
   // REQUESTS SECTION METHODS
   loadPendingRequests(): void {
-    // Implement pending requests loading logic
-    // ...existing code...
+    this.chatService.getPendingRequests().subscribe({
+      next: (requests) => {
+        this.requests = requests;
+      },
+      error: (error) => {
+        console.error('Error loading pending requests:', error);
+      }
+    });
   }
   
   approveChatRequest(request: any): void {
-    // Implement approve chat request logic
-    // ...existing code...
+    this.chatService.approveChatRequest(request.id);
+    this.loadPendingRequests();
   }
   
   rejectChatRequest(request: any): void {
-    // Implement reject chat request logic
-    // ...existing code...
+    this.chatService.rejectChatRequest(request.id);
+    this.loadPendingRequests();
   }
   
   // GROUPS SECTION METHODS

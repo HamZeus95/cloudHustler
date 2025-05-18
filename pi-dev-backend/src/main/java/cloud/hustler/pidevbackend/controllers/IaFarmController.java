@@ -22,6 +22,7 @@ public class IaFarmController {
     //worked
     @PostMapping("/ask-farming-question")
     public Mono<ResponseEntity<String>> askFarmingQuestion(@RequestBody Map<String, String> input) {
+        System.out.println("Received input: " + input);
         return iaFarmService.askFarmingQuestion(input.get("prompt"))
                 .map(response -> ResponseEntity.ok().body(response))
                 .defaultIfEmpty(ResponseEntity.noContent().build())

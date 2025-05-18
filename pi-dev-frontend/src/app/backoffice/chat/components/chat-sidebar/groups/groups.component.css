@@ -234,3 +234,206 @@
   .scrollable::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+
+.groups-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.create-group {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.create-group-btn {
+  width: 100%;
+  padding: 8px;
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.create-group-btn:hover {
+  background-color: #40a9ff;
+}
+
+.groups-content-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent; /* Firefox */
+}
+
+/* Custom scrollbar styling for Webkit browsers */
+.groups-content-wrapper::-webkit-scrollbar {
+  width: 5px;
+}
+
+.groups-content-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.groups-content-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+
+.groups-content-wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.group-list {
+  padding: 5px 10px;
+}
+
+.group-list.scrollable {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.section-header {
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+  margin-top: 10px;
+}
+
+.section-header h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.member-groups-header {
+  margin-top: 15px;
+}
+
+.group-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border: 1px solid #f0f0f0;
+}
+
+.group-item:hover {
+  background-color: #f0f0f0;
+}
+
+.group-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+  background-color: #e1e1e1;
+  flex-shrink: 0;
+}
+
+.group-icon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.admin-group {
+  background-color: #fffbe6;
+}
+
+.group-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.group-info h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.group-info p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.member-count, .created-date, .created-by {
+  display: block;
+  font-size: 12px;
+  color: #999;
+  margin-top: 2px;
+}
+
+.group-actions, .leave-group {
+  display: flex;
+  gap: 5px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.group-item:hover .group-actions,
+.group-item:hover .leave-group {
+  opacity: 1;
+}
+
+.edit-btn, .delete-btn, .leave-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.edit-btn:hover {
+  background-color: #e6f7ff;
+  color: #1890ff;
+}
+
+.delete-btn:hover {
+  background-color: #fff1f0;
+  color: #f5222d;
+}
+
+.leave-btn:hover {
+  background-color: #fff1f0;
+  color: #f5222d;
+}
+
+.no-groups, .no-results {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+}
+
+.create-from-search {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

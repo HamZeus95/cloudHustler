@@ -30,6 +30,13 @@ public class CorsConfig {
         // Use setAllowedOriginPatterns instead of setAllowedOrigins for specific origins when allowCredentials=true
         config.setAllowedOriginPatterns(allowedOrigins);
 
+         config.addAllowedMethod("GET");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("DELETE");
+        config.addAllowedMethod("OPTIONS");
+        config.addAllowedMethod("PATCH");
+
         // Allow all HTTP methods
         config.addAllowedMethod("*");
 

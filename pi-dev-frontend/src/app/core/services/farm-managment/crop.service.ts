@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 @Injectable()
 export class CropService {
   private apiUrl = '/api/v1/crop'; 
-  private aiWebhookUrl = 'https://mohamed-dhia-alaya.app.n8n.cloud/webhook/new-crop';
+  private aiWebhookUrl = 'https://mda-dhia-alaya.app.n8n.cloud/webhook-test/new-crop';
 
 
   constructor(private http: HttpClient) {}

@@ -17,6 +17,16 @@ import { RequestsComponent } from './components/chat-sidebar/requests/requests.c
 import { GroupsComponent } from './components/chat-sidebar/groups/groups.component';
 import { BlockedComponent } from './components/chat-sidebar/blocked/blocked.component'; 
 
+// Import real services
+import { ChatService } from './services/chat.service';
+import { ChatGroupService } from './services/chat-group.service';
+import { BlockUserService } from './services/block-user.service';
+
+// Import fake services
+import { FakeChatService } from './services/fake-chat.service';
+import { FakeChatGroupService } from './services/fake-chat-group.service';
+import { FakeBlockUserService } from './services/fake-block-user.service';
+
 @NgModule({
   declarations: [
     ChatPageComponent,
@@ -36,6 +46,12 @@ import { BlockedComponent } from './components/chat-sidebar/blocked/blocked.comp
     ReactiveFormsModule,
     ChatRoutingModule,
     SharedLayoutsModule
+  ],
+  providers: [
+    // Use fake services instead of real ones
+    { provide: ChatService, useClass: FakeChatService },
+    { provide: ChatGroupService, useClass: FakeChatGroupService },
+    { provide: BlockUserService, useClass: FakeBlockUserService }
   ]
 })
 export class ChatModule { }

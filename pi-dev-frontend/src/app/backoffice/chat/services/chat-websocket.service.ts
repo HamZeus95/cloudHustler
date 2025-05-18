@@ -19,6 +19,7 @@ export class ChatWebsocketService {
   private readReceipts = new Subject<ChatMessage>();
   private bulkReadReceipts = new Subject<any>();
   private messageDeleted = new Subject<any>();
+  private typingStatus = new Subject<any>();
   private errors = new Subject<string>();
   
   // Group subscription tracking
@@ -86,6 +87,16 @@ export class ChatWebsocketService {
           this.messageDeleted.next(data);
         } catch (error) {
           console.error('Error parsing message deleted event:', error);
+        }
+      });
+      
+      // Subscribe to typing status
+      this.client?.subscribe(`/user/queue/typingStatus`, (message) => {
+        try {
+          const status = JSON.parse(message.body);
+          this.typingStatus.next(status);
+        } catch (error) {
+          console.error('Error parsing typing status:', error);
         }
       });
       
@@ -291,6 +302,38 @@ export class ChatWebsocketService {
     });
   }
 
+  // Send typing status for direct messages
+  sendTypingStatus(receiverId: string, isTyping: boolean): void {
+    if (!this.client?.connected) {
+      this.errors.next('Cannot send typing status - WebSocket not connected');
+      return;
+    }
+    
+    this.client.publish({
+      destination: `/app/chat.typing`,
+      body: JSON.stringify({
+        receiverId,
+        isTyping
+      })
+    });
+  }
+  
+  // Send typing status for group messages
+  sendGroupTypingStatus(groupId: string, isTyping: boolean): void {
+    if (!this.client?.connected) {
+      this.errors.next('Cannot send group typing status - WebSocket not connected');
+      return;
+    }
+    
+    this.client.publish({
+      destination: `/app/chat.groupTyping`,
+      body: JSON.stringify({
+        groupId,
+        isTyping
+      })
+    });
+  }
+
   // Get direct messages as Observable
   getDirectMessages(): Observable<ChatMessage> {
     return this.directMessages.asObservable();
@@ -314,6 +357,11 @@ export class ChatWebsocketService {
   // Get message deleted events as Observable
   getMessageDeletedEvents(): Observable<any> {
     return this.messageDeleted.asObservable();
+  }
+
+  // Get typing status as Observable
+  getTypingStatus(): Observable<any> {
+    return this.typingStatus.asObservable();
   }
 
   // Get errors as Observable

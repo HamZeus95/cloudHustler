@@ -9,6 +9,8 @@ export interface ChatGroup {
   memberCount: number;
   isCurrentUserAdmin: boolean;
   isCurrentUserCreator: boolean;
+  avatar?: string;
+  creatorId?: string;
   lastMessage?: {
     content: string;
     senderId: string;

@@ -11,11 +11,103 @@
 .search-results-container {
   max-height: 250px;
   overflow-y: auto;
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+/* Search results scrollbar for Webkit browsers */
+.search-results-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.search-results-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.search-results-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.search-results-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Recent Chats Section */
+.recent-chats {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  min-height: 400px; /* Increased minimum height */
 }
 
 .section-header {
   padding: 0.5rem 1rem;
   border-bottom: 1px solid #e5e5e5;
+  flex-shrink: 0;
+}
+
+/* Dedicated container for recent conversations */
+.recent-conversations {
+  overflow-y: auto;
+  flex: 1;
+  height: calc(100vh - 240px); /* Use viewport height for better calculation */
+  min-height: 300px; /* Increased minimum height */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.6) transparent; /* Darker for better visibility */
+  padding-bottom: 20px;
+  margin-right: 2px; /* Add margin to ensure scrollbar is not too close to the edge */
+}
+
+/* Custom scrollbar for recent conversations */
+.recent-conversations::-webkit-scrollbar {
+  width: 10px; /* Wider scrollbar */
+}
+
+.recent-conversations::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.recent-conversations::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.6); /* Darker for better visibility */
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
+}
+
+.recent-conversations::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Create a scrollable container for the chat items */
+.chats-scroll-container {
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: rgba(0, 0, 0, 0.4) transparent;
+  height: calc(100% - 42px); /* Height minus section header */
+  min-height: 200px; /* Increased minimum height */
+  position: relative; /* For positioning absolute elements if needed */
+  padding-bottom: 20px; /* Add padding at bottom for better scrolling */
+}
+
+/* Chat items scrollbar for Webkit browsers */
+.chats-scroll-container::-webkit-scrollbar {
+  width: 8px; /* Increased width for better visibility */
+}
+
+.chats-scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Light gray background for better visibility */
+}
+
+.chats-scroll-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.4); /* Darker for better visibility */
+  border-radius: 6px;
+}
+
+.chats-scroll-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .user-item {

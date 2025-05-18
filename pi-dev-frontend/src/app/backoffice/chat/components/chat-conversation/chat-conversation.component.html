@@ -17,9 +17,13 @@
       <div class="partner-info">
         <div class="avatar">
           <img *ngIf="partnerInfo?.avatar" [src]="partnerInfo.avatar" alt="Avatar">
-          <div *ngIf="!partnerInfo?.avatar" class="default-avatar">
+          <div *ngIf="!partnerInfo?.avatar && conversationType === 'direct'" class="default-avatar">
             {{ partnerInfo?.name?.charAt(0) }}
           </div>
+          <div *ngIf="!partnerInfo?.avatar && conversationType === 'group'" class="group-avatar">
+            {{ partnerInfo?.name?.charAt(0) }}
+          </div>
+          <div *ngIf="partnerInfo?.online" class="online-indicator"></div>
         </div>
         <div class="info">
           <h4>{{ partnerInfo?.name }}</h4>
@@ -34,6 +38,12 @@
       </div>
       <div class="conversation-actions">
         <!-- Add any actions like search, call, etc. -->
+        <button class="action-icon">
+          <i class="fas fa-search"></i>
+        </button>
+        <button class="action-icon">
+          <i class="fas fa-phone"></i>
+        </button>
       </div>
     </div>
     
@@ -62,9 +72,26 @@
         </app-chat-message>
       </ng-container>
       
+      <!-- Typing indicator -->
+      <div *ngIf="isTyping" class="typing-indicator">
+        <div class="message-avatar" *ngIf="conversationType === 'group'">
+          <img *ngIf="typingUser?.avatar" [src]="typingUser.avatar" alt="Avatar">
+          <div *ngIf="!typingUser?.avatar" class="default-avatar">
+            {{ typingUser?.name?.charAt(0) || 'U' }}
+          </div>
+        </div>
+        <div class="dots">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+      
       <!-- No messages yet -->
       <div *ngIf="messages.length === 0 && !loadingMessages" class="no-messages">
-        <p>No messages yet. Start a conversation!</p>
+        <i class="far fa-comment-dots"></i>
+        <p>No messages yet</p>
+        <div class="sub-text">Start a conversation!</div>
       </div>
       
       <!-- Loading indicator -->

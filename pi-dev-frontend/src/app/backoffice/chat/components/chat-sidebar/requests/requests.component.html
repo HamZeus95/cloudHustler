@@ -1,19 +1,23 @@
-<div class="section-header">
-  <h4>Pending Requests</h4>
-</div>
-<div class="request-item" *ngFor="let request of requests">
-  <div class="user-avatar">
-    <img [src]="'assets/images/default-avatar.png'" alt="User avatar">
+<div class="requests-wrapper">
+  <div class="section-header">
+    <h4>Pending Requests</h4>
   </div>
-  <div class="user-info">
-    <h4>request.senderName </h4>
-    <p>Wants to chat with you</p>
+  <div class="requests-container">
+    <div class="request-item" *ngFor="let request of requests">
+      <div class="user-avatar">
+        <img [src]="'assets/images/default-avatar.png'" alt="User avatar">
+      </div>
+      <div class="user-info">
+        <h4>request.senderName </h4>
+        <p>Wants to chat with you</p>
+      </div>
+      <div class="request-actions">
+        <button class="approve-btn" (click)="approveChatRequest(request)">✓</button>
+        <button class="reject-btn" (click)="rejectChatRequest(request)">✗</button>
+      </div>
+    </div>
+    <div class="no-requests" *ngIf="requests.length === 0">
+      <p>No pending requests</p>
+    </div>
   </div>
-  <div class="request-actions">
-    <button class="approve-btn" (click)="approveChatRequest(request)">✓</button>
-    <button class="reject-btn" (click)="rejectChatRequest(request)">✗</button>
-  </div>
-</div>
-<div class="no-requests" *ngIf="requests.length === 0">
-  <p>No pending requests</p>
 </div>

@@ -1,82 +1,126 @@
+.blocked-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.blocked-container {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+/* Custom scrollbar styling for Webkit browsers */
+.blocked-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.blocked-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.blocked-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.blocked-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .section-header {
-  padding: 10px 15px;
-  border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 10px;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #e5e5e5;
+  flex-shrink: 0;
+  background-color: #f8f9fa;
 }
 
 .section-header h4 {
   margin: 0;
   font-size: 16px;
   font-weight: 500;
+  color: #333;
 }
 
 .blocked-user-item {
   display: flex;
-  padding: 12px 15px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  background-color: #f9f9f9;
   align-items: center;
-  transition: background-color 0.2s ease;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  background-color: #fff;
+  transition: background-color 0.2s;
 }
 
 .blocked-user-item:hover {
-  background-color: #f0f0f0;
+  background-color: #f5f5f5;
 }
 
 .user-avatar {
-  margin-right: 12px;
-}
-
-.user-avatar img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  overflow: hidden;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
 .user-info {
   flex: 1;
+  min-width: 0;
 }
 
 .user-info h4 {
-  margin: 0 0 4px 0;
+  margin: 0;
   font-size: 15px;
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .user-info p {
-  margin: 2px 0;
+  margin: 4px 0 0;
   font-size: 13px;
   color: #666;
 }
 
 .user-info small {
+  display: block;
   font-size: 12px;
-  color: #888;
+  color: #999;
+  margin-top: 4px;
 }
 
 .unblock-action {
-  margin-left: 10px;
+  margin-left: 12px;
 }
 
 .unblock-btn {
-  background-color: #ff5252;
+  padding: 5px 10px;
+  background-color: #ff4d4f;
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 6px 12px;
-  font-size: 13px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  font-size: 12px;
+  transition: all 0.2s;
 }
 
 .unblock-btn:hover {
-  background-color: #ff3838;
+  background-color: #ff7875;
+  transform: scale(1.05);
 }
 
 .no-blocked-users {
   text-align: center;
   padding: 20px;
-  color: #888;
+  color: #999;
 }

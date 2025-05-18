@@ -17,4 +17,5 @@ export interface ChatRequest {
   status: ChatRequestStatus;
   createdAt: string;
   updatedAt?: string;
+  timestamp?: string;
 }
